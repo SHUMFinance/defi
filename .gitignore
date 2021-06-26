@@ -1,0 +1,14 @@
+shum/package-lock.json
+shum/deploy.sh
+shum/node_modules
+shum/build
+shum/contracts/artifacts
+shum/.openzeppelin/.session
+.DS_Store
+
+# Hardhat files
+shum/cache/
+shum/artifacts/
+
+# OpenZeppelin dev files
+shum/.openzeppelin/unknown-*.json
