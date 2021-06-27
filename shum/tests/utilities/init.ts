@@ -48,7 +48,7 @@ export const deployLinearStack = async (
 
   // Load contract factories without external libraries
   const [
-    LinearFinance,
+    ShumFinance,
     LnAccessControl,
     LnAssetSystem,
     LnAssetUpgradeable,
@@ -58,7 +58,7 @@ export const deployLinearStack = async (
     LnRewardSystem,
   ] = await Promise.all(
     [
-      "LinearFinance",
+      "ShumFinance",
       "LnAccessControl",
       "LnAssetSystem",
       "LnAssetUpgradeable",
@@ -98,12 +98,12 @@ export const deployLinearStack = async (
    * LINA token contract
    */
   const linaToken: Contract = await upgrades.deployProxy(
-    LinearFinance,
+    ShumFinance,
     [
       admin.address, // _admin
     ],
     {
-      initializer: "__LinearFinance_init",
+      initializer: "__ShumFinance_init",
     }
   );
 
