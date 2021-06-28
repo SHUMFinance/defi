@@ -12,7 +12,7 @@ import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/ILnCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 
-// 根据 LnCollateralSystem 的抵押资产计算相关抵押率，buildable lusd
+// Calculate the relevant mortgage rate according to the mortgage assets of lncolateralsystem，buildable lusd
 contract LnBuildBurnSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;

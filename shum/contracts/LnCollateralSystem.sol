@@ -15,8 +15,9 @@ import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/ILnConfig.sol";
 import "./interfaces/ILnRewardLocker.sol";
 
-// 单纯抵押进来
-// 赎回时需要 债务率良好才能赎回， 赎回部分能保持债务率高于目标债务率
+// Simple mortgage
+// When redeeming, it needs a good debt ratio to redeem, 
+// and the redeemed part can keep the debt ratio higher than the target debt ratio
 contract LnCollateralSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;

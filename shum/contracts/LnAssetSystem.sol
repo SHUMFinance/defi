@@ -11,8 +11,8 @@ contract LnAssetSystem is LnAddressStorage {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
-    ILnAsset[] public mAssetList; // 合约地址数组
-    mapping(address => bytes32) public mAddress2Names; // 地址到名称的映射
+    ILnAsset[] public mAssetList; // contract address array 
+    mapping(address => bytes32) public mAddress2Names; // addredd and name map
 
     function __LnAssetSystem_init(address _admin) public initializer {
         __LnAddressStorage_init(_admin);
