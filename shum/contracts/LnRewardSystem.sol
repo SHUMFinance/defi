@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "./interfaces/ILnCollateralSystem.sol";
 import "./interfaces/ILnRewardLocker.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 
 /**
  * @title LnRewardSystem
@@ -19,7 +19,7 @@ import "./upgradeable/LnAdminUpgradeable.sol";
  *
  * Period ID starts from 1, not zero.
  */
-contract LnRewardSystem is LnAdminUpgradeable {
+contract LnRewardSystem is ShumAdminUpgradeable {
     using ECDSAUpgradeable for bytes32;
     using SafeMathUpgradeable for uint256;
 
@@ -68,7 +68,7 @@ contract LnRewardSystem is LnAdminUpgradeable {
         address _rewardLockerAddress,
         address _admin
     ) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
 
         /**
          * The next line is commented out to make migration from Ethereum to Binance Smart

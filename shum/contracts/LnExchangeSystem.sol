@@ -7,10 +7,10 @@ import "./interfaces/ILnAsset.sol";
 import "./interfaces/ILnAddressStorage.sol";
 import "./interfaces/ILnPrices.sol";
 import "./interfaces/ILnConfig.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
-contract LnExchangeSystem is LnAdminUpgradeable, LnAddressCache {
+contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
@@ -75,7 +75,7 @@ contract LnExchangeSystem is LnAdminUpgradeable, LnAddressCache {
     bytes32 private constant LUSD_KEY = "lUSD";
 
     function __LnExchangeSystem_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {

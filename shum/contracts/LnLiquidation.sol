@@ -9,10 +9,10 @@ import "./interfaces/ILnConfig.sol";
 import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/ILnPrices.sol";
 import "./interfaces/ILnRewardLocker.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
-contract LnLiquidation is LnAdminUpgradeable {
+contract LnLiquidation is ShumAdminUpgradeable {
     using SafeMathUpgradeable for uint256;
     using SafeDecimalMath for uint256;
 
@@ -111,7 +111,7 @@ contract LnLiquidation is LnAdminUpgradeable {
         ILnRewardLocker _lnRewardLocker,
         address _admin
     ) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
 
         require(address(_lnBuildBurnSystem) != address(0), "LnLiquidation: zero address");
         require(address(_lnCollateralSystem) != address(0), "LnLiquidation: zero address");

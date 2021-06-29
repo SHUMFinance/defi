@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 
-contract LnConfig is LnAdminUpgradeable {
+contract LnConfig is ShumAdminUpgradeable {
     mapping(bytes32 => uint) internal mUintConfig;
 
     function __LnConfig_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     //some configue keys

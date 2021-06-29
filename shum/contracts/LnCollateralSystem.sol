@@ -2,7 +2,7 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-upgradeable/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
@@ -18,7 +18,7 @@ import "./interfaces/ILnRewardLocker.sol";
 // Simple mortgage
 // When redeeming, it needs a good debt ratio to redeem, 
 // and the redeemed part can keep the debt ratio higher than the target debt ratio
-contract LnCollateralSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddressCache {
+contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
     using AddressUpgradeable for address;
@@ -110,7 +110,7 @@ contract LnCollateralSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddres
 
     // -------------------------------------------------------
     function __LnCollateralSystem_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     function setPaused(bool _paused) external onlyAdmin {

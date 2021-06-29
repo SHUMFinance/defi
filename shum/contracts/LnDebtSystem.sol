@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnAccessControl.sol";
 import "./interfaces/ILnAssetSystem.sol";
 
-contract LnDebtSystem is LnAdminUpgradeable, LnAddressCache {
+contract LnDebtSystem is ShumAdminUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
@@ -35,7 +35,7 @@ contract LnDebtSystem is LnAdminUpgradeable, LnAddressCache {
 
     // -------------------------------------------------------
     function __LnDebtSystem_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     event UpdateAddressStorage(address oldAddr, address newAddr);

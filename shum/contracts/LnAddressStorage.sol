@@ -2,13 +2,13 @@
 pragma solidity ^0.6.12;
 
 import "./interfaces/ILnAddressStorage.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 
-contract LnAddressStorage is LnAdminUpgradeable, ILnAddressStorage {
+contract LnAddressStorage is ShumAdminUpgradeable, ILnAddressStorage {
     mapping(bytes32 => address) public mAddrs;
 
     function __LnAddressStorage_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     function updateAll(bytes32[] calldata names, address[] calldata destinations) external override onlyAdmin {

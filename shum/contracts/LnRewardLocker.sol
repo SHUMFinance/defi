@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "./interfaces/ILnAccessControl.sol";
 import "./interfaces/ILnRewardLocker.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 
 /**
  * @title LnRewardLocker
@@ -13,7 +13,7 @@ import "./upgradeable/LnAdminUpgradeable.sol";
  * @dev A contract for locking LINA rewards. The current version only supports adding rewards.
  * Reward claiming will be added in a later iteration.
  */
-contract LnRewardLocker is ILnRewardLocker, LnAdminUpgradeable {
+contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
     using SafeMathUpgradeable for uint256;
 
     event RewardEntryAdded(uint256 entryId, address user, uint256 amount, uint256 unlockTime);
@@ -70,7 +70,7 @@ contract LnRewardLocker is ILnRewardLocker, LnAdminUpgradeable {
         ILnAccessControl _accessCtrl,
         address _admin
     ) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
 
         require(_linaTokenAddr != address(0), "LnRewardLocker: zero address");
         require(address(_accessCtrl) != address(0), "LnRewardLocker: zero address");

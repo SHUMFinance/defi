@@ -4,14 +4,14 @@ pragma solidity ^0.6.12;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "./interfaces/ILnAccessControl.sol";
 import "./LnAddressCache.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 
 /**
  * @title LnAssetUpgradeable
  *
  * @dev This is an upgradeable version of `LnAsset`.
  */
-contract LnAssetUpgradeable is ERC20Upgradeable, LnAdminUpgradeable, LnAddressCache {
+contract LnAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, LnAddressCache {
     bytes32 mKeyName;
     ILnAccessControl accessCtrl;
 
@@ -41,7 +41,7 @@ contract LnAssetUpgradeable is ERC20Upgradeable, LnAdminUpgradeable, LnAddressCa
         address _admin
     ) public initializer {
         __ERC20_init(_name, _symbol);
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
 
         mKeyName = _key;
     }

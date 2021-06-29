@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "./SafeDecimalMath.sol";
@@ -13,7 +13,7 @@ import "./interfaces/ILnCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 
 // Calculate the relevant mortgage rate according to the mortgage assets of lncolateralsystem，buildable lusd
-contract LnBuildBurnSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddressCache {
+contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
@@ -39,7 +39,7 @@ contract LnBuildBurnSystem is LnAdminUpgradeable, PausableUpgradeable, LnAddress
 
     // -------------------------------------------------------
     function __LnBuildBurnSystem_init(address admin, address _lUSDTokenAddr) public initializer {
-        __LnAdminUpgradeable_init(admin);
+        __ShumAdminUpgradeable_init(admin);
 
         lUSDToken = ILnAsset(_lUSDTokenAddr);
     }

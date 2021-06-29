@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/utils/SafeCastUpgradeable.sol";
 import "./interfaces/IBandProtocolOracle.sol";
 import "./interfaces/IChainlinkOracle.sol";
 import "./interfaces/ILnPrices.sol";
-import "./upgradeable/LnAdminUpgradeable.sol";
+import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
 /**
@@ -16,7 +16,7 @@ import "./SafeDecimalMath.sol";
  * @dev A contract for providing Linear contracts with access to asset prices from multiple data
  * oracles including Chainlink and Band Protocol.
  */
-contract LnOracleRouter is LnAdminUpgradeable, ILnPrices {
+contract LnOracleRouter is ShumAdminUpgradeable, ILnPrices {
     using SafeCastUpgradeable for int256;
     using SafeDecimalMath for uint256;
     using SafeMathUpgradeable for uint256;
@@ -84,7 +84,7 @@ contract LnOracleRouter is LnAdminUpgradeable, ILnPrices {
     }
 
     function __LnOracleRouter_init(address _admin) public initializer {
-        __LnAdminUpgradeable_init(_admin);
+        __ShumAdminUpgradeable_init(_admin);
     }
 
     function setGlobalStalePeriod(uint256 newStalePeriod) external onlyAdmin {
