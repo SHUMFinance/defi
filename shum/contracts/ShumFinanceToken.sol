@@ -11,7 +11,7 @@ contract ShumFinance is ERC20Upgradeable, ShumAdminUpgradeable {
     uint256 public constant MAX_SUPPLY = 10000000000e18;
 
     function __ShumFinance_init(address _admin) public initializer {
-        __ERC20_init("Linear Token", "LINA");
+        __ERC20_init("Shum Token", "SHUM");
         __ShumAdminUpgradeable_init(_admin);
     }
 

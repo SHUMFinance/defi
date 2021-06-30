@@ -38,7 +38,7 @@ describe("ShumErc20Bridge", function () {
     amount: BigNumber
   ): Promise<string> => {
     const domain = {
-      name: "Linear",
+      name: "Shum",
       version: "1",
       chainId: (await ethers.provider.getNetwork()).chainId,
       verifyingContract: shumErc20Bridge.address,
@@ -113,7 +113,7 @@ describe("ShumErc20Bridge", function () {
     await shum.connect(alice).approve(shumErc20Bridge.address, uint256Max);
 
     await shumErc20Bridge.connect(admin).addToken(
-      formatBytes32String("SHUM"), // tokenKey
+      formatBytes32String("Shum"), // tokenKey
       shum.address, // tokenAddress
       TOKEN_LOCK_TYPE_TRANSFER // lockType
     );
@@ -123,7 +123,7 @@ describe("ShumErc20Bridge", function () {
       TOKEN_LOCK_TYPE_MINT_BURN // lockType
     );
     await shumErc20Bridge.connect(admin).addChainSupportForToken(
-      formatBytes32String("SHUM"), // tokenKey
+      formatBytes32String("Shum"), // tokenKey
       mockChainId // chainId
     );
     await shumErc20Bridge.connect(admin).addChainSupportForToken(
@@ -146,7 +146,7 @@ describe("ShumErc20Bridge", function () {
   it("cannot deposit for unsupported chain", async () => {
     await expect(
       shumErc20Bridge.connect(alice).deposit(
-        formatBytes32String("LINA"), // token
+        formatBytes32String("Shum"), // token
         expandTo18Decimals(1_000), // amount
         BigNumber.from(8888), // destChainId
         hexlify(zeroPad(alice.address, 32)) // recipient
@@ -157,7 +157,7 @@ describe("ShumErc20Bridge", function () {
   it("token tranferred on deposit of token in transfer mode", async () => {
     await expect(
       shumErc20Bridge.connect(alice).deposit(
-        formatBytes32String("LINA"), // token
+        formatBytes32String("Shum"), // token
         expandTo18Decimals(1_000), // amount
         mockChainId, // destChainId
         hexlify(zeroPad(alice.address, 32)) // recipient
@@ -172,7 +172,7 @@ describe("ShumErc20Bridge", function () {
         1, // depositId
         hexlify(zeroPad(alice.address, 32)), // depositor
         hexlify(zeroPad(alice.address, 32)), // recipient
-        formatBytes32String("LINA"), // currency
+        formatBytes32String("Shum"), // currency
         expandTo18Decimals(1_000) // amount
       );
 
@@ -221,7 +221,7 @@ describe("ShumErc20Bridge", function () {
       BigNumber.from(999), // depositId
       hexlify(zeroPad(alice.address, 32)), // depositor
       hexlify(zeroPad(alice.address, 32)), // recipient
-      formatBytes32String("LINA"), // currency
+      formatBytes32String("Shum"), // currency
       expandTo18Decimals(1_000) // amount
     );
 
@@ -232,7 +232,7 @@ describe("ShumErc20Bridge", function () {
         BigNumber.from(1), // depositId
         hexlify(zeroPad(alice.address, 32)), // depositor
         hexlify(zeroPad(alice.address, 32)), // recipient
-        formatBytes32String("LINA"), // currency
+        formatBytes32String("Shum"), // currency
         expandTo18Decimals(1000), // amount
         signature // signature
       )
@@ -247,7 +247,7 @@ describe("ShumErc20Bridge", function () {
       BigNumber.from(1), // depositId
       hexlify(zeroPad(alice.address, 32)), // depositor
       hexlify(zeroPad(alice.address, 32)), // recipient
-      formatBytes32String("LINA"), // currency
+      formatBytes32String("Shum"), // currency
       expandTo18Decimals(1_000) // amount
     );
 
@@ -258,7 +258,7 @@ describe("ShumErc20Bridge", function () {
         BigNumber.from(1), // depositId
         hexlify(zeroPad(alice.address, 32)), // depositor
         hexlify(zeroPad(alice.address, 32)), // recipient
-        formatBytes32String("LINA"), // currency
+        formatBytes32String("Shum"), // currency
         expandTo18Decimals(1000), // amount
         signature // signature
       )
@@ -272,7 +272,7 @@ describe("ShumErc20Bridge", function () {
         1, // depositId
         hexlify(zeroPad(alice.address, 32)), // depositor
         hexlify(zeroPad(alice.address, 32)), // recipient
-        formatBytes32String("LINA"), // currency
+        formatBytes32String("Shum"), // currency
         expandTo18Decimals(1_000) // amount
       );
 
@@ -335,7 +335,7 @@ describe("ShumErc20Bridge", function () {
       BigNumber.from(1), // depositId
       hexlify(zeroPad(alice.address, 32)), // depositor
       hexlify(zeroPad(alice.address, 32)), // recipient
-      formatBytes32String("LINA"), // currency
+      formatBytes32String("Shum"), // currency
       expandTo18Decimals(1_000) // amount
     );
 
@@ -346,7 +346,7 @@ describe("ShumErc20Bridge", function () {
       BigNumber.from(1), // depositId
       hexlify(zeroPad(alice.address, 32)), // depositor
       hexlify(zeroPad(alice.address, 32)), // recipient
-      formatBytes32String("LINA"), // currency
+      formatBytes32String("Shum"), // currency
       expandTo18Decimals(1000), // amount
       signature // signature
     );
@@ -358,7 +358,7 @@ describe("ShumErc20Bridge", function () {
         BigNumber.from(1), // depositId
         hexlify(zeroPad(alice.address, 32)), // depositor
         hexlify(zeroPad(alice.address, 32)), // recipient
-        formatBytes32String("LINA"), // currency
+        formatBytes32String("Shum"), // currency
         expandTo18Decimals(1000), // amount
         signature // signature
       )
