@@ -7,7 +7,7 @@ import "./interfaces/ILnBuildBurnSystem.sol";
 import "./interfaces/ILnCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 import "./interfaces/ILnDebtSystem.sol";
-import "./interfaces/ILnPrices.sol";
+import "./interfaces/IShumPrices.sol";
 import "./interfaces/ILnRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
@@ -79,7 +79,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
     ILnCollateralSystem public lnCollateralSystem;
     ILnConfig public lnConfig;
     ILnDebtSystem public lnDebtSystem;
-    ILnPrices public lnPrices;
+    IShumPrices public lnPrices;
     ILnRewardLocker public lnRewardLocker;
 
     mapping(address => UndercollateralizationMark) public undercollateralizationMarks;
@@ -107,7 +107,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
         ILnCollateralSystem _lnCollateralSystem,
         ILnConfig _lnConfig,
         ILnDebtSystem _lnDebtSystem,
-        ILnPrices _lnPrices,
+        IShumPrices _lnPrices,
         ILnRewardLocker _lnRewardLocker,
         address _admin
     ) public initializer {
@@ -128,7 +128,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
         lnRewardLocker = _lnRewardLocker;
     }
 
-    function setLnPrices(ILnPrices newLnPrices) external onlyAdmin {
+    function setLnPrices(IShumPrices newLnPrices) external onlyAdmin {
         require(address(newLnPrices) != address(0), "LnLiquidation: zero address");
         lnPrices = newLnPrices;
     }

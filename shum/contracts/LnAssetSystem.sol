@@ -2,7 +2,7 @@
 pragma solidity ^0.6.12;
 
 import "./interfaces/ILnAsset.sol";
-import "./interfaces/ILnPrices.sol";
+import "./interfaces/IShumPrices.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
 import "./LnAddressStorage.sol";
@@ -60,7 +60,7 @@ contract LnAssetSystem is LnAddressStorage {
     // check exchange rate invalid condition ? invalid just fail.
     function totalAssetsInUsd() public view returns (uint256 rTotal) {
         require(mAddrs["LnPrices"] != address(0), "LnPrices address cannot access");
-        ILnPrices priceGetter = ILnPrices(mAddrs["LnPrices"]); //getAddress
+        IShumPrices priceGetter = IShumPrices(mAddrs["LnPrices"]); //getAddress
         for (uint256 i = 0; i < mAssetList.length; i++) {
             uint256 exchangeRate = priceGetter.getPrice(mAssetList[i].keyName());
             rTotal = rTotal.add(mAssetList[i].totalSupply().multiplyDecimal(exchangeRate));

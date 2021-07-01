@@ -11,12 +11,12 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
 /**
- * @title LnOracleRouter
+ * @title ShumOracleRouter
  *
  * @dev A contract for providing Linear contracts with access to asset prices from multiple data
  * oracles including Chainlink and Band Protocol.
  */
-contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
+contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
     using SafeCastUpgradeable for int256;
     using SafeDecimalMath for uint256;
     using SafeMathUpgradeable for uint256;
@@ -72,7 +72,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         require(
             !_isUpdateTimeStaled(sourceTime, getStalePeriodForCurrency(sourceKey)) &&
                 !_isUpdateTimeStaled(destTime, getStalePeriodForCurrency(destKey)),
-            "LnOracleRouter: staled price data"
+            "ShumOracleRouter: staled price data"
         );
 
         return sourceAmount.multiplyDecimalRound(sourcePrice).divideDecimalRound(destPrice);
@@ -83,7 +83,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         return overridenPeriod == 0 ? globalStalePeriod : overridenPeriod;
     }
 
-    function __LnOracleRouter_init(address _admin) public initializer {
+    function __ShumOracleRouter_init(address _admin) public initializer {
         __ShumAdminUpgradeable_init(_admin);
     }
 
@@ -112,7 +112,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         address[] calldata oracleAddresses,
         bool removeExisting
     ) external onlyAdmin {
-        require(currencyKeys.length == oracleAddresses.length, "LnOracleRouter: array length mismatch");
+        require(currencyKeys.length == oracleAddresses.length, "ShumOracleRouter: array length mismatch");
 
         for (uint256 ind = 0; ind < currencyKeys.length; ind++) {
             _addChainlinkOracle(currencyKeys[ind], oracleAddresses[ind], removeExisting);
@@ -136,7 +136,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
     ) external onlyAdmin {
         require(
             currencyKeys.length == bandCurrencyKeys.length && bandCurrencyKeys.length == oracleAddresses.length,
-            "LnOracleRouter: array length mismatch"
+            "ShumOracleRouter: array length mismatch"
         );
 
         for (uint256 ind = 0; ind < currencyKeys.length; ind++) {
@@ -153,11 +153,11 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         address oracleAddress,
         bool removeExisting
     ) private {
-        require(currencyKey != bytes32(0), "LnOracleRouter: empty currency key");
-        require(oracleAddress != address(0), "LnOracleRouter: empty oracle address");
+        require(currencyKey != bytes32(0), "ShumOracleRouter: empty currency key");
+        require(oracleAddress != address(0), "ShumOracleRouter: empty oracle address");
 
         if (oracleSettings[currencyKey].oracleAddress != address(0)) {
-            require(removeExisting, "LnOracleRouter: oracle already exists");
+            require(removeExisting, "ShumOracleRouter: oracle already exists");
             _removeOracle(currencyKey);
         }
 
@@ -172,12 +172,12 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         address oracleAddress,
         bool removeExisting
     ) private {
-        require(currencyKey != bytes32(0), "LnOracleRouter: empty currency key");
-        require(bytes(bandCurrencyKey).length != 0, "LnOracleRouter: empty band currency key");
-        require(oracleAddress != address(0), "LnOracleRouter: empty oracle address");
+        require(currencyKey != bytes32(0), "ShumOracleRouter: empty currency key");
+        require(bytes(bandCurrencyKey).length != 0, "ShumOracleRouter: empty band currency key");
+        require(oracleAddress != address(0), "ShumOracleRouter: empty oracle address");
 
         if (oracleSettings[currencyKey].oracleAddress != address(0)) {
-            require(removeExisting, "LnOracleRouter: oracle already exists");
+            require(removeExisting, "ShumOracleRouter: oracle already exists");
             _removeOracle(currencyKey);
         }
 
@@ -189,7 +189,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
 
     function _removeOracle(bytes32 currencyKey) private {
         OracleSettings memory settings = oracleSettings[currencyKey];
-        require(settings.oracleAddress != address(0), "LnOracleRouter: oracle not found");
+        require(settings.oracleAddress != address(0), "ShumOracleRouter: oracle not found");
 
         delete oracleSettings[currencyKey];
 
@@ -204,7 +204,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
         if (currencyKey == LUSD) return (SafeDecimalMath.unit(), block.timestamp);
 
         OracleSettings memory settings = oracleSettings[currencyKey];
-        require(settings.oracleAddress != address(0), "LnOracleRouter: oracle not set");
+        require(settings.oracleAddress != address(0), "ShumOracleRouter: oracle not set");
 
         if (settings.oracleType == ORACLE_TYPE_CHAINLINK) {
             (, int256 rawAnswer, , uint256 rawUpdateTime, ) = IChainlinkOracle(settings.oracleAddress).latestRoundData();
@@ -231,7 +231,7 @@ contract LnOracleRouter is ShumAdminUpgradeable, IShumPrices {
             price = priceRes.rate;
             updateTime = priceRes.lastUpdatedBase;
         } else {
-            require(false, "LnOracleRouter: unknown oracle type");
+            require(false, "ShumOracleRouter: unknown oracle type");
         }
     }
 

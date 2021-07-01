@@ -5,7 +5,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "./SafeDecimalMath.sol";
-import "./interfaces/ILnPrices.sol";
+import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnAsset.sol";
 import "./interfaces/ILnDebtSystem.sol";
@@ -22,7 +22,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
     ILnAsset private lUSDToken; // this contract need
 
     ILnDebtSystem private debtSystem;
-    ILnPrices private priceGetter;
+    IShumPrices private priceGetter;
     ILnCollateralSystem private collaterSys;
     ILnConfig private mConfig;
     address private liquidation;
@@ -53,7 +53,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
     }
 
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
-        priceGetter = ILnPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
+        priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
         debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         address payable collateralAddress =
             payable(_addressStorage.getAddressWithRequire("LnCollateralSystem", "LnCollateralSystem address not valid"));

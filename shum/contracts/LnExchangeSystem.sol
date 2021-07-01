@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnAsset.sol";
 import "./interfaces/ILnAddressStorage.sol";
-import "./interfaces/ILnPrices.sol";
+import "./interfaces/IShumPrices.sol";
 import "./interfaces/ILnConfig.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
@@ -54,7 +54,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
     }
 
     ILnAddressStorage mAssets;
-    ILnPrices mPrices;
+    IShumPrices mPrices;
     ILnConfig mConfig;
     address mRewardSys;
     address foundationFeeHolder;
@@ -80,7 +80,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
 
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
         mAssets = ILnAddressStorage(_addressStorage.getAddressWithRequire(ASSETS_KEY, ""));
-        mPrices = ILnPrices(_addressStorage.getAddressWithRequire(PRICES_KEY, ""));
+        mPrices = IShumPrices(_addressStorage.getAddressWithRequire(PRICES_KEY, ""));
         mConfig = ILnConfig(_addressStorage.getAddressWithRequire(CONFIG_KEY, ""));
         mRewardSys = _addressStorage.getAddressWithRequire(REWARD_SYS_KEY, "");
 

@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "./SafeDecimalMath.sol";
-import "./interfaces/ILnPrices.sol";
+import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnBuildBurnSystem.sol";
 import "./interfaces/ILnDebtSystem.sol";
@@ -25,7 +25,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
 
     // -------------------------------------------------------
     // need set before system running value.
-    ILnPrices public priceGetter;
+    IShumPrices public priceGetter;
     ILnDebtSystem public debtSystem;
     ILnConfig public mConfig;
     ILnRewardLocker public mRewardLocker;
@@ -123,7 +123,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
 
     // ------------------ system config ----------------------
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
-        priceGetter = ILnPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
+        priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
         debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         mConfig = ILnConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
         mRewardLocker = ILnRewardLocker(

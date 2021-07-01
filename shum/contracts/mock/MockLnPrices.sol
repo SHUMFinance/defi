@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "../interfaces/ILnPrices.sol";
+import "../interfaces/IShumPrices.sol";
 import "../SafeDecimalMath.sol";
 
-contract MockLnPrices is ILnPrices {
+contract MockLnPrices is IShumPrices {
     using SafeDecimalMath for uint256;
 
     struct PriceData {
