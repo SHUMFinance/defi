@@ -5,7 +5,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
 import "./LnAddressCache.sol";
-import "./interfaces/ILnAccessControl.sol";
+import "./interfaces/IShumAccessControl.sol";
 import "./interfaces/ILnAssetSystem.sol";
 
 contract LnDebtSystem is ShumAdminUpgradeable, LnAddressCache {
@@ -14,7 +14,7 @@ contract LnDebtSystem is ShumAdminUpgradeable, LnAddressCache {
 
     // -------------------------------------------------------
     // need set before system running value.
-    ILnAccessControl private accessCtrl;
+    IShumAccessControl private accessCtrl;
     ILnAssetSystem private assetSys;
     // -------------------------------------------------------
     struct DebtData {
@@ -44,7 +44,7 @@ contract LnDebtSystem is ShumAdminUpgradeable, LnAddressCache {
 
     // ------------------ system config ----------------------
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
-        accessCtrl = ILnAccessControl(
+        accessCtrl = IShumAccessControl(
             _addressStorage.getAddressWithRequire("LnAccessControl", "LnAccessControl address not valid")
         );
         assetSys = ILnAssetSystem(_addressStorage.getAddressWithRequire("LnAssetSystem", "LnAssetSystem address not valid"));

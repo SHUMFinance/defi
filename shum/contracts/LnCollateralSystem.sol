@@ -13,7 +13,7 @@ import "./LnAddressCache.sol";
 import "./interfaces/ILnBuildBurnSystem.sol";
 import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/ILnConfig.sol";
-import "./interfaces/ILnRewardLocker.sol";
+import "./interfaces/IShumRewardLocker.sol";
 
 // Simple mortgage
 // When redeeming, it needs a good debt ratio to redeem, 
@@ -28,7 +28,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
     IShumPrices public priceGetter;
     ILnDebtSystem public debtSystem;
     ILnConfig public mConfig;
-    ILnRewardLocker public mRewardLocker;
+    IShumRewardLocker public mRewardLocker;
 
     bytes32 public constant Currency_ETH = "ETH";
     bytes32 public constant Currency_LINA = "LINA";
@@ -126,7 +126,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
         debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         mConfig = ILnConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
-        mRewardLocker = ILnRewardLocker(
+        mRewardLocker = IShumRewardLocker(
             _addressStorage.getAddressWithRequire("LnRewardLocker", "LnRewardLocker address not valid")
         );
         buildBurnSystem = ILnBuildBurnSystem(

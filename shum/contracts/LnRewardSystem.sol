@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/cryptography/ECDSAUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "./interfaces/ILnCollateralSystem.sol";
-import "./interfaces/ILnRewardLocker.sol";
+import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
 /**
@@ -33,7 +33,7 @@ contract LnRewardSystem is ShumAdminUpgradeable {
 
     IERC20Upgradeable public lusd;
     ILnCollateralSystem public collateralSystem;
-    ILnRewardLocker public rewardLocker;
+    IShumRewardLocker public rewardLocker;
 
     bytes32 public DOMAIN_SEPARATOR; // For EIP-712
 
@@ -86,7 +86,7 @@ contract LnRewardSystem is ShumAdminUpgradeable {
         );
         lusd = IERC20Upgradeable(_lusdAddress);
         collateralSystem = ILnCollateralSystem(_collateralSystemAddress);
-        rewardLocker = ILnRewardLocker(_rewardLockerAddress);
+        rewardLocker = IShumRewardLocker(_rewardLockerAddress);
 
         // While we could in-theory calculate the EIP-712 domain separator off-chain, doing
         // it on-chain simplifies deployment and the cost here is one-off and acceptable.
@@ -147,7 +147,7 @@ contract LnRewardSystem is ShumAdminUpgradeable {
         require(_rewardLockerAddress != address(rewardLocker), "LnRewardSystem: address not changed");
 
         address oldAddress = address(rewardLocker);
-        rewardLocker = ILnRewardLocker(_rewardLockerAddress);
+        rewardLocker = IShumRewardLocker(_rewardLockerAddress);
 
         emit RewardLockerAddressChanged(oldAddress, address(rewardLocker));
     }

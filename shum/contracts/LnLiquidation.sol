@@ -8,7 +8,7 @@ import "./interfaces/ILnCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/IShumPrices.sol";
-import "./interfaces/ILnRewardLocker.sol";
+import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
@@ -80,7 +80,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
     ILnConfig public lnConfig;
     ILnDebtSystem public lnDebtSystem;
     IShumPrices public lnPrices;
-    ILnRewardLocker public lnRewardLocker;
+    IShumRewardLocker public lnRewardLocker;
 
     mapping(address => UndercollateralizationMark) public undercollateralizationMarks;
 
@@ -108,7 +108,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
         ILnConfig _lnConfig,
         ILnDebtSystem _lnDebtSystem,
         IShumPrices _lnPrices,
-        ILnRewardLocker _lnRewardLocker,
+        IShumRewardLocker _lnRewardLocker,
         address _admin
     ) public initializer {
         __ShumAdminUpgradeable_init(_admin);

@@ -2,7 +2,7 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "./interfaces/ILnAccessControl.sol";
+import "./interfaces/IShumAccessControl.sol";
 import "./LnAddressCache.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
@@ -13,7 +13,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
  */
 contract LnAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, LnAddressCache {
     bytes32 mKeyName;
-    ILnAccessControl accessCtrl;
+    IShumAccessControl accessCtrl;
 
     bytes32 private constant ROLE_ISSUE_ASSET = "ISSUE_ASSET";
     bytes32 private constant ROLE_BURN_ASSET = "BURN_ASSET";
@@ -51,7 +51,7 @@ contract LnAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, LnAddress
     }
 
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
-        accessCtrl = ILnAccessControl(
+        accessCtrl = IShumAccessControl(
             _addressStorage.getAddressWithRequire("LnAccessControl", "LnAccessControl address not valid")
         );
 
