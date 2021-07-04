@@ -9,7 +9,7 @@ import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnAsset.sol";
 import "./interfaces/ILnDebtSystem.sol";
-import "./interfaces/ILnCollateralSystem.sol";
+import "./interfaces/IShumCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 
 // Calculate the relevant mortgage rate according to the mortgage assets of lncolateralsystem，buildable lusd
@@ -23,7 +23,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
 
     ILnDebtSystem private debtSystem;
     IShumPrices private priceGetter;
-    ILnCollateralSystem private collaterSys;
+    IShumCollateralSystem private collaterSys;
     ILnConfig private mConfig;
     address private liquidation;
 
@@ -57,7 +57,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
         debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         address payable collateralAddress =
             payable(_addressStorage.getAddressWithRequire("LnCollateralSystem", "LnCollateralSystem address not valid"));
-        collaterSys = ILnCollateralSystem(collateralAddress);
+        collaterSys = IShumCollateralSystem(collateralAddress);
         mConfig = ILnConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
         liquidation = _addressStorage.getAddressWithRequire("LnLiquidation", "LnLiquidation address not valid");
 

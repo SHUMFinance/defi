@@ -14,7 +14,7 @@ import IShumCollateralSystem from "../artifacts/contracts/interfaces/IShumCollat
 
 use(waffle.solidity);
 
-describe("LnRewardSystem", function () {
+describe("ShumRewardSystem", function () {
   let deployer: SignerWithAddress,
     admin: SignerWithAddress,
     alice: SignerWithAddress,
@@ -24,7 +24,7 @@ describe("LnRewardSystem", function () {
   let lusd: Contract,
     lnCollateralSystem: MockContract,
     lnRewardLocker: Contract,
-    lnRewardSystem: Contract;
+    shumRewardSystem: Contract;
 
   let aliceSignaturePeriod1: string;
 
@@ -51,7 +51,7 @@ describe("LnRewardSystem", function () {
       name: "Linear",
       version: "1",
       chainId: (await ethers.provider.getNetwork()).chainId,
-      verifyingContract: lnRewardSystem.address,
+      verifyingContract: shumRewardSystem.address,
     };
 
     const types = {
@@ -83,7 +83,7 @@ describe("LnRewardSystem", function () {
     const MockLnRewardLocker = await ethers.getContractFactory(
       "MockLnRewardLocker"
     );
-    const LnRewardSystem = await ethers.getContractFactory("LnRewardSystem");
+    const ShumRewardSystem = await ethers.getContractFactory("ShumRewardSystem");
 
     firstPeriodStartTime = (await getBlockDateTime(ethers.provider)).plus({
       days: 1,
@@ -102,8 +102,8 @@ describe("LnRewardSystem", function () {
 
     lnRewardLocker = await MockLnRewardLocker.deploy();
 
-    lnRewardSystem = await LnRewardSystem.deploy();
-    await lnRewardSystem.connect(deployer).__LnRewardSystem_init(
+    shumRewardSystem = await ShumRewardSystem.deploy();
+    await shumRewardSystem.connect(deployer).__ShumRewardSystem_init(
       firstPeriodStartTime.toSeconds(), // _firstPeriodStartTime
       rewardSigner.address, // _rewardSigner
       lusd.address, // _lusdAddress
@@ -112,10 +112,10 @@ describe("LnRewardSystem", function () {
       admin.address // _admin
     );
 
-    // LnRewardSystem holds 1,000,000 lUSD to start
+    // ShumRewardSystem holds 1,000,000 lUSD to start
     await lusd
       .connect(deployer)
-      .mint(lnRewardSystem.address, expandTo18Decimals(1_000_000));
+      .mint(shumRewardSystem.address, expandTo18Decimals(1_000_000));
 
     // Period 1, 100 staking reward, 100 fee reward
     aliceSignaturePeriod1 = await createSignature(
@@ -128,31 +128,31 @@ describe("LnRewardSystem", function () {
   });
 
   it("only admin can change signer", async () => {
-    expect(await lnRewardSystem.rewardSigner()).to.equal(rewardSigner.address);
+    expect(await shumRewardSystem.rewardSigner()).to.equal(rewardSigner.address);
 
     await expect(
-      lnRewardSystem.connect(alice).setRewardSigner(alice.address)
+      shumRewardSystem.connect(alice).setRewardSigner(alice.address)
     ).to.revertedWith(
-      "LnAdminUpgradeable: only the contract admin can perform this action"
+      "ShumAdminUpgradeable: only the contract admin can perform this action"
     );
 
-    await lnRewardSystem.connect(admin).setRewardSigner(alice.address);
+    await shumRewardSystem.connect(admin).setRewardSigner(alice.address);
 
-    expect(await lnRewardSystem.rewardSigner()).to.equal(alice.address);
+    expect(await shumRewardSystem.rewardSigner()).to.equal(alice.address);
   });
 
   it("can claim reward with valid signature", async () => {
     await setNextBlockTimestamp(ethers.provider, getPeriodEndTime(1));
 
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
     )
-      .to.emit(lnRewardSystem, "RewardClaimed")
+      .to.emit(shumRewardSystem, "RewardClaimed")
       .withArgs(
         alice.address, // recipient
         1, // periodId
@@ -160,7 +160,7 @@ describe("LnRewardSystem", function () {
         expandTo18Decimals(200) // feeReward
       )
       .to.emit(lusd, "Transfer")
-      .withArgs(lnRewardSystem.address, alice.address, expandTo18Decimals(200));
+      .withArgs(shumRewardSystem.address, alice.address, expandTo18Decimals(200));
 
     // Assert staking reward
     const lastAppendRewardCall = await lnRewardLocker.lastAppendRewardCall();
@@ -171,7 +171,7 @@ describe("LnRewardSystem", function () {
     );
 
     // Assert fee reward
-    expect(await lusd.balanceOf(lnRewardSystem.address)).to.equal(
+    expect(await lusd.balanceOf(shumRewardSystem.address)).to.equal(
       expandTo18Decimals(999_800)
     );
     expect(await lusd.balanceOf(alice.address)).to.equal(
@@ -194,43 +194,43 @@ describe("LnRewardSystem", function () {
 
     // Wrong period id
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         2, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: invalid signature");
+    ).to.revertedWith("ShumRewardSystem: invalid signature");
 
     // Wrong staking reward
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(200), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: invalid signature");
+    ).to.revertedWith("ShumRewardSystem: invalid signature");
 
     // Wrong fee reward
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(300), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: invalid signature");
+    ).to.revertedWith("ShumRewardSystem: invalid signature");
 
     // Wrong signer
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         fakeSignature // signature
       )
-    ).to.revertedWith("LnRewardSystem: invalid signature");
+    ).to.revertedWith("ShumRewardSystem: invalid signature");
   });
 
   it("cannot claim reward before period ends", async () => {
@@ -240,26 +240,26 @@ describe("LnRewardSystem", function () {
     );
 
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: period not ended");
+    ).to.revertedWith("ShumRewardSystem: period not ended");
   });
 
   it("cannot claim reward after expiration", async () => {
     await setNextBlockTimestamp(ethers.provider, getPeriodEndTime(3));
 
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: reward expired");
+    ).to.revertedWith("ShumRewardSystem: reward expired");
   });
 
   it("cannot claim reward if target ratio is not met", async () => {
@@ -269,19 +269,19 @@ describe("LnRewardSystem", function () {
     await lnCollateralSystem.mock.IsSatisfyTargetRatio.returns(false);
 
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: below target ratio");
+    ).to.revertedWith("ShumRewardSystem: below target ratio");
   });
 
   it("cannot claim reward multiple times", async () => {
     await setNextBlockTimestamp(ethers.provider, getPeriodEndTime(1));
 
-    await lnRewardSystem.connect(alice).claimReward(
+    await shumRewardSystem.connect(alice).claimReward(
       1, // periodId
       expandTo18Decimals(100), // stakingReward
       expandTo18Decimals(200), // feeReward
@@ -289,12 +289,12 @@ describe("LnRewardSystem", function () {
     );
 
     await expect(
-      lnRewardSystem.connect(alice).claimReward(
+      shumRewardSystem.connect(alice).claimReward(
         1, // periodId
         expandTo18Decimals(100), // stakingReward
         expandTo18Decimals(200), // feeReward
         aliceSignaturePeriod1 // signature
       )
-    ).to.revertedWith("LnRewardSystem: reward already claimed");
+    ).to.revertedWith("ShumRewardSystem: reward already claimed");
   });
 });

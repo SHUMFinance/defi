@@ -4,7 +4,7 @@ pragma solidity ^0.7.6;
 import "@openzeppelin/contracts/math/Math.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "./interfaces/ILnBuildBurnSystem.sol";
-import "./interfaces/ILnCollateralSystem.sol";
+import "./interfaces/IShumCollateralSystem.sol";
 import "./interfaces/ILnConfig.sol";
 import "./interfaces/ILnDebtSystem.sol";
 import "./interfaces/IShumPrices.sol";
@@ -76,7 +76,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
     }
 
     ILnBuildBurnSystem public lnBuildBurnSystem;
-    ILnCollateralSystem public lnCollateralSystem;
+    IShumCollateralSystem public lnCollateralSystem;
     ILnConfig public lnConfig;
     ILnDebtSystem public lnDebtSystem;
     IShumPrices public lnPrices;
@@ -104,7 +104,7 @@ contract LnLiquidation is ShumAdminUpgradeable {
 
     function __LnLiquidation_init(
         ILnBuildBurnSystem _lnBuildBurnSystem,
-        ILnCollateralSystem _lnCollateralSystem,
+        IShumCollateralSystem _lnCollateralSystem,
         ILnConfig _lnConfig,
         ILnDebtSystem _lnDebtSystem,
         IShumPrices _lnPrices,
