@@ -12,7 +12,7 @@ import {
 
 use(waffle.solidity);
 
-describe("LnVaultFixedRewardPool", function () {
+describe("ShumVaultFixedRewardPool", function () {
   let deployer: SignerWithAddress,
     alice: SignerWithAddress,
     bob: SignerWithAddress;
@@ -60,8 +60,8 @@ describe("LnVaultFixedRewardPool", function () {
     [deployer, alice, bob] = await ethers.getSigners();
 
     const MockERC20 = await ethers.getContractFactory("MockERC20");
-    const LnVaultFixedRewardPool = await ethers.getContractFactory(
-      "LnVaultFixedRewardPool"
+    const ShumVaultFixedRewardPool = await ethers.getContractFactory(
+      "ShumVaultFixedRewardPool"
     );
 
     startTime = (await getBlockDateTime(ethers.provider)).plus({ days: 1 });
@@ -75,7 +75,7 @@ describe("LnVaultFixedRewardPool", function () {
       "REWARD" // _symbol
     );
     pool = await upgrades.deployProxy(
-      LnVaultFixedRewardPool,
+      ShumVaultFixedRewardPool,
       [
         startTime.toSeconds(), // _startTime
         expandTo18Decimals(1), // _rewardPerSecond
@@ -83,7 +83,7 @@ describe("LnVaultFixedRewardPool", function () {
         rewardToken.address, // _rewardToken
       ],
       {
-        initializer: "__LnVaultFixedRewardPool_init",
+        initializer: "__ShumVaultFixedRewardPool_init",
       }
     );
 
@@ -111,7 +111,7 @@ describe("LnVaultFixedRewardPool", function () {
     );
     await expect(
       pool.connect(alice).stake(expandTo18Decimals(1))
-    ).to.be.revertedWith("LnVaultFixedRewardPool: pool not started");
+    ).to.be.revertedWith("ShumVaultFixedRewardPool: pool not started");
   });
 
   it("can stake after start time", async () => {

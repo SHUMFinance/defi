@@ -12,7 +12,7 @@ import {
 
 use(waffle.solidity);
 
-describe("LnVaultDynamicInterestPool", function () {
+describe("ShumVaultDynamicInterestPool", function () {
   let deployer: SignerWithAddress,
     alice: SignerWithAddress,
     bob: SignerWithAddress,
@@ -107,8 +107,8 @@ describe("LnVaultDynamicInterestPool", function () {
     [deployer, alice, bob, charlie] = await ethers.getSigners();
 
     const MockERC20 = await ethers.getContractFactory("MockERC20");
-    const LnVaultDynamicInterestPool = await ethers.getContractFactory(
-      "LnVaultDynamicInterestPool"
+    const ShumVaultDynamicInterestPool = await ethers.getContractFactory(
+      "ShumVaultDynamicInterestPool"
     );
 
     startTime = (await getBlockDateTime(ethers.provider)).plus({ days: 1 });
@@ -122,7 +122,7 @@ describe("LnVaultDynamicInterestPool", function () {
       "INTEREST" // _symbol
     );
     pool = await upgrades.deployProxy(
-      LnVaultDynamicInterestPool,
+      ShumVaultDynamicInterestPool,
       [
         startTime.toSeconds(), // _firstPeriodStartTime
         periodDuration.as("seconds"), // _periodDuration
@@ -132,7 +132,7 @@ describe("LnVaultDynamicInterestPool", function () {
         interestToken.address, // _interestToken
       ],
       {
-        initializer: "__LnVaultDynamicInterestPool_init",
+        initializer: "__ShumVaultDynamicInterestPool_init",
       }
     );
 
@@ -158,7 +158,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).subscribe(
         expandTo18Decimals(1_000).add(1) // amount
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: user oversubscribed");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: user oversubscribed");
 
     await pool.connect(alice).subscribe(
       expandTo18Decimals(1_000) // amount
@@ -168,7 +168,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).subscribe(
         1 // amount
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: user oversubscribed");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: user oversubscribed");
   });
 
   it("cannot subscribe more than total subscription limit", async () => {
@@ -183,7 +183,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(charlie).subscribe(
         expandTo18Decimals(500).add(1) // amount
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: total oversubscribed");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: total oversubscribed");
   });
 
   it("amount subscribed before start should earn interest for the first period", async () => {
@@ -242,7 +242,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).withdrawInterest(
         2 // periodId
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: invalid period id");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: invalid period id");
 
     // Interest = 1000 * 3% = 30
     await withdrawInterestWithAssertion(
@@ -420,7 +420,7 @@ describe("LnVaultDynamicInterestPool", function () {
       })
     );
     await expect(pool.connect(alice).withdrawPrincipal()).to.be.revertedWith(
-      "LnVaultDynamicInterestPool: refund still pending"
+      "ShumVaultDynamicInterestPool: refund still pending"
     );
 
     await assertWithdrawablePrincipal(
@@ -467,7 +467,7 @@ describe("LnVaultDynamicInterestPool", function () {
       startTime.plus(periodDuration).minus({ seconds: 1 })
     );
     await expect(pool.connect(alice).withdrawPrincipal()).to.be.revertedWith(
-      "LnVaultDynamicInterestPool: refund still pending"
+      "ShumVaultDynamicInterestPool: refund still pending"
     );
 
     await assertWithdrawablePrincipal(
@@ -516,7 +516,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).withdrawInterest(
         1 // periodId
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: period not ended");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: period not ended");
 
     await assertWithdrawableInterests(
       startTime.plus(periodDuration),
@@ -560,7 +560,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).withdrawInterest(
         1 // periodId
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: interest rate not set");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: interest rate not set");
 
     await pool.connect(deployer).setInterestRate(
       1, // periodId
@@ -616,7 +616,7 @@ describe("LnVaultDynamicInterestPool", function () {
       pool.connect(alice).withdrawInterest(
         2 // periodId
       )
-    ).to.be.revertedWith("LnVaultDynamicInterestPool: invalid period id");
+    ).to.be.revertedWith("ShumVaultDynamicInterestPool: invalid period id");
 
     // Can claim period 2 after claiming period 1
     await withdrawInterestWithAssertion(
