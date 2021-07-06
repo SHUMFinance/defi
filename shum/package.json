@@ -1,17 +1,17 @@
 {
-  "name": "linear-finance-contracts",
+  "name": "shum-finance-contracts",
   "version": "0.0.1",
-  "description": "Smart contracts for the Linear platform",
+  "description": "Smart contracts for the Shum platform",
   "scripts": {
     "format": "prettier --write .",
     "compile": "hardhat compile",
     "test": "hardhat test"
   },
-  "author": "Linear Finance <info@linear.finance>",
+  "author": "Shum Finance <info@Shum.finance>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Linear-finance/linear"
+    "url": "https://github.com/SHUMFinance/defi"
   },
   "dependencies": {},
   "devDependencies": {

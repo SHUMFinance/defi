@@ -1,14 +1,14 @@
-# Linear Finance
+# shum Finance
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/Linear-finance/linear) ![GitHub top language](https://img.shields.io/github/languages/top/Linear-finance/linear) [![Test with Hardhat](https://github.com/Linear-finance/linear/actions/workflows/hardhat-test.yml/badge.svg)](https://github.com/Linear-finance/linear/actions/workflows/hardhat-test.yml)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/shum-finance/shum) ![GitHub top language](https://img.shields.io/github/languages/top/shum-finance/shum) [![Test with Hardhat](https://github.com/shum-finance/shum/actions/workflows/hardhat-test.yml/badge.svg)](https://github.com/shum-finance/shum/actions/workflows/hardhat-test.yml)
 
-Smart contracts implemented in Solidity for Linear Finance.
+Smart contracts implemented in Solidity for shum Finance.
 
 ## Introduction
 
-Linear Finance is a cross-chain compatible, decentralized delta-one asset protocol to cost-effectively and instantly create, manage, and trade synthetic assets with unlimited liquidity.
+shum Finance is a cross-chain compatible, decentralized delta-one asset protocol to cost-effectively and instantly create, manage, and trade synthetic assets with unlimited liquidity.
 
-Linear Finance ("Linear") is a non-custodial, cross-chain compatible, delta-one asset protocol. Linear's long term DeFi vision is to increase inclusiveness and democratize access to investment assets (digital and traditional). Tremendous value exists in the ability for investors to easily and quickly invest, save fees, and secure assets at fair market value. Linear combines substantial technical experience from numerous crypto projects with extensive financial experience in exotic and structured assets from traditional global asset management firms to bring to market one of the first DeFi projects built upon Ethereum with cross-chain compatibility. Linear will allow users to build and manage spot or portfolio exposures with a slew of innovative digital and traditional financial products.
+shum Finance ("shum") is a non-custodial, cross-chain compatible, delta-one asset protocol. shum's long term DeFi vision is to increase inclusiveness and democratize access to investment assets (digital and traditional). Tremendous value exists in the ability for investors to easily and quickly invest, save fees, and secure assets at fair market value. shum combines substantial technical experience from numerous crypto projects with extensive financial experience in exotic and structured assets from traditional global asset management firms to bring to market one of the first DeFi projects built upon Ethereum with cross-chain compatibility. shum will allow users to build and manage spot or portfolio exposures with a slew of innovative digital and traditional financial products.
 
 ## Prerequisite
 

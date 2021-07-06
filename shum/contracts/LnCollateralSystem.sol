@@ -10,9 +10,9 @@ import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
-import "./interfaces/ILnBuildBurnSystem.sol";
+import "./interfaces/IShumBuildBurnSystem.sol";
 import "./interfaces/ILnDebtSystem.sol";
-import "./interfaces/ILnConfig.sol";
+import "./interfaces/IShumConfig.sol";
 import "./interfaces/IShumRewardLocker.sol";
 
 // Simple mortgage

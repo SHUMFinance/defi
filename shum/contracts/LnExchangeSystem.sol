@@ -6,7 +6,7 @@ import "./LnAddressCache.sol";
 import "./interfaces/ILnAsset.sol";
 import "./interfaces/ILnAddressStorage.sol";
 import "./interfaces/IShumPrices.sol";
-import "./interfaces/ILnConfig.sol";
+import "./interfaces/IShumConfig.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
