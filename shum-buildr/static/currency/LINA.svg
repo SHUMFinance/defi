@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g>
+                            <g fill="#FFF" transform="translate(-367 -507) translate(120 120) translate(193 333) translate(54 54)">
+                                <circle cx="40" cy="40" r="40"/>
+                            </g>
+                            <g stroke="#DEDDDE" transform="translate(-367 -507) translate(120 120) translate(193 333) translate(54 54)">
+                                <circle cx="40" cy="40" r="39.5"/>
+                            </g>
+                            <g fill-rule="nonzero">
+                                <g>
+                                    <path fill="#C9EAF1" d="M24 0L28.243 4.243 4.243 28.243 0 24z" transform="translate(-367 -507) translate(120 120) translate(193 333) translate(54 54) translate(16 16) translate(2 2)"/>
+                                    <path fill="#76BFEC" d="M31.029 7.029L35.272 11.272 11.272 35.272 7.029 31.029z" transform="translate(-367 -507) translate(120 120) translate(193 333) translate(54 54) translate(16 16) translate(2 2)"/>
+                                    <path fill="#191BA1" d="M38.059 14.059L42.302 18.302 18.302 42.302 14.059 38.059z" transform="translate(-367 -507) translate(120 120) translate(193 333) translate(54 54) translate(16 16) translate(2 2)"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

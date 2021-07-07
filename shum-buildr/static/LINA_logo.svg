@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <linearGradient id="xputhirlba" x1="87.611%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#7EB5FF"/>
+            <stop offset="99.968%" stop-color="#1A38F8"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g>
+                            <g fill="#FFF" transform="translate(-367 -509) translate(120 120) translate(193 333) translate(54 56)">
+                                <circle cx="40" cy="40" r="40"/>
+                            </g>
+                            <g stroke="#E5E5E5" transform="translate(-367 -509) translate(120 120) translate(193 333) translate(54 56)">
+                                <circle cx="40" cy="40" r="39.5"/>
+                            </g>
+                            <g fill="url(#xputhirlba)" fill-rule="nonzero" transform="translate(-367 -509) translate(120 120) translate(193 333) translate(54 56) translate(16 16)">
+                                <path d="M12 8.077c2.149-.256 3.728.126 4.738 1.145 1.01 1.02 1.529 2.177 1.558 3.47v27.28c-1.734.136-3.203-.217-4.41-1.06-1.205-.843-1.834-2.053-1.886-3.63zm9.724 0c2.15-.256 3.728.126 4.738 1.145 1.01 1.02 1.529 2.177 1.558 3.47v27.28c-1.733.136-3.203-.217-4.409-1.06-1.206-.843-1.835-2.053-1.887-3.63zm9.724 0c2.15-.256 3.729.126 4.738 1.145 1.01 1.02 1.529 2.177 1.558 3.47v27.28c-1.733.136-3.203-.217-4.409-1.06-1.206-.843-1.835-2.053-1.887-3.63z" transform="rotate(-135 24.872 24)"/>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>1AA3A64F-BE61-4F9D-9AFE-71DF181F7DBF</title>
+    <g id="🕹-Component" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Market-Icon" transform="translate(-586.000000, -748.000000)">
+            <g id="Icon/Indicies/JP---Inactive" transform="translate(586.000000, 748.000000)">
+                <g id="Setup/Button/Filled---Grey" fill="#F6F5F6">
+                    <circle id="Oval" cx="12" cy="12" r="12"></circle>
+                </g>
+                <path d="M12,6.66666667 C14.9455187,6.66666667 17.3333333,9.05448133 17.3333333,12 C17.3333333,14.9455187 14.9455187,17.3333333 12,17.3333333 C9.05448133,17.3333333 6.66666667,14.9455187 6.66666667,12 C6.66666667,9.05448133 9.05448133,6.66666667 12,6.66666667 Z" id="Path" fill="#DEDDDE"></path>
+            </g>
+        </g>
+    </g>
+</svg>

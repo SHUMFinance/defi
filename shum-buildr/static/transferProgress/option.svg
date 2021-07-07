@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g stroke="#1A38F8" transform="translate(-377 -755) translate(377 755) translate(2 2)">
+                    <circle cx="10" cy="10" r="9.5"/>
+                </g>
+                <text fill="#1A38F8" font-family="Gilroy-Medium, Gilroy" font-size="12" font-weight="400" transform="translate(-377 -755) translate(377 755)">
+                    <tspan x="9" y="16">?</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

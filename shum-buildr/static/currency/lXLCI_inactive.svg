@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g fill="#F6F5F6" transform="translate(-434 -940) translate(434 940)">
+                    <circle cx="12" cy="12" r="12"/>
+                </g>
+                <g fill="#BABABA">
+                    <path d="M2.449 3.6l5.218 7.774-1.864.01-1.81-2.633-1.812 2.632H.3l2.719-4.052L.555 3.6h1.894zm8.015.004v6.262h3.602v1.425h-5.46V3.604h1.858zM7.504 3.6L5.51 6.566l-.989-1.41L5.601 3.6h1.903z" transform="translate(-434 -940) translate(434 940) translate(4.8 4.8)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

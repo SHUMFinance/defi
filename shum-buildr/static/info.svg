@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="Icon/Tip-Copy-3">
+    <g id="Setup/Icon-Button/Outline">
+      <path d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" id="Oval" fill="#1a38f8" stroke="none" />
+    </g>
+    <path d="M1.5 0.75C1.5 1.16421 1.16421 1.5 0.75 1.5C0.335786 1.5 0 1.16421 0 0.75C0 0.335786 0.335786 0 0.75 0C1.16421 0 1.5 0.335786 1.5 0.75ZM1.49495 3.66253C1.45163 3.28953 1.13463 3 0.75 3C0.335786 3 0 3.33579 0 3.75L0 8.46278L0.0050458 8.55025C0.0483696 8.92325 0.365373 9.21278 0.75 9.21278C1.16421 9.21278 1.5 8.877 1.5 8.46278L1.5 3.75L1.49495 3.66253Z" transform="translate(8.25 4.5)" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="Logo/LNR-Filled-Copy-2">
+    <g id="Setup/Icon-Button/Outline">
+      <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" id="Oval" fill="#FFFFFF" stroke="none" />
+    </g>
+    <g id="Logo/Crypto/ETH" transform="translate(8 8)">
+      <path d="M0 10L5.96745 0L11.9349 10L5.96745 13.6539L0 10ZM6 15.0893L0.670809 12L6 19.2889L11.1536 12L6 15.0893Z" transform="translate(6 2)" id="Combined-Shape" fill="#3C3A3E" fill-rule="evenodd" stroke="none" />
+    </g>
+    <g id="Setup/Icon-Button/Outline-Copy" />
+  </g>
+</svg>

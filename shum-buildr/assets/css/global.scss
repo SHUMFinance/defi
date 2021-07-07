@@ -1,0 +1,165 @@
+//引入主题文件
+//Import theme doc
+@import "~/assets/theme/light";
+@import "~/assets/theme/dark";
+
+//滚动条样式
+//Import scroll bar
+@import "./scrollbar";
+
+//全局动画时间
+//Animation for all global pages
+$animete-time: 0.2s;
+
+$max-phone-width: 414px; //phone最大宽度
+$min-ipad-width: 768px; //ipad最小宽度
+$max-ipad-width: 1024px; //ipad最大宽度
+$size1080p-width: 1920px; //1080p宽度
+$size1080p1-width: 1921px; //1080p宽度
+$size2k-width: 2560px; //2k宽度
+$size2kp1-width: 2561px; //2k宽度
+$size4k-width: 3840px; //4k宽度
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+$mainColor: #1b05a1;
+$mainTextColor: #5a575c;
+$secondaryTextColor: #c6c4c7;
+$lightBlue: #f1f7ff;
+
+//全局poptip样式
+.globalInfoStyle.ivu-tooltip {
+    line-height: 1;
+    .ivu-tooltip-rel {
+        transition: $animete-time linear;
+        line-height: 1;
+
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .ivu-tooltip-popper {
+        &[x-placement="top"] {
+            .ivu-tooltip-arrow {
+                border-right: 1px solid #1a38f8;
+                border-bottom: 1px solid #1a38f8;
+            }
+        }
+
+        &[x-placement^="bottom"] {
+            .ivu-tooltip-arrow {
+                border-left: 1px solid #1a38f8;
+                border-top: 1px solid #1a38f8;
+            }
+        }
+
+        &[x-placement="left"] {
+            .ivu-tooltip-arrow {
+                border-top: 1px solid #1a38f8;
+                border-right: 1px solid #1a38f8;
+            }
+        }
+
+        &[x-placement^="right"] {
+            .ivu-tooltip-arrow {
+                border-left: 1px solid #1a38f8;
+                border-bottom: 1px solid #1a38f8;
+            }
+        }
+
+        .ivu-tooltip-arrow {
+            transform: rotate(45deg);
+            width: 10px;
+            height: 10px;
+            background: white;
+            border: none;
+        }
+
+        .ivu-tooltip-inner {
+            width: 100%;
+            background-color: #fff;
+            font-family: Gilroy-Medium;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 500;
+            color: #5a575c;
+            padding: 10px 16px;
+            border: 1px solid #1a38f8;
+            box-shadow: 0 2px 12px 0 #deddde;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: left;
+            word-break: keep-all;
+            white-space: break-spaces;
+        }
+    }
+
+    &.action {
+        .ivu-tooltip-popper {
+            .ivu-tooltip-arrow {
+                border-color: #e5e5e5;
+            }
+
+            .ivu-tooltip-inner {
+                border-color: #e5e5e5;
+                box-shadow: 0 2px 6px 0 #deddde;
+                text-transform: none;
+                white-space: nowrap;
+                padding: 15px 16px;
+
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .tipTitle {
+                    font-family: Gilroy-Bold;
+                    font-size: 12px;
+                    font-weight: bold;
+                    font-stretch: normal;
+                    font-style: normal;
+                    letter-spacing: normal;
+                    text-align: center;
+                    color: #5a575c;
+                }
+
+                .tipDesc {
+                    font-family: Gilroy-Medium;
+                    font-size: 12px;
+                    font-weight: 500;
+                    font-stretch: normal;
+                    font-style: normal;
+                    letter-spacing: normal;
+                    text-align: center;
+                    color: #99999a;
+                }
+            }
+        }
+    }
+}
+
+.ivu-spin-fullscreen {
+    z-index: 10000 !important;
+}
+
+.vertical-center-modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ivu-modal{
+        top: 0;
+    }
+}

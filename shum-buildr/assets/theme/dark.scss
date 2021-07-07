@@ -1,0 +1,29 @@
+//暗色主题
+//Preparation for dark theme
+$darkBackgroundColor: #000; //背景色
+$darkBackgroundDeepColor: #000; //深色背景
+$darkFontColor: #fff; //字体色
+$darkBorderColor: #000; //边框色
+$darkBorderLightColor: #000; //边框浅色
+$darkBorderDeepColor: #000; //边框深色
+$darkButtonColor: #000; //按钮色
+$darkButtonHoverColor: #000; //按钮热点色
+
+.dark {
+    * {
+        transition: 0.2s linear;
+    }
+}
+
+//导出变量,在js中使用
+//Export for js
+:export {
+    darkBackgroundColor: $darkBackgroundColor;
+    darkBackgroundDeepColor: $darkBackgroundDeepColor;
+    darkFontColor: $darkFontColor;
+    darkBorderColor: $darkBorderColor;
+    darkBorderLightColor: $darkBorderLightColor;
+    darkBorderDeepColor: $darkBorderDeepColor;
+    darkButtonColor: $darkButtonColor;
+    darkButtonHoverColor: $darkButtonHoverColor;
+}

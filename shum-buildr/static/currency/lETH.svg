@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2CB1D762-FEE6-4A9E-92A3-3B18D3D6A3ED</title>
+    <g id="🕹-Component" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Market-Icon" transform="translate(-180.000000, -388.000000)">
+            <g id="Icon/Crypto/ETH-Outlined" transform="translate(180.000000, 388.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="12" cy="12" r="12"></circle>
+                <g id="Setup/Button/Outline---Grey" stroke="#DEDDDE">
+                    <circle id="Oval" cx="12" cy="12" r="11.5"></circle>
+                </g>
+                <g id="Logo/Crypto/ETH" transform="translate(4.800000, 4.800000)" fill="#3C3A3E">
+                    <path d="M10.538859,8.6654278 L7.3327139,13.2 L4.01732301,8.6654278 L7.3327139,10.5873367 L10.538859,8.6654278 Z M7.3124641,1.2 L11.0249282,7.42118984 L7.3124641,9.69435528 L3.6,7.42118984 L7.3124641,1.2 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

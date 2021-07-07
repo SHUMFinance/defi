@@ -1,0 +1,82 @@
+//所有div滚动条样式
+//CSS for all div scroll bar
+html,
+body,
+div {
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        transition: 5s ease;
+    }
+}
+
+html,
+body,
+div {
+    &::-webkit-scrollbar-track {
+        background: #efefef;
+        border-radius: 2px;
+    }
+}
+
+html,
+body,
+div {
+    &::-webkit-scrollbar-thumb {
+        background: #bfbfbf;
+        border-radius: 10px;
+    }
+}
+
+html,
+body,
+div {
+    &::-webkit-scrollbar-thumb:hover {
+        background: #afafaf;
+    }
+}
+
+html,
+body,
+div {
+    &::-webkit-scrollbar-corner {
+        background: #efefef;
+    }
+}
+//所有div滚动条样式
+
+.isMobile {
+    div {
+        &::-webkit-scrollbar {
+            width: 4.5px;
+            height: 4.5px;
+            transition: 5s ease;
+        }
+    }
+
+    div {
+        &::-webkit-scrollbar-track {
+            background: rgba(white,0);
+            border-radius: 2px;
+        }
+    }
+
+    div {
+        &::-webkit-scrollbar-thumb {
+            background: #e5e5e5;
+            border-radius: 4.5px;
+        }
+    }
+
+    div {
+        &::-webkit-scrollbar-thumb:hover {
+            background: #d4d4d4;
+        }
+    }
+
+    div {
+        &::-webkit-scrollbar-corner {
+            background: rgba(white,0);
+        }
+    }
+}

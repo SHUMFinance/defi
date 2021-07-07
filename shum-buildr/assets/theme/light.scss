@@ -1,0 +1,29 @@
+//亮色主题
+//Light theme setup
+$lightBackgroundColor: #fff; //背景色
+$lightBackgroundDeepColor: #fff; //深色背景
+$lightFontColor: #000; //字体色
+$lightBorderColor: #fff; //边框色
+$lightBorderLightColor: #fff; //边框浅色
+$lightBorderDeepColor: #fff; //边框深色
+$lightButtonColor: #000; //按钮色
+$lightButtonHoverColor: #fff; //按钮热点色
+
+.light {
+    * {
+        transition: all 0.2s linear;
+    }
+}
+
+//导出变量,在js中使用
+//Export for js
+:export {
+    lightBackgroundColor: $lightBackgroundColor;
+    lightBackgroundDeepColor: $lightBackgroundDeepColor;
+    lightFontColor: $lightFontColor;
+    lightBorderColor: $lightBorderColor;
+    lightBorderLightColor: $lightBorderLightColor;
+    lightBorderDeepColor: $lightBorderDeepColor;
+    lightButtonColor: $lightButtonColor;
+    lightButtonHoverColor: $lightButtonHoverColor;
+}
