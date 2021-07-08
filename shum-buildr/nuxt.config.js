@@ -15,7 +15,7 @@ module.exports = {
      ** Headers of the page
      */
     head: {
-        title: "Linear | Buildr",
+        title: "Shum | Buildr",
         meta: [
             { charset: "utf-8" },
             {

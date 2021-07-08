@@ -1,7 +1,7 @@
 {
-  "name": "linear-buildr",
+  "name": "shum-buildr",
   "version": "1.0.0",
-  "description": "linear-buildr",
+  "description": "shum-buildr",
   "author": "liquefy",
   "private": true,
   "scripts": {
