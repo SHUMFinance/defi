@@ -11,7 +11,7 @@ import "./SafeDecimalMath.sol";
 import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/IShumBuildBurnSystem.sol";
-import "./interfaces/ILnDebtSystem.sol";
+import "./interfaces/IShumDebtSystem.sol";
 import "./interfaces/IShumConfig.sol";
 import "./interfaces/IShumRewardLocker.sol";
 
@@ -26,8 +26,8 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
     // -------------------------------------------------------
     // need set before system running value.
     IShumPrices public priceGetter;
-    ILnDebtSystem public debtSystem;
-    ILnConfig public mConfig;
+    IShumDebtSystem public debtSystem;
+    IShumConfig public mConfig;
     IShumRewardLocker public mRewardLocker;
 
     bytes32 public constant Currency_ETH = "ETH";
@@ -54,7 +54,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
     mapping(address => mapping(bytes32 => CollateralData)) public userCollateralData;
 
     // State variables added by upgrades
-    ILnBuildBurnSystem public buildBurnSystem;
+    IShumBuildBurnSystem public buildBurnSystem;
     address public liquidation;
 
     bytes32 private constant BUILD_RATIO_KEY = "BuildRatio";
@@ -124,12 +124,12 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
     // ------------------ system config ----------------------
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
-        debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
-        mConfig = ILnConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
+        debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
+        mConfig = IShumConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
         mRewardLocker = IShumRewardLocker(
             _addressStorage.getAddressWithRequire("LnRewardLocker", "LnRewardLocker address not valid")
         );
-        buildBurnSystem = ILnBuildBurnSystem(
+        buildBurnSystem = IShumBuildBurnSystem(
             _addressStorage.getAddressWithRequire("LnBuildBurnSystem", "LnBuildBurnSystem address not valid")
         );
         liquidation = _addressStorage.getAddressWithRequire("LnLiquidation", "LnLiquidation address not valid");

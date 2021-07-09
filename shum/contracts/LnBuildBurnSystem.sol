@@ -8,9 +8,9 @@ import "./SafeDecimalMath.sol";
 import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/ILnAsset.sol";
-import "./interfaces/ILnDebtSystem.sol";
+import "./interfaces/IShumDebtSystem.sol";
 import "./interfaces/IShumCollateralSystem.sol";
-import "./interfaces/ILnConfig.sol";
+import "./interfaces/IShumConfig.sol";
 
 // Calculate the relevant mortgage rate according to the mortgage assets of lncolateralsystem，buildable lusd
 contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddressCache {
@@ -21,10 +21,10 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
     // need set before system running value.
     ILnAsset private lUSDToken; // this contract need
 
-    ILnDebtSystem private debtSystem;
+    IShumDebtSystem private debtSystem;
     IShumPrices private priceGetter;
     IShumCollateralSystem private collaterSys;
-    ILnConfig private mConfig;
+    IShumConfig private mConfig;
     address private liquidation;
 
     modifier onlyCollaterSys {
@@ -54,11 +54,11 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
 
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
-        debtSystem = ILnDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
+        debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         address payable collateralAddress =
             payable(_addressStorage.getAddressWithRequire("LnCollateralSystem", "LnCollateralSystem address not valid"));
         collaterSys = IShumCollateralSystem(collateralAddress);
-        mConfig = ILnConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
+        mConfig = IShumConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
         liquidation = _addressStorage.getAddressWithRequire("LnLiquidation", "LnLiquidation address not valid");
 
         emit CachedAddressUpdated("LnPrices", address(priceGetter));

@@ -55,7 +55,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
 
     ILnAddressStorage mAssets;
     IShumPrices mPrices;
-    ILnConfig mConfig;
+    IShumConfig mConfig;
     address mRewardSys;
     address foundationFeeHolder;
 
@@ -81,7 +81,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
     function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
         mAssets = ILnAddressStorage(_addressStorage.getAddressWithRequire(ASSETS_KEY, ""));
         mPrices = IShumPrices(_addressStorage.getAddressWithRequire(PRICES_KEY, ""));
-        mConfig = ILnConfig(_addressStorage.getAddressWithRequire(CONFIG_KEY, ""));
+        mConfig = IShumConfig(_addressStorage.getAddressWithRequire(CONFIG_KEY, ""));
         mRewardSys = _addressStorage.getAddressWithRequire(REWARD_SYS_KEY, "");
 
         emit CachedAddressUpdated(ASSETS_KEY, address(mAssets));

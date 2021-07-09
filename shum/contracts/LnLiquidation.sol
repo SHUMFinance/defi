@@ -3,10 +3,10 @@ pragma solidity ^0.7.6;
 
 import "@openzeppelin/contracts/math/Math.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
-import "./interfaces/ILnBuildBurnSystem.sol";
+import "./interfaces/IShumBuildBurnSystem.sol";
 import "./interfaces/IShumCollateralSystem.sol";
-import "./interfaces/ILnConfig.sol";
-import "./interfaces/ILnDebtSystem.sol";
+import "./interfaces/IShumConfig.sol";
+import "./interfaces/IShumDebtSystem.sol";
 import "./interfaces/IShumPrices.sol";
 import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
@@ -75,10 +75,10 @@ contract LnLiquidation is ShumAdminUpgradeable {
         uint256 lockedCollateral;
     }
 
-    ILnBuildBurnSystem public lnBuildBurnSystem;
+    IShumBuildBurnSystem public lnBuildBurnSystem;
     IShumCollateralSystem public lnCollateralSystem;
-    ILnConfig public lnConfig;
-    ILnDebtSystem public lnDebtSystem;
+    IShumConfig public lnConfig;
+    IShumDebtSystem public lnDebtSystem;
     IShumPrices public lnPrices;
     IShumRewardLocker public lnRewardLocker;
 
@@ -103,10 +103,10 @@ contract LnLiquidation is ShumAdminUpgradeable {
     }
 
     function __LnLiquidation_init(
-        ILnBuildBurnSystem _lnBuildBurnSystem,
+        IShumBuildBurnSystem _lnBuildBurnSystem,
         IShumCollateralSystem _lnCollateralSystem,
-        ILnConfig _lnConfig,
-        ILnDebtSystem _lnDebtSystem,
+        IShumConfig _lnConfig,
+        IShumDebtSystem _lnDebtSystem,
         IShumPrices _lnPrices,
         IShumRewardLocker _lnRewardLocker,
         address _admin
