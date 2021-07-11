@@ -344,19 +344,19 @@
                     <img class="tokenIcon" src="@/static/LINA_logo.svg" />
                     <div class="box">
                         <div class="tokenItems obtrusive">
-                            <div class="left">LINA</div>
+                            <div class="left">SHUM</div>
                             <div class="right">
                                 <b>{{
                                     isEthereumNetwork
                                         ? walletDetails.avaliableLINA || 0
                                         : walletDetails.amountLINA || 0
                                 }}</b>
-                                LINA
+                                SHUM
                             </div>
                         </div>
                         <div class="tokenItems">
                             <div class="left">
-                                1 LINA = ${{ walletDetails.LINA2USDRate || 0 }}
+                                1 SHUM = ${{ walletDetails.LINA2USDRate || 0 }}
                                 USD
                             </div>
                             <div class="right">
@@ -371,7 +371,7 @@
                         <div class="tokenItems unobtrusive">
                             <div class="left">Available</div>
                             <div class="right">
-                                {{ walletDetails.avaliableLINA || 0 }} LINA
+                                {{ walletDetails.avaliableLINA || 0 }} SHUM
                             </div>
                         </div>
                         <div class="tokenItems unobtrusive">
@@ -381,7 +381,7 @@
                                     N/A
                                 </template>
                                 <template v-else>
-                                    {{ walletDetails.stakedLINA || 0 }} LINA
+                                    {{ walletDetails.stakedLINA || 0 }} SHUM
                                 </template>
                             </div>
                         </div>
@@ -392,7 +392,7 @@
                                     N/A
                                 </template>
                                 <template v-else>
-                                    {{ walletDetails.lockLINA || 0 }} LINA
+                                    {{ walletDetails.lockLINA || 0 }} SHUM
                                 </template>
                             </div>
                         </div>

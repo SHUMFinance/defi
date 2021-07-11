@@ -5,9 +5,9 @@ import {
     isEthereumNetwork,
     isMainnetNetwork,
     SUPPORTED_NETWORKS_MAP
-} from "@/assets/shumLibrary/shumTools/network";
-import { URLS } from "@/assets/shumLibrary/shumTools/constants/urls";
-import { DECIMAL_PRECISION } from "@/assets/shumLibrary/shumTools/constants/process";
+} from "@/assets/linearLibrary/linearTools/network";
+import { URLS } from "@/assets/linearLibrary/linearTools/constants/urls";
+import { DECIMAL_PRECISION } from "@/assets/linearLibrary/linearTools/constants/process";
 
 /**
  * 时间格式化函数, 按照指定格式化字符串格式化传入时间

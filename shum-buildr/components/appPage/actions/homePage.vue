@@ -45,7 +45,7 @@
         </div>
         <div class="title">Welcome to Buildr</div>
         <div class="context">
-            Our native token LINA is staked in our collateral pool to build
+            Our native token Shum is staked in our collateral pool to build
             ℓUSD. The collateral pool enables infinite liquidity and no
             slippage.
         </div>
@@ -55,7 +55,7 @@
                     <img src="@/static/LINA_logo.svg"  />
                 </div>
                 <div class="boxContext">
-                    Buy LINA <br />
+                    Buy Shum <br />
                     on other platform
                 </div>
                 <div
@@ -63,7 +63,7 @@
                     :class="{ isMobile }"
                     @click="!isMobile && btnClick(1)"
                 >
-                    BUY LINA <Icon type="ios-arrow-round-forward" />
+                    BUY Shum <Icon type="ios-arrow-round-forward" />
                 </div>
             </div>
             <div class="boxItem" @click="isMobile && btnClick(2)">
@@ -71,7 +71,7 @@
                     <img src="@/static/currency/lUSD.svg"  />
                 </div>
                 <div class="boxContext">
-                    Stake LINA <br />
+                    Stake Shum <br />
                     Build ℓUSD
                 </div>
                 <div

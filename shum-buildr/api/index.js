@@ -3,7 +3,7 @@ import {
     BLOCKCHAIN_BROWSER_API,
     TOKEN_BRIDGE_API,
     isMainnetNetwork
-} from "@/assets/shumLibrary/shumTools/network";
+} from "@/assets/linearLibrary/linearTools/network";
 
 export default {
     async getReferralCode(wallet) {
