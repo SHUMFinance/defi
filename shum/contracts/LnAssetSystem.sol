@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./interfaces/ILnAsset.sol";
+import "./interfaces/IShumAsset.sol";
 import "./interfaces/IShumPrices.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
@@ -11,14 +11,14 @@ contract LnAssetSystem is LnAddressStorage {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
-    ILnAsset[] public mAssetList; // contract address array 
+    IShumAsset[] public mAssetList; // contract address array 
     mapping(address => bytes32) public mAddress2Names; // addredd and name map
 
     function __LnAssetSystem_init(address _admin) public initializer {
         __LnAddressStorage_init(_admin);
     }
 
-    function addAsset(ILnAsset asset) external onlyAdmin {
+    function addAsset(IShumAsset asset) external onlyAdmin {
         bytes32 name = asset.keyName();
 
         require(mAddrs[name] == address(0), "Asset already exists");

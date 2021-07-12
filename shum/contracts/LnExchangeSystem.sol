@@ -3,7 +3,7 @@ pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./LnAddressCache.sol";
-import "./interfaces/ILnAsset.sol";
+import "./interfaces/IShumAsset.sol";
 import "./interfaces/ILnAddressStorage.sol";
 import "./interfaces/IShumPrices.sol";
 import "./interfaces/IShumConfig.sol";
@@ -140,7 +140,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
         // We don't need the return value here. It's just for preventing entering invalid trades
         mAssets.getAddressWithRequire(destKey, "LnExchangeSystem: dest asset not found");
 
-        ILnAsset source = ILnAsset(mAssets.getAddressWithRequire(sourceKey, "LnExchangeSystem: source asset not found"));
+        IShumAsset source = IShumAsset(mAssets.getAddressWithRequire(sourceKey, "LnExchangeSystem: source asset not found"));
 
         // Only lock up the source amount here. Everything else will be performed in settlement.
         // The `move` method is a special variant of `transferForm` that doesn't require approval.
@@ -180,10 +180,10 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
             "LnExchangeSystem: trade can only be reverted now"
         );
 
-        ILnAsset source =
-            ILnAsset(mAssets.getAddressWithRequire(exchangeEntry.fromCurrency, "LnExchangeSystem: source asset not found"));
-        ILnAsset dest =
-            ILnAsset(mAssets.getAddressWithRequire(exchangeEntry.toCurrency, "LnExchangeSystem: dest asset not found"));
+        IShumAsset source =
+            IShumAsset(mAssets.getAddressWithRequire(exchangeEntry.fromCurrency, "LnExchangeSystem: source asset not found"));
+        IShumAsset dest =
+            IShumAsset(mAssets.getAddressWithRequire(exchangeEntry.toCurrency, "LnExchangeSystem: dest asset not found"));
         uint destAmount = mPrices.exchange(exchangeEntry.fromCurrency, exchangeEntry.fromAmount, exchangeEntry.toCurrency);
 
         // This might cause a transaction to deadlock, but impact would be negligible
@@ -211,8 +211,8 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
             }
         }
 
-        ILnAsset lusd =
-            ILnAsset(mAssets.getAddressWithRequire(mPrices.LUSD(), "LnExchangeSystem: failed to get lUSD address"));
+        IShumAsset lusd =
+            IShumAsset(mAssets.getAddressWithRequire(mPrices.LUSD(), "LnExchangeSystem: failed to get lUSD address"));
 
         if (feeForPoolInUsd > 0) lusd.mint(mRewardSys, feeForPoolInUsd);
         if (foundationSplit > 0) lusd.mint(foundationFeeHolder, foundationSplit);
@@ -233,8 +233,8 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
         require(revertDelay > 0, "LnExchangeSystem: revert delay not set");
         require(block.timestamp > exchangeEntry.timestamp + revertDelay, "LnExchangeSystem: revert delay not passed");
 
-        ILnAsset source =
-            ILnAsset(mAssets.getAddressWithRequire(exchangeEntry.fromCurrency, "LnExchangeSystem: source asset not found"));
+        IShumAsset source =
+            IShumAsset(mAssets.getAddressWithRequire(exchangeEntry.fromCurrency, "LnExchangeSystem: source asset not found"));
 
         // Refund the amount locked
         source.move(address(this), exchangeEntry.fromAddr, exchangeEntry.fromAmount);

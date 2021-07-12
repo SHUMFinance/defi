@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 import "./interfaces/IShumPrices.sol";
 import "./LnAddressCache.sol";
-import "./interfaces/ILnAsset.sol";
+import "./interfaces/IShumAsset.sol";
 import "./interfaces/IShumDebtSystem.sol";
 import "./interfaces/IShumCollateralSystem.sol";
 import "./interfaces/IShumConfig.sol";
@@ -19,7 +19,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
 
     // -------------------------------------------------------
     // need set before system running value.
-    ILnAsset private lUSDToken; // this contract need
+    IShumAsset private lUSDToken; // this contract need
 
     IShumDebtSystem private debtSystem;
     IShumPrices private priceGetter;
@@ -41,7 +41,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
     function __LnBuildBurnSystem_init(address admin, address _lUSDTokenAddr) public initializer {
         __ShumAdminUpgradeable_init(admin);
 
-        lUSDToken = ILnAsset(_lUSDTokenAddr);
+        lUSDToken = IShumAsset(_lUSDTokenAddr);
     }
 
     function setPaused(bool _paused) external onlyAdmin {
@@ -70,7 +70,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
 
     function SetLusdTokenAddress(address _address) public onlyAdmin {
         emit UpdateLusdToken(address(lUSDToken), _address);
-        lUSDToken = ILnAsset(_address);
+        lUSDToken = IShumAsset(_address);
     }
 
     event UpdateLusdToken(address oldAddr, address newAddr);
