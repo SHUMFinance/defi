@@ -50,7 +50,7 @@ contract LnAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, LnAddress
         return mKeyName;
     }
 
-    function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
+    function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
         accessCtrl = IShumAccessControl(
             _addressStorage.getAddressWithRequire("LnAccessControl", "LnAccessControl address not valid")
         );

@@ -4,7 +4,7 @@ pragma solidity ^0.6.12;
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./LnAddressCache.sol";
 import "./interfaces/IShumAsset.sol";
-import "./interfaces/ILnAddressStorage.sol";
+import "./interfaces/IShumAddressStorage.sol";
 import "./interfaces/IShumPrices.sol";
 import "./interfaces/IShumConfig.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
@@ -53,7 +53,7 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
         bytes32 toCurrency;
     }
 
-    ILnAddressStorage mAssets;
+    IShumAddressStorage mAssets;
     IShumPrices mPrices;
     IShumConfig mConfig;
     address mRewardSys;
@@ -78,8 +78,8 @@ contract LnExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
         __ShumAdminUpgradeable_init(_admin);
     }
 
-    function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
-        mAssets = ILnAddressStorage(_addressStorage.getAddressWithRequire(ASSETS_KEY, ""));
+    function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
+        mAssets = IShumAddressStorage(_addressStorage.getAddressWithRequire(ASSETS_KEY, ""));
         mPrices = IShumPrices(_addressStorage.getAddressWithRequire(PRICES_KEY, ""));
         mConfig = IShumConfig(_addressStorage.getAddressWithRequire(CONFIG_KEY, ""));
         mRewardSys = _addressStorage.getAddressWithRequire(REWARD_SYS_KEY, "");

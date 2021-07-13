@@ -122,7 +122,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
     }
 
     // ------------------ system config ----------------------
-    function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
+    function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
         debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         mConfig = IShumConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));

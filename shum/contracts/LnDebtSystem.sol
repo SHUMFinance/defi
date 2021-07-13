@@ -43,7 +43,7 @@ contract LnDebtSystem is ShumAdminUpgradeable, LnAddressCache {
     event PushDebtLog(uint256 index, uint256 newFactor, uint256 timestamp);
 
     // ------------------ system config ----------------------
-    function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
+    function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
         accessCtrl = IShumAccessControl(
             _addressStorage.getAddressWithRequire("LnAccessControl", "LnAccessControl address not valid")
         );

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./interfaces/ILnAddressStorage.sol";
+import "./interfaces/IShumAddressStorage.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
-contract LnAddressStorage is ShumAdminUpgradeable, ILnAddressStorage {
+contract LnAddressStorage is ShumAdminUpgradeable, IShumAddressStorage {
     mapping(bytes32 => address) public mAddrs;
 
     function __LnAddressStorage_init(address _admin) public initializer {

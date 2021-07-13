@@ -52,7 +52,7 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddre
         }
     }
 
-    function updateAddressCache(ILnAddressStorage _addressStorage) public override onlyAdmin {
+    function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("LnPrices", "LnPrices address not valid"));
         debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         address payable collateralAddress =
