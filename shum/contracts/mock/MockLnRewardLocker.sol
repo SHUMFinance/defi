@@ -2,12 +2,12 @@
 pragma solidity ^0.7.6;
 
 /**
- * @title MockLnRewardLocker
+ * @title MockLShumRewardLocker
  *
- * @dev A mock LnRewardLocker contract for testing. We wouldn't need this
+ * @dev A mock LShumRewardLocker contract for testing. We wouldn't need this
  * contract if Hardhat supported Waffle's `calledOnContractWith` on mocks.
  */
-contract MockLnRewardLocker {
+contract MockLShumRewardLocker {
     struct AppendRewardArgs {
         address _user;
         uint256 _amount;

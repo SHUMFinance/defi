@@ -4,7 +4,7 @@ pragma solidity ^0.7.6;
 import "@openzeppelin/contracts-upgradeable/cryptography/ECDSAUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-import "./interfaces/ILnCollateralSystem.sol";
+import "./interfaces/IShumCollateralSystem.sol";
 import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
@@ -32,7 +32,7 @@ contract LnRewardSystem is ShumAdminUpgradeable {
     mapping(address => uint256) public userLastClaimPeriodIds;
 
     IERC20Upgradeable public lusd;
-    ILnCollateralSystem public collateralSystem;
+    IShumCollateralSystem public collateralSystem;
     IShumRewardLocker public rewardLocker;
 
     bytes32 public DOMAIN_SEPARATOR; // For EIP-712
@@ -85,7 +85,7 @@ contract LnRewardSystem is ShumAdminUpgradeable {
             "LnRewardSystem: zero address"
         );
         lusd = IERC20Upgradeable(_lusdAddress);
-        collateralSystem = ILnCollateralSystem(_collateralSystemAddress);
+        collateralSystem = IShumCollateralSystem(_collateralSystemAddress);
         rewardLocker = IShumRewardLocker(_rewardLockerAddress);
 
         // While we could in-theory calculate the EIP-712 domain separator off-chain, doing

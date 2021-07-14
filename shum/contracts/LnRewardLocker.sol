@@ -3,17 +3,17 @@ pragma solidity ^0.7.6;
 
 import "@openzeppelin/contracts-upgradeable/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
-import "./interfaces/ILnAccessControl.sol";
-import "./interfaces/ILnRewardLocker.sol";
+import "./interfaces/IShumAccessControl.sol";
+import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
 /**
- * @title LnRewardLocker
+ * @title LShumRewardLocker
  *
  * @dev A contract for locking LINA rewards. The current version only supports adding rewards.
  * Reward claiming will be added in a later iteration.
  */
-contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
+contract LShumRewardLocker is IShumRewardLocker, ShumAdminUpgradeable {
     using SafeMathUpgradeable for uint256;
 
     event RewardEntryAdded(uint256 entryId, address user, uint256 amount, uint256 unlockTime);
@@ -46,18 +46,18 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
     uint256 public override totalLockedAmount;
 
     address public linaTokenAddr;
-    ILnAccessControl public accessCtrl;
+    IShumAccessControl public accessCtrl;
 
     bytes32 private constant ROLE_LOCK_REWARD = "LOCK_REWARD";
     bytes32 private constant ROLE_MOVE_REWARD = "MOVE_REWARD";
 
     modifier onlyLockRewardRole() {
-        require(accessCtrl.hasRole(ROLE_LOCK_REWARD, msg.sender), "LnRewardLocker: not LOCK_REWARD role");
+        require(accessCtrl.hasRole(ROLE_LOCK_REWARD, msg.sender), "LShumRewardLocker: not LOCK_REWARD role");
         _;
     }
 
     modifier onlyMoveRewardRole() {
-        require(accessCtrl.hasRole(ROLE_MOVE_REWARD, msg.sender), "LnRewardLocker: not MOVE_REWARD role");
+        require(accessCtrl.hasRole(ROLE_MOVE_REWARD, msg.sender), "LShumRewardLocker: not MOVE_REWARD role");
         _;
     }
 
@@ -65,15 +65,15 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
         return lockedAmountByAddresses[user];
     }
 
-    function __LnRewardLocker_init(
+    function __LShumRewardLocker_init(
         address _linaTokenAddr,
-        ILnAccessControl _accessCtrl,
+        IShumAccessControl _accessCtrl,
         address _admin
     ) public initializer {
         __ShumAdminUpgradeable_init(_admin);
 
-        require(_linaTokenAddr != address(0), "LnRewardLocker: zero address");
-        require(address(_accessCtrl) != address(0), "LnRewardLocker: zero address");
+        require(_linaTokenAddr != address(0), "LShumRewardLocker: zero address");
+        require(address(_accessCtrl) != address(0), "LShumRewardLocker: zero address");
 
         linaTokenAddr = _linaTokenAddr;
         accessCtrl = _accessCtrl;
@@ -96,8 +96,8 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
         uint256[] calldata amounts,
         uint256[] calldata unlockTimes
     ) external onlyAdmin {
-        require(users.length > 0, "LnRewardLocker: empty array");
-        require(users.length == amounts.length && amounts.length == unlockTimes.length, "LnRewardLocker: length mismatch");
+        require(users.length > 0, "LShumRewardLocker: empty array");
+        require(users.length == amounts.length && amounts.length == unlockTimes.length, "LShumRewardLocker: length mismatch");
 
         for (uint256 ind = 0; ind < users.length; ind++) {
             _addReward(users[ind], amounts[ind], unlockTimes[ind]);
@@ -129,12 +129,12 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
         uint256 amount,
         uint256 unlockTime
     ) private {
-        require(amount > 0, "LnRewardLocker: zero amount");
+        require(amount > 0, "LShumRewardLocker: zero amount");
 
         uint216 trimmedAmount = uint216(amount);
         uint40 trimmedUnlockTime = uint40(unlockTime);
-        require(uint256(trimmedAmount) == amount, "LnRewardLocker: reward amount overflow");
-        require(uint256(trimmedUnlockTime) == unlockTime, "LnRewardLocker: unlock time overflow");
+        require(uint256(trimmedAmount) == amount, "LShumRewardLocker: reward amount overflow");
+        require(uint256(trimmedUnlockTime) == unlockTime, "LShumRewardLocker: unlock time overflow");
 
         lastRewardEntryId++;
 
@@ -155,7 +155,7 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
     ) private {
         // Check amount and adjust from balance directly
         uint256 totalAmount = amount1.add(amount2);
-        require(totalAmount > 0 && totalAmount <= lockedAmountByAddresses[from], "LnRewardLocker: amount out of range");
+        require(totalAmount > 0 && totalAmount <= lockedAmountByAddresses[from], "LShumRewardLocker: amount out of range");
         lockedAmountByAddresses[from] = lockedAmountByAddresses[from].sub(totalAmount);
 
         uint256 amount1Left = amount1;
@@ -181,7 +181,7 @@ contract LnRewardLocker is ILnRewardLocker, ShumAdminUpgradeable {
         }
 
         // Ensure all amounts are distributed
-        require(amount1Left == 0 && amount2Left == 0, "LnRewardLocker: amount not filled with all entries");
+        require(amount1Left == 0 && amount2Left == 0, "LShumRewardLocker: amount not filled with all entries");
     }
 
     function moveRewardEntry(MoveEntryParams memory params)

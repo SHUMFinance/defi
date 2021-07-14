@@ -127,7 +127,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
         debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("LnDebtSystem", "LnDebtSystem address not valid"));
         mConfig = IShumConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
         mRewardLocker = IShumRewardLocker(
-            _addressStorage.getAddressWithRequire("LnRewardLocker", "LnRewardLocker address not valid")
+            _addressStorage.getAddressWithRequire("LShumRewardLocker", "LShumRewardLocker address not valid")
         );
         buildBurnSystem = IShumBuildBurnSystem(
             _addressStorage.getAddressWithRequire("LnBuildBurnSystem", "LnBuildBurnSystem address not valid")
@@ -137,7 +137,7 @@ contract LnCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, LnAddr
         emit CachedAddressUpdated("LnPrices", address(priceGetter));
         emit CachedAddressUpdated("LnDebtSystem", address(debtSystem));
         emit CachedAddressUpdated("LnConfig", address(mConfig));
-        emit CachedAddressUpdated("LnRewardLocker", address(mRewardLocker));
+        emit CachedAddressUpdated("LShumRewardLocker", address(mRewardLocker));
         emit CachedAddressUpdated("LnBuildBurnSystem", address(buildBurnSystem));
         emit CachedAddressUpdated("LnLiquidation", liquidation);
     }
