@@ -77,7 +77,6 @@ contract LnRewardSystem is ShumAdminUpgradeable {
         // require(block.timestamp < _firstPeriodStartTime + PERIOD_LENGTH, "LnRewardSystem: first period already ended");
 
         firstPeriodStartTime = _firstPeriodStartTime;
-
         _setRewardSigner(_rewardSigner);
 
         require(

@@ -13,7 +13,7 @@ import "./SafeDecimalMath.sol";
 /**
  * @title ShumOracleRouter
  *
- * @dev A contract for providing Linear contracts with access to asset prices from multiple data
+ * @dev A contract for providing shum contracts with access to asset prices from multiple data
  * oracles including Chainlink and Band Protocol.
  */
 contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
