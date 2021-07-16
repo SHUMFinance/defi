@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 import "./interfaces/IShumPrices.sol";
-import "./LnAddressCache.sol";
+import "./interfaces/IShumAddressCache.sol";
 import "./interfaces/IShumAsset.sol";
 import "./interfaces/IShumDebtSystem.sol";
 import "./interfaces/IShumCollateralSystem.sol";
