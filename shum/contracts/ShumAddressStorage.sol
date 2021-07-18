@@ -7,7 +7,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
 contract ShumAddressStorage is ShumAdminUpgradeable, IShumAddressStorage {
     mapping(bytes32 => address) public mAddrs;
 
-    function __ShumAccessControl_init(address _admin) public initializer {
+    function __ShumAddressStorage_init(address _admin) public initializer {
         __ShumAdminUpgradeable_init(_admin);
     }
 

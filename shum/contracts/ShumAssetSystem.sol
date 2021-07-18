@@ -5,9 +5,9 @@ import "./interfaces/IShumAsset.sol";
 import "./interfaces/IShumPrices.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
-import "./interfaces/IShumAddressStorage.sol";
+import "./ShumAddressStorage.sol";
 
-contract ShumAssetSystem is LnAddressStorage {
+contract ShumAssetSystem is ShumAddressStorage {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
@@ -15,7 +15,7 @@ contract ShumAssetSystem is LnAddressStorage {
     mapping(address => bytes32) public mAddress2Names; // addredd and name map
 
     function __ShumAssetSystem_init(address _admin) public initializer {
-        __LnAddressStorage_init(_admin);
+        __ShumAddressStorage_init(_admin);
     }
 
     function addAsset(IShumAsset asset) external onlyAdmin {

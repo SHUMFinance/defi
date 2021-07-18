@@ -2,7 +2,7 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "./IShumAddressCache.sol";
+import "./ShumAddressCache.sol";
 import "./interfaces/IShumAsset.sol";
 import "./interfaces/IShumAddressStorage.sol";
 import "./interfaces/IShumPrices.sol";
@@ -10,7 +10,7 @@ import "./interfaces/IShumConfig.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
-contract ShumExchangeSystem is ShumAdminUpgradeable, LnAddressCache {
+contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 

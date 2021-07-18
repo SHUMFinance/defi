@@ -11,7 +11,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
  *
  * @dev This is an upgradeable version of `LnAsset`.
  */
-contract ShumAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, LnAddressCache {
+contract ShumAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, ShumAddressCache {
     bytes32 mKeyName;
     IShumAccessControl accessCtrl;
 
