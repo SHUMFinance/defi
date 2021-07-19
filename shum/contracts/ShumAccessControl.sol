@@ -14,7 +14,7 @@ contract ShumAccessControl is AccessControlUpgradeable {
     bytes32 public constant ISSUE_ASSET_ROLE = ("ISSUE_ASSET"); //keccak256
     bytes32 public constant BURN_ASSET_ROLE = ("BURN_ASSET");
 
-    bytes32 public constant DEBT_SYSTEM = ("LnDebtSystem");
+    bytes32 public constant DEBT_SYSTEM = ("ShumDebtSystem");
 
     // -------------------------------------------------------
     function __ShumAccessControl_init(address admin) public initializer {

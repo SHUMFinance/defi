@@ -65,7 +65,7 @@ contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
     mapping(uint256 => PendingExchangeEntry) public pendingExchangeEntries;
 
     bytes32 private constant ASSETS_KEY = "LnAssetSystem";
-    bytes32 private constant PRICES_KEY = "LnPrices";
+    bytes32 private constant PRICES_KEY = "ShumPrices";
     bytes32 private constant CONFIG_KEY = "LnConfig";
     bytes32 private constant REWARD_SYS_KEY = "LnRewardSystem";
     bytes32 private constant CONFIG_FEE_SPLIT = "FoundationFeeSplit";

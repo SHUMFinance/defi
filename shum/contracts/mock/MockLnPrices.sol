@@ -4,7 +4,7 @@ pragma solidity ^0.6.12;
 import "../interfaces/IShumPrices.sol";
 import "../SafeDecimalMath.sol";
 
-contract MockLnPrices is IShumPrices {
+contract MockShumPrices is IShumPrices {
     using SafeDecimalMath for uint256;
 
     struct PriceData {
@@ -31,7 +31,7 @@ contract MockLnPrices is IShumPrices {
 
         require(
             !_isUpdateTimeStaled(sourceData.updateTime) && !_isUpdateTimeStaled(destData.updateTime),
-            "MockLnPrices: staled price data"
+            "MockShumPrices: staled price data"
         );
 
         return sourceAmount.multiplyDecimalRound(sourceData.price).divideDecimalRound(destData.price);

@@ -128,9 +128,9 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         lnRewardLocker = _lnRewardLocker;
     }
 
-    function setLnPrices(IShumPrices newLnPrices) external onlyAdmin {
-        require(address(newLnPrices) != address(0), "ShumLiquidation: zero address");
-        lnPrices = newLnPrices;
+    function setShumPrices(IShumPrices newShumPrices) external onlyAdmin {
+        require(address(newShumPrices) != address(0), "ShumLiquidation: zero address");
+        lnPrices = newShumPrices;
     }
 
     function markPositionAsUndercollateralized(address user) external {

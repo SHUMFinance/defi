@@ -59,8 +59,8 @@ contract ShumAssetSystem is ShumAddressStorage {
 
     // check exchange rate invalid condition ? invalid just fail.
     function totalAssetsInUsd() public view returns (uint256 rTotal) {
-        require(mAddrs["LnPrices"] != address(0), "LnPrices address cannot access");
-        IShumPrices priceGetter = IShumPrices(mAddrs["LnPrices"]); //getAddress
+        require(mAddrs["ShumPrices"] != address(0), "ShumPrices address cannot access");
+        IShumPrices priceGetter = IShumPrices(mAddrs["ShumPrices"]); //getAddress
         for (uint256 i = 0; i < mAssetList.length; i++) {
             uint256 exchangeRate = priceGetter.getPrice(mAssetList[i].keyName());
             rTotal = rTotal.add(mAssetList[i].totalSupply().multiplyDecimal(exchangeRate));
