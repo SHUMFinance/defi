@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 /**
  * @title ShumAdminUpgradeable
  *
- * @dev This is an upgradeable version of `LnAdmin` by replacing the constructor with
+ * @dev This is an upgradeable version of `ShumAdmin` by replacing the constructor with
  * an initializer and reserving storage slots.
  */
 contract ShumAdminUpgradeable is Initializable {

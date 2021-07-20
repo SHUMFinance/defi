@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-contract LnAdmin {
+contract ShumAdmin {
     address public admin;
     address public candidate;
 

@@ -9,7 +9,7 @@ import "./upgradeable/ShumAdminUpgradeable.sol";
 /**
  * @title ShumAssetUpgradeable
  *
- * @dev This is an upgradeable version of `LnAsset`.
+ * @dev This is an upgradeable version of `ShumAsset`.
  */
 contract ShumAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, ShumAddressCache {
     bytes32 mKeyName;
@@ -52,10 +52,10 @@ contract ShumAssetUpgradeable is ERC20Upgradeable, ShumAdminUpgradeable, ShumAdd
 
     function updateAddressCache(IShumAddressStorage _addressStorage) public override onlyAdmin {
         accessCtrl = IShumAccessControl(
-            _addressStorage.getAddressWithRequire("LnAccessControl", "LnAccessControl address not valid")
+            _addressStorage.getAddressWithRequire("ShumAccessControl", "ShumAccessControl address not valid")
         );
 
-        emit CachedAddressUpdated("LnAccessControl", address(accessCtrl));
+        emit CachedAddressUpdated("ShumAccessControl", address(accessCtrl));
     }
 
     function mint(address account, uint256 amount) external onlyIssueAssetRole {

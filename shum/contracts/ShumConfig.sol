@@ -3,10 +3,10 @@ pragma solidity ^0.6.12;
 
 import "./upgradeable/ShumAdminUpgradeable.sol";
 
-contract LnConfig is ShumAdminUpgradeable {
+contract ShumConfig is ShumAdminUpgradeable {
     mapping(bytes32 => uint) internal mUintConfig;
 
-    function __LnConfig_init(address _admin) public initializer {
+    function __ShumConfig_init(address _admin) public initializer {
         __ShumAdminUpgradeable_init(_admin);
     }
 

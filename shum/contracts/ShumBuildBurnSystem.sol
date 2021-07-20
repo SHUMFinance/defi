@@ -13,7 +13,7 @@ import "./interfaces/IShumCollateralSystem.sol";
 import "./interfaces/IShumConfig.sol";
 
 // Calculate the relevant mortgage rate according to the mortgage assets of lncolateralsystem，buildable lusd
-contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumAddressCache {
+contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
 
@@ -28,17 +28,17 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumAdd
     address private liquidation;
 
     modifier onlyCollaterSys {
-        require((msg.sender == address(collaterSys)), "LnBuildBurnSystem: not collateral system");
+        require((msg.sender == address(collaterSys)), "ShumBuildBurnSystem: not collateral system");
         _;
     }
 
     modifier onlyLiquidation {
-        require((msg.sender == liquidation), "LnBuildBurnSystem: not liquidation");
+        require((msg.sender == liquidation), "ShumBuildBurnSystem: not liquidation");
         _;
     }
 
     // -------------------------------------------------------
-    function __LnBuildBurnSystem_init(address admin, address _lUSDTokenAddr) public initializer {
+    function __ShumBuildBurnSystem_init(address admin, address _lUSDTokenAddr) public initializer {
         __ShumAdminUpgradeable_init(admin);
 
         lUSDToken = IShumAsset(_lUSDTokenAddr);
@@ -56,16 +56,16 @@ contract LnBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumAdd
         priceGetter = IShumPrices(_addressStorage.getAddressWithRequire("ShumPrices", "ShumPrices address not valid"));
         debtSystem = IShumDebtSystem(_addressStorage.getAddressWithRequire("ShumDebtSystem", "ShumDebtSystem address not valid"));
         address payable collateralAddress =
-            payable(_addressStorage.getAddressWithRequire("LnCollateralSystem", "LnCollateralSystem address not valid"));
+            payable(_addressStorage.getAddressWithRequire("ShumCollateralSystem", "ShumCollateralSystem address not valid"));
         collaterSys = IShumCollateralSystem(collateralAddress);
-        mConfig = IShumConfig(_addressStorage.getAddressWithRequire("LnConfig", "LnConfig address not valid"));
-        liquidation = _addressStorage.getAddressWithRequire("LnLiquidation", "LnLiquidation address not valid");
+        mConfig = IShumConfig(_addressStorage.getAddressWithRequire("ShumConfig", "ShumConfig address not valid"));
+        liquidation = _addressStorage.getAddressWithRequire("ShumLiquidation", "ShumLiquidation address not valid");
 
         emit CachedAddressUpdated("ShumPrices", address(priceGetter));
         emit CachedAddressUpdated("ShumDebtSystem", address(debtSystem));
-        emit CachedAddressUpdated("LnCollateralSystem", address(collaterSys));
-        emit CachedAddressUpdated("LnConfig", address(mConfig));
-        emit CachedAddressUpdated("LnLiquidation", liquidation);
+        emit CachedAddressUpdated("ShumCollateralSystem", address(collaterSys));
+        emit CachedAddressUpdated("ShumConfig", address(mConfig));
+        emit CachedAddressUpdated("ShumLiquidation", liquidation);
     }
 
     function SetLusdTokenAddress(address _address) public onlyAdmin {

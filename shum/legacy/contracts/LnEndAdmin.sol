@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./LnAdmin.sol";
+import "./ShumAdmin.sol";
 
-contract LnEndAdmin {
+contract ShumEndAdmin {
     constructor() public {}
 
     function becomeAdmin(address target) external {
-        LnAdmin(target).becomeAdmin();
+        ShumAdmin(target).becomeAdmin();
     }
 }
