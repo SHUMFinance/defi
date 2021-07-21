@@ -18,7 +18,7 @@
                             </template>
                             <template v-else>
                                 Build ℓUSD and earn staking rewards by staking
-                                LINA.
+                                SHUM.
                             </template>
                         </div>
                         <div class="actionRate" v-if="isBinanceNetwork">
@@ -44,7 +44,7 @@
                                     <img src="@/static/LINA_logo.svg" />
                                 </div>
                                 <div class="itemType">
-                                    <div class="itemTypeTitle">Stake LINA</div>
+                                    <div class="itemTypeTitle">Stake SHUM</div>
                                     <div
                                         class="itemTypeBtn"
                                         :class="{ active: activeItemBtn == 0 }"
@@ -1260,7 +1260,7 @@ export default {
 
                     if (ratioAmount > this.buildData.currentRatio) {
                         //上调抵押率，计算stake lina，lusd不动
-                        //计算达成ratioAmount时，需要再stake多少lina
+                        //计算达成ratioAmount时，需要再stake多少shum
                         let stakeWhenRaisePratio = bnSub(
                             bnDiv(
                                 bnMul(
@@ -1297,7 +1297,7 @@ export default {
                         ratioAmount < this.buildData.currentRatio &&
                         ratioAmount >= this.buildData.targetRatio
                     ) {
-                        //下调抵押率，计算lusd，stake lina不动
+                        //下调抵押率，计算lusd，stake shum不动
                         //下调抵押率至ratioAmount需要生成多少债务
                         let debtWhenFallPratio = bnDiv(
                             bnMul(

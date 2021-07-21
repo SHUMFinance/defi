@@ -390,7 +390,7 @@ export default {
 
             currencyList: [
                 {
-                    name: "LINA",
+                    name: "SHUM",
                     key: "LINA",
                     img: require("@/static/LINA_logo.svg"),
                     balance: 0

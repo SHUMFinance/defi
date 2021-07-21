@@ -28,9 +28,9 @@
                         {{ codeInputErrorMsg }}
                     </div>
 
-                    <div class="contentTitle">Earn LINA with friends</div>
+                    <div class="contentTitle">Earn Shum with friends</div>
                     <div class="contentDesc">
-                        Receive 10 USD worth LINA when a friend adds your code
+                        Receive 10 USD worth Shum when a friend adds your code
                         and completes 10 transactions, up to 1000 quota for
                         phase 1 marketing
                     </div>

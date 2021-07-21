@@ -603,7 +603,7 @@ export default [
   {
     inputs: [
       {
-        internalType: 'contract ILnAddressStorage',
+        internalType: 'contract IShumAddressStorage',
         name: '_addressStorage',
         type: 'address'
       }

@@ -16,11 +16,11 @@
                                 .
                             </template>
                             <template v-else>
-                                Burn ℓUSD to unlock staked LINA
+                                Burn ℓUSD to unlock staked SHUM
                             </template>
                         </div>
                         <div class="actionRate" v-if="isBinanceNetwork">
-                            1 LINA = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
+                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
                         </div>
                         <div
                             class="actionInputItem"
@@ -35,12 +35,12 @@
                                 </div>
                                 <div class="itemType">
                                     <div class="itemTypeTitle">
-                                        Unstake LINA
+                                        Unstake SHUM
                                         <Tooltip
                                             max-width="305"
                                             placement="top"
                                             class="tip globalInfoStyle"
-                                            content="Amount of LINA unstaked may vary due to block times and price fluctuations in pledge tokens."
+                                            content="Amount of SHUM unstaked may vary due to block times and price fluctuations in pledge tokens."
                                             offset="0 4"
                                         >
                                             <img
@@ -207,7 +207,7 @@
                             {{ errors.amountMsg }}
                         </div>
                         <div class="actionRate">
-                            1 LINA = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
+                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
                         </div>
 
                         <div class="inputGroupBox">
@@ -231,7 +231,7 @@
                                     />
 
                                     <div class="itemTypeTitle">
-                                        Unstake LINA
+                                        Unstake SHUM
                                     </div>
 
                                     <InputNumber
@@ -385,9 +385,9 @@
             :mask="true"
             class="introductActionModal"
         >
-            <div class="title">Unstake LINA</div>
+            <div class="title">Unstake SHUM</div>
             <div class="context">
-                Amount of LINA unstaked may vary due to block times and price
+                Amount of SHUM unstaked may vary due to block times and price
                 fluctuations in pledge tokens.
             </div>
         </Modal>
@@ -491,7 +491,7 @@ export default {
             },
 
             burnData: {
-                LINA: 0,
+                SHUM: 0,
                 LINA2USD: 0,
                 staked: 0,
                 lock: 0,
@@ -596,7 +596,7 @@ export default {
                     utils
                 } = lnrJSConnector;
 
-                const LINABytes = utils.formatBytes32String("LINA");
+                const LINABytes = utils.formatBytes32String("SHUM");
 
                 const results = await Promise.all([
                     LnCollateralSystem.userCollateralData(
@@ -634,8 +634,8 @@ export default {
 
                 const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-                const priceRates = await getPriceRates(["LINA", "lUSD"]);
-                // const priceRates = await getPriceRatesFromApi(["LINA", "lUSD"]);
+                const priceRates = await getPriceRates(["SHUM", "lUSD"]);
+                // const priceRates = await getPriceRatesFromApi(["SHUM", "lUSD"]);
 
                 const LINAPrice = priceRates.LINA / priceRates.lUSD;
                 const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.lUSD);
@@ -1149,7 +1149,7 @@ export default {
                                 )
                             );
                         if (this.burnData.debtBN.lte(lockLINAToBuildLUSDBN)) {
-                            //债务 <= lockLINAToLUSDBN 时，则可以直接解锁所有stake lina
+                            //债务 <= lockLINAToLUSDBN 时，则可以直接解锁所有stake shum
 
                             this.inputData.unStake = formatEtherToNumber(
                                 this.burnData.stakedBN

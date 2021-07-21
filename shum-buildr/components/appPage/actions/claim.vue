@@ -6,7 +6,7 @@
                     <div class="actionBody">
                         <div class="actionTitle">Claim</div>
                         <div class="actionDesc">
-                            Claim rewards from staking LINA and building ℓUSD
+                            Claim rewards from staking SHUM and building ℓUSD
                         </div>
 
                         <div
@@ -24,7 +24,7 @@
                                 <img v-else src="@/static/LINA_gray_logo.svg" />
                                 <div class="title">Staking Rewards</div>
                                 <div class="amount">
-                                    <span>{{ stakingRewards }}</span> LINA
+                                    <span>{{ stakingRewards }}</span> SHUM
                                 </div>
                             </div>
                             <div class="box">

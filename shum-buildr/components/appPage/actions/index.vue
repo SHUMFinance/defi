@@ -84,13 +84,13 @@
                 <div class="title" v-if="currentAction == 5">Swap</div>
 
                 <div class="context" v-if="currentAction == 1">
-                    Build ℓUSD and earn staking rewards by staking LINA
+                    Build ℓUSD and earn staking rewards by staking SHUM
                 </div>
                 <div class="context" v-if="currentAction == 2">
-                    Burn ℓUSD to unlock staked LINA
+                    Burn ℓUSD to unlock staked SHUM
                 </div>
                 <div class="context" v-if="currentAction == 3">
-                    Claim rewards from staking LINA and building ℓUSD
+                    Claim rewards from staking SHUM and building ℓUSD
                 </div>
                 <div class="context" v-if="currentAction == 4">
                     Transfer different currencies to specified wallet address
