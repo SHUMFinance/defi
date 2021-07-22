@@ -263,7 +263,7 @@ export default {
             currencyDropDown: false,
 
             selectCurrencyIndex: 0,
-            selectCurrencyKey: "LINA",
+            selectCurrencyKey: "SHUM",
 
             currencies: []
         };
@@ -358,7 +358,7 @@ export default {
             this.currencies = [
                 {
                     name: "SHUM",
-                    key: "LINA",
+                    key: "SHUM",
                     img: require("@/static/LINA_logo.svg"),
                     balance: 0,
                     frozenBalance: 0,

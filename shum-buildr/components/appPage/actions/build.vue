@@ -22,7 +22,7 @@
                             </template>
                         </div>
                         <div class="actionRate" v-if="isBinanceNetwork">
-                            1 LINA =
+                            1 SHUM =
                             {{
                                 formatNumberFromBigNumber(
                                     buildData.LINA2USDBN,
@@ -50,7 +50,7 @@
                                         :class="{ active: activeItemBtn == 0 }"
                                         @click.stop="clickBuy"
                                     >
-                                        buy lina
+                                        buy shum
                                         <img src="@/static/arrow_right.svg" />
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                         </div>
 
                         <div class="actionRate">
-                            1 LINA =
+                            1 SHUM =
                             {{
                                 formatNumberFromBigNumber(
                                     buildData.LINA2USDBN,

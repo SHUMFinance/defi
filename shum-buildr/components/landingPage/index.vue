@@ -6,7 +6,7 @@
                 src="@/static/linear_buildr_logo.svg"
             />
             <div class="mBuyLINA mobileShow" @click.stop="openBuyLINA">
-                BUY LINA
+                BUY SHUM
                 <img src="@/static/arrow_right.svg" />
             </div>
         </div>

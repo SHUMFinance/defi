@@ -391,7 +391,7 @@ export default {
             currencyList: [
                 {
                     name: "SHUM",
-                    key: "LINA",
+                    key: "SHUM",
                     img: require("@/static/LINA_logo.svg"),
                     balance: 0
                 }
@@ -517,8 +517,8 @@ export default {
 
             this.currencyList = [
                 {
-                    name: "LINA",
-                    key: "LINA",
+                    name: "SHUM",
+                    key: "SHUM",
                     img: require("@/static/LINA_logo.svg"),
                     balance: _.floor(bn2n(linaBalance), 4)
                 },
@@ -568,8 +568,8 @@ export default {
                 this.BUILD_PROCESS_SETUP.TRANSFER = _.replace(
                     BUILD_PROCESS_SETUP.TRANSFER,
                     "[REPLACE_CURRENCY]",
-                    this.currentSelectCurrency.name == "LINA"
-                        ? "LINA"
+                    this.currentSelectCurrency.name == "SHUM"
+                        ? "SHUM"
                         : this.currentSelectCurrency.name
                 );
 
