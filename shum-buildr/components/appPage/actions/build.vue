@@ -676,7 +676,7 @@ export default {
 
                     this.buildData.LINABN = avaliableLINA;
                 } else {
-                    const LINABytes = utils.formatBytes32String("LINA");
+                    const LINABytes = utils.formatBytes32String("SHUM");
                     //取合约地址
                     const LnCollateralSystemAddress =
                         LnCollateralSystem.contract.address;
@@ -720,8 +720,8 @@ export default {
 
                     const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-                    const priceRates = await getPriceRates(["LINA", "lUSD"]);
-                    // const priceRates = await getPriceRatesFromApi(["LINA", "lUSD"]);
+                    const priceRates = await getPriceRates(["SHUM", "lUSD"]);
+                    // const priceRates = await getPriceRatesFromApi(["SHUM", "lUSD"]);
 
                     const LINAPrice = priceRates.LINA / priceRates.lUSD;
                     const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.lUSD);
@@ -1550,7 +1550,7 @@ export default {
             );
 
             let transaction = await LnCollateralSystem.stakeAndBuild(
-                utils.formatBytes32String("LINA"),
+                utils.formatBytes32String("SHUM"),
                 stakeAmountLINA,
                 buildAmountlUSD,
                 transactionSettings
@@ -1624,7 +1624,7 @@ export default {
             );
 
             let transaction = await LnCollateralSystem.Collateral(
-                utils.formatBytes32String("LINA"),
+                utils.formatBytes32String("SHUM"),
                 stakeAmountLINA,
                 transactionSettings
             );
@@ -1757,7 +1757,7 @@ export default {
                 }
 
                 let gasEstimate = await LnCollateralSystem.contract.estimateGas.stakeAndBuild(
-                    utils.formatBytes32String("LINA"),
+                    utils.formatBytes32String("SHUM"),
                     stakeAmountLINA,
                     buildAmountlUSD
                 );
@@ -1785,7 +1785,7 @@ export default {
                 }
 
                 let gasEstimate = await LnCollateralSystem.contract.estimateGas.Collateral(
-                    utils.formatBytes32String("LINA"),
+                    utils.formatBytes32String("SHUM"),
                     stakeAmountLINA
                 );
 

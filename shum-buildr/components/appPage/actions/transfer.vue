@@ -681,7 +681,7 @@ export default {
         //发起链上交易
         sendTransaction(currency, amount, destination, settings) {
             if (!currency) return null;
-            if (currency === "LINA") {
+            if (currency === "SHUM") {
                 let LnProxy = lnrJSConnector.lnrJS.LinearFinance;
                 return LnProxy.transfer(destination, amount, settings);
             } else if (["ETH", "BNB"].includes(currency)) {
@@ -713,7 +713,7 @@ export default {
 
                 const amountBN = n2bn(amount);
 
-                if (currency === "LINA") {
+                if (currency === "SHUM") {
                     let LnProxy = lnrJSConnector.lnrJS.LinearFinance;
                     // if (this.isEthereumNetwork) {
                     //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;

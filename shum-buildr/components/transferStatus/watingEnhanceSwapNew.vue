@@ -663,7 +663,7 @@ export default {
         //需要swap的token
         currency: {
             type: String,
-            default: "LINA" //LINA, lUSD
+            default: "SHUM" //LINA, lUSD
         },
 
         //swap类型
@@ -957,7 +957,7 @@ export default {
                     }
 
                     let replaceCurrency = this.currency;
-                    if (this.currency == "LINA") {
+                    if (this.currency == "SHUM") {
                         LnProxy = lnrJSConnector.lnrJS.LinearFinance;
                     } else {
                         LnProxy = lnrJSConnector.lnrJS[this.currency];
@@ -1104,7 +1104,7 @@ export default {
             let LnProxy,
                 LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge;
 
-            if (this.currency == "LINA") {
+            if (this.currency == "SHUM") {
                 LnProxy = lnrJSConnector.lnrJS.LinearFinance;
             } else {
                 LnProxy = lnrJSConnector.lnrJS[this.currency];
@@ -1170,7 +1170,7 @@ export default {
                 //     LnProxy = lnrJSConnector.lnrJS.LinearFinance;
                 // }
 
-                if (this.currency == "LINA") {
+                if (this.currency == "SHUM") {
                     LnProxy = lnrJSConnector.lnrJS.LinearFinance;
                 } else {
                     LnProxy = lnrJSConnector.lnrJS[this.currency];

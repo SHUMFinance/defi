@@ -171,9 +171,9 @@ export const getPriceRatesFromApi = async currency => {
     if (_.isString(currency)) {
         if (currency == "lUSD") {
             rates["lUSD"] = n2bn("1");
-        } else if (currency == "LINA") {
-            rates["LINA"] = await LnChainLinkPrices.getPrice(
-                utils.formatBytes32String("LINA")
+        } else if (currency == "SHUM") {
+            rates["SHUM"] = await LnChainLinkPrices.getPrice(
+                utils.formatBytes32String("SHUM")
             );
         } else {
             const id = CRYPTO_CURRENCIES_API[currency]?.id;
@@ -187,7 +187,7 @@ export const getPriceRatesFromApi = async currency => {
 
         for (const index in currency) {
             const c = currency[index];
-            if (!["lUSD", "LINA"].includes(c)) {
+            if (!["lUSD", "SHUM"].includes(c)) {
                 ids.push(CRYPTO_CURRENCIES_API[c]?.id);
             }
         }
@@ -198,9 +198,9 @@ export const getPriceRatesFromApi = async currency => {
             const c = currency[index];
             if (c == "lUSD") {
                 rates["lUSD"] = n2bn("1");
-            } else if (c == "LINA") {
-                rates["LINA"] = await LnChainLinkPrices.getPrice(
-                    utils.formatBytes32String("LINA")
+            } else if (c == "SHUM") {
+                rates["SHUM"] = await LnChainLinkPrices.getPrice(
+                    utils.formatBytes32String("SHUM")
                 );
             } else {
                 const id = CRYPTO_CURRENCIES_API[c]?.id;
@@ -257,7 +257,7 @@ export const storeDetailsData = async () => {
                     ...promiseArray,
                     LnCollateralSystem.userCollateralData(
                         walletAddress,
-                        utils.formatBytes32String("LINA")
+                        utils.formatBytes32String("SHUM")
                     ),
                     LnCollateralSystem.GetUserTotalCollateralInUsd(
                         walletAddress
@@ -328,7 +328,7 @@ export const storeDetailsData = async () => {
             //所有资产余额
             let transferableAssets = [
                 {
-                    name: "LINA",
+                    name: "SHUM",
                     balance: avaliableLINA,
                     valueUSD: 0,
                     img: require("@/static/LINA_logo.svg")

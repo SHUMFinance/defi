@@ -800,7 +800,7 @@ export default {
 
             let transaction = await LnCollateralSystem.burnAndUnstake(
                 burnAmount,
-                utils.formatBytes32String("LINA"),
+                utils.formatBytes32String("SHUM"),
                 unstakeAmount,
                 {
                     gasPrice: this.$store.state?.gasDetails?.price,
@@ -906,7 +906,7 @@ export default {
             );
 
             let transaction = await LnCollateralSystem.Redeem(
-                utils.formatBytes32String("LINA"),
+                utils.formatBytes32String("SHUM"),
                 unstakeAmount,
                 {
                     gasPrice: this.$store.state?.gasDetails?.price,
@@ -961,7 +961,7 @@ export default {
 
                 let gasEstimate = await LnCollateralSystem.contract.estimateGas.burnAndUnstake(
                     burnAmount,
-                    utils.formatBytes32String("LINA"),
+                    utils.formatBytes32String("SHUM"),
                     unstakeAmount
                 );
 
@@ -999,7 +999,7 @@ export default {
                 } = lnrJSConnector;
 
                 let gasEstimate = await LnCollateralSystem.contract.estimateGas.Redeem(
-                    utils.formatBytes32String("LINA"),
+                    utils.formatBytes32String("SHUM"),
                     unstakeAmount
                 );
 

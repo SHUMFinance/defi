@@ -375,7 +375,7 @@ export default {
                 await this.filterCurrencies();
             } catch (error) {
                 this.initCurrencies();
-                this.selectCurrencyKey = "LINA";
+                this.selectCurrencyKey = "SHUM";
                 console.log("initData error", error);
                 this.processing = false;
             }
@@ -415,7 +415,7 @@ export default {
                 this.selectCurrencyKey
             ]);
             this.selectCurrencyIndex = index != -1 ? index : 0;
-            this.selectCurrencyKey = index != -1 ? this.currency.key : "LINA";
+            this.selectCurrencyKey = index != -1 ? this.currency.key : "SHUM";
         },
 
         //过滤无余额的token
@@ -467,7 +467,7 @@ export default {
                 //总额
                 item.totalBalance = item.balance + item.frozenBalance;
 
-                return item.key == "LINA" || item.totalBalance > 0;
+                return item.key == "SHUM" || item.totalBalance > 0;
             });
 
             this.currencies = [...currencies];
@@ -488,7 +488,7 @@ export default {
                 let otherNetworkId = getOtherNetworks(this.walletNetworkId);
 
                 let contract;
-                if (this.currency.key == "LINA") {
+                if (this.currency.key == "SHUM") {
                     contract = lnrJSConnector.lnrJS.LinearFinance;
                 } else {
                     contract = lnrJSConnector.lnrJS[this.currency.key];

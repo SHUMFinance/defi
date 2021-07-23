@@ -191,7 +191,7 @@ export default {
                         utils
                     } = lnrJSConnector;
 
-                    const LINABytes = utils.formatBytes32String("LINA");
+                    const LINABytes = utils.formatBytes32String("SHUM");
 
                     //取合约地址
                     const LnCollateralSystemAddress =
@@ -229,7 +229,7 @@ export default {
                         amountlUSD
                     ] = results.map(formatEtherToNumber);
 
-                    const priceRates = await getPriceRates(["LINA", "lUSD"]);
+                    const priceRates = await getPriceRates(["SHUM", "lUSD"]);
 
                     this.walletData.LINA2USD = priceRates.LINA / priceRates.lUSD;
 

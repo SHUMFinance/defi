@@ -350,7 +350,7 @@ export default {
                     tableData = this.$store.state?.walletDetails?.transferableAssets.filter(
                         function(item) {
                             item.decimal = _.has(currencies, item.name) ? 4 : 2;
-                            return !["LINA", "ETH", "BNB"].includes(item.name);
+                            return !["SHUM", "ETH", "BNB"].includes(item.name);
                         }
                     );
                 }
