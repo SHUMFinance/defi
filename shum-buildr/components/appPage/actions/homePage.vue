@@ -19,12 +19,12 @@
                     <div class="context">
                         <template v-if="currentRatioStatus == 1">
                             Your P-ratio is below the target ratio. To prevent being liquidated, please either 
-                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} LINA</span><span v-else>stake {{formatNumber(needLINANum)}} LINA</span> or 
+                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
                             <span v-if="needBuylUSD">buy and burn {{formatNumber(needlUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needlUSDNum)}} ℓUSD</span> to raise up to target ratio to be able to claim rewards.
                         </template>
                         <template v-if="currentRatioStatus == 2">
                             Your P-ratio has reached the minimum maintainence level. Please 
-                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} LINA</span><span v-else>stake {{formatNumber(needLINANum)}} LINA</span> or 
+                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
                             <span v-if="needBuylUSD">buy and burn {{formatNumber(needlUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needlUSDNum)}} ℓUSD</span> to raise up to target ratio. 
                         </template>
                         <template v-if="currentRatioStatus == 3">
@@ -33,7 +33,7 @@
                         </template>
                     </div>
                     <div class="btnBox">
-                        <div class="btn" v-if="needBuyLINA && currentRatioStatus != 3" @click="actionLink(1)">Buy LINA →</div>
+                        <div class="btn" v-if="needBuyLINA && currentRatioStatus != 3" @click="actionLink(1)">Buy SHUM →</div>
                         <div class="btn" v-if="!needBuyLINA && currentRatioStatus != 3" @click="actionLink(2)">Stake now →</div>
                         <div class="btn" v-if="needBuylUSD && currentRatioStatus != 3" @click="actionLink(3)">Buy ℓUSD →</div>
                         <div class="btn" v-if="!needBuylUSD && currentRatioStatus != 3" @click="actionLink(4)">Burn now →</div>

@@ -663,7 +663,7 @@ export default {
         //需要swap的token
         currency: {
             type: String,
-            default: "SHUM" //LINA, lUSD
+            default: "SHUM" //SHUM, lUSD
         },
 
         //swap类型

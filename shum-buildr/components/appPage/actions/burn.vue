@@ -7,7 +7,7 @@
                         <div class="actionTitle">Burn</div>
                         <div class="actionDesc">
                             <template v-if="isEthereumNetwork">
-                                Burn ℓUSD to unlock staked LINA. You can perform
+                                Burn ℓUSD to unlock staked SHUM. You can perform
                                 this on Binance Smart Chain network. &nbsp;<span
                                     class="step"
                                     @click="jumpToStep"
@@ -1231,7 +1231,7 @@ export default {
                         this.burnData.lockBN.eq("0")
                     ) {
                         this.errors.amountMsg =
-                            "There is no LINA staked on the contract.";
+                            "There is no SHUM staked on the contract.";
                         return;
                     }
 
@@ -1463,13 +1463,13 @@ export default {
 
                     if (this.burnData.stakedBN.eq("0")) {
                         this.errors.unStakeMsg =
-                            "There is no LINA staked on the contract.";
+                            "There is no SHUM staked on the contract.";
                         return;
                     }
 
                     if (!unstakedAmount) {
                         this.errors.unStakeMsg =
-                            "You can't unstake the amount of LINA above.";
+                            "You can't unstake the amount of SHUM above.";
                         return;
                     } else {
                         this.errors.unStakeMsg = "";

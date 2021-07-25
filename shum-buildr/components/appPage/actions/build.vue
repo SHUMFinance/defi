@@ -7,7 +7,7 @@
                         <div class="actionTitle">Build</div>
                         <div class="actionDesc">
                             <template v-if="isEthereumNetwork">
-                                Earn rewards by staking LINA and building ℓUSD.
+                                Earn rewards by staking SHUM and building ℓUSD.
                                 You will need a Binance Chain wallet for the
                                 transaction &nbsp;<span
                                     class="step"
@@ -266,7 +266,7 @@
                                     <div class="itemType">
                                         <img src="@/static/LINA_logo.svg" />
                                         <div class="itemTypeTitle">
-                                            Stake LINA
+                                            Stake SHUM
                                         </div>
                                         <InputNumber
                                             class="input"

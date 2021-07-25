@@ -614,7 +614,7 @@ export default {
                         rewardslusd = formatNumber(item.rewardslusd) + " ℓUSD";
                     }
                     if (!item.rewardsLina || item.rewardsLina != 0) {
-                        rewardsLina = formatNumber(item.rewardsLina) + " LINA";
+                        rewardsLina = formatNumber(item.rewardsLina) + " SHUM";
                     }
                     amount = "+" + rewardsLina + "&\n" + "+" + rewardslusd;
                 } else {
