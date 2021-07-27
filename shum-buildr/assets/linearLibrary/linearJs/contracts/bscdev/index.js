@@ -1,5 +1,5 @@
 
-  import LinearFinance from './LinearFinance';
+  import LinearFinance from './ShumFinance';
 import lUSD from './lUSD';
 import lBTC from './lBTC';
 import lETH from './lETH';
@@ -21,8 +21,8 @@ import LnConfig from './LnConfig';
 import LnDebtSystem from './LnDebtSystem';
 import LnCollateralSystem from './LnCollateralSystem';
 import LnRewardLocker from './LnRewardLocker';
-import LnRewardSystem from './LnRewardSystem';
-import LnErc20Bridge from './LnErc20Bridge';
+import LnRewardSystem from './ShumRewardSystem';
+import LnErc20Bridge from './ShumErc20Bridge';
 import lXLCI from './lXLCI';
 import lXBCI from './lXBCI';
 import LnLiquidation from './LnLiquidation';

@@ -1,5 +1,5 @@
 
-  import LinearFinance from './LinearFinance';
+import LinearFinance from './LinearFinance';
 import LnAssetSystem from './LnAssetSystem';
 import LnBuildBurnSystem from './LnBuildBurnSystem';
 import LnConfig from './LnConfig';
