@@ -1,13 +1,13 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/bscdev/LnOracleRouter';
+      import abi from '../../lib/abis/bscdev/ShumOracleRouter';
   
-      function LnOracleRouter(contractSettings) {
+      function ShumOracleRouter(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
-          this.contractSettings.addressList['LnOracleRouter'],
+          this.contractSettings.addressList['ShumOracleRouter'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
@@ -33,9 +33,9 @@
         return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__LnOracleRouter_init = async (_admin, txParams) => {
+      this.__ShumOracleRouter_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnOracleRouter_init(_admin, txParams);
+        return await this.contract.__ShumOracleRouter_init(_admin, txParams);
       };
     
       this.addBandOracle = async (currencyKey, bandCurrencyKey, oracleAddress, removeExisting, txParams) => {
@@ -140,5 +140,5 @@
     
       }
   
-      export default LnOracleRouter;
+      export default ShumOracleRouter;
     

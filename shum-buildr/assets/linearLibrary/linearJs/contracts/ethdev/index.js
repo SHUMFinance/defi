@@ -1,5 +1,5 @@
 
-  import LinearFinance from './ShumFinance';
+import ShumFinance from './ShumFinance';
 import lUSD from './lUSD';
 import lBTC from './lBTC';
 import lETH from './lETH';
@@ -22,6 +22,6 @@ import lXBCI from './lXBCI';
 import lVET from './lVET';
   
   export default {
-    LinearFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnErc20Bridge, lXLCI, lXBCI, lVET
+    ShumFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnErc20Bridge, lXLCI, lXBCI, lVET
   };
     

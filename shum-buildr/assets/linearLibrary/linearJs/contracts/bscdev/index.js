@@ -1,5 +1,5 @@
 
-  import LinearFinance from './ShumFinance';
+import ShumFinance from './ShumFinance';
 import lUSD from './lUSD';
 import lBTC from './lBTC';
 import lETH from './lETH';
@@ -15,21 +15,21 @@ import lXAG from './lXAG';
 import lEUR from './lEUR';
 import lUNI from './lUNI';
 import lJPY from './lJPY';
-import LnAssetSystem from './LnAssetSystem';
-import LnBuildBurnSystem from './LnBuildBurnSystem';
-import LnConfig from './LnConfig';
-import LnDebtSystem from './LnDebtSystem';
-import LnCollateralSystem from './LnCollateralSystem';
-import LnRewardLocker from './LnRewardLocker';
+import LnAssetSystem from './ShumAssetSystem';
+import LnBuildBurnSystem from './ShumBuildBurnSystem';
+import LnConfig from './ShumConfig';
+import LnDebtSystem from './ShumDebtSystem';
+import LnCollateralSystem from './ShumCollateralSystem';
+import LnRewardLocker from './ShumRewardLocker';
 import LnRewardSystem from './ShumRewardSystem';
 import LnErc20Bridge from './ShumErc20Bridge';
 import lXLCI from './lXLCI';
 import lXBCI from './lXBCI';
-import LnLiquidation from './LnLiquidation';
+import LnLiquidation from './ShumLiquidation';
 import lVET from './lVET';
-import LnOracleRouter from './LnOracleRouter';
+import LnOracleRouter from './ShumOracleRouter';
   
   export default {
-    LinearFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnBuildBurnSystem, LnConfig, LnDebtSystem, LnCollateralSystem, LnRewardLocker, LnRewardSystem, LnErc20Bridge, lXLCI, lXBCI, LnLiquidation, lVET, LnOracleRouter
+    ShumFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnBuildBurnSystem, LnConfig, LnDebtSystem, LnCollateralSystem, LnRewardLocker, LnRewardSystem, LnErc20Bridge, lXLCI, lXBCI, LnLiquidation, lVET, LnOracleRouter
   };
     
