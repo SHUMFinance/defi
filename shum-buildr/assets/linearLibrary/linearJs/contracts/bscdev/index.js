@@ -15,21 +15,21 @@ import lXAG from './lXAG';
 import lEUR from './lEUR';
 import lUNI from './lUNI';
 import lJPY from './lJPY';
-import LnAssetSystem from './ShumAssetSystem';
-import LnBuildBurnSystem from './ShumBuildBurnSystem';
-import LnConfig from './ShumConfig';
-import LnDebtSystem from './ShumDebtSystem';
-import LnCollateralSystem from './ShumCollateralSystem';
-import LnRewardLocker from './ShumRewardLocker';
-import LnRewardSystem from './ShumRewardSystem';
-import LnErc20Bridge from './ShumErc20Bridge';
+import ShumAssetSystem from './ShumAssetSystem';
+import ShumBuildBurnSystem from './ShumBuildBurnSystem';
+import ShumConfig from './ShumConfig';
+import ShumDebtSystem from './ShumDebtSystem';
+import ShumCollateralSystem from './ShumCollateralSystem';
+import ShumRewardLocker from './ShumRewardLocker';
+import ShumRewardSystem from './ShumRewardSystem';
+import ShumErc20Bridge from './ShumErc20Bridge';
 import lXLCI from './lXLCI';
 import lXBCI from './lXBCI';
-import LnLiquidation from './ShumLiquidation';
+import ShumLiquidation from './ShumLiquidation';
 import lVET from './lVET';
-import LnOracleRouter from './ShumOracleRouter';
+import ShumOracleRouter from './ShumOracleRouter';
   
   export default {
-    ShumFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnBuildBurnSystem, LnConfig, LnDebtSystem, LnCollateralSystem, LnRewardLocker, LnRewardSystem, LnErc20Bridge, lXLCI, lXBCI, LnLiquidation, lVET, LnOracleRouter
+    ShumFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, ShumAssetSystem, ShumBuildBurnSystem, ShumConfig, ShumDebtSystem, ShumCollateralSystem, ShumRewardLocker, ShumRewardSystem, ShumErc20Bridge, lXLCI, lXBCI, ShumLiquidation, lVET, ShumOracleRouter
   };
     
