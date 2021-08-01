@@ -1,20 +1,20 @@
 
 import ShumFinance from './ShumFinance';
-import lUSD from './lUSD';
-import lBTC from './sBTC';
-import lETH from './sETH';
-import lLINK from './sLINK';
-import lTRX from './sTRX';
-import lDOT from './sDOT';
-import lYFI from './lYFI';
-import lBNB from './sBNB';
-import lADA from './sADA';
-import lXLM from './lXLM';
-import lXAU from './lXAU';
-import lXAG from './lXAG';
-import lEUR from './sEUR';
-import lUNI from './lUNI';
-import lJPY from './sJPY';
+import sUSD from './sUSD';
+import sBTC from './sBTC';
+import sETH from './sETH';
+import sLINK from './sLINK';
+import sTRX from './sTRX';
+import sDOT from './sDOT';
+import sYFI from './sYFI';
+import sBNB from './sBNB';
+import sADA from './sADA';
+import sXLM from './sXLM';
+import sXAU from './sXAU';
+import sXAG from './sXAG';
+import sEUR from './sEUR';
+import sUNI from './sUNI';
+import sJPY from './sJPY';
 import ShumAssetSystem from './ShumAssetSystem';
 import ShumBuildBurnSystem from './ShumBuildBurnSystem';
 import ShumConfig from './ShumConfig';
@@ -23,13 +23,13 @@ import ShumCollateralSystem from './ShumCollateralSystem';
 import ShumRewardLocker from './ShumRewardLocker';
 import ShumRewardSystem from './ShumRewardSystem';
 import ShumErc20Bridge from './ShumErc20Bridge';
-import lXLCI from './lXLCI';
-import lXBCI from './lXBCI';
+import sXLCI from './sXLCI';
+import sXBCI from './sXBCI';
 import ShumLiquidation from './ShumLiquidation';
-import lVET from './lVET';
+import sVET from './sVET';
 import ShumOracleRouter from './ShumOracleRouter';
   
   export default {
-    ShumFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, ShumAssetSystem, ShumBuildBurnSystem, ShumConfig, ShumDebtSystem, ShumCollateralSystem, ShumRewardLocker, ShumRewardSystem, ShumErc20Bridge, lXLCI, lXBCI, ShumLiquidation, lVET, ShumOracleRouter
+    ShumFinance, sUSD, sBTC, sETH, sLINK, sTRX, sDOT, sYFI, sBNB, sADA, sXLM, sXAU, sXAG, sEUR, sUNI, sJPY, ShumAssetSystem, ShumBuildBurnSystem, ShumConfig, ShumDebtSystem, ShumCollateralSystem, ShumRewardLocker, ShumRewardSystem, ShumErc20Bridge, sXLCI, sXBCI, ShumLiquidation, sVET, ShumOracleRouter
   };
     
