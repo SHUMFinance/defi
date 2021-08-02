@@ -1,13 +1,13 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/bscdev/sXLCI';
+      import abi from '../../lib/abis/ethdev/sBTC';
   
-      function sXLCI(contractSettings) {
+      function sBTC(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
-          this.contractSettings.addressList['sXLCI'],
+          this.contractSettings.addressList['sBTC'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
@@ -120,5 +120,5 @@
     
       }
   
-      export default sXLCI;
+      export default sBTC;
     
