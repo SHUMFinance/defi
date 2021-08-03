@@ -1,3 +1,3 @@
-import lDOT from '../mainnet/lUSD';
-      export default lDOT;
+import sDOT from '../mainnet/lUSD';
+      export default sDOT;
       

@@ -1,26 +1,26 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/mainnet/sDOT';
+      import abi from '../../lib/abis/ethdev/sXBCI';
   
-      function sDOT(contractSettings) {
+      function sXBCI(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
-          this.contractSettings.addressList['sDOT'],
+          this.contractSettings.addressList['sXBCI'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
   
         
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__LnAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
+      this.__ShumAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
+        return await this.contract.__ShumAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
@@ -120,5 +120,5 @@
     
       }
   
-      export default sDOT;
+      export default sXBCI;
     

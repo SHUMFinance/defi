@@ -5,7 +5,7 @@ import lBTC from './lBTC';
 import lETH from './lETH';
 import lLINK from './lLINK';
 import lTRX from './lTRX';
-import lDOT from './lDOT';
+import sDOT from './sDOT';
 import lYFI from './lYFI';
 import lBNB from './lBNB';
 import lADA from './lADA';
@@ -30,6 +30,6 @@ import lVET from './lVET';
 import LnOracleRouter from './LnOracleRouter';
   
   export default {
-    LinearFinance, lUSD, lBTC, lETH, lLINK, lTRX, lDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnBuildBurnSystem, LnConfig, LnDebtSystem, LnCollateralSystem, LnRewardLocker, LnRewardSystem, LnErc20Bridge, lXLCI, lXBCI, LnLiquidation, lVET, LnOracleRouter
+    LinearFinance, lUSD, lBTC, lETH, lLINK, lTRX, sDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnBuildBurnSystem, LnConfig, LnDebtSystem, LnCollateralSystem, LnRewardLocker, LnRewardSystem, LnErc20Bridge, lXLCI, lXBCI, LnLiquidation, lVET, LnOracleRouter
   };
     

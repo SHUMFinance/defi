@@ -1,13 +1,13 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/bscmainnet/lDOT';
+      import abi from '../../lib/abis/bscmainnet/sDOT';
   
-      function lDOT(contractSettings) {
+      function sDOT(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
-          this.contractSettings.addressList['lDOT'],
+          this.contractSettings.addressList['sDOT'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
@@ -120,5 +120,5 @@
     
       }
   
-      export default lDOT;
+      export default sDOT;
     

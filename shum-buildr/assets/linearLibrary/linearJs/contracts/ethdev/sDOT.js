@@ -1,26 +1,26 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/ethdev/lDOT';
+      import abi from '../../lib/abis/ethdev/sDOT';
   
-      function lDOT(contractSettings) {
+      function sDOT(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
-          this.contractSettings.addressList['lDOT'],
+          this.contractSettings.addressList['sDOT'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
   
         
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__LnAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
+      this.__ShumAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
+        return await this.contract.__ShumAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
@@ -120,5 +120,5 @@
     
       }
   
-      export default lDOT;
+      export default sDOT;
     

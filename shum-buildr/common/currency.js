@@ -74,7 +74,7 @@ const currencies = {
     //    fullName: "ℓJUST",
     //    type: "crypto"
     //},
-    lDOT: {
+    sDOT: {
         name: "ℓDOT",
         fullName: "ℓDOT",
         type: "crypto"
