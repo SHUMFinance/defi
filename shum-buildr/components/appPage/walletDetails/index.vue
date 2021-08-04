@@ -399,21 +399,21 @@
                     </div>
                 </div>
                 <div class=" tokenBox">
-                    <img class="tokenIcon" src="@/static/currency/lUSD.svg" />
+                    <img class="tokenIcon" src="@/static/currency/sUSD.svg" />
                     <div class="box">
                         <div class="tokenItems obtrusive">
                             <div class="left">ℓUSD</div>
                             <div class="right">
-                                <b>{{ walletDetails.amountlUSD || 0 }}</b> ℓUSD
+                                <b>{{ walletDetails.amountsUSD || 0 }}</b> ℓUSD
                             </div>
                         </div>
                         <div class="tokenItems">
                             <div class="left">
-                                1 ℓUSD = ${{ walletDetails.lUSD2USDRate || 1 }}
+                                1 ℓUSD = ${{ walletDetails.sUSD2USDRate || 1 }}
                                 USD
                             </div>
                             <div class="right">
-                                ≈ ${{ walletDetails.amountlUSD2USD || 0 }} USD
+                                ≈ ${{ walletDetails.amountsUSD2USD || 0 }} USD
                             </div>
                         </div>
                     </div>
@@ -446,7 +446,7 @@
                     <template v-else-if="isBinanceNetwork">
                         <img
                             class="tokenIcon bsc"
-                            src="@/static/currency/lBNB.svg"
+                            src="@/static/currency/sBNB.svg"
                         />
                         <div class="box">
                             <div class="tokenItems obtrusive">
@@ -472,7 +472,7 @@
                     </template>
                 </div>
                 <div class=" tokenBox">
-                    <img class="tokenIcon" src="@/static/currency/lUSD.svg" />
+                    <img class="tokenIcon" src="@/static/currency/sUSD.svg" />
                     <div class="box">
                         <div class="tokenItems obtrusive singer">
                             <div class="left">
@@ -499,7 +499,7 @@
                     </div>
                 </div>
                 <div class=" tokenBox">
-                    <img class="tokenIcon" src="@/static/currency/lUSD.svg" />
+                    <img class="tokenIcon" src="@/static/currency/sUSD.svg" />
                     <div class="box">
                         <div class="tokenItems obtrusive singer">
                             <div class="left">

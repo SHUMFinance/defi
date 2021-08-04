@@ -31,9 +31,9 @@
                                 <div class="titleMobile">Exchange Rewards</div>
                                 <img
                                     v-if="feesAreClaimable"
-                                    src="@/static/currency/lUSD.svg"
+                                    src="@/static/currency/sUSD.svg"
                                 />
-                                <img v-else src="@/static/LUSD_gray_logo.svg" />
+                                <img v-else src="@/static/sUSD_gray_logo.svg" />
                                 <div class="title">Exchange Rewards</div>
                                 <div class="amount">
                                     <span>{{ tradingRewards }}</span> ℓUSD
@@ -275,7 +275,7 @@ export default {
                     this.actionTabs = "m1"; //进入等待页
 
                     let {
-                        lnrJS: { LnRewardSystem }
+                        lnrJS: { ShumRewardSystem }
                     } = lnrJSConnector;
 
                     const rewardEntry = this.pendingRewardEntries[0];
@@ -283,7 +283,7 @@ export default {
                     //     rewardEntry.signatures[0].signature
                     // );
 
-                    let transaction = await LnRewardSystem.claimReward(
+                    let transaction = await ShumRewardSystem.claimReward(
                         rewardEntry.periodId, // periodId
                         BigNumber.from(rewardEntry.stakingReward), // stakingReward
                         BigNumber.from(rewardEntry.feeReward), // feeReward
@@ -360,7 +360,7 @@ export default {
                 this.processing = true;
 
                 const {
-                    lnrJS: { LnRewardSystem, LnCollateralSystem, LnDebtSystem }
+                    lnrJS: { ShumRewardSystem, ShumCollateralSystem, ShumDebtSystem }
                 } = lnrJSConnector;
 
                 const apiUrl = isMainnetNetwork(this.walletNetworkId)
@@ -375,15 +375,15 @@ export default {
                     totalCollateralInUsd,
                     amountDebt
                 ] = await Promise.all([
-                    LnRewardSystem.firstPeriodStartTime(),
-                    LnRewardSystem.userLastClaimPeriodIds(walletAddress),
+                    ShumRewardSystem.firstPeriodStartTime(),
+                    ShumRewardSystem.userLastClaimPeriodIds(walletAddress),
                     fetch(apiUrl),
 
                     //p ratio
-                    LnCollateralSystem.GetUserTotalCollateralInUsd(
+                    ShumCollateralSystem.GetUserTotalCollateralInUsd(
                         walletAddress
                     ),
-                    LnDebtSystem.GetUserDebtBalanceInUsd(walletAddress)
+                    ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress)
                 ]);
 
                 //当前P Ratio
@@ -436,7 +436,7 @@ export default {
         async getGasEstimate() {
             try {
                 const {
-                    lnrJS: { LnRewardSystem }
+                    lnrJS: { ShumRewardSystem }
                 } = lnrJSConnector;
 
                 const rewardEntry = this.pendingRewardEntries[0];
@@ -444,7 +444,7 @@ export default {
                 //     rewardEntry.signatures[0].signature
                 // );
 
-                let gasEstimate = await LnRewardSystem.contract.estimateGas.claimReward(
+                let gasEstimate = await ShumRewardSystem.contract.estimateGas.claimReward(
                     rewardEntry.periodId, // periodId
                     BigNumber.from(rewardEntry.stakingReward), // stakingReward
                     BigNumber.from(rewardEntry.feeReward), // feeReward

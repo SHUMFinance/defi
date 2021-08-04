@@ -498,7 +498,7 @@ export default {
         async initLiquidsList() {
             this.processing = true;
             const [linaBalance, walletBalance, liquids] = await Promise.all([
-                lnrJSConnector.lnrJS.LinearFinance.balanceOf(
+                lnrJSConnector.lnrJS.ShumFinance.balanceOf(
                     this.walletAddress
                 ),
                 lnrJSConnector.provider.getBalance(this.walletAddress),
@@ -526,7 +526,7 @@ export default {
                     name: this.isEthereumNetwork ? "ETH" : "BNB",
                     key: this.isEthereumNetwork ? "ETH" : "BNB",
                     img: require(`@/static/${
-                        this.isEthereumNetwork ? "ETH_logo" : "currency/lBNB"
+                        this.isEthereumNetwork ? "ETH_logo" : "currency/sBNB"
                     }.svg`),
                     balance: _.floor(bn2n(walletBalance), 4)
                 },
@@ -682,7 +682,7 @@ export default {
         sendTransaction(currency, amount, destination, settings) {
             if (!currency) return null;
             if (currency === "SHUM") {
-                let LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                 return LnProxy.transfer(destination, amount, settings);
             } else if (["ETH", "BNB"].includes(currency)) {
                 return lnrJSConnector.signer.sendTransaction({
@@ -714,7 +714,7 @@ export default {
                 const amountBN = n2bn(amount);
 
                 if (currency === "SHUM") {
-                    let LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                    let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                     // if (this.isEthereumNetwork) {
                     //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
                     // } else if (this.isBinanceNetwork) {

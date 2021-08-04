@@ -3,6 +3,7 @@
       import ContractSettings from '../../contractSettings';
       import abi from '../../lib/abis/ethdev/ShumAssetSystem';
   
+
       function ShumAssetSystem(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   

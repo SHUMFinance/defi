@@ -21,18 +21,18 @@ import { n2bn, bn2n, bnMul, bnAdd } from "@/common/bnCalc";
 let loopId = 0;
 
 /**
- * 获取所有合成资产余额/汇率列表，所有合成资产换算成lusd的总价值
+ * 获取所有合成资产余额/汇率列表，所有合成资产换算成sUSD的总价值
  */
 export const getLiquids = async (wallet, all = false) => {
     const {
         lnrJS: {
-            LnAssetSystem,
+            ShumAssetSystem,
             contractSettings: { addressList }
         }
     } = lnrJSConnector;
 
     //获取资产列表
-    const assetAddress = await LnAssetSystem.getAssetAddresses();
+    const assetAddress = await ShumAssetSystem.getAssetAddresses();
 
     let liquids = n2bn("0");
     let assetKeys = [];
@@ -75,7 +75,7 @@ export const getLiquids = async (wallet, all = false) => {
         for (const index in assetKeys) {
             const key = assetKeys[index]; //资产名称
             const balance = assetBalances[index]; //余额
-            let price = key == "lUSD" ? (price = n2bn(1)) : assetPrices[key]; //价格
+            let price = key == "sUSD" ? (price = n2bn(1)) : assetPrices[key]; //价格
 
             //如果不是获取所有且余额为0则跳过
             if (!all && balance.isZero()) {
@@ -105,10 +105,10 @@ export const getLiquids = async (wallet, all = false) => {
  */
 export const getBuildRatio = async () => {
     const {
-        lnrJS: { LnConfig }
+        lnrJS: { ShumConfig }
     } = lnrJSConnector;
-    let BUILD_RATIO = await LnConfig.BUILD_RATIO();
-    let uint = await LnConfig.getUint(BUILD_RATIO);
+    let BUILD_RATIO = await ShumConfig.BUILD_RATIO();
+    let uint = await ShumConfig.getUint(BUILD_RATIO);
     return uint;
 };
 
@@ -129,7 +129,7 @@ export const getPriceRates = async currency => {
     if (isEthereum) {
         rates = await band.pricesLast({ sources: currency });
     } else if (isBinance) {
-        contract = lnrJSConnector.lnrJS.LnOracleRouter;
+        contract = lnrJSConnector.lnrJS.ShumOracleRouter;
         if (_.isString(currency)) {
             ["ETH", "BNB"].includes(currency) && (currency = "l" + currency);
             rates[currency] = await contract.getPrice(
@@ -165,14 +165,14 @@ export const getPriceRates = async currency => {
 export const getPriceRatesFromApi = async currency => {
     const rates = {};
     const {
-        lnrJS: { LnChainLinkPrices },
+        lnrJS: { ShumChainLinkPrices },
         utils
     } = lnrJSConnector;
     if (_.isString(currency)) {
-        if (currency == "lUSD") {
-            rates["lUSD"] = n2bn("1");
+        if (currency == "sUSD") {
+            rates["sUSD"] = n2bn("1");
         } else if (currency == "SHUM") {
-            rates["SHUM"] = await LnChainLinkPrices.getPrice(
+            rates["SHUM"] = await ShumChainLinkPrices.getPrice(
                 utils.formatBytes32String("SHUM")
             );
         } else {
@@ -187,7 +187,7 @@ export const getPriceRatesFromApi = async currency => {
 
         for (const index in currency) {
             const c = currency[index];
-            if (!["lUSD", "SHUM"].includes(c)) {
+            if (!["sUSD", "SHUM"].includes(c)) {
                 ids.push(CRYPTO_CURRENCIES_API[c]?.id);
             }
         }
@@ -196,10 +196,10 @@ export const getPriceRatesFromApi = async currency => {
 
         for (const index in currency) {
             const c = currency[index];
-            if (c == "lUSD") {
-                rates["lUSD"] = n2bn("1");
+            if (c == "sUSD") {
+                rates["sUSD"] = n2bn("1");
             } else if (c == "SHUM") {
-                rates["SHUM"] = await LnChainLinkPrices.getPrice(
+                rates["SHUM"] = await ShumChainLinkPrices.getPrice(
                     utils.formatBytes32String("SHUM")
                 );
             } else {
@@ -236,34 +236,34 @@ export const storeDetailsData = async () => {
 
             const {
                 lnrJS: {
-                    LinearFinance,
-                    LnCollateralSystem,
-                    lUSD,
-                    LnDebtSystem,
-                    LnRewardLocker
+                    ShumFinance,
+                    ShumCollateralSystem,
+                    sUSD,
+                    ShumDebtSystem,
+                    ShumRewardLocker
                 },
                 utils,
                 provider
             } = lnrJSConnector;
 
             let promiseArray = [
-                LinearFinance.balanceOf(walletAddress),
-                lUSD.balanceOf(walletAddress),
+                ShumFinance.balanceOf(walletAddress),
+                sUSD.balanceOf(walletAddress),
                 provider.getBalance(walletAddress)
             ];
 
             if (!isEthDev) {
                 promiseArray = [
                     ...promiseArray,
-                    LnCollateralSystem.userCollateralData(
+                    ShumCollateralSystem.userCollateralData(
                         walletAddress,
                         utils.formatBytes32String("SHUM")
                     ),
-                    LnCollateralSystem.GetUserTotalCollateralInUsd(
+                    ShumCollateralSystem.GetUserTotalCollateralInUsd(
                         walletAddress
                     ),
-                    LnDebtSystem.GetUserDebtBalanceInUsd(walletAddress),
-                    LnRewardLocker.balanceOf(walletAddress),
+                    ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress),
+                    ShumRewardLocker.balanceOf(walletAddress),
                     getBuildRatio()
                 ];
             }
@@ -273,7 +273,7 @@ export const storeDetailsData = async () => {
 
             let [
                 avaliableLINA,
-                amountlUSD,
+                amountsUSD,
                 amountETH,
                 stakedLINA,
                 totalCollateralInUsd,
@@ -289,7 +289,7 @@ export const storeDetailsData = async () => {
             // const priceRates = await getPriceRatesFromApi(CRYPTO_CURRENCIES);
 
             const LINA2USDRate = priceRates.LINA / 1e18 || 0;
-            const lUSD2USDRate = priceRates.lUSD / 1e18 || 1;
+            const sUSD2USDRate = priceRates.sUSD / 1e18 || 1;
             const ETH2USDRate =
                 (isEthereum ? priceRates.ETH : isBinance ? priceRates.BNB : 1) /
                     1e18 || 1;
@@ -301,7 +301,7 @@ export const storeDetailsData = async () => {
                 buildRatio = 0.2;
                 amountDebt = [n2bn("0")];
             } else {
-                amountDebt2USD = amountDebt[0] * lUSD2USDRate;
+                amountDebt2USD = amountDebt[0] * sUSD2USDRate;
             }
 
             let currentRatioPercent =
@@ -312,7 +312,7 @@ export const storeDetailsData = async () => {
             const amountLINA = avaliableLINA + stakedLINA + lockLINA;
             const amountLINA2USD = amountLINA * LINA2USDRate;
             const avaliableLINA2USD = avaliableLINA * LINA2USDRate;
-            const amountlUSD2USD = amountlUSD * lUSD2USDRate;
+            const amountsUSD2USD = amountsUSD * sUSD2USDRate;
             const amountETH2USD = amountETH * ETH2USDRate;
             const liquids2USD = formatEtherToNumber(liquidsData.liquids);
 
@@ -347,7 +347,7 @@ export const storeDetailsData = async () => {
                     name: "BNB",
                     balance: amountETH,
                     valueUSD: 0,
-                    img: require("@/static/currency/lBNB.svg")
+                    img: require("@/static/currency/sBNB.svg")
                 });
             }
 
@@ -364,9 +364,9 @@ export const storeDetailsData = async () => {
                 avaliableLINA2USD,
                 stakedLINA,
                 lockLINA,
-                amountlUSD,
-                lUSD2USDRate,
-                amountlUSD2USD,
+                amountsUSD,
+                sUSD2USDRate,
+                amountsUSD2USD,
                 amountETH,
                 ETH2USDRate,
                 amountETH2USD,

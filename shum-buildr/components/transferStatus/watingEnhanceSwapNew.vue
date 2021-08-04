@@ -663,7 +663,7 @@ export default {
         //需要swap的token
         currency: {
             type: String,
-            default: "SHUM" //SHUM, lUSD
+            default: "SHUM" //SHUM, sUSD
         },
 
         //swap类型
@@ -937,7 +937,7 @@ export default {
                     this.waitProcessFlow = null;
 
                     let LnProxy,
-                        LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge;
+                        LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
                     if (isEthereumNetwork(this.walletNetworkId)) {
                         // LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
                         this.BUILD_PROCESS_SETUP.FREEZE =
@@ -947,7 +947,7 @@ export default {
                         // this.BUILD_PROCESS_SETUP.STAKING_BUILD =
                         //     BUILD_PROCESS_SETUP.STAKING_BUILD + "ETH";
                     } else if (isBinanceNetwork(this.walletNetworkId)) {
-                        // LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                        // LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                         this.BUILD_PROCESS_SETUP.FREEZE =
                             BUILD_PROCESS_SETUP.FREEZE + "BSC";
                         this.BUILD_PROCESS_SETUP.UNFREEZE =
@@ -958,7 +958,7 @@ export default {
 
                     let replaceCurrency = this.currency;
                     if (this.currency == "SHUM") {
-                        LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                        LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                     } else {
                         LnProxy = lnrJSConnector.lnrJS[this.currency];
                         replaceCurrency = currenciesList[this.currency].name;
@@ -1102,10 +1102,10 @@ export default {
             this.confirmTransactionStatus = false;
 
             let LnProxy,
-                LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge;
+                LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
 
             if (this.currency == "SHUM") {
-                LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                LnProxy = lnrJSConnector.lnrJS.ShumFinance;
             } else {
                 LnProxy = lnrJSConnector.lnrJS[this.currency];
             }
@@ -1167,11 +1167,11 @@ export default {
                 // if (isEthereumNetwork(this.walletNetworkId)) {
                 //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
                 // } else if (isBinanceNetwork(this.walletNetworkId)) {
-                //     LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                //     LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                 // }
 
                 if (this.currency == "SHUM") {
-                    LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                    LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                 } else {
                     LnProxy = lnrJSConnector.lnrJS[this.currency];
                 }
@@ -1196,7 +1196,7 @@ export default {
         async startFreezeContract(swapNumber) {
             this.confirmTransactionStatus = false;
 
-            let LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge,
+            let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                 SETUP;
             if (isEthereumNetwork(this.walletNetworkId)) {
                 SETUP = "ETH";
@@ -1360,7 +1360,7 @@ export default {
             }
 
             if (walletStatus) {
-                let LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge,
+                let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                     SETUP;
                 if (isEthereumNetwork(this.walletNetworkId)) {
                     SETUP = "ETH";
@@ -1485,7 +1485,7 @@ export default {
             this.confirmTransactionStatus = false;
 
             const {
-                lnrJS: { LnCollateralSystem },
+                lnrJS: { ShumCollateralSystem },
                 utils
             } = lnrJSConnector;
 
@@ -1500,7 +1500,7 @@ export default {
                 stakeAmountLINA
             );
 
-            let transaction = await LnCollateralSystem.collateralAndBuild(
+            let transaction = await ShumCollateralSystem.collateralAndBuild(
                 utils.formatBytes32String(this.currency),
                 stakeAmountLINA,
                 transactionSettings
@@ -1538,7 +1538,7 @@ export default {
         async getGasEstimateFromStakingAndBuild(stakeAmountLINA) {
             try {
                 const {
-                    lnrJS: { LnCollateralSystem },
+                    lnrJS: { ShumCollateralSystem },
                     utils
                 } = lnrJSConnector;
 
@@ -1549,7 +1549,7 @@ export default {
                     throw new Error("invalid stakeAmountLINA");
                 }
 
-                let gasEstimate = await LnCollateralSystem.contract.estimateGas.collateralAndBuild(
+                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.collateralAndBuild(
                     utils.formatBytes32String(this.currency),
                     stakeAmountLINA
                 );
@@ -1885,10 +1885,10 @@ export default {
         //获取解冻合约
         getTargetContract() {
             let type,
-                contract = "LnErc20Bridge";
+                contract = "ShumErc20Bridge";
             if (isEthereumNetwork(this.targetNetworkId)) {
                 type = SUPPORTED_WALLETS_MAP.METAMASK;
-                // contract = "LnErc20Bridge";
+                // contract = "ShumErc20Bridge";
             } else if (isBinanceNetwork(this.targetNetworkId)) {
                 type = SUPPORTED_WALLETS_MAP.BINANCE_CHAIN;
                 // contract = "LnBep20Bridge";
@@ -1905,7 +1905,7 @@ export default {
 
         //获取冻结手续费
         async getFreezeFee() {
-            let LnBridge = lnrJSConnector.lnrJS.LnErc20Bridge;
+            let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
             const gasLimit = await this.getGasEstimateFromFreeze(
                 LnBridge,
                 n2bn(this.swapNumber)

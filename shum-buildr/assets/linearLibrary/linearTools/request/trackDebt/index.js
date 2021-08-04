@@ -43,13 +43,13 @@ export const fetchTrackDebt = async walletAddress => {
 
         burned.map((record, index) => {
             totalBuild += record.value;
-        }); //it`s shouldn`t record in burn when user exchange lusd to other synth //console.log(minted, burned); //console.log(issuedDebt, totalMinted, totalBuild);
+        }); //it`s shouldn`t record in burn when user exchange sUSD to other synth //console.log(minted, burned); //console.log(issuedDebt, totalMinted, totalBuild);
         issuedDebt = totalMinted - totalBuild;
         // console.log(issuedDebt, "issuedDebt");
 
         if (totalMinted) {
             const {
-                lnrJS: { LnDebtSystem },
+                lnrJS: { ShumDebtSystem },
                 utils
             } = lnrJSConnector;
 
@@ -168,7 +168,7 @@ export const fetchTrackDebt = async walletAddress => {
                 debtSnapshot.push([(timestampArr[2] - 86400) * 1000, 0]);
             }
 
-            let tempCurrentDebt = await LnDebtSystem.GetUserDebtBalanceInUsd(
+            let tempCurrentDebt = await ShumDebtSystem.GetUserDebtBalanceInUsd(
                 walletAddress
             );
 

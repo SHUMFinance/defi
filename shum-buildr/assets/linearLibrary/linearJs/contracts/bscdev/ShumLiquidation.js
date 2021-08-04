@@ -38,14 +38,14 @@
         return await this.contract.LIQUIDATION_RATIO_KEY(txParams);
       };
     
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__ShumLiquidation_init = async (_lnBuildBurnSystem, _lnCollateralSystem, _lnConfig, _lnDebtSystem, _lnPrices, _lnRewardLocker, _admin, txParams) => {
+      this.__ShumLiquidation_init = async (_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _lnPrices, _ShumRewardLocker, _admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__ShumLiquidation_init(_lnBuildBurnSystem, _lnCollateralSystem, _lnConfig, _lnDebtSystem, _lnPrices, _lnRewardLocker, _admin, txParams);
+        return await this.contract.__ShumLiquidation_init(_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _lnPrices, _ShumRewardLocker, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
@@ -78,29 +78,29 @@
         return await this.contract.isPositionMarkedAsUndercollateralized(user, txParams);
       };
     
-      this.liquidatePosition = async (user, lusdToBurn, rewardEntryIds, txParams) => {
+      this.liquidatePosition = async (user, sUSDToBurn, rewardEntryIds, txParams) => {
         txParams = txParams || {};
-        return await this.contract.liquidatePosition(user, lusdToBurn, rewardEntryIds, txParams);
+        return await this.contract.liquidatePosition(user, sUSDToBurn, rewardEntryIds, txParams);
       };
     
-      this.lnBuildBurnSystem = async (txParams) => {
+      this.ShumBuildBurnSystem = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnBuildBurnSystem(txParams);
+        return await this.contract.ShumBuildBurnSystem(txParams);
       };
     
-      this.lnCollateralSystem = async (txParams) => {
+      this.ShumCollateralSystem = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnCollateralSystem(txParams);
+        return await this.contract.ShumCollateralSystem(txParams);
       };
     
-      this.lnConfig = async (txParams) => {
+      this.ShumConfig = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnConfig(txParams);
+        return await this.contract.ShumConfig(txParams);
       };
     
-      this.lnDebtSystem = async (txParams) => {
+      this.ShumDebtSystem = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnDebtSystem(txParams);
+        return await this.contract.ShumDebtSystem(txParams);
       };
     
       this.lnPrices = async (txParams) => {
@@ -108,9 +108,9 @@
         return await this.contract.lnPrices(txParams);
       };
     
-      this.lnRewardLocker = async (txParams) => {
+      this.ShumRewardLocker = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnRewardLocker(txParams);
+        return await this.contract.ShumRewardLocker(txParams);
       };
     
       this.markPositionAsUndercollateralized = async (user, txParams) => {

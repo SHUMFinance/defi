@@ -20,12 +20,12 @@
                         <template v-if="currentRatioStatus == 1">
                             Your P-ratio is below the target ratio. To prevent being liquidated, please either 
                             <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
-                            <span v-if="needBuylUSD">buy and burn {{formatNumber(needlUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needlUSDNum)}} ℓUSD</span> to raise up to target ratio to be able to claim rewards.
+                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} ℓUSD</span> to raise up to target ratio to be able to claim rewards.
                         </template>
                         <template v-if="currentRatioStatus == 2">
                             Your P-ratio has reached the minimum maintainence level. Please 
                             <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
-                            <span v-if="needBuylUSD">buy and burn {{formatNumber(needlUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needlUSDNum)}} ℓUSD</span> to raise up to target ratio. 
+                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} ℓUSD</span> to raise up to target ratio. 
                         </template>
                         <template v-if="currentRatioStatus == 3">
                             Your P-raio has fallen below the minimum required level for more than 3 days, 
@@ -35,8 +35,8 @@
                     <div class="btnBox">
                         <div class="btn" v-if="needBuyLINA && currentRatioStatus != 3" @click="actionLink(1)">Buy SHUM →</div>
                         <div class="btn" v-if="!needBuyLINA && currentRatioStatus != 3" @click="actionLink(2)">Stake now →</div>
-                        <div class="btn" v-if="needBuylUSD && currentRatioStatus != 3" @click="actionLink(3)">Buy ℓUSD →</div>
-                        <div class="btn" v-if="!needBuylUSD && currentRatioStatus != 3" @click="actionLink(4)">Burn now →</div>
+                        <div class="btn" v-if="needBuysUSD && currentRatioStatus != 3" @click="actionLink(3)">Buy ℓUSD →</div>
+                        <div class="btn" v-if="!needBuysUSD && currentRatioStatus != 3" @click="actionLink(4)">Burn now →</div>
                         <div class="btn" v-if="currentRatioStatus == 3" @click="actionLink(5)">View Details →</div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="boxItem" @click="isMobile && btnClick(2)">
                 <div class="imgBox">
-                    <img src="@/static/currency/lUSD.svg"  />
+                    <img src="@/static/currency/sUSD.svg"  />
                 </div>
                 <div class="boxContext">
                     Stake Shum <br />
@@ -130,14 +130,14 @@ export default {
             currentRatioStatus: 0, //0正常 1低于500警告 2低于200清算窗口 3爆仓
             needBuyLINA: false,
             needLINANum: 0,
-            needBuylUSD: false,
-            needlUSDNum: 0,
+            needBuysUSD: false,
+            needsUSDNum: 0,
             walletData: {
                 avaliableLINA: 0,
                 LINA2USD: 0,
                 staked: 0,
                 lock: 0,
-                amountlUSD: 0,
+                amountsUSD: 0,
                 debt: 0,
                 targetRatio: 500,
                 currentRatio: 0
@@ -182,11 +182,11 @@ export default {
                 if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
                     const {
                         lnrJS: {
-                            LinearFinance,
-                            LnCollateralSystem,
-                            LnRewardLocker,
-                            LnDebtSystem,
-                            lUSD
+                            ShumFinance,
+                            ShumCollateralSystem,
+                            ShumRewardLocker,
+                            ShumDebtSystem,
+                            sUSD
                         },
                         utils
                     } = lnrJSConnector;
@@ -194,21 +194,21 @@ export default {
                     const LINABytes = utils.formatBytes32String("SHUM");
 
                     //取合约地址
-                    const LnCollateralSystemAddress =
-                        LnCollateralSystem.contract.address;
+                    const ShumCollateralSystemAddress =
+                        ShumCollateralSystem.contract.address;
 
                     const results = await Promise.all([
-                        LinearFinance.balanceOf(this.walletAddress), //LINA余额
-                        LnCollateralSystem.userCollateralData(
+                        ShumFinance.balanceOf(this.walletAddress), //LINA余额
+                        ShumCollateralSystem.userCollateralData(
                             this.walletAddress,
                             LINABytes
                         ), //staked lina
-                        LnRewardLocker.balanceOf(this.walletAddress), //lock lina
-                        LnDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress), //总债务
-                        LnCollateralSystem.GetUserTotalCollateralInUsd(
+                        ShumRewardLocker.balanceOf(this.walletAddress), //lock lina
+                        ShumDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress), //总债务
+                        ShumCollateralSystem.GetUserTotalCollateralInUsd(
                             this.walletAddress
-                        ), //个人全部抵押物兑lUSD,用于计算pratio
-                        lUSD.balanceOf(this.walletAddress), //lUSD余额
+                        ), //个人全部抵押物兑sUSD,用于计算pratio
+                        sUSD.balanceOf(this.walletAddress), //sUSD余额
                     ]);
 
                     let currentRatioPercent = BigNumber.from("0");
@@ -225,19 +225,19 @@ export default {
                         stakedLina,
                         lockLina,
                         amountDebt,
-                        totalCollateralInUsd, //个人全部抵押物兑lUSD,用于计算pratio
-                        amountlUSD
+                        totalCollateralInUsd, //个人全部抵押物兑sUSD,用于计算pratio
+                        amountsUSD
                     ] = results.map(formatEtherToNumber);
 
-                    const priceRates = await getPriceRates(["SHUM", "lUSD"]);
+                    const priceRates = await getPriceRates(["SHUM", "sUSD"]);
 
-                    this.walletData.LINA2USD = priceRates.LINA / priceRates.lUSD;
+                    this.walletData.LINA2USD = priceRates.LINA / priceRates.sUSD;
 
                     this.walletData.avaliableLINA = avaliableLINA + stakedLina + lockLina;
                     this.walletData.staked = stakedLina;
                     this.walletData.lock = lockLina;
                     this.walletData.debt = amountDebt[0];
-                    this.walletData.amountlUSD = amountlUSD;
+                    this.walletData.amountsUSD = amountsUSD;
                     this.walletData.currentRatio = currentRatioPercent;
 
                     let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
@@ -277,13 +277,13 @@ export default {
             if (this.needLINANum < 0) this.needLINANum = 0;
             if (this.needLINANum > this.walletData.avaliableLINA) this.needBuyLINA = true; //可用lina数量不足
 
-            //计算达到target需要burn多少lusd
-            let canBuildlUSDWhenTargetRatio = ((this.walletData.staked+this.walletData.lock)
+            //计算达到target需要burn多少sUSD
+            let canBuildsUSDWhenTargetRatio = ((this.walletData.staked+this.walletData.lock)
             *this.walletData.LINA2USD)/5;
 
-            this.needlUSDNum = this.walletData.debt - canBuildlUSDWhenTargetRatio;
-            if (this.needlUSDNum < 0) this.needlUSDNum = 0;
-            if (this.needlUSDNum > this.walletData.amountlUSD) this.needBuylUSD = true; //可用lusd数量不足
+            this.needsUSDNum = this.walletData.debt - canBuildsUSDWhenTargetRatio;
+            if (this.needsUSDNum < 0) this.needsUSDNum = 0;
+            if (this.needsUSDNum > this.walletData.amountsUSD) this.needBuysUSD = true; //可用sUSD数量不足
         },
         btnClick(type) {
             if (type == 1) {

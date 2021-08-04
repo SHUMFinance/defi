@@ -101,7 +101,7 @@
                         >
                             <div class="itemLeft">
                                 <div class="itemIcon">
-                                    <img src="@/static/currency/lUSD.svg" />
+                                    <img src="@/static/currency/sUSD.svg" />
                                 </div>
                                 <div class="itemType">
                                     <div class="itemTypeTitle">
@@ -146,7 +146,7 @@
                                     <!-- :formatter=" value => floor(
                                         toNonExponential(value), DECIMAL_PRECISION )
                                     " -->
-                                    <!-- :max="formatEtherToNumber(buildData.maxAvaliablelUSD)" -->
+                                    <!-- :max="formatEtherToNumber(buildData.maxAvaliablesUSD)" -->
                                     <!-- <div class="unit">ℓUSD</div> -->
                                 </div>
                                 <!-- <div class="avaliable">Avaliable : 1,000</div> -->
@@ -283,7 +283,7 @@
                                     </div>
 
                                     <div class="itemType">
-                                        <img src="@/static/currency/lUSD.svg" />
+                                        <img src="@/static/currency/sUSD.svg" />
                                         <div class="itemTypeTitle">
                                             Build ℓUSD
                                         </div>
@@ -656,16 +656,16 @@ export default {
 
                 const {
                     lnrJS: {
-                        LinearFinance,
-                        LnCollateralSystem,
-                        LnRewardLocker,
-                        LnDebtSystem
+                        ShumFinance,
+                        ShumCollateralSystem,
+                        ShumRewardLocker,
+                        ShumDebtSystem
                     },
                     utils
                 } = lnrJSConnector;
 
                 if (this.isEthDevNetwork) {
-                    const avaliableLINA = await LinearFinance.balanceOf(
+                    const avaliableLINA = await ShumFinance.balanceOf(
                         walletAddress
                     ); //LINA余额
 
@@ -678,25 +678,25 @@ export default {
                 } else {
                     const LINABytes = utils.formatBytes32String("SHUM");
                     //取合约地址
-                    const LnCollateralSystemAddress =
-                        LnCollateralSystem.contract.address;
+                    const ShumCollateralSystemAddress =
+                        ShumCollateralSystem.contract.address;
 
                     const results = await Promise.all([
-                        LinearFinance.balanceOf(walletAddress), //LINA余额
-                        LnCollateralSystem.userCollateralData(
+                        ShumFinance.balanceOf(walletAddress), //LINA余额
+                        ShumCollateralSystem.userCollateralData(
                             walletAddress,
                             LINABytes
                         ), //staked lina
-                        LnRewardLocker.balanceOf(walletAddress), //lock lina
-                        LinearFinance.allowance(
+                        ShumRewardLocker.balanceOf(walletAddress), //lock lina
+                        ShumFinance.allowance(
                             walletAddress,
-                            LnCollateralSystemAddress
+                            ShumCollateralSystemAddress
                         ), //已 approved 的 lina 额度
-                        LnDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
+                        ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
                         getBuildRatio(), //目标抵押率
-                        LnCollateralSystem.GetUserTotalCollateralInUsd(
+                        ShumCollateralSystem.GetUserTotalCollateralInUsd(
                             walletAddress
-                        ) //个人全部抵押物兑lUSD,用于计算pratio
+                        ) //个人全部抵押物兑sUSD,用于计算pratio
                     ]);
 
                     const [
@@ -720,11 +720,11 @@ export default {
 
                     const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-                    const priceRates = await getPriceRates(["SHUM", "lUSD"]);
-                    // const priceRates = await getPriceRatesFromApi(["SHUM", "lUSD"]);
+                    const priceRates = await getPriceRates(["SHUM", "sUSD"]);
+                    // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
 
-                    const LINAPrice = priceRates.LINA / priceRates.lUSD;
-                    const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.lUSD);
+                    const LINAPrice = priceRates.LINA / priceRates.sUSD;
+                    const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.sUSD);
 
                     this.buildData.LINA = _.floor(
                         avaliableLINA,
@@ -782,10 +782,10 @@ export default {
                 if (this.isEthDevNetwork) {
                     this.inputData.stake = this.buildData.LINA;
                 } else {
-                    let allCanBuildLUSDAfterStakeAll = n2bn("0");
+                    let allCanBuildsUSDAfterStakeAll = n2bn("0");
 
-                    //抵押所有lina后能生成多少lUSD
-                    allCanBuildLUSDAfterStakeAll = bnDiv(
+                    //抵押所有lina后能生成多少sUSD
+                    allCanBuildsUSDAfterStakeAll = bnDiv(
                         bnMul(
                             bnAdd(
                                 bnAdd(
@@ -799,9 +799,9 @@ export default {
                         n2bn((this.buildData.targetRatio / 100).toString())
                     );
 
-                    //可以生成的lUSD小于等于债务
+                    //可以生成的sUSD小于等于债务
                     if (
-                        allCanBuildLUSDAfterStakeAll.lte(this.buildData.debtBN)
+                        allCanBuildsUSDAfterStakeAll.lte(this.buildData.debtBN)
                     ) {
                         this.errors.amountMsg =
                             "You don't have enough amount of LINA.";
@@ -821,7 +821,7 @@ export default {
                     );
                     this.inputData.amount = formatEtherToNumber(
                         bnSub(
-                            allCanBuildLUSDAfterStakeAll,
+                            allCanBuildsUSDAfterStakeAll,
                             this.buildData.debtBN
                         )
                     );
@@ -829,7 +829,7 @@ export default {
 
                     this.actionData.stake = this.buildData.LINABN;
                     this.actionData.amount = bnSub(
-                        allCanBuildLUSDAfterStakeAll,
+                        allCanBuildsUSDAfterStakeAll,
                         this.buildData.debtBN
                     );
                     this.actionData.ratio = n2bn("500");
@@ -863,7 +863,7 @@ export default {
                         )
                     ) {
                         //抵押率大于目标抵押率，只build，不计算stake
-                        let stakeAndLockToLUSD = bnDiv(
+                        let stakeAndLockTosUSD = bnDiv(
                             bnMul(
                                 bnAdd(
                                     this.buildData.stakedBN,
@@ -879,7 +879,7 @@ export default {
                             _.floor(
                                 formatEtherToNumber(
                                     bnSub(
-                                        stakeAndLockToLUSD,
+                                        stakeAndLockTosUSD,
                                         this.buildData.debtBN
                                     )
                                 ),
@@ -889,7 +889,7 @@ export default {
 
                         this.actionData.stake = n2bn("0");
                         this.actionData.amount = bnSub(
-                            bnSub(stakeAndLockToLUSD, this.buildData.debtBN),
+                            bnSub(stakeAndLockTosUSD, this.buildData.debtBN),
                             n2bn(this.toleranceDifference.toString())
                         ); //增加容错
 
@@ -973,7 +973,7 @@ export default {
                 }
 
                 if (!this.isEthDevNetwork) {
-                    //抵押输入的lina时能生成的最大lusd
+                    //抵押输入的lina时能生成的最大sUSD
                     let canBuildMaxAfterStake = bnDiv(
                         bnMul(
                             bnAdd(
@@ -1052,7 +1052,7 @@ export default {
 
                     this.inputData.ratio = this.buildData.targetRatio;
 
-                    //抵押所有lina后能build最大lusd
+                    //抵押所有lina后能build最大sUSD
                     let canBuildMaxAfterStakeAll = bnDiv(
                         bnMul(
                             bnAdd(
@@ -1067,18 +1067,18 @@ export default {
                         n2bn((this.buildData.targetRatio / 100).toString())
                     );
 
-                    //抵押所有lina后能build最大lusd - debt = 还能build多少
+                    //抵押所有lina后能build最大sUSD - debt = 还能build多少
                     let canBuildAfterStakeAll = bnSub(
                         canBuildMaxAfterStakeAll,
                         this.buildData.debtBN
                     );
 
-                    //抵押所有lina也无法生成lusd
+                    //抵押所有lina也无法生成sUSD
                     if (canBuildAfterStakeAll.lt(n2bn("0"))) {
                         canBuildAfterStakeAll = n2bn("0");
                     }
 
-                    //输入lusd超过最大可build数量
+                    //输入sUSD超过最大可build数量
                     if (
                         n2bn(buildAmount.toString()).gt(canBuildAfterStakeAll)
                     ) {
@@ -1103,7 +1103,7 @@ export default {
                         this.buildData.debtBN
                     );
 
-                    //输入lusd大于现在直接可以build的数量
+                    //输入sUSD大于现在直接可以build的数量
                     if (n2bn(buildAmount.toString()).gt(nowCanBuild)) {
                         let needStakeAmount = bnDiv(
                             bnMul(
@@ -1259,7 +1259,7 @@ export default {
                     }
 
                     if (ratioAmount > this.buildData.currentRatio) {
-                        //上调抵押率，计算stake lina，lusd不动
+                        //上调抵押率，计算stake lina，sUSD不动
                         //计算达成ratioAmount时，需要再stake多少shum
                         let stakeWhenRaisePratio = bnSub(
                             bnDiv(
@@ -1297,7 +1297,7 @@ export default {
                         ratioAmount < this.buildData.currentRatio &&
                         ratioAmount >= this.buildData.targetRatio
                     ) {
-                        //下调抵押率，计算lusd，stake shum不动
+                        //下调抵押率，计算sUSD，stake shum不动
                         //下调抵押率至ratioAmount需要生成多少债务
                         let debtWhenFallPratio = bnDiv(
                             bnMul(
@@ -1310,7 +1310,7 @@ export default {
                             n2bn((ratioAmount / 100).toString())
                         );
 
-                        //下调抵押率至ratioAmount需要build多少lusd
+                        //下调抵押率至ratioAmount需要build多少sUSD
                         let needBuildAmount = bnSub(
                             debtWhenFallPratio,
                             this.buildData.debtBN
@@ -1412,7 +1412,7 @@ export default {
                     ) {
                         await this.startStakingAndBuildContract({
                             stakeAmountLINA: this.actionData.stake,
-                            buildAmountlUSD: this.actionData.amount
+                            buildAmountsUSD: this.actionData.amount
                         });
                     } else if (
                         this.waitProcessArray[this.confirmTransactionStep] ==
@@ -1449,13 +1449,13 @@ export default {
             this.confirmTransactionStatus = false;
 
             const {
-                lnrJS: { LnCollateralSystem, LinearFinance },
+                lnrJS: { ShumCollateralSystem, ShumFinance },
                 utils
             } = lnrJSConnector;
 
             //取合约地址
-            const LnCollateralSystemAddress =
-                LnCollateralSystem.contract.address;
+            const ShumCollateralSystemAddress =
+                ShumCollateralSystem.contract.address;
 
             const transactionSettings = {
                 gasPrice: this.$store.state?.gasDetails?.price,
@@ -1465,12 +1465,12 @@ export default {
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             transactionSettings.gasLimit = await this.getGasEstimateFromApprove(
-                LnCollateralSystemAddress,
+                ShumCollateralSystemAddress,
                 approveAmountLINA
             );
 
-            let transaction = await LinearFinance.approve(
-                LnCollateralSystemAddress,
+            let transaction = await ShumFinance.approve(
+                ShumCollateralSystemAddress,
                 approveAmountLINA,
                 transactionSettings
             );
@@ -1506,9 +1506,9 @@ export default {
 
         //开始抵押和build合约调用
         async startStakingAndBuildContract(
-            { stakeAmountLINA, buildAmountlUSD } = {
+            { stakeAmountLINA, buildAmountsUSD } = {
                 stakeAmountLINA: n2bn("0"),
-                buildAmountlUSD: n2bn("0")
+                buildAmountsUSD: n2bn("0")
             }
         ) {
             this.confirmTransactionStatus = false;
@@ -1530,12 +1530,12 @@ export default {
                 );
             }
 
-            if (buildAmountlUSD.gt(n2bn("0.01"))) {
-                buildAmountlUSD = n2bn(_.floor(bn2n(buildAmountlUSD), 2));
+            if (buildAmountsUSD.gt(n2bn("0.01"))) {
+                buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 2));
             }
 
             const {
-                lnrJS: { LnCollateralSystem },
+                lnrJS: { ShumCollateralSystem },
                 utils
             } = lnrJSConnector;
 
@@ -1546,13 +1546,13 @@ export default {
 
             transactionSettings.gasLimit = await this.getGasEstimateFromStakingAndBuild(
                 stakeAmountLINA,
-                buildAmountlUSD
+                buildAmountsUSD
             );
 
-            let transaction = await LnCollateralSystem.stakeAndBuild(
+            let transaction = await ShumCollateralSystem.stakeAndBuild(
                 utils.formatBytes32String("SHUM"),
                 stakeAmountLINA,
-                buildAmountlUSD,
+                buildAmountsUSD,
                 transactionSettings
             );
 
@@ -1608,7 +1608,7 @@ export default {
             }
 
             const {
-                lnrJS: { LnCollateralSystem },
+                lnrJS: { ShumCollateralSystem },
                 utils
             } = lnrJSConnector;
 
@@ -1623,7 +1623,7 @@ export default {
                 stakeAmountLINA
             );
 
-            let transaction = await LnCollateralSystem.Collateral(
+            let transaction = await ShumCollateralSystem.Collateral(
                 utils.formatBytes32String("SHUM"),
                 stakeAmountLINA,
                 transactionSettings
@@ -1658,13 +1658,13 @@ export default {
         },
 
         //开始Build合约调用
-        async startBuildContract(buildAmountlUSD) {
+        async startBuildContract(buildAmountsUSD) {
             this.confirmTransactionStatus = false;
 
-            buildAmountlUSD = n2bn(_.floor(bn2n(buildAmountlUSD), 2));
+            buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 2));
 
             const {
-                lnrJS: { LnBuildBurnSystem },
+                lnrJS: { ShumBuildBurnSystem },
                 utils
             } = lnrJSConnector;
 
@@ -1676,11 +1676,11 @@ export default {
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             transactionSettings.gasLimit = await this.getGasEstimateFromBuild(
-                buildAmountlUSD
+                buildAmountsUSD
             );
 
-            let transaction = await LnBuildBurnSystem.BuildAsset(
-                buildAmountlUSD,
+            let transaction = await ShumBuildBurnSystem.BuildAsset(
+                buildAmountsUSD,
                 transactionSettings
             );
 
@@ -1717,7 +1717,7 @@ export default {
             try {
                 const {
                     utils,
-                    lnrJS: { LinearFinance }
+                    lnrJS: { ShumFinance }
                 } = lnrJSConnector;
 
                 if (
@@ -1727,7 +1727,7 @@ export default {
                     throw new Error("invalid approveAmountLINA");
                 }
 
-                let gasEstimate = await LinearFinance.contract.estimateGas.approve(
+                let gasEstimate = await ShumFinance.contract.estimateGas.approve(
                     contractAddress,
                     approveAmountLINA
                 );
@@ -1741,25 +1741,25 @@ export default {
         //评估StakingAndBuild的gas
         async getGasEstimateFromStakingAndBuild(
             stakeAmountLINA,
-            buildAmountlUSD
+            buildAmountsUSD
         ) {
             try {
                 const {
-                    lnrJS: { LnCollateralSystem },
+                    lnrJS: { ShumCollateralSystem },
                     utils
                 } = lnrJSConnector;
 
                 if (
                     stakeAmountLINA.lte("0") &&
-                    buildAmountlUSD.lte("0") //小于等于0
+                    buildAmountsUSD.lte("0") //小于等于0
                 ) {
                     throw new Error("invalid input");
                 }
 
-                let gasEstimate = await LnCollateralSystem.contract.estimateGas.stakeAndBuild(
+                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.stakeAndBuild(
                     utils.formatBytes32String("SHUM"),
                     stakeAmountLINA,
-                    buildAmountlUSD
+                    buildAmountsUSD
                 );
 
                 return bufferGasLimit(gasEstimate);
@@ -1773,7 +1773,7 @@ export default {
         async getGasEstimateFromStaking(stakeAmountLINA) {
             try {
                 const {
-                    lnrJS: { LnCollateralSystem },
+                    lnrJS: { ShumCollateralSystem },
                     utils
                 } = lnrJSConnector;
 
@@ -1784,7 +1784,7 @@ export default {
                     throw new Error("invalid stakeAmountLINA");
                 }
 
-                let gasEstimate = await LnCollateralSystem.contract.estimateGas.Collateral(
+                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.Collateral(
                     utils.formatBytes32String("SHUM"),
                     stakeAmountLINA
                 );
@@ -1796,21 +1796,21 @@ export default {
         },
 
         //评估Build的gas
-        async getGasEstimateFromBuild(buildAmountlUSD) {
+        async getGasEstimateFromBuild(buildAmountsUSD) {
             try {
                 const {
-                    lnrJS: { LnBuildBurnSystem },
+                    lnrJS: { ShumBuildBurnSystem },
                     utils
                 } = lnrJSConnector;
 
                 if (
-                    buildAmountlUSD <= 0 //小于等于0
+                    buildAmountsUSD <= 0 //小于等于0
                 ) {
-                    throw new Error("invalid buildAmountlUSD");
+                    throw new Error("invalid buildAmountsUSD");
                 }
 
-                let gasEstimate = await LnBuildBurnSystem.contract.estimateGas.BuildAsset(
-                    buildAmountlUSD
+                let gasEstimate = await ShumBuildBurnSystem.contract.estimateGas.BuildAsset(
+                    buildAmountsUSD
                 );
 
                 return bufferGasLimit(gasEstimate);

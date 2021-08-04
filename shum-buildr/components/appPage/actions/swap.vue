@@ -386,7 +386,7 @@ export default {
             this.processing = true;
             this.initCurrencies();
             const [linaBalance, liquids] = await Promise.all([
-                lnrJSConnector.lnrJS.LinearFinance.balanceOf(
+                lnrJSConnector.lnrJS.ShumFinance.balanceOf(
                     this.walletAddress
                 ),
                 getLiquids(this.walletAddress, true)
@@ -489,7 +489,7 @@ export default {
 
                 let contract;
                 if (this.currency.key == "SHUM") {
-                    contract = lnrJSConnector.lnrJS.LinearFinance;
+                    contract = lnrJSConnector.lnrJS.ShumFinance;
                 } else {
                     contract = lnrJSConnector.lnrJS[this.currency.key];
                 }

@@ -275,14 +275,14 @@ export default {
                     break;
                 case 1:
                     window.open(
-                        "https://www.linkedin.com/company/linearfinance/"
+                        "https://www.linkedin.com/company/ShumFinance/"
                     );
                     break;
                 case 2:
                     window.open("https://medium.com/@linear.finance");
                     break;
                 case 3:
-                    window.open("https://twitter.com/LinearFinance");
+                    window.open("https://twitter.com/ShumFinance");
                     break;
                 default:
                     break;
@@ -335,7 +335,7 @@ export default {
         async getTrackData() {
             try {
                 const {
-                    lnrJS: { lUSD, lBTC, lETH, lHB10 }
+                    lnrJS: { sUSD, sBTC, sETH, lHB10 }
                 } = lnrJSConnector;
 
                 let trackData = { issuedDebt: 0, currentDebt: [] };

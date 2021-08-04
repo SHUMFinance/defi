@@ -13,9 +13,9 @@
         );
   
         
-      this.LUSD = async (txParams) => {
+      this.sUSD = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.LUSD(txParams);
+        return await this.contract.sUSD(txParams);
       };
     
       this.ORACLE_TYPE_BAND = async (txParams) => {
@@ -28,9 +28,9 @@
         return await this.contract.ORACLE_TYPE_CHAINLINK(txParams);
       };
     
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
       this.__ShumOracleRouter_init = async (_admin, txParams) => {

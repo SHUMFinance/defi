@@ -1,196 +1,196 @@
 const currencies = {
-    lUSD: {
-        name: "ℓUSD",
-        fullName: "ℓUSD",
+    sUSD: {
+        name: "sUSD",
+        fullName: "sUSD",
         type: "crypto"
     },
-    lBTC: {
-        name: "ℓBTC",
+    sBTC: {
+        name: "sBTC",
         fullName: "Liquid Bitcoin",
         type: "crypto"
     },
-    lETH: {
-        name: "ℓETH",
+    sETH: {
+        name: "sETH",
         fullName: "Liquid Ether",
         type: "crypto"
     },
     //lBCH: {
-    //    name: "ℓBCH",
-    //    fullName: "ℓBCH",
+    //    name: "sBCH",
+    //    fullName: "sBCH",
     //    type: "crypto"
     //},
     //lEOS: {
-    //    name: "ℓEOS",
-    //    fullName: "ℓEOS",
+    //    name: "sEOS",
+    //    fullName: "sEOS",
     //    type: "crypto"
     //},
     //lLTC: {
-    //    name: "ℓLTC",
-    //    fullName: "ℓLTC",
+    //    name: "sLTC",
+    //    fullName: "sLTC",
     //    type: "crypto"
     //},
-    lXRP: {
-        name: "ℓXRP",
-        fullName: "ℓXRP",
+    sXRP: {
+        name: "sXRP",
+        fullName: "sXRP",
         type: "crypto"
     },
-    lTRX: {
-        name: "ℓTRX",
-        fullName: "ℓTRX",
+    sTRX: {
+        name: "sTRX",
+        fullName: "sTRX",
         type: "crypto"
     },
     //lBSV: {
-    //    name: "ℓBSV",
-    //    fullName: "ℓBSV",
+    //    name: "sBSV",
+    //    fullName: "sBSV",
     //    type: "crypto"
     //},
-    lLINK: {
-        name: "ℓLINK",
-        fullName: "ℓLINK",
+    sLINK: {
+        name: "sLINK",
+        fullName: "sLINK",
         type: "crypto"
     },
     //lZEC: {
-    //    name: "ℓZEC",
-    //    fullName: "ℓZEC",
+    //    name: "sZEC",
+    //    fullName: "sZEC",
     //    type: "crypto"
     //},
     //lNEO: {
-    //    name: "ℓNEO",
-    //    fullName: "ℓNEO",
+    //    name: "sNEO",
+    //    fullName: "sNEO",
     //    type: "crypto"
     //},
-    lBNB: {
-        name: "ℓBNB",
-        fullName: "ℓBNB",
+    sBNB: {
+        name: "sBNB",
+        fullName: "sBNB",
         type: "crypto"
     },
     //lDASH: {
-    //    name: "ℓDASH",
-    //    fullName: "ℓDASH",
+    //    name: "sDASH",
+    //    fullName: "sDASH",
     //    type: "crypto"
     //},
     //lJUST: {
-    //    name: "ℓJUST",
-    //    fullName: "ℓJUST",
+    //    name: "sJUST",
+    //    fullName: "sJUST",
     //    type: "crypto"
     //},
     sDOT: {
-        name: "ℓDOT",
-        fullName: "ℓDOT",
+        name: "sDOT",
+        fullName: "sDOT",
         type: "crypto"
     },
-    lYFI: {
-        name: "ℓYFI",
+    sYFI: {
+        name: "sYFI",
         fullName: "Yearn.finance",
         type: "crypto"
     },
-    lADA: {
-        name: "ℓADA",
+    sADA: {
+        name: "sADA",
         fullName: "Cardano",
         type: "crypto"
     },
-    lXLM: {
-        name: "ℓXLM",
+    sXLM: {
+        name: "sXLM",
         fullName: "Stellar",
         type: "crypto"
     },
     //lXCF: {
-    //    name: "ℓXCF",
-    //    fullName: "ℓXCF",
+    //    name: "sXCF",
+    //    fullName: "sXCF",
     //    type: " "
     //},
-    lXAU: {
-        name: "ℓXAU",
-        fullName: "ℓXAU",
+    sXAU: {
+        name: "sXAU",
+        fullName: "sXAU",
         type: "commodity"
     },
-    lXAG: {
-        name: "ℓXAG",
-        fullName: "ℓXAG",
+    sXAG: {
+        name: "sXAG",
+        fullName: "sXAG",
         type: "commodity"
     },
     //lSOY: {
-    //    name: "ℓSOY",
-    //    fullName: "ℓSOY",
+    //    name: "sSOY",
+    //    fullName: "sSOY",
     //    type: "commodity"
     //},
     //lOIL: {
-    //    name: "ℓOIL",
-    //    fullName: "ℓOIL",
+    //    name: "sOIL",
+    //    fullName: "sOIL",
     //    type: "commodity"
     //},
     //lNIKK: {
-    //    name: "ℓNIKK",
-    //    fullName: "ℓNIKK",
+    //    name: "sNIKK",
+    //    fullName: "sNIKK",
     //    type: "index"
     //},
     //lFTSE: {
-    //    name: "ℓFTSE",
-    //    fullName: "ℓFTSE",
+    //    name: "sFTSE",
+    //    fullName: "sFTSE",
     //    type: "index"
     //},
     //lCAC: {
-    //    name: "ℓCAC",
-    //    fullName: "ℓCAC",
+    //    name: "sCAC",
+    //    fullName: "sCAC",
     //    type: "index"
     //},
     //lDAX: {
-    //    name: "ℓDAX",
-    //    fullName: "ℓDAX",
+    //    name: "sDAX",
+    //    fullName: "sDAX",
     //    type: "index"
     //},
-    lHB10: {
-        name: "ℓHB-10",
+    sHB10: {
+        name: "sHB-10",
         fullName: "Liquid Huobi index",
         type: "index"
     },
-    lXBCI: {
-        name: "ℓXBCI",
+    sXBCI: {
+        name: "sXBCI",
         fullName: "Xangle Blue Chip Index",
         type: "index"
     },
-    lXLCI: {
-        name: "ℓXLCI",
+    sXLCI: {
+        name: "sXLCI",
         fullName: "Xangle Large Cap Index",
         type: "index"
     },
-    lXCI: {
-        name: "ℓXCI",
+    sXCI: {
+        name: "sXCI",
         fullName: "Xangle Cap index",
         type: "index"
     },
-    lUNI: {
-        name: "ℓUNI",
+    sUNI: {
+        name: "sUNI",
         fullName: "Uniswap",
         type: "crypto"
     },
-    lXCU: {
-        name: "ℓXCU",
-        fullName: "ℓXCU",
+    sXCU: {
+        name: "sXCU",
+        fullName: "sXCU",
         type: "commodity"
     },
-    lCHF: {
-        name: "ℓCHF",
-        fullName: "ℓCHF",
+    sCHF: {
+        name: "sCHF",
+        fullName: "sCHF",
         type: "currencies"
     },
-    lJPY: {
-        name: "ℓJPY",
-        fullName: "ℓJPY",
+    sJPY: {
+        name: "sJPY",
+        fullName: "sJPY",
         type: "currencies"
     },
-    lEUR: {
-        name: "ℓEUR",
-        fullName: "ℓEUR",
+    sEUR: {
+        name: "sEUR",
+        fullName: "sEUR",
         type: "currencies"
     },
-    lDOGE: {
-        name: "ℓDOGE",
+    sDOGE: {
+        name: "sDOGE",
         fullName: "Doge Coin",
         type: "crypto"
     },
-    lVET: {
-        name: "ℓVET",
+    sVET: {
+        name: "sVET",
         fullName: "Vechain",
         type: "crypto",
     }
@@ -207,6 +207,6 @@ const requireIcon = () => {
 
 requireIcon();
 
-export const sourceKey = "lUSD";
+export const sourceKey = "sUSD";
 
 export default currencies;

@@ -13,14 +13,14 @@
         );
   
         
-      this.__LnAddressStorage_init = async (_admin, txParams) => {
+      this.__ShumAddressStorage_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAddressStorage_init(_admin, txParams);
+        return await this.contract.__ShumAddressStorage_init(_admin, txParams);
       };
     
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
       this.__ShumAssetSystem_init = async (_admin, txParams) => {

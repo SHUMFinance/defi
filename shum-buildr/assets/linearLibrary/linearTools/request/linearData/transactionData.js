@@ -51,7 +51,7 @@ module.exports = {
                         "account", // the address of the burner
                         "timestamp", // the timestamp when this transaction happened
                         "block", // the block in which this transaction happened
-                        "value", // the issued amount in lUSD
+                        "value", // the issued amount in sUSD
                         "source" //符号
                     ]
                 }
@@ -95,7 +95,7 @@ module.exports = {
                         "account", // the address of the burner
                         "timestamp", // the timestamp when this transaction happened
                         "block", // the block in which this transaction happened
-                        "value", // the burned amount in lUSD
+                        "value", // the burned amount in sUSD
                         "source" //符号
                     ]
                 }
@@ -238,7 +238,7 @@ module.exports = {
                         "account", // the address of the claimer
                         "timestamp", // the timestamp when this transaction happened
                         "block", // the block in which this transaction happened
-                        "rewardslusd",
+                        "rewardssUSD",
                         "rewardsLina"
                     ]
                 }
@@ -250,14 +250,14 @@ module.exports = {
                             account,
                             timestamp,
                             block,
-                            rewardslusd,
+                            rewardssUSD,
                             rewardsLina
                         }) => ({
                             hash: id.split("-")[0],
                             account,
                             timestamp: Number(timestamp * 1000),
                             block: Number(block),
-                            rewardslusd: bn2n(BigNumber.from(rewardslusd)),
+                            rewardssUSD: bn2n(BigNumber.from(rewardssUSD)),
                             rewardsLina: bn2n(BigNumber.from(rewardsLina))
                         })
                     )
@@ -783,7 +783,7 @@ module.exports = {
         userMintOrBurnAssetsCount({
             max = maxRequest,
             account = undefined,
-            source = "lUSD",
+            source = "sUSD",
             networkId = $nuxt.$store.state?.walletNetworkId
         } = {}) {
             return pageResults({

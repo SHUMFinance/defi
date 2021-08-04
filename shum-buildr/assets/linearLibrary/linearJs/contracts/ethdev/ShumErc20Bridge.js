@@ -33,9 +33,9 @@
         return await this.contract.TOKEN_LOCK_TYPE_TRANSFER(txParams);
       };
     
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
       this.__ShumErc20Bridge_init = async (_relayer, _admin, txParams) => {

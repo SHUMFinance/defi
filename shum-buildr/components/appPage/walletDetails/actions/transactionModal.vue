@@ -605,18 +605,18 @@ export default {
                         " " +
                         item.source;
                 } else if (item.type == "Claim") {
-                    let rewardslusd = "";
+                    let rewardssUSD = "";
                     let rewardsLina = "";
                     if (
-                        item.rewardslusd != undefined ||
-                        item.rewardslusd != 0
+                        item.rewardssUSD != undefined ||
+                        item.rewardssUSD != 0
                     ) {
-                        rewardslusd = formatNumber(item.rewardslusd) + " ℓUSD";
+                        rewardssUSD = formatNumber(item.rewardssUSD) + " ℓUSD";
                     }
                     if (!item.rewardsLina || item.rewardsLina != 0) {
                         rewardsLina = formatNumber(item.rewardsLina) + " SHUM";
                     }
-                    amount = "+" + rewardsLina + "&\n" + "+" + rewardslusd;
+                    amount = "+" + rewardsLina + "&\n" + "+" + rewardssUSD;
                 } else {
                     return null;
                 }
@@ -685,8 +685,8 @@ export default {
                         )
                             return false;
                         if (
-                            record.rewardslusd < amountRange.from ||
-                            record.rewardslusd > amountRange.to
+                            record.rewardssUSD < amountRange.from ||
+                            record.rewardssUSD > amountRange.to
                         ) {
                             if (
                                 record.rewardsLina < amountRange.from ||

@@ -6,22 +6,22 @@ import sETH from './sETH';
 import sLINK from './sLINK';
 import sTRX from './sTRX';
 import sDOT from './sDOT';
-import lYFI from './sYFI';
-import lBNB from './sBNB';
-import lADA from './sADA';
-import lXLM from './sXLM';
-import lXAU from './sXAU';
-import lXAG from './sXAG';
-import lEUR from './sEUR';
-import lUNI from './sUNI';
-import lJPY from './sJPY';
-import LnAssetSystem from './ShumAssetSystem';
-import LnErc20Bridge from './ShumErc20Bridge';
-import lXLCI from './sXLCI';
-import lXBCI from './sXBCI';
-import lVET from './sVET';
+import sYFI from './sYFI';
+import sBNB from './sBNB';
+import sADA from './sADA';
+import sXLM from './sXLM';
+import sXAU from './sXAU';
+import sXAG from './sXAG';
+import sEUR from './sEUR';
+import sUNI from './sUNI';
+import sJPY from './sJPY';
+import ShumAssetSystem from './ShumAssetSystem';
+import ShumErc20Bridge from './ShumErc20Bridge';
+import sXLCI from './sXLCI';
+import sXBCI from './sXBCI';
+import sVET from './sVET';
   
   export default {
-    ShumFinance, sUSD, sBTC, sETH, sLINK, sTRX, sDOT, lYFI, lBNB, lADA, lXLM, lXAU, lXAG, lEUR, lUNI, lJPY, LnAssetSystem, LnErc20Bridge, lXLCI, lXBCI, lVET
+    ShumFinance, sUSD, sBTC, sETH, sLINK, sTRX, sDOT, sYFI, sBNB, sADA, sXLM, sXAU, sXAG, sEUR, sUNI, sJPY, ShumAssetSystem, ShumErc20Bridge, sXLCI, sXBCI, sVET
   };
     

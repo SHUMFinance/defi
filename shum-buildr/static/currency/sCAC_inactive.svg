@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>3796D865-9FA5-4911-9CD5-31D692C42AC7</title>
+    <defs>
+        <circle id="path-1" cx="12" cy="12" r="12"></circle>
+    </defs>
+    <g id="🕹-Component" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Market-Icon" transform="translate(-586.000000, -892.000000)">
+            <g id="Icon/Indicies/FR---Inactive" transform="translate(586.000000, 892.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#F6F5F6" xlink:href="#path-1"></use>
+                <g id="FR" mask="url(#mask-2)">
+                    <polygon id="Path" fill="#F8F9FD" fill-rule="nonzero" points="7.8 0 16.2 0 16.2 24 7.8 24"></polygon>
+                    <polygon id="Path" fill="#C1C1C1" points="0 0 7.8 0 7.8 24 0 24"></polygon>
+                    <polygon id="Path" fill="#DEDDDE" points="16.2 0 24 0 24 24 16.2 24"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

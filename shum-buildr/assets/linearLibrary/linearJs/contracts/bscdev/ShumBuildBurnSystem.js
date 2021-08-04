@@ -38,19 +38,19 @@
         return await this.contract.MaxCanBuildAsset(user, txParams);
       };
     
-      this.SetLusdTokenAddress = async (_address, txParams) => {
+      this.SetsUSDTokenAddress = async (_address, txParams) => {
         txParams = txParams || {};
-        return await this.contract.SetLusdTokenAddress(_address, txParams);
+        return await this.contract.SetsUSDTokenAddress(_address, txParams);
       };
     
-      this.__LnAdminUpgradeable_init = async (_admin, txParams) => {
+      this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAdminUpgradeable_init(_admin, txParams);
+        return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__ShumBuildBurnSystem_init = async (admin, _lUSDTokenAddr, txParams) => {
+      this.__ShumBuildBurnSystem_init = async (admin, _sUSDTokenAddr, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__ShumBuildBurnSystem_init(admin, _lUSDTokenAddr, txParams);
+        return await this.contract.__ShumBuildBurnSystem_init(admin, _sUSDTokenAddr, txParams);
       };
     
       this.admin = async (txParams) => {

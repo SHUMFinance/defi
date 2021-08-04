@@ -92,8 +92,8 @@ export const fetchTransactionHistory = async (
                     event.amount
                         ? (event.amount = _.floor(event.amount, event.decimal))
                         : null;
-                    event.rewardslusd
-                        ? (event.rewardslusd = _.floor(event.rewardslusd, 2))
+                    event.rewardssUSD
+                        ? (event.rewardssUSD = _.floor(event.rewardssUSD, 2))
                         : null;
                     event.rewardsLina
                         ? (event.rewardsLina = _.floor(event.rewardsLina, 2))

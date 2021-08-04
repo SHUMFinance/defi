@@ -93,7 +93,7 @@
                         >
                             <div class="itemLeft">
                                 <div class="itemIcon">
-                                    <img src="@/static/currency/lUSD.svg" />
+                                    <img src="@/static/currency/sUSD.svg" />
                                 </div>
                                 <div class="itemType">
                                     <div class="itemTypeTitle">Burn</div>
@@ -271,7 +271,7 @@
                                 <div class="inputBox">
                                     <img
                                         class="logo"
-                                        src="@/static/currency/lUSD.svg"
+                                        src="@/static/currency/sUSD.svg"
                                     />
 
                                     <div class="itemTypeTitle">Burn ℓUSD</div>
@@ -495,7 +495,7 @@ export default {
                 LINA2USD: 0,
                 staked: 0,
                 lock: 0,
-                lUSD: 0,
+                sUSD: 0,
                 debt: 0,
                 targetRatio: 500,
                 currentRatio: 0
@@ -579,7 +579,7 @@ export default {
             try {
                 this.processing = true;
 
-                let LnProxy = lnrJSConnector.lnrJS.LinearFinance;
+                let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                 // if (this.isEthereumNetwork) {
                 //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
                 // } else if (this.isBinanceNetwork) {
@@ -588,10 +588,10 @@ export default {
 
                 const {
                     lnrJS: {
-                        LnCollateralSystem,
-                        lUSD,
-                        LnDebtSystem,
-                        LnRewardLocker
+                        ShumCollateralSystem,
+                        sUSD,
+                        ShumDebtSystem,
+                        ShumRewardLocker
                     },
                     utils
                 } = lnrJSConnector;
@@ -599,24 +599,24 @@ export default {
                 const LINABytes = utils.formatBytes32String("SHUM");
 
                 const results = await Promise.all([
-                    LnCollateralSystem.userCollateralData(
+                    ShumCollateralSystem.userCollateralData(
                         walletAddress,
                         LINABytes
                     ), //LINA抵押数量
-                    LnRewardLocker.balanceOf(walletAddress),
-                    lUSD.balanceOf(walletAddress), //lUSD余额
-                    LnCollateralSystem.GetUserTotalCollateralInUsd(
+                    ShumRewardLocker.balanceOf(walletAddress),
+                    sUSD.balanceOf(walletAddress), //sUSD余额
+                    ShumCollateralSystem.GetUserTotalCollateralInUsd(
                         walletAddress
-                    ), //个人全部抵押物兑lUSD,用于计算pratio
+                    ), //个人全部抵押物兑sUSD,用于计算pratio
                     getBuildRatio(), //目标抵押率
                     LnProxy.balanceOf(walletAddress), //LINA余额
-                    LnDebtSystem.GetUserDebtBalanceInUsd(walletAddress) //总债务
+                    ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress) //总债务
                 ]);
 
                 const [
                     stakingLina,
                     lockLina,
-                    amountlUSD,
+                    amountsUSD,
                     totalCollateralInUsd,
                     buildRatio,
                     avaliableLINA,
@@ -634,11 +634,11 @@ export default {
 
                 const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-                const priceRates = await getPriceRates(["SHUM", "lUSD"]);
-                // const priceRates = await getPriceRatesFromApi(["SHUM", "lUSD"]);
+                const priceRates = await getPriceRates(["SHUM", "sUSD"]);
+                // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
 
-                const LINAPrice = priceRates.LINA / priceRates.lUSD;
-                const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.lUSD);
+                const LINAPrice = priceRates.LINA / priceRates.sUSD;
+                const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.sUSD);
 
                 this.burnData.LINA = _.floor(avaliableLINA, 2);
                 this.burnData.LINABN = results[5];
@@ -652,8 +652,8 @@ export default {
                 this.burnData.lock = _.floor(lockLina, 2);
                 this.burnData.lockBN = results[1];
 
-                this.burnData.lUSD = _.floor(amountlUSD, 2);
-                this.burnData.lUSDBN = results[2];
+                this.burnData.sUSD = _.floor(amountsUSD, 2);
+                this.burnData.sUSDBN = results[2];
 
                 this.burnData.debt = _.floor(amountDebt[0], 2);
                 this.burnData.debtBN = results[6][0];
@@ -781,7 +781,7 @@ export default {
 
             //burn多一点点,防止unstake出错
             let tempBurnAmount = n2bn(_.ceil(bn2n(burnAmount), 2));
-            if (tempBurnAmount.lte(this.burnData.lUSDBN)) {
+            if (tempBurnAmount.lte(this.burnData.sUSDBN)) {
                 burnAmount = tempBurnAmount;
             }
 
@@ -789,7 +789,7 @@ export default {
             unstakeAmount = n2bn(_.floor(bn2n(unstakeAmount), 2));
 
             const {
-                lnrJS: { LnCollateralSystem },
+                lnrJS: { ShumCollateralSystem },
                 utils
             } = lnrJSConnector;
 
@@ -798,7 +798,7 @@ export default {
                 unstakeAmount
             );
 
-            let transaction = await LnCollateralSystem.burnAndUnstake(
+            let transaction = await ShumCollateralSystem.burnAndUnstake(
                 burnAmount,
                 utils.formatBytes32String("SHUM"),
                 unstakeAmount,
@@ -843,18 +843,18 @@ export default {
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             let tempBurnAmount = n2bn(_.ceil(bn2n(burnAmount), 2));
-            if (tempBurnAmount.lte(this.burnData.lUSDBN)) {
+            if (tempBurnAmount.lte(this.burnData.sUSDBN)) {
                 burnAmount = tempBurnAmount;
             }
 
             const {
-                lnrJS: { LnBuildBurnSystem },
+                lnrJS: { ShumBuildBurnSystem },
                 utils
             } = lnrJSConnector;
 
             const burnGasLimit = await this.getBurnGasEstimate(burnAmount);
 
-            let transaction = await LnBuildBurnSystem.BurnAsset(burnAmount, {
+            let transaction = await ShumBuildBurnSystem.BurnAsset(burnAmount, {
                 gasPrice: this.$store.state?.gasDetails?.price,
                 gasLimit: burnGasLimit
             });
@@ -897,7 +897,7 @@ export default {
             unstakeAmount = n2bn(_.floor(bn2n(unstakeAmount), 2));
 
             const {
-                lnrJS: { LnCollateralSystem },
+                lnrJS: { ShumCollateralSystem },
                 utils
             } = lnrJSConnector;
 
@@ -905,7 +905,7 @@ export default {
                 unstakeAmount
             );
 
-            let transaction = await LnCollateralSystem.Redeem(
+            let transaction = await ShumCollateralSystem.Redeem(
                 utils.formatBytes32String("SHUM"),
                 unstakeAmount,
                 {
@@ -948,7 +948,7 @@ export default {
         async getBurnAndUnstakeGasEstimate(burnAmount, unstakeAmount) {
             try {
                 const {
-                    lnrJS: { LnCollateralSystem },
+                    lnrJS: { ShumCollateralSystem },
                     utils
                 } = lnrJSConnector;
 
@@ -959,7 +959,7 @@ export default {
                     throw new Error("invalid input");
                 }
 
-                let gasEstimate = await LnCollateralSystem.contract.estimateGas.burnAndUnstake(
+                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.burnAndUnstake(
                     burnAmount,
                     utils.formatBytes32String("SHUM"),
                     unstakeAmount
@@ -976,11 +976,11 @@ export default {
         async getBurnGasEstimate(burnAmount) {
             try {
                 const {
-                    lnrJS: { LnBuildBurnSystem },
+                    lnrJS: { ShumBuildBurnSystem },
                     utils
                 } = lnrJSConnector;
 
-                let gasEstimate = await LnBuildBurnSystem.contract.estimateGas.BurnAsset(
+                let gasEstimate = await ShumBuildBurnSystem.contract.estimateGas.BurnAsset(
                     burnAmount
                 );
 
@@ -994,11 +994,11 @@ export default {
         async getUnstakeGasEstimate(unstakeAmount) {
             try {
                 const {
-                    lnrJS: { LnCollateralSystem },
+                    lnrJS: { ShumCollateralSystem },
                     utils
                 } = lnrJSConnector;
 
-                let gasEstimate = await LnCollateralSystem.contract.estimateGas.Redeem(
+                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.Redeem(
                     utils.formatBytes32String("SHUM"),
                     unstakeAmount
                 );
@@ -1088,7 +1088,7 @@ export default {
             );
         },
 
-        //点击 Unstake Max 取回本金，不够lUSD就报错
+        //点击 Unstake Max 取回本金，不够sUSD就报错
         clickUnstakeMax() {
             try {
                 this.activeItemBtn = 0;
@@ -1107,7 +1107,7 @@ export default {
                     if (this.burnData.lockBN.eq("0")) {
                         //没有lock lina
                         if (
-                            this.burnData.lUSDBN.eq("0") &&
+                            this.burnData.sUSDBN.eq("0") &&
                             this.burnData.debtBN.gt("0")
                         ) {
                             this.errors.unStakeMsg =
@@ -1115,9 +1115,9 @@ export default {
                             return;
                         }
 
-                        if (this.burnData.lUSDBN.gte(this.burnData.debtBN)) {
-                            //lUSD大于债务
-                            //lUSD足够还清债务则销毁债务数量的lUSD则可取回所有LINA
+                        if (this.burnData.sUSDBN.gte(this.burnData.debtBN)) {
+                            //sUSD大于债务
+                            //sUSD足够还清债务则销毁债务数量的sUSD则可取回所有LINA
                             this.inputData.unStake = formatEtherToNumber(
                                 this.burnData.stakedBN
                             );
@@ -1130,26 +1130,26 @@ export default {
                             this.actionDatas.amount = this.burnData.debtBN;
                             this.actionDatas.ratio = null;
                         } else {
-                            //lUSD不足还清债务则报错
+                            //sUSD不足还清债务则报错
                             this.errors.unStakeMsg =
                                 "You don't have enough amount of ℓUSD.";
                         }
                     } else {
                         //有lock lina
-                        //计算当前价格的lock lina能生成多少lusd
-                        let lockLINAToLUSDBN = this.burnData.lockBN.mul(
+                        //计算当前价格的lock lina能生成多少sUSD
+                        let lockLINATosUSDBN = this.burnData.lockBN.mul(
                             this.burnData.LINA2USDBN
                         );
 
-                        let lockLINAToBuildLUSDBN = this.burnData.lockBN
+                        let lockLINAToBuildsUSDBN = this.burnData.lockBN
                             .mul(this.burnData.LINA2USDBN)
                             .div(
                                 n2bn(
                                     (this.burnData.targetRatio / 100).toString()
                                 )
                             );
-                        if (this.burnData.debtBN.lte(lockLINAToBuildLUSDBN)) {
-                            //债务 <= lockLINAToLUSDBN 时，则可以直接解锁所有stake shum
+                        if (this.burnData.debtBN.lte(lockLINAToBuildsUSDBN)) {
+                            //债务 <= lockLINATosUSDBN 时，则可以直接解锁所有stake shum
 
                             this.inputData.unStake = formatEtherToNumber(
                                 this.burnData.stakedBN
@@ -1171,22 +1171,22 @@ export default {
                                 //有债务
                                 this.inputData.ratio = formatEtherToNumber(
                                     bnDiv(
-                                        lockLINAToLUSDBN,
+                                        lockLINATosUSDBN,
                                         this.burnData.debtBN
                                     )
                                 );
                                 this.actionDatas.ratio = bnDiv(
-                                    lockLINAToLUSDBN,
+                                    lockLINATosUSDBN,
                                     this.burnData.debtBN
                                 );
                             }
                         } else {
                             let stakeDebt = this.burnData.debtBN.sub(
-                                lockLINAToBuildLUSDBN
+                                lockLINAToBuildsUSDBN
                             ); //取回所有stake所需还的债务
 
-                            if (this.burnData.lUSDBN.gte(stakeDebt)) {
-                                //lUSD足够还清债务则销毁债务数量的lUSD则可取回所有LINA
+                            if (this.burnData.sUSDBN.gte(stakeDebt)) {
+                                //sUSD足够还清债务则销毁债务数量的sUSD则可取回所有LINA
                                 this.inputData.unStake = formatEtherToNumber(
                                     this.burnData.stakedBN
                                 );
@@ -1195,19 +1195,19 @@ export default {
                                 );
                                 this.inputData.ratio =
                                     formatEtherToNumber(
-                                        lockLINAToLUSDBN.div(
-                                            lockLINAToBuildLUSDBN
+                                        lockLINATosUSDBN.div(
+                                            lockLINAToBuildsUSDBN
                                         )
                                     ) * 100;
 
                                 this.actionDatas.unStake = this.burnData.stakedBN;
                                 this.actionDatas.amount = stakeDebt;
                                 this.actionDatas.ratio = bnDiv(
-                                    lockLINAToLUSDBN,
-                                    lockLINAToBuildLUSDBN
+                                    lockLINATosUSDBN,
+                                    lockLINAToBuildsUSDBN
                                 );
                             } else {
-                                //lUSD不足还清债务则报错
+                                //sUSD不足还清债务则报错
                                 this.errors.unStakeMsg =
                                     "You don't have enough amount of ℓUSD.";
                             }
@@ -1217,7 +1217,7 @@ export default {
             } catch (error) {}
         },
 
-        //点击 Burn Max 销毁lUSD，取回能取回的最大本金
+        //点击 Burn Max 销毁sUSD，取回能取回的最大本金
         clickBurnMax() {
             try {
                 this.activeItemBtn = 1;
@@ -1235,14 +1235,14 @@ export default {
                         return;
                     }
 
-                    if (this.burnData.lUSDBN.eq("0")) {
+                    if (this.burnData.sUSDBN.eq("0")) {
                         this.errors.amountMsg =
                             "You don't have enough amount of ℓUSD.";
                         return;
                     }
 
-                    if (this.burnData.lUSDBN.gte(this.burnData.debtBN)) {
-                        //lUSD >= debt
+                    if (this.burnData.sUSDBN.gte(this.burnData.debtBN)) {
+                        //sUSD >= debt
                         this.inputData.unStake = formatEtherToNumber(
                             this.burnData.stakedBN
                         );
@@ -1255,15 +1255,15 @@ export default {
                         this.actionDatas.amount = this.burnData.debtBN;
                         this.actionDatas.ratio = null;
                     } else {
-                        //lUSD < debt
+                        //sUSD < debt
                         this.inputData.amount = formatEtherToNumber(
-                            this.burnData.lUSDBN
+                            this.burnData.sUSDBN
                         );
-                        this.actionDatas.amount = this.burnData.lUSDBN;
+                        this.actionDatas.amount = this.burnData.sUSDBN;
 
                         let ratioAfterBurn = n2bn("0");
 
-                        //lUSD不足还清所有债务，则计算销毁所有lUSD后的抵押率，大于目标则解锁大于部分，小于等于则不解锁LINA
+                        //sUSD不足还清所有债务，则计算销毁所有sUSD后的抵押率，大于目标则解锁大于部分，小于等于则不解锁LINA
                         ratioAfterBurn = bnMul(
                             bnDiv(
                                 bnMul(
@@ -1275,7 +1275,7 @@ export default {
                                 ),
                                 bnSub(
                                     this.burnData.debtBN,
-                                    this.burnData.lUSDBN
+                                    this.burnData.sUSDBN
                                 )
                             ),
                             n2bn("100")
@@ -1339,7 +1339,7 @@ export default {
                         //                                     ),
                         //                                     bnSub(
                         //                                         this.burnData.debtBN,
-                        //                                         this.burnData.lUSDBN
+                        //                                         this.burnData.sUSDBN
                         //                                     )
                         //                                 ),
                         //                                 n2bn('100')
@@ -1413,11 +1413,11 @@ export default {
                             n2bn(this.burnData.targetRatio.toString())
                         )
                     ) {
-                        //上调抵押率，看当前抵押率上调到目标抵押率需要还多少债务，如果lUSD余额大于等于要还的则销毁，低于则报错
-                        let retainlUSD = n2bn("0"),
-                            burnlUSD = n2bn("0"); //上调抵押率需要保留/销毁多少lUSD
+                        //上调抵押率，看当前抵押率上调到目标抵押率需要还多少债务，如果sUSD余额大于等于要还的则销毁，低于则报错
+                        let retainsUSD = n2bn("0"),
+                            burnsUSD = n2bn("0"); //上调抵押率需要保留/销毁多少sUSD
 
-                        retainlUSD = bnDiv(
+                        retainsUSD = bnDiv(
                             bnMul(
                                 bnAdd(
                                     this.burnData.stakedBN,
@@ -1428,19 +1428,19 @@ export default {
                             n2bn((this.burnData.targetRatio / 100).toString())
                         );
 
-                        burnlUSD = bnSub(this.burnData.debtBN, retainlUSD);
+                        burnsUSD = bnSub(this.burnData.debtBN, retainsUSD);
 
-                        if (this.burnData.lUSDBN.lt(burnlUSD)) {
+                        if (this.burnData.sUSDBN.lt(burnsUSD)) {
                             this.errors.ratioMsg =
                                 "You don't have enough amount of ℓUSD.";
                         }
 
                         this.inputData.unStake = 0;
-                        this.inputData.amount = formatEtherToNumber(burnlUSD);
+                        this.inputData.amount = formatEtherToNumber(burnsUSD);
                         this.inputData.ratio = this.burnData.targetRatio;
 
                         this.actionDatas.unStake = n2bn("0");
-                        this.actionDatas.amount = burnlUSD;
+                        this.actionDatas.amount = burnsUSD;
                         this.actionDatas.ratio = n2bn(
                             this.burnData.targetRatio.toString()
                         );
@@ -1489,7 +1489,7 @@ export default {
 
                     //一个LINA都解锁不了
                     if (
-                        this.burnData.lUSDBN.eq("0") &&
+                        this.burnData.sUSDBN.eq("0") &&
                         this.burnData.currentRatioBN.lte(
                             n2bn(this.burnData.targetRatio.toString())
                         ) &&
@@ -1511,25 +1511,25 @@ export default {
                         return;
                     }
 
-                    //当前价格的lock lina能生成多少lusd
-                    let lockLINAToBuildLUSDBN = bnDiv(
+                    //当前价格的lock lina能生成多少sUSD
+                    let lockLINAToBuildsUSDBN = bnDiv(
                         bnMul(this.burnData.lockBN, this.burnData.LINA2USDBN),
                         n2bn((this.burnData.targetRatio / 100).toString())
                     );
                     //取回所有stake所需还的债务
                     let stakeDebt = bnSub(
                         this.burnData.debtBN,
-                        lockLINAToBuildLUSDBN
+                        lockLINAToBuildsUSDBN
                     );
 
                     let allCanUnstakeAfterBurn = n2bn("0");
 
                     //判断输入的值是否超过能解锁的最大LINA
-                    //够lUSD还债，则可以解锁所有LINA
-                    if (this.burnData.lUSDBN.gte(stakeDebt)) {
+                    //够sUSD还债，则可以解锁所有LINA
+                    if (this.burnData.sUSDBN.gte(stakeDebt)) {
                         allCanUnstakeAfterBurn = this.burnData.stakedBN;
                     } else {
-                        //lUSD不足还清所有债务，则计算销毁所有lUSD后的抵押率，大于目标则解锁大于部分，小于等于则不解锁LINA
+                        //sUSD不足还清所有债务，则计算销毁所有sUSD后的抵押率，大于目标则解锁大于部分，小于等于则不解锁LINA
                         let ratioAfterBurn = bnMul(
                             bnDiv(
                                 bnMul(
@@ -1541,13 +1541,13 @@ export default {
                                 ),
                                 bnSub(
                                     this.burnData.debtBN,
-                                    this.burnData.lUSDBN
+                                    this.burnData.sUSDBN
                                 )
                             ),
                             n2bn("100")
                         );
 
-                        //销毁所有lUSD后抵押率不超过目标抵押率，则不能解锁LINA
+                        //销毁所有sUSD后抵押率不超过目标抵押率，则不能解锁LINA
                         if (
                             ratioAfterBurn.lte(
                                 n2bn(this.burnData.targetRatio.toString())
@@ -1559,7 +1559,7 @@ export default {
                             return;
                         }
 
-                        //用销毁所有lUSD后超额的抵押率算
+                        //用销毁所有sUSD后超额的抵押率算
                         allCanUnstakeAfterBurn = bnMul(
                             bnAdd(this.burnData.stakedBN, this.burnData.lockBN),
                             bnDiv(
@@ -1605,7 +1605,7 @@ export default {
                             n2bn(this.burnData.targetRatio.toString())
                         )
                     ) {
-                        let retainlUSD = bnDiv(
+                        let retainsUSD = bnDiv(
                             bnMul(
                                 bnAdd(
                                     this.burnData.stakedBN,
@@ -1616,7 +1616,7 @@ export default {
                             n2bn((this.burnData.targetRatio / 100).toString())
                         );
 
-                        needFixRatio = bnSub(this.burnData.debtBN, retainlUSD);
+                        needFixRatio = bnSub(this.burnData.debtBN, retainsUSD);
                     }
 
                     let needBurnAmount = n2bn("0");
@@ -1692,14 +1692,14 @@ export default {
             }
         },
 
-        //输入要销毁lUSD数量
+        //输入要销毁sUSD数量
         changeAmount(burnAmount) {
             try {
                 if (this.isBinanceNetwork) {
                     this.resetErrorsMsg();
                     // this.resetInputData();
 
-                    if (!burnAmount || this.burnData.lUSDBN.eq("0")) {
+                    if (!burnAmount || this.burnData.sUSDBN.eq("0")) {
                         this.errors.amountMsg =
                             "You can't burn the amount of ℓUSD.";
                         return;
@@ -1718,7 +1718,7 @@ export default {
                         return;
                     }
 
-                    if (n2bn(burnAmount.toString()).gt(this.burnData.lUSDBN)) {
+                    if (n2bn(burnAmount.toString()).gt(this.burnData.sUSDBN)) {
                         this.inputData.amount = burnAmount;
                         this.errors.amountMsg =
                             "You don't have enough amount of ℓUSD.";
@@ -1743,7 +1743,7 @@ export default {
                         n2bn("100")
                     );
 
-                    ////用输入的lUSD销毁后超额的抵押率算，不超过目标抵押率，则不能解锁LINA
+                    ////用输入的sUSD销毁后超额的抵押率算，不超过目标抵押率，则不能解锁LINA
                     if (
                         ratioAfterBurnInputAmount.lte(
                             n2bn(this.burnData.targetRatio.toString())
@@ -1761,7 +1761,7 @@ export default {
                         return;
                     }
 
-                    //用输入的lUSD销毁后超额的抵押率算
+                    //用输入的sUSD销毁后超额的抵押率算
                     let allCanUnstakedLINAAfterBurn = bnMul(
                         bnAdd(this.burnData.stakedBN, this.burnData.lockBN),
                         bnDiv(
@@ -1861,7 +1861,7 @@ export default {
 
                     let maxRatioAfterBurnMax = n2bn("0");
 
-                    if (this.burnData.lUSDBN.lt(this.burnData.debtBN)) {
+                    if (this.burnData.sUSDBN.lt(this.burnData.debtBN)) {
                         maxRatioAfterBurnMax = bnMul(
                             bnDiv(
                                 bnMul(
@@ -1873,7 +1873,7 @@ export default {
                                 ),
                                 bnSub(
                                     this.burnData.debtBN,
-                                    this.burnData.lUSDBN
+                                    this.burnData.sUSDBN
                                 )
                             ),
                             n2bn("100")
@@ -1890,9 +1890,9 @@ export default {
                     }
 
                     if (ratioAmount > this.burnData.currentRatio) {
-                        //上调抵押率，计算lUSD，LINA为0，调整抵押率最大为无限大，也就是销毁所有lUSD
-                        //计算达成 ratioAmount 时，抵押的LINA价值多少lUSD
-                        let retainlUSD = bnDiv(
+                        //上调抵押率，计算sUSD，LINA为0，调整抵押率最大为无限大，也就是销毁所有sUSD
+                        //计算达成 ratioAmount 时，抵押的LINA价值多少sUSD
+                        let retainsUSD = bnDiv(
                             bnMul(
                                 bnAdd(
                                     this.burnData.stakedBN,
@@ -1902,13 +1902,13 @@ export default {
                             ),
                             n2bn((ratioAmount / 100).toString())
                         );
-                        let burnlUSD = bnSub(this.burnData.debtBN, retainlUSD); //债务 - 抵押的LINA价值多少lUSD = 需要销毁的lUSD
+                        let burnsUSD = bnSub(this.burnData.debtBN, retainsUSD); //债务 - 抵押的LINA价值多少sUSD = 需要销毁的sUSD
 
                         this.inputData.unStake = 0;
                         this.actionDatas.unStake = n2bn("0");
 
-                        this.inputData.amount = formatEtherToNumber(burnlUSD);
-                        this.actionDatas.amount = burnlUSD;
+                        this.inputData.amount = formatEtherToNumber(burnsUSD);
+                        this.actionDatas.amount = burnsUSD;
 
                         this.inputData.ratio = ratioAmount;
                         this.actionDatas.ratio = n2bn(ratioAmount.toString());
@@ -1978,7 +1978,7 @@ export default {
                             }
                         }
 
-                        //下调抵押率，lUSD为0，计算LINA
+                        //下调抵押率，sUSD为0，计算LINA
                         //计算达成 ratioAmount 时，需要抵押多少LINA
                         let retainStake = bnDiv(
                             bnMul(
