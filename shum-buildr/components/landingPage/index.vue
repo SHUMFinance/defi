@@ -315,7 +315,11 @@ export default {
         },
 
         async selectedWallet(walletType) {
+            console.log("xxl index.vue 00 selectedWallet " + walletType);
             const status = await checkNetwork();
+
+            console.log("xxl index.vue 01 selectedWallet " + status);
+            
             if (status) {
                 await selectedWallet(walletType);
             } else {

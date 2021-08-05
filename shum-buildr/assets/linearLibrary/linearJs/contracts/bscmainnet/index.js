@@ -1,5 +1,4 @@
-
-  import ShumFinance from './ShumFinance';
+import ShumFinance from './ShumFinance';
 import ShumAssetSystem from './ShumAssetSystem';
 import ShumBuildBurnSystem from './ShumBuildBurnSystem';
 import ShumConfig from './ShumConfig';
@@ -29,7 +28,7 @@ import sXBCI from './sXBCI';
 import sVET from './sVET';
 import ShumLiquidation from './ShumLiquidation';
   
-  export default {
-    ShumFinance, ShumAssetSystem, ShumBuildBurnSystem, ShumConfig, ShumOracleRouter, ShumDebtSystem, ShumCollateralSystem, ShumRewardLocker, sUSD, ShumRewardSystem, ShumErc20Bridge, sBTC, sETH, sLINK, sTRX, sDOT, sYFI, sBNB, sADA, sXLM, sXAU, sXAG, sEUR, sUNI, sJPY, sXLCI, sXBCI, sVET, ShumLiquidation
-  };
+export default {
+  ShumFinance, ShumAssetSystem, ShumBuildBurnSystem, ShumConfig, ShumOracleRouter, ShumDebtSystem, ShumCollateralSystem, ShumRewardLocker, sUSD, ShumRewardSystem, ShumErc20Bridge, sBTC, sETH, sLINK, sTRX, sDOT, sYFI, sBNB, sADA, sXLM, sXAU, sXAG, sEUR, sUNI, sJPY, sXLCI, sXBCI, sVET, ShumLiquidation
+};
     

@@ -1,32 +1,26 @@
 
       import {Contract} from 'ethers';
       import ContractSettings from '../../contractSettings';
-      import abi from '../../lib/abis/bscmainnet/ShumFinance';
+      import abi from '../../lib/abis/bscdev/sBTC';
   
-      function ShumFinance(contractSettings) {
+      function sBTC(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
-        
-        
+  
         this.contract = new Contract(
-          this.contractSettings.addressList['ShumFinance'],
+          this.contractSettings.addressList['sBTC'],
           abi,
           this.contractSettings.signer || this.contractSettings.provider
         );
   
         
-      this.MAX_SUPPLY = async (txParams) => {
-        txParams = txParams || {};
-        return await this.contract.MAX_SUPPLY(txParams);
-      };
-    
-      this.__ShumFinance_init = async (_admin, txParams) => {
-        txParams = txParams || {};
-        return await this.contract.__ShumFinance_init(_admin, txParams);
-      };
-    
       this.__ShumAdminUpgradeable_init = async (_admin, txParams) => {
         txParams = txParams || {};
         return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
+      };
+    
+      this.__LnAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
+        txParams = txParams || {};
+        return await this.contract.__LnAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
@@ -79,6 +73,11 @@
         return await this.contract.increaseAllowance(spender, addedValue, txParams);
       };
     
+      this.keyName = async (txParams) => {
+        txParams = txParams || {};
+        return await this.contract.keyName(txParams);
+      };
+    
       this.mint = async (account, amount, txParams) => {
         txParams = txParams || {};
         return await this.contract.mint(account, amount, txParams);
@@ -114,7 +113,12 @@
         return await this.contract.transferFrom(sender, recipient, amount, txParams);
       };
     
+      this.updateAddressCache = async (_addressStorage, txParams) => {
+        txParams = txParams || {};
+        return await this.contract.updateAddressCache(_addressStorage, txParams);
+      };
+    
       }
   
-      export default ShumFinance;
+      export default sBTC;
     

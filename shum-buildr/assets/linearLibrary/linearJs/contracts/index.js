@@ -1,10 +1,9 @@
-
-  import mainnet from './mainnet';
+import mainnet from './mainnet';
+import ropsten from './ropsten';
 import bscmainnet from './bscmainnet';
-import ethdev from './ethdev';
-import bscdev from './bscdev';
+import bsctestnet from './bsctestnet';
   
-  export default {
-    mainnet, bscmainnet, ethdev, bscdev
-  };
+export default {
+    mainnet, ropsten, bscmainnet, bsctestnet
+};
     

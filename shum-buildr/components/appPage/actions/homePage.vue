@@ -161,6 +161,9 @@ export default {
         },
     },
     created() {
+
+        console.log("xxl created computed");
+
          //订阅钱包账户改变事件
          this.$pub.subscribe("onWalletAccountChange", (msg, params) => {
             this.walletStatusChange();
@@ -171,6 +174,7 @@ export default {
         });
     },
     mounted() {
+        console.log("xxl checkLiquidation : ");
         this.checkLiquidation();
     },
     methods: {
@@ -178,6 +182,7 @@ export default {
             try {
                 this.currentRatioStatus = 0;
 
+                console.log("xxl homePage checkLiquidation ...");
                 //如果是bsc main/bsc(私链)则检查liquidation buildr一定时链接了钱包才能进到homepage，所以无需检查是否有钱包连接
                 if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
                     const {

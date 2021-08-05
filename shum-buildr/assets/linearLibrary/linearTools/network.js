@@ -12,8 +12,8 @@ import api from "@/api";
  */
 export const ETHEREUM_NETWORKS = {
     1: "MAINNET",
-    // 3: "ROPSTEN",
-    10001: "ETHDEV"
+    3: "ROPSTEN",
+    //10001: "ETHDEV"
 };
 
 /**
@@ -21,8 +21,8 @@ export const ETHEREUM_NETWORKS = {
  */
 export const BINANCE_NETWORKS = {
     56: "BSCMAINNET",
-    // 97: "BSCTESTNET",
-    10056: "BSCDEV"
+    97: "BSCTESTNET",
+    //10056: "BSCDEV"
 };
 
 /**
@@ -37,42 +37,42 @@ export const MAINNET_NETWORKS = {
  * 测试网网络
  */
 export const TESTNET_NETWORKS = {
-    // 3: "ROPSTEN",
-    // 97: "BSCTESTNET",
-    10001: "ETHDEV",
-    10056: "BSCDEV"
-};
-
-export const ETHDEV_NETWORKS = {
-    10001: "ETHDEV"
-};
-
-export const BSCDEV_NETWORKS = {
-    10056: "BSCDEV"
-};
-
-export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
-
-const MAINNET_RELATIVE_NETWORKS = {
-    1: "MAINNET",
-    56: "BSCMAINNET"
-};
-
-const TESTNET_RELATIVE_NETWORKS = {
     3: "ROPSTEN",
-    97: "BSCTESTNET"
+    97: "BSCTESTNET",
+    //10001: "ETHDEV",
+    //10056: "BSCDEV"
 };
 
-const DEV_RELATIVE_NETWORKS = {
-    10001: "ETHDEV",
-    10056: "BSCDEV"
-};
+// export const ETHDEV_NETWORKS = {
+//     10001: "ETHDEV"
+// };
 
-//有liquidation的网络
-export const LIQUIDATION_NETWORKS = {
-    56: "BSCMAINNET",
-    10056: "BSCDEV"
-};
+// export const BSCDEV_NETWORKS = {
+//     10056: "BSCDEV"
+// };
+
+// export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
+
+// const MAINNET_RELATIVE_NETWORKS = {
+//     1: "MAINNET",
+//     56: "BSCMAINNET"
+// };
+
+// const TESTNET_RELATIVE_NETWORKS = {
+//     3: "ROPSTEN",
+//     97: "BSCTESTNET"
+// };
+
+// const DEV_RELATIVE_NETWORKS = {
+//     10001: "ETHDEV",
+//     10056: "BSCDEV"
+// };
+
+// //有liquidation的网络
+// export const LIQUIDATION_NETWORKS = {
+//     56: "BSCMAINNET",
+//     10056: "BSCDEV"
+// };
 
 export const isEthereumNetwork = walletNetworkId =>
     ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);

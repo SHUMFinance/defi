@@ -3,11 +3,11 @@ import addresses from "./lib/addresses";
 
 const SUPPORTED_NETWORKS = {
     1: "mainnet",
-    // 3: "ropsten",
+    3: "ropsten",
     56: "bscmainnet", //bsc主网
-    // 97: "bsctestnet", //bsc测试网
-    10001: "ethdev", // eth dev
-    10056: "bscdev" //bsc dev
+    97: "bsctestnet", //bsc测试网
+    //10001: "ethdev", // eth dev
+    //10056: "bscdev" //bsc dev
 };
 
 const API_KEY = {
@@ -18,9 +18,9 @@ const API_KEY = {
 
 export const RPC_URL = {
     56: "https://bsc-dataseed1.binance.org",
-    // 97: "https://data-seed-prebsc-1-s3.binance.org:8545",
-    10001: "https://master.http.eth.dev.linear.finance",
-    10056: "https://master.http.bsc.dev.linear.finance"
+    97: "https://data-seed-prebsc-1-s3.binance.org:8545",
+    // 10001: "https://master.http.eth.dev.linear.finance",
+    // 10056: "https://master.http.bsc.dev.linear.finance"
 };
 
 class ContractSettings {
@@ -33,7 +33,8 @@ class ContractSettings {
         if (!provider && networkId) {
             let tempNetwork = this.network;
 
-            if ([56, 97, 10001, 10056].includes(this.networkId)) {
+            // if ([56, 97, 10001, 10056].includes(this.networkId)) {
+            if ([56, 97].includes(this.networkId)) {
                 tempNetwork = RPC_URL[this.networkId];
             }
             this.provider = getDefaultProvider(tempNetwork, API_KEY);

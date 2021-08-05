@@ -12,6 +12,8 @@ async function start() {
     // Instantiate nuxt.js
     const nuxt = new Nuxt(config);
 
+    console.log("xxl start 000");
+
     const {
         host = process.env.HOST || "127.0.0.1",
         port = process.env.PORT || process.env.SERVER_PORT

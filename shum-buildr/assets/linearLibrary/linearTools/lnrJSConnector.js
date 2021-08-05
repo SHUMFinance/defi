@@ -23,10 +23,21 @@ import { UpdateWalletConnectSigner } from "../linearJs/lib/signers/walletConnect
 let lnrJSConnector = {
     signers: LinearJs.signers,
     setContractSettings: function(contractSettings) {
+
+        console.log(1);
+        console.log(contractSettings);
+        
         this.lnrJS = new LinearJs(contractSettings);
+        console.log(2);
+        console.log(this.lnrJS.contractSettings);
+
+
         this.signer = this.lnrJS.contractSettings.signer;
+        console.log(3);
         this.provider = this.lnrJS.contractSettings.provider;
+        console.log(4);
         this.utils = this.lnrJS.utils;
+        console.log(5);
     }
 };
 
@@ -37,6 +48,8 @@ export const defaultNetwork = {
 
 export const connectToWallet = async networkType => {
     try {
+        console.log("xxl come to connectToWallet networkType");
+
         let network;
         let registeredWalletConnectEvents =
             $nuxt.$store.state?.registeredWalletConnectEvents;
@@ -63,8 +76,10 @@ export const connectToWallet = async networkType => {
 
         const { name, networkId } = network;
 
-        //  [1, 56].includes(networkId)
+        console.log("xxl name : " + name + " networkId : " + networkId);
 
+        //  [1, 56].includes(networkId)
+        console.log("1");
         if (!SUPPORTED_NETWORKS[networkId]) {
             $nuxt.$store.commit("setAutoConnect", false);
             $nuxt.$store.commit("setWalletType", "");
@@ -73,11 +88,15 @@ export const connectToWallet = async networkType => {
             throw new Error("not support network");
         }
 
+        console.log("2");
         //当连接方式为wallet_connect 且已经设置监听方式时,不要再去重新生成signer，改用updateWalletConnectWeb3Provider去更新provider
         if (!registeredWalletConnectEvents) {
             setSigner({ type: networkType, networkId });
         }
 
+        //setSigner({ type: networkType, networkId });
+
+        console.log("3");
         switch (networkType) {
             case SUPPORTED_WALLETS_MAP.METAMASK:
                 return connectToMetamask(networkId, name);
@@ -88,6 +107,7 @@ export const connectToWallet = async networkType => {
             default:
                 return {};
         }
+
     } catch (error) {
         console.log(error, "connectToWallet error");
         return {};
@@ -95,6 +115,10 @@ export const connectToWallet = async networkType => {
 };
 
 const connectToMetamask = async (networkId, networkName) => {
+
+    console.log("xxl come to connectToMetamask networkType networkName");
+
+
     const walletState = {
         walletType: SUPPORTED_WALLETS_MAP.METAMASK
     };
@@ -105,6 +129,11 @@ const connectToMetamask = async (networkId, networkName) => {
         }
 
         const accounts = await lnrJSConnector.signer.getNextAddresses();
+
+        console.log("xxl the accounts is :");
+        console.log(accounts);
+
+
         if (accounts && accounts.length > 0) {
             return {
                 ...walletState,
@@ -127,6 +156,8 @@ const connectToMetamask = async (networkId, networkName) => {
 };
 
 const connectToBinance = async (networkId, networkName) => {
+
+    console.log("xxl come to connectToWallet connectToBinance");
     const walletState = {
         walletType: SUPPORTED_WALLETS_MAP.BINANCE_CHAIN
     };
@@ -158,6 +189,8 @@ const connectToBinance = async (networkId, networkName) => {
 };
 
 const connectToWalletConnect = async (networkId, networkName) => {
+
+    console.log("xxl come to connectToWalletConnect");
     const walletState = {
         walletType: SUPPORTED_WALLETS_MAP.WALLET_CONNECT
     };
@@ -224,13 +257,24 @@ const updateWalletConnectWeb3Provider = ({ type, networkId }) => {
 };
 
 export const setSigner = ({ type, networkId }) => {
+
+    console.log("xxl set signer type :" + type + " networkId:" + networkId);
+
     const signer = new lnrJSConnector.signers[type](
         getSignerConfig({ type, networkId })
     );
+
+    console.log("xxl signer ...");
+    console.log(signer);
+    console.log("xxl signer end ");
+
     lnrJSConnector.setContractSettings({
         networkId,
         signer
     });
+
+    console.log("xxl setContractSettings end ");
+
 };
 
 const getSignerConfig = ({ type, networkId }) => {
@@ -251,6 +295,10 @@ const getSignerConfig = ({ type, networkId }) => {
  * @param waitStore  是否等待数据获取完成
  */
 export const selectedWallet = async (walletType, waitStore = true) => {
+
+
+    console.log("xxl selectedWallet ...");
+
     //walletType = SUPPORTED_WALLETS_MAP.WALLET_CONNECT;
     try {
         //连接钱包
