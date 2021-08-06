@@ -215,6 +215,7 @@ export const getPriceRatesFromApi = async currency => {
  * 保存详情面板下所有数据到store中
  */
 export const storeDetailsData = async () => {
+
     const store = $nuxt.$store;
     const walletAddress = store.state?.wallet?.address;
 
@@ -223,7 +224,6 @@ export const storeDetailsData = async () => {
 
         //之前状态
         // const status = store.state?.wallet?.status;
-
         try {
             await store.commit("mergeWallet", {
                 status: WALLET_STATUS.UPDATING

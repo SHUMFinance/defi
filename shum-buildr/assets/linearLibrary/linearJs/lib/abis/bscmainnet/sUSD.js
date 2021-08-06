@@ -120,7 +120,7 @@ export default [
       { internalType: 'string', name: '_symbol', type: 'string' },
       { internalType: 'address', name: '_admin', type: 'address' }
     ],
-    name: '__LnAssetUpgradeable_init',
+    name: '__ShumAssetUpgradeable_init',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'

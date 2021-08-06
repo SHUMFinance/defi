@@ -175,7 +175,7 @@ export default {
     },
     mounted() {
         console.log("xxl checkLiquidation : ");
-        this.checkLiquidation();
+        //this.checkLiquidation();
     },
     methods: {
         async checkLiquidation() {
@@ -183,6 +183,13 @@ export default {
                 this.currentRatioStatus = 0;
 
                 console.log("xxl homePage checkLiquidation ...");
+
+                console.log("xxl LIQUIDATION_NETWORKS");
+                console.log(LIQUIDATION_NETWORKS);
+
+                console.log("xxl this.walletNetworkId");
+                console.log(this.walletNetworkId);
+
                 //如果是bsc main/bsc(私链)则检查liquidation buildr一定时链接了钱包才能进到homepage，所以无需检查是否有钱包连接
                 if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
                     const {
@@ -198,6 +205,7 @@ export default {
 
                     const LINABytes = utils.formatBytes32String("SHUM");
 
+                    console.log("xxl 1 ...");
                     //取合约地址
                     const ShumCollateralSystemAddress =
                         ShumCollateralSystem.contract.address;
@@ -216,6 +224,7 @@ export default {
                         sUSD.balanceOf(this.walletAddress), //sUSD余额
                     ]);
 
+                    console.log("xxl 2 ...");
                     let currentRatioPercent = BigNumber.from("0");
 
                     if (results[4].gt("0") && results[3][0].gt("0")) {
@@ -236,6 +245,7 @@ export default {
 
                     const priceRates = await getPriceRates(["SHUM", "sUSD"]);
 
+                    console.log("xxl 3 ...");
                     this.walletData.LINA2USD = priceRates.LINA / priceRates.sUSD;
 
                     this.walletData.avaliableLINA = avaliableLINA + stakedLina + lockLina;
@@ -247,6 +257,7 @@ export default {
 
                     let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
 
+                    console.log("xxl 4 ...");
                     if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
                         this.targetRatioCal();
                         this.currentRatioStatus = 2;
@@ -265,6 +276,8 @@ export default {
                             }
                         }
                     }
+                    console.log("xxl 5 ...");
+
                 }
             } catch(e) {
                 console.log(e, "home page check liquidation err");

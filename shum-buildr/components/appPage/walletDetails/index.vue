@@ -745,7 +745,7 @@ export default {
         // _.delay(this.trackModalClick, 500)
         // 测试用,无用时删除
 
-        this.checkLiquidation();
+        //this.checkLiquidation();
 
         //根据url参数判断是否打开track transaction referral
         if (this.$store.state?.walletDetailsActionURL) {

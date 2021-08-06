@@ -7,7 +7,6 @@ const BinanceSigner = () => {
     signer.getNextAddresses = () =>{
         console.log("xxl BinanceSigner getNextAddresses");
         new Promise(resolve => resolve(BinanceChain.enable()));
-
     }
 
     return signer;

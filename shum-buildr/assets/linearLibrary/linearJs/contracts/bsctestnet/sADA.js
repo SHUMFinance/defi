@@ -18,9 +18,9 @@
         return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__LnAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
+      this.__ShumAssetUpgradeable_init = async (_key, _name, _symbol, _admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__LnAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
+        return await this.contract.__ShumAssetUpgradeable_init(_key, _name, _symbol, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
