@@ -68,7 +68,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
         emit CachedAddressUpdated("ShumLiquidation", liquidation);
     }
 
-    function SetLusdTokenAddress(address _address) public onlyAdmin {
+    function SetSusdTokenAddress(address _address) public onlyAdmin {
         emit UpdateLusdToken(address(lUSDToken), _address);
         lUSDToken = IShumAsset(_address);
     }

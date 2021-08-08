@@ -272,7 +272,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
             mark.marker,
             params.liquidator,
             params.lusdToBurn,
-            "LINA",
+            "SHUM",
             totalFromStaked,
             totalFromLocked,
             rewards.markerReward,

@@ -20,56 +20,56 @@ describe("Integration | Build", function () {
 
     stack = await deployLinearStack(deployer, admin);
 
-    // Set LINA price to $0.01
-    await stack.lnPrices.connect(admin).setPrice(
-      ethers.utils.formatBytes32String("LINA"), // currencyKey
+    // Set SHUM price to $0.01
+    await stack.shumPrices.connect(admin).setPrice(
+      ethers.utils.formatBytes32String("SHUM"), // currencyKey
       expandTo18Decimals(0.01) // price
     );
 
-    // Mint 1,000,000 LINA to Alice
-    await stack.linaToken
+    // Mint 1,000,000 SHUM to Alice
+    await stack.shumToken
       .connect(admin)
       .mint(alice.address, expandTo18Decimals(1_000_000));
 
-    await stack.linaToken
+    await stack.shumToken
       .connect(alice)
-      .approve(stack.lnCollateralSystem.address, uint256Max);
+      .approve(stack.shumCollateralSystem.address, uint256Max);
   });
 
-  it("can build lUSD with just locked reward", async function () {
-    // Lock 10,000 LINA of rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+  it("can build sUSD with just locked reward", async function () {
+    // Lock 10,000 SHUM of rewards for Alice
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [expandTo18Decimals(10_000)], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
     );
 
-    // Alice can build 1 lUSD without staking
-    await stack.lnBuildBurnSystem.connect(alice).BuildAsset(
+    // Alice can build 1 sUSD without staking
+    await stack.shumBuildBurnSystem.connect(alice).BuildAsset(
       expandTo18Decimals(1) // amount
     );
 
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(1)
     );
   });
 
   it("maxRedeemableLina() should return staked amount when debt is zero regardless of locked collateral", async function () {
-    // Alice stakes 9,000 LINA
-    await stack.lnCollateralSystem.connect(alice).Collateral(
-      ethers.utils.formatBytes32String("LINA"), // _currency
+    // Alice stakes 9,000 SHUM
+    await stack.shumCollateralSystem.connect(alice).Collateral(
+      ethers.utils.formatBytes32String("SHUM"), // _currency
       expandTo18Decimals(9_000) // _amount
     );
 
     // Returns 9,000 when locked amount is zero
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
 
     // Lock rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [expandTo18Decimals(9_000).sub(1)], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
@@ -77,13 +77,13 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is less than staked
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
 
-    // Lock 1 unit of LINA rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    // Lock 1 unit of SHUM rewards for Alice
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [1], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
@@ -91,13 +91,13 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is the same as staked
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
 
-    // Lock 1 unit of LINA rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    // Lock 1 unit of SHUM rewards for Alice
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [1], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
@@ -105,47 +105,47 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is the same as staked
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
   });
 
   it("maxRedeemableLina() should reflect debt amount", async function () {
-    // Alice stakes 9,000 LINA
-    await stack.lnCollateralSystem.connect(alice).Collateral(
-      ethers.utils.formatBytes32String("LINA"), // _currency
+    // Alice stakes 9,000 SHUM
+    await stack.shumCollateralSystem.connect(alice).Collateral(
+      ethers.utils.formatBytes32String("SHUM"), // _currency
       expandTo18Decimals(9_000) // _amount
     );
 
-    // Alice builds 10 lUSD
-    await stack.lnBuildBurnSystem.connect(alice).BuildAsset(
+    // Alice builds 10 sUSD
+    await stack.shumBuildBurnSystem.connect(alice).BuildAsset(
       expandTo18Decimals(10) // amount
     );
 
-    // 5,000 LINA is set aside
+    // 5,000 SHUM is set aside
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(4_000));
 
-    // Lock 4,000 LINA rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    // Lock 4,000 SHUM rewards for Alice
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [expandTo18Decimals(4_000)], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
     );
 
-    // Now 8,000 LINA is withdrawable
+    // Now 8,000 SHUM is withdrawable
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(8_000));
 
-    // Lock 1,000 LINA rewards for Alice
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    // Lock 1,000 SHUM rewards for Alice
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [expandTo18Decimals(1_000)], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
@@ -153,19 +153,19 @@ describe("Integration | Build", function () {
 
     // All staked amount available
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
 
     // Locking more won't increase withdrawable amount
-    await stack.lnRewardLocker.connect(admin).migrateRewards(
+    await stack.shumRewardLocker.connect(admin).migrateRewards(
       [alice.address], // _users
       [1], // _amounts
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
     );
     expect(
-      await stack.lnCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableLina(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));

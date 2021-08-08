@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./SafeDecimalMath.sol";
 import "./ShumAddressStorage.sol";
 
+import "hardhat/console.sol";
+
 contract ShumAssetSystem is ShumAddressStorage {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
@@ -59,6 +61,8 @@ contract ShumAssetSystem is ShumAddressStorage {
 
     // check exchange rate invalid condition ? invalid just fail.
     function totalAssetsInUsd() public view returns (uint256 rTotal) {
+
+        console.log("xxl totalAssetsInUsd ...");
         require(mAddrs["ShumPrices"] != address(0), "ShumPrices address cannot access");
         IShumPrices priceGetter = IShumPrices(mAddrs["ShumPrices"]); //getAddress
         for (uint256 i = 0; i < mAssetList.length; i++) {

@@ -45,7 +45,7 @@ contract ShumRewardLocker is IShumRewardLocker, ShumAdminUpgradeable {
     mapping(address => uint256) public lockedAmountByAddresses;
     uint256 public override totalLockedAmount;
 
-    address public linaTokenAddr;
+    address public shumTokenAddr;
     IShumAccessControl public accessCtrl;
 
     bytes32 private constant ROLE_LOCK_REWARD = "LOCK_REWARD";
@@ -66,16 +66,16 @@ contract ShumRewardLocker is IShumRewardLocker, ShumAdminUpgradeable {
     }
 
     function __ShumRewardLocker_init(
-        address _linaTokenAddr,
+        address _shumTokenAddr,
         IShumAccessControl _accessCtrl,
         address _admin
     ) public initializer {
         __ShumAdminUpgradeable_init(_admin);
 
-        require(_linaTokenAddr != address(0), "ShumRewardLocker: zero address");
+        require(_shumTokenAddr != address(0), "ShumRewardLocker: zero address");
         require(address(_accessCtrl) != address(0), "ShumRewardLocker: zero address");
 
-        linaTokenAddr = _linaTokenAddr;
+        shumTokenAddr = _shumTokenAddr;
         accessCtrl = _accessCtrl;
     }
 

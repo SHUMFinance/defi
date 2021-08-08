@@ -13,20 +13,20 @@ import { expandTo18Decimals, zeroAddress } from ".";
 import { formatBytes32String } from "ethers/lib/utils";
 
 export interface DeployedStack {
-  linaToken: Contract;
-  lusdToken: Contract;
-  lbtcToken: Contract;
-  lnAccessControl: Contract;
-  lnAssetSystem: Contract;
-  lnBuildBurnSystem: Contract;
-  lnPrices: Contract;
-  lnCollateralSystem: Contract;
-  lnConfig: Contract;
-  lnDebtSystem: Contract;
-  lnExchangeSystem: Contract;
-  lnRewardLocker: Contract;
-  lnRewardSystem: Contract;
-  lnLiquidation: Contract;
+  shumToken: Contract;
+  susdToken: Contract;
+  sbtcToken: Contract;
+  shumAccessControl: Contract;
+  shumAssetSystem: Contract;
+  shumBuildBurnSystem: Contract;
+  shumPrices: Contract;
+  shumCollateralSystem: Contract;
+  shumConfig: Contract;
+  shumDebtSystem: Contract;
+  shumExchangeSystem: Contract;
+  shumRewardLocker: Contract;
+  shumRewardSystem: Contract;
+  shumLiquidation: Contract;
 }
 
 export const deployLinearStack = async (
@@ -49,40 +49,40 @@ export const deployLinearStack = async (
   // Load contract factories without external libraries
   const [
     ShumFinance,
-    LnAccessControl,
-    LnAssetSystem,
-    LnAssetUpgradeable,
-    LnCollateralSystem,
-    LnConfig,
-    LnRewardLocker,
-    LnRewardSystem,
+    ShumAccessControl,
+    ShumAssetSystem,
+    ShumAssetUpgradeable,
+    ShumCollateralSystem,
+    ShumConfig,
+    ShumRewardLocker,
+    ShumRewardSystem,
   ] = await Promise.all(
     [
       "ShumFinance",
-      "LnAccessControl",
-      "LnAssetSystem",
-      "LnAssetUpgradeable",
-      "LnCollateralSystem",
-      "LnConfig",
-      "LnRewardLocker",
-      "LnRewardSystem",
+      "ShumAccessControl",
+      "ShumAssetSystem",
+      "ShumAssetUpgradeable",
+      "ShumCollateralSystem",
+      "ShumConfig",
+      "ShumRewardLocker",
+      "ShumRewardSystem",
     ].map((contractName) => ethers.getContractFactory(contractName, deployer))
   );
 
   // Load contract factories with external libraries
   const [
-    LnBuildBurnSystem,
-    MockLnPrices,
-    LnDebtSystem,
-    LnExchangeSystem,
-    LnLiquidation,
+    ShumBuildBurnSystem,
+    MockShumPrices,
+    ShumDebtSystem,
+    ShumExchangeSystem,
+    ShumLiquidation,
   ] = await Promise.all(
     [
-      "LnBuildBurnSystem",
-      "MockLnPrices",
-      "LnDebtSystem",
-      "LnExchangeSystem",
-      "LnLiquidation",
+      "ShumBuildBurnSystem",
+      "MockShumPrices",
+      "ShumDebtSystem",
+      "ShumExchangeSystem",
+      "ShumLiquidation",
     ].map((contractName) =>
       ethers.getContractFactory(contractName, {
         signer: deployer,
@@ -95,9 +95,9 @@ export const deployLinearStack = async (
   );
 
   /**
-   * LINA token contract
+   * SHUM token contract
    */
-  const linaToken: Contract = await upgrades.deployProxy(
+  const shumToken: Contract = await upgrades.deployProxy(
     ShumFinance,
     [
       admin.address, // _admin
@@ -112,27 +112,27 @@ export const deployLinearStack = async (
    * - An asset registry for recording all synthetic assets
    * - A contract address registry for service discovery
    */
-  const lnAssetSystem = await upgrades.deployProxy(
-    LnAssetSystem,
+  const shumAssetSystem = await upgrades.deployProxy(
+    ShumAssetSystem,
     [
       admin.address, // _admin
     ],
     {
-      initializer: "__LnAssetSystem_init",
+      initializer: "__ShumAssetSystem_init",
     }
   );
 
   /**
    * The contract for controlling issuance and burning of synthetic assets
    */
-  const lnBuildBurnSystem = await upgrades.deployProxy(
-    LnBuildBurnSystem,
+  const shumBuildBurnSystem = await upgrades.deployProxy(
+    ShumBuildBurnSystem,
     [
       admin.address, // admin
-      zeroAddress, // _lUSDTokenAddr
+      zeroAddress, // _susdTokenAddr
     ],
     {
-      initializer: "__LnBuildBurnSystem_init",
+      initializer: "__ShumBuildBurnSystem_init",
       unsafeAllowLinkedLibraries: true,
     }
   );
@@ -140,92 +140,92 @@ export const deployLinearStack = async (
   /**
    * A contract for storing configuration values
    */
-  const lnConfig = await upgrades.deployProxy(
-    LnConfig,
+  const shumConfig = await upgrades.deployProxy(
+    ShumConfig,
     [
       admin.address, // _admin
     ],
     {
-      initializer: "__LnConfig_init",
+      initializer: "__ShumConfig_init",
     }
   );
 
   /**
    * A contract for role-based access control
    */
-  const lnAccessControl = await upgrades.deployProxy(
-    LnAccessControl,
+  const shumAccessControl = await upgrades.deployProxy(
+    ShumAccessControl,
     [
       admin.address, // admin
     ],
     {
-      initializer: "__LnAccessControl_init",
+      initializer: "__ShumAccessControl_init",
     }
   );
 
   /**
    * Oracle contract for price data access
    */
-  const lnPrices = await MockLnPrices.deploy(
+  const shumPrices = await MockShumPrices.deploy(
     Duration.fromObject({ hours: 12 }).as("seconds") // _stalePeriod
   );
 
-  const lnDebtSystem = await upgrades.deployProxy(
-    LnDebtSystem,
+  const shumDebtSystem = await upgrades.deployProxy(
+    ShumDebtSystem,
     [admin.address],
     {
-      initializer: "__LnDebtSystem_init",
+      initializer: "__ShumDebtSystem_init",
       unsafeAllowLinkedLibraries: true,
     }
   );
 
-  const lnCollateralSystem = await upgrades.deployProxy(
-    LnCollateralSystem,
+  const shumCollateralSystem = await upgrades.deployProxy(
+    ShumCollateralSystem,
     [
       admin.address, // admin
     ],
     {
-      initializer: "__LnCollateralSystem_init",
+      initializer: "__ShumCollateralSystem_init",
       unsafeAllowLinkedLibraries: true,
     }
   );
 
-  const lnRewardLocker = await upgrades.deployProxy(
-    LnRewardLocker,
+  const shumRewardLocker = await upgrades.deployProxy(
+    ShumRewardLocker,
     [
-      linaToken.address, // _linaTokenAddr
-      lnAccessControl.address, // _accessCtrl
+      shumToken.address, // _shumTokenAddr
+      shumAccessControl.address, // _accessCtrl
       admin.address, // _admin
     ],
     {
-      initializer: "__LnRewardLocker_init",
+      initializer: "__ShumRewardLocker_init",
     }
   );
 
-  const lnExchangeSystem = await upgrades.deployProxy(
-    LnExchangeSystem,
+  const shumExchangeSystem = await upgrades.deployProxy(
+    ShumExchangeSystem,
     [
       admin.address, // _admin
     ],
     {
-      initializer: "__LnExchangeSystem_init",
+      initializer: "__ShumExchangeSystem_init",
       unsafeAllowLinkedLibraries: true,
     }
   );
 
-  const lnLiquidation = await upgrades.deployProxy(
-    LnLiquidation,
+  const shumLiquidation = await upgrades.deployProxy(
+    ShumLiquidation,
     [
-      lnBuildBurnSystem.address, // _lnBuildBurnSystem
-      lnCollateralSystem.address, // _lnCollateralSystem
-      lnConfig.address, // _lnConfig
-      lnDebtSystem.address, // _lnDebtSystem
-      lnPrices.address, // _lnPrices
-      lnRewardLocker.address, // _lnRewardLocker
+      shumBuildBurnSystem.address, // _shumBuildBurnSystem
+      shumCollateralSystem.address, // _shumCollateralSystem
+      shumConfig.address, // _shumConfig
+      shumDebtSystem.address, // _shumDebtSystem
+      shumPrices.address, // _shumPrices
+      shumRewardLocker.address, // _shumRewardLocker
       admin.address, // _admin
     ],
     {
-      initializer: "__LnLiquidation_init",
+      initializer: "__ShumLiquidation_init",
       unsafeAllowLinkedLibraries: true,
     }
   );
@@ -261,153 +261,153 @@ export const deployLinearStack = async (
       value: Duration.fromObject({ days: 3 }).as("seconds"),
     },
   ])
-    await lnConfig.connect(admin).setUint(
+    await shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String(config.key), // key
       config.value // value
     );
 
   /**
-   * Assign the following roles to contract `LnBuildBurnSystem`:
+   * Assign the following roles to contract `ShumBuildBurnSystem`:
    * - ISSUE_ASSET
    * - BURN_ASSET
-   * - LnDebtSystem
+   * - ShumDebtSystem
    */
-  await lnAccessControl
+  await shumAccessControl
     .connect(admin)
-    .SetIssueAssetRole([lnBuildBurnSystem.address], [true]);
-  await lnAccessControl
+    .SetIssueAssetRole([shumBuildBurnSystem.address], [true]);
+  await shumAccessControl
     .connect(admin)
-    .SetBurnAssetRole([lnBuildBurnSystem.address], [true]);
-  await lnAccessControl
+    .SetBurnAssetRole([shumBuildBurnSystem.address], [true]);
+  await shumAccessControl
     .connect(admin)
-    .SetDebtSystemRole([lnBuildBurnSystem.address], [true]);
+    .SetDebtSystemRole([shumBuildBurnSystem.address], [true]);
 
   /**
-   * Assign the following roles to contract `LnExchangeSystem`:
+   * Assign the following roles to contract `ShumExchangeSystem`:
    * - ISSUE_ASSET
    * - BURN_ASSET
    * - MOVE_ASSET
    */
-  await lnAccessControl
+  await shumAccessControl
     .connect(admin)
-    .SetIssueAssetRole([lnExchangeSystem.address], [true]);
-  await lnAccessControl
+    .SetIssueAssetRole([shumExchangeSystem.address], [true]);
+  await shumAccessControl
     .connect(admin)
-    .SetBurnAssetRole([lnExchangeSystem.address], [true]);
-  await lnAccessControl.connect(admin).SetRoles(
+    .SetBurnAssetRole([shumExchangeSystem.address], [true]);
+  await shumAccessControl.connect(admin).SetRoles(
     formatBytes32String("MOVE_ASSET"), // roleType
-    [lnExchangeSystem.address], // addresses
+    [shumExchangeSystem.address], // addresses
     [true] // setTo
   );
 
   /**
-   * Assign the following role to contract `LnLiquidation`:
+   * Assign the following role to contract `ShumLiquidation`:
    * - MOVE_REWARD
    */
-  await lnAccessControl.connect(admin).SetRoles(
+  await shumAccessControl.connect(admin).SetRoles(
     formatBytes32String("MOVE_REWARD"), // roleType
-    [lnLiquidation.address], // addresses
+    [shumLiquidation.address], // addresses
     [true] // setTo
   );
 
   /**
    * Fill the contract address registry
    */
-  await lnAssetSystem
+  await shumAssetSystem
     .connect(admin)
     .updateAll(
       [
-        ethers.utils.formatBytes32String("LnAssetSystem"),
-        ethers.utils.formatBytes32String("LnAccessControl"),
-        ethers.utils.formatBytes32String("LnConfig"),
-        ethers.utils.formatBytes32String("LnPrices"),
-        ethers.utils.formatBytes32String("LnDebtSystem"),
-        ethers.utils.formatBytes32String("LnCollateralSystem"),
-        ethers.utils.formatBytes32String("LnBuildBurnSystem"),
-        ethers.utils.formatBytes32String("LnRewardLocker"),
-        ethers.utils.formatBytes32String("LnExchangeSystem"),
-        ethers.utils.formatBytes32String("LnLiquidation"),
+        ethers.utils.formatBytes32String("ShumAssetSystem"),
+        ethers.utils.formatBytes32String("ShumAccessControl"),
+        ethers.utils.formatBytes32String("ShumConfig"),
+        ethers.utils.formatBytes32String("ShumPrices"),
+        ethers.utils.formatBytes32String("ShumDebtSystem"),
+        ethers.utils.formatBytes32String("ShumCollateralSystem"),
+        ethers.utils.formatBytes32String("ShumBuildBurnSystem"),
+        ethers.utils.formatBytes32String("ShumRewardLocker"),
+        ethers.utils.formatBytes32String("ShumExchangeSystem"),
+        ethers.utils.formatBytes32String("ShumLiquidation"),
       ],
       [
-        lnAssetSystem.address,
-        lnAccessControl.address,
-        lnConfig.address,
-        lnPrices.address,
-        lnDebtSystem.address,
-        lnCollateralSystem.address,
-        lnBuildBurnSystem.address,
-        lnRewardLocker.address,
-        lnExchangeSystem.address,
-        lnLiquidation.address,
+        shumAssetSystem.address,
+        shumAccessControl.address,
+        shumConfig.address,
+        shumPrices.address,
+        shumDebtSystem.address,
+        shumCollateralSystem.address,
+        shumBuildBurnSystem.address,
+        shumRewardLocker.address,
+        shumExchangeSystem.address,
+        shumLiquidation.address,
       ]
     );
 
   /**
    * Synchronize contract address cache
    */
-  await lnBuildBurnSystem
+  await shumBuildBurnSystem
     .connect(admin)
-    .updateAddressCache(lnAssetSystem.address);
-  await lnCollateralSystem
+    .updateAddressCache(shumAssetSystem.address);
+  await shumCollateralSystem
     .connect(admin)
-    .updateAddressCache(lnAssetSystem.address);
-  await lnDebtSystem.connect(admin).updateAddressCache(lnAssetSystem.address);
+    .updateAddressCache(shumAssetSystem.address);
+  await shumDebtSystem.connect(admin).updateAddressCache(shumAssetSystem.address);
 
   /**
-   * Create the base synthetic asset lUSD
+   * Create the base synthetic asset sUSD
    */
-  const lusdToken = await upgrades.deployProxy(
-    LnAssetUpgradeable,
+  const susdToken = await upgrades.deployProxy(
+    ShumAssetUpgradeable,
     [
-      ethers.utils.formatBytes32String("lUSD"), // bytes32 _key,
-      "lUSD", // _name,
-      "lUSD", // _symbol
+      ethers.utils.formatBytes32String("sUSD"), // bytes32 _key,
+      "sUSD", // _name,
+      "sUSD", // _symbol
       admin.address, // _admin
     ],
     {
-      initializer: "__LnAssetUpgradeable_init",
+      initializer: "__ShumAssetUpgradeable_init",
     }
   );
 
   /**
    * Create synthetic asset lBTC
    */
-  const lbtcToken = await upgrades.deployProxy(
-    LnAssetUpgradeable,
+  const sbtcToken = await upgrades.deployProxy(
+    ShumAssetUpgradeable,
     [
-      ethers.utils.formatBytes32String("lBTC"), // bytes32 _key,
-      "lBTC", // _name,
-      "lBTC", // _symbol
+      ethers.utils.formatBytes32String("sBTC"), // bytes32 _key,
+      "sBTC", // _name,
+      "sBTC", // _symbol
       admin.address, // _admin
     ],
     {
-      initializer: "__LnAssetUpgradeable_init",
+      initializer: "__ShumAssetUpgradeable_init",
     }
   );
 
   /**
    * Update synth address cache
    */
-  await lusdToken.connect(admin).updateAddressCache(lnAssetSystem.address);
-  await lbtcToken.connect(admin).updateAddressCache(lnAssetSystem.address);
+  await susdToken.connect(admin).updateAddressCache(shumAssetSystem.address);
+  await sbtcToken.connect(admin).updateAddressCache(shumAssetSystem.address);
 
   /**
-   * Register lUSD on `LnBuildBurnSystem`
+   * Register sUSD on `ShumBuildBurnSystem`
    */
-  await lnBuildBurnSystem.connect(admin).SetLusdTokenAddress(lusdToken.address);
+  await shumBuildBurnSystem.connect(admin).SetSusdTokenAddress(susdToken.address);
 
   /**
-   * Register synth assets on `LnAssetSystem`
+   * Register synth assets on `ShumAssetSystem`
    */
-  await lnAssetSystem.connect(admin).addAsset(lusdToken.address);
-  await lnAssetSystem.connect(admin).addAsset(lbtcToken.address);
+  await shumAssetSystem.connect(admin).addAsset(susdToken.address);
+  await shumAssetSystem.connect(admin).addAsset(sbtcToken.address);
 
   /**
-   * Register LINA on `LnCollateralSystem`
+   * Register SHUM on `ShumCollateralSystem`
    */
-  await lnCollateralSystem.connect(admin).UpdateTokenInfo(
-    ethers.utils.formatBytes32String("LINA"), // _currency
-    linaToken.address, // _tokenAddr
+  await shumCollateralSystem.connect(admin).UpdateTokenInfo(
+    ethers.utils.formatBytes32String("SHUM"), // _currency
+    shumToken.address, // _tokenAddr
     expandTo18Decimals(1), // _minCollateral
     false // _close
   );
@@ -415,48 +415,48 @@ export const deployLinearStack = async (
   /**
    * A contract for distributing rewards calculated and signed off-chain.
    */
-  const lnRewardSystem = await upgrades.deployProxy(
-    LnRewardSystem,
+  const shumRewardSystem = await upgrades.deployProxy(
+    ShumRewardSystem,
     [
       (await ethers.provider.getBlock("latest")).timestamp, // _firstPeriodStartTime
       admin.address, // _rewardSigner
-      lusdToken.address, // _lusdAddress
-      lnCollateralSystem.address, // _collateralSystemAddress
-      lnRewardLocker.address, // _rewardLockerAddress
+      susdToken.address, // _susdAddress
+      shumCollateralSystem.address, // _collateralSystemAddress
+      shumRewardLocker.address, // _rewardLockerAddress
       admin.address, // _admin
     ],
     {
-      initializer: "__LnRewardSystem_init",
+      initializer: "__ShumRewardSystem_init",
     }
   );
 
   /**
-   * Synchronize LnExchangeAddress cache
+   * Synchronize shumExchangeAddress cache
    */
-  await lnAssetSystem
+  await shumAssetSystem
     .connect(admin)
     .updateAll(
-      [ethers.utils.formatBytes32String("LnRewardSystem")],
-      [lnRewardSystem.address]
+      [ethers.utils.formatBytes32String("ShumRewardSystem")],
+      [shumRewardSystem.address]
     );
-  await lnExchangeSystem
+  await shumExchangeSystem
     .connect(admin)
-    .updateAddressCache(lnAssetSystem.address);
+    .updateAddressCache(shumAssetSystem.address);
 
   return {
-    linaToken,
-    lusdToken,
-    lbtcToken,
-    lnAccessControl,
-    lnAssetSystem,
-    lnBuildBurnSystem,
-    lnPrices,
-    lnCollateralSystem,
-    lnConfig,
-    lnDebtSystem,
-    lnExchangeSystem,
-    lnRewardLocker,
-    lnRewardSystem,
-    lnLiquidation,
+    shumToken,
+    susdToken,
+    sbtcToken,
+    shumAccessControl,
+    shumAssetSystem,
+    shumBuildBurnSystem,
+    shumPrices,
+    shumCollateralSystem,
+    shumConfig,
+    shumDebtSystem,
+    shumExchangeSystem,
+    shumRewardLocker,
+    shumRewardSystem,
+    shumLiquidation,
   };
 };
