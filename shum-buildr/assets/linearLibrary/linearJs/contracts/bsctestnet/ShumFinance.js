@@ -9,6 +9,7 @@
     console.log("xxl ShumFinance ...");
     console.log(this.contractSettings);
 
+    console.log(this.contractSettings.addressList['ShumFinance']);
 
     this.contract = new Contract(
       this.contractSettings.addressList['ShumFinance'],

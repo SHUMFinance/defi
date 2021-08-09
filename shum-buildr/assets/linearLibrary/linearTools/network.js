@@ -43,9 +43,10 @@ export const TESTNET_NETWORKS = {
     //10056: "BSCDEV"
 };
 
-// export const ETHDEV_NETWORKS = {
-//     10001: "ETHDEV"
-// };
+//xxl TODO need To change ...
+export const ETHDEV_NETWORKS = {
+    10001: "ETHDEV"
+};
 
 // export const BSCDEV_NETWORKS = {
 //     10056: "BSCDEV"
@@ -68,11 +69,13 @@ export const TESTNET_NETWORKS = {
 //     10056: "BSCDEV"
 // };
 
-// //有liquidation的网络
-// export const LIQUIDATION_NETWORKS = {
-//     56: "BSCMAINNET",
-//     10056: "BSCDEV"
-// };
+//有liquidation的网络
+export const LIQUIDATION_NETWORKS = {
+    56: "BSCMAINNET",
+    //xxl 00 add config
+    //10056: "BSCDEV"
+    97: "BSCTESTNET"
+};
 
 export const isEthereumNetwork = walletNetworkId =>
     ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);

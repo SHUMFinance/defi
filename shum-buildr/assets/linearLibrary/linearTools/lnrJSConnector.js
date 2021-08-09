@@ -24,20 +24,15 @@ let lnrJSConnector = {
     signers: LinearJs.signers,
     setContractSettings: function(contractSettings) {
 
-        console.log(1);
+        console.log("xxl lnrJSConnector 01");
         console.log(contractSettings);
         
         this.lnrJS = new LinearJs(contractSettings);
-        console.log(2);
         console.log(this.lnrJS.contractSettings);
 
-
-        this.signer = this.lnrJS.contractSettings.signer;
-        console.log(3);
+        this.signer = this.lnrJS.contractSettings.signer;  
         this.provider = this.lnrJS.contractSettings.provider;
-        console.log(4);
         this.utils = this.lnrJS.utils;
-        console.log(5);
     }
 };
 
@@ -79,7 +74,6 @@ export const connectToWallet = async networkType => {
         console.log("xxl name : " + name + " networkId : " + networkId);
 
         //  [1, 56].includes(networkId)
-        console.log("1");
         if (!SUPPORTED_NETWORKS[networkId]) {
             $nuxt.$store.commit("setAutoConnect", false);
             $nuxt.$store.commit("setWalletType", "");
@@ -88,15 +82,12 @@ export const connectToWallet = async networkType => {
             throw new Error("not support network");
         }
 
-        console.log("2");
         //当连接方式为wallet_connect 且已经设置监听方式时,不要再去重新生成signer，改用updateWalletConnectWeb3Provider去更新provider
         if (!registeredWalletConnectEvents) {
             setSigner({ type: networkType, networkId });
         }
 
         //setSigner({ type: networkType, networkId });
-
-        console.log("3");
         switch (networkType) {
             case SUPPORTED_WALLETS_MAP.METAMASK:
                 return connectToMetamask(networkId, name);

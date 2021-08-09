@@ -175,7 +175,7 @@ export default {
     },
     mounted() {
         console.log("xxl checkLiquidation : ");
-        //this.checkLiquidation();
+        this.checkLiquidation();
     },
     methods: {
         async checkLiquidation() {
@@ -192,6 +192,8 @@ export default {
 
                 //如果是bsc main/bsc(私链)则检查liquidation buildr一定时链接了钱包才能进到homepage，所以无需检查是否有钱包连接
                 if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
+
+
                     const {
                         lnrJS: {
                             ShumFinance,
@@ -203,20 +205,40 @@ export default {
                         utils
                     } = lnrJSConnector;
 
+                    console.log("xxl lnrJS ...");
                     const LINABytes = utils.formatBytes32String("SHUM");
 
-                    console.log("xxl 1 ...");
-                    //取合约地址
+                    console.log("xxl checkLiquidation 1 ...");
+                    
+                    //xxl TODO ShumCollateralSystemAddress do not need ...
                     const ShumCollateralSystemAddress =
                         ShumCollateralSystem.contract.address;
 
+                    console.log("xxl checkLiquidation 2 ...");
+                    console.log("xxl this.walletAddress : " + this.walletAddress);
+
+
+                    //xxl ShumFinance
+                    let balance = await ShumFinance.balanceOf(this.walletAddress);
+                    console.log("xxl ShumFinance balance is : " + balance);
+ 
+                    //
+                    let shumRewardBalance = await ShumRewardLocker.balanceOf(this.walletAddress);
+                    console.log("xxl ShumRewardLocker balance is : " + shumRewardBalance);
+ 
+
+                    let userDebtBalanceInUsd = await ShumDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress);
+                    console.log("xxl ShumDebtSystem userDebtBalanceInUsd is : " + userDebtBalanceInUsd);
+
+
+                    ////
                     const results = await Promise.all([
-                        ShumFinance.balanceOf(this.walletAddress), //LINA余额
+                        ShumFinance.balanceOf(this.walletAddress), //Shum余额
                         ShumCollateralSystem.userCollateralData(
                             this.walletAddress,
                             LINABytes
                         ), //staked lina
-                        ShumRewardLocker.balanceOf(this.walletAddress), //lock lina
+                        ShumRewardLocker.balanceOf(this.walletAddress), //lock shum
                         ShumDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress), //总债务
                         ShumCollateralSystem.GetUserTotalCollateralInUsd(
                             this.walletAddress
@@ -224,7 +246,7 @@ export default {
                         sUSD.balanceOf(this.walletAddress), //sUSD余额
                     ]);
 
-                    console.log("xxl 2 ...");
+                    console.log("xxl checkLiquidation 3 ...");
                     let currentRatioPercent = BigNumber.from("0");
 
                     if (results[4].gt("0") && results[3][0].gt("0")) {
@@ -283,6 +305,7 @@ export default {
                 console.log(e, "home page check liquidation err");
             }
         },
+
         colseAttention() {
             this.currentRatioStatus = 0;
         },

@@ -41,6 +41,9 @@ class ContractSettings {
         }
         this.signer = signer;
         this.addressList = addresses[this.networkId];
+
+        console.log("xxl ContractSettings ...");
+        console.log(this.addressList);
     }
 }
 
