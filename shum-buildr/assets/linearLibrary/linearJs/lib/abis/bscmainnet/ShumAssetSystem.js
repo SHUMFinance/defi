@@ -118,7 +118,7 @@ export default [
   {
     inputs: [
       {
-        internalType: 'contract ILnAsset',
+        internalType: 'contract IShumAsset',
         name: 'asset',
         type: 'address'
       }
@@ -198,7 +198,7 @@ export default [
     inputs: [ { internalType: 'uint256', name: '', type: 'uint256' } ],
     name: 'mAssetList',
     outputs: [
-      { internalType: 'contract ILnAsset', name: '', type: 'address' }
+      { internalType: 'contract IShumAsset', name: '', type: 'address' }
     ],
     stateMutability: 'view',
     type: 'function'

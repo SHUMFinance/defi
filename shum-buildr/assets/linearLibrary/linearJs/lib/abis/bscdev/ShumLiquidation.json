@@ -231,8 +231,8 @@
 				"type": "address"
 			},
 			{
-				"internalType": "contract ILnPrices",
-				"name": "_lnPrices",
+				"internalType": "contract IshumPrices",
+				"name": "_ShumPrices",
 				"type": "address"
 			},
 			{
@@ -246,7 +246,7 @@
 				"type": "address"
 			}
 		],
-		"name": "__LnLiquidation_init",
+		"name": "__ShumLiquidation_init",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -418,10 +418,10 @@
 	},
 	{
 		"inputs": [],
-		"name": "lnPrices",
+		"name": "shumPrices",
 		"outputs": [
 			{
-				"internalType": "contract ILnPrices",
+				"internalType": "contract IshumPrices",
 				"name": "",
 				"type": "address"
 			}

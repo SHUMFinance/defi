@@ -195,8 +195,8 @@ export default [
         type: 'address'
       },
       {
-        internalType: 'contract ILnPrices',
-        name: '_lnPrices',
+        internalType: 'contract IshumPrices',
+        name: '_ShumPrices',
         type: 'address'
       },
       {
@@ -206,7 +206,7 @@ export default [
       },
       { internalType: 'address', name: '_admin', type: 'address' }
     ],
-    name: '__LnLiquidation_init',
+    name: '__ShumLiquidation_init',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'
@@ -318,9 +318,9 @@ export default [
   },
   {
     inputs: [],
-    name: 'lnPrices',
+    name: 'shumPrices',
     outputs: [
-      { internalType: 'contract ILnPrices', name: '', type: 'address' }
+      { internalType: 'contract IshumPrices', name: '', type: 'address' }
     ],
     stateMutability: 'view',
     type: 'function'

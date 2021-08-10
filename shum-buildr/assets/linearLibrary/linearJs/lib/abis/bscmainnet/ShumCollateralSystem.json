@@ -767,7 +767,7 @@
 		"name": "priceGetter",
 		"outputs": [
 			{
-				"internalType": "contract ILnPrices",
+				"internalType": "contract IshumPrices",
 				"name": "",
 				"type": "address"
 			}

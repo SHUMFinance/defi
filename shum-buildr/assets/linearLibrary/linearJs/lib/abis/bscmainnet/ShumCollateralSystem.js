@@ -516,7 +516,7 @@ export default [
     inputs: [],
     name: 'priceGetter',
     outputs: [
-      { internalType: 'contract ILnPrices', name: '', type: 'address' }
+      { internalType: 'contract IshumPrices', name: '', type: 'address' }
     ],
     stateMutability: 'view',
     type: 'function'

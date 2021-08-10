@@ -422,7 +422,7 @@ export default [
     inputs: [],
     name: 'priceGetter',
     outputs: [
-      { internalType: 'contract LnPrices', name: '', type: 'address' }
+      { internalType: 'contract shumPrices', name: '', type: 'address' }
     ],
     stateMutability: 'view',
     type: 'function'

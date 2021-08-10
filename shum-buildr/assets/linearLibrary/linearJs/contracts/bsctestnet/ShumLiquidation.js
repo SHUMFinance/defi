@@ -43,9 +43,9 @@
         return await this.contract.__ShumAdminUpgradeable_init(_admin, txParams);
       };
     
-      this.__ShumLiquidation_init = async (_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _lnPrices, _ShumRewardLocker, _admin, txParams) => {
+      this.__ShumLiquidation_init = async (_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _ShumPrices, _ShumRewardLocker, _admin, txParams) => {
         txParams = txParams || {};
-        return await this.contract.__ShumLiquidation_init(_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _lnPrices, _ShumRewardLocker, _admin, txParams);
+        return await this.contract.__ShumLiquidation_init(_ShumBuildBurnSystem, _ShumCollateralSystem, _ShumConfig, _ShumDebtSystem, _ShumPrices, _ShumRewardLocker, _admin, txParams);
       };
     
       this.admin = async (txParams) => {
@@ -103,9 +103,9 @@
         return await this.contract.ShumDebtSystem(txParams);
       };
     
-      this.lnPrices = async (txParams) => {
+      this.shumPrices = async (txParams) => {
         txParams = txParams || {};
-        return await this.contract.lnPrices(txParams);
+        return await this.contract.shumPrices(txParams);
       };
     
       this.ShumRewardLocker = async (txParams) => {

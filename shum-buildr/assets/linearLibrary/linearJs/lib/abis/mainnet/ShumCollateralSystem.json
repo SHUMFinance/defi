@@ -633,7 +633,7 @@
 		"name": "priceGetter",
 		"outputs": [
 			{
-				"internalType": "contract LnPrices",
+				"internalType": "contract shumPrices",
 				"name": "",
 				"type": "address"
 			}

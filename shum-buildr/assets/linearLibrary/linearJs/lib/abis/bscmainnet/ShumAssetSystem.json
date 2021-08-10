@@ -136,7 +136,7 @@
 	{
 		"inputs": [
 			{
-				"internalType": "contract ILnAsset",
+				"internalType": "contract IShumAsset",
 				"name": "asset",
 				"type": "address"
 			}
@@ -297,7 +297,7 @@
 		"name": "mAssetList",
 		"outputs": [
 			{
-				"internalType": "contract ILnAsset",
+				"internalType": "contract IShumAsset",
 				"name": "",
 				"type": "address"
 			}
