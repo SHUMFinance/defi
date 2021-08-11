@@ -30,7 +30,7 @@
                         }}
                     </div>
                     <div class="p_2">
-                        Total Issued Debt (ℓUSD)
+                        Total Issued Debt (sUSD)
                     </div>
                 </div>
                 <div class="line"></div>
@@ -43,7 +43,7 @@
                         }}
                     </div>
                     <div class="p_2">
-                        Total Current Debt (ℓUSD)
+                        Total Current Debt (sUSD)
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                         lineColor: '#fff',
                         areaColorTop: '#fff'
                     }"
-                    :title="'Total Current Debt\n(ℓUSD)'"
+                    :title="'Total Current Debt\n(sUSD)'"
                 ></trackchart>
 
                 <trackchart
@@ -91,11 +91,11 @@
                         lineColor: '#1a38f8',
                         areaColorTop: '#1a38f8'
                     }"
-                    :formatter="`ℓUSD : {c0}`"
+                    :formatter="`sUSD : {c0}`"
                     :title="
                         !isMobile
-                            ? 'Total Current Debt\n(ℓUSD)'
-                            : 'Total Current Debt (ℓUSD) / Date'
+                            ? 'Total Current Debt\n(sUSD)'
+                            : 'Total Current Debt (sUSD) / Date'
                     "
                 ></trackchart>
             </div>

@@ -314,7 +314,7 @@
             <img src="@/static/no_transaction.svg" />
             <div class="title">No Transactions</div>
             <div class="context">You have not made any transactions yet</div>
-            <div class="buildBtn" @click="toBuild()">Build ℓUSD</div>
+            <div class="buildBtn" @click="toBuild()">Build sUSD</div>
         </div>
 
         <Modal
@@ -611,7 +611,7 @@ export default {
                         item.rewardssUSD != undefined ||
                         item.rewardssUSD != 0
                     ) {
-                        rewardssUSD = formatNumber(item.rewardssUSD) + " ℓUSD";
+                        rewardssUSD = formatNumber(item.rewardssUSD) + " sUSD";
                     }
                     if (!item.rewardsLina || item.rewardsLina != 0) {
                         rewardsLina = formatNumber(item.rewardsLina) + " SHUM";

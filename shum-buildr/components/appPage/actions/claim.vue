@@ -6,7 +6,7 @@
                     <div class="actionBody">
                         <div class="actionTitle">Claim</div>
                         <div class="actionDesc">
-                            Claim rewards from staking SHUM and building ℓUSD
+                            Claim rewards from staking SHUM and building sUSD
                         </div>
 
                         <div
@@ -36,7 +36,7 @@
                                 <img v-else src="@/static/sUSD_gray_logo.svg" />
                                 <div class="title">Exchange Rewards</div>
                                 <div class="amount">
-                                    <span>{{ tradingRewards }}</span> ℓUSD
+                                    <span>{{ tradingRewards }}</span> sUSD
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,7 @@
                         <div class="actionTitle">Burn</div>
                         <div class="actionDesc">
                             <template v-if="isEthereumNetwork">
-                                Burn ℓUSD to unlock staked SHUM. You can perform
+                                Burn sUSD to unlock staked SHUM. You can perform
                                 this on Binance Smart Chain network. &nbsp;<span
                                     class="step"
                                     @click="jumpToStep"
@@ -16,11 +16,11 @@
                                 .
                             </template>
                             <template v-else>
-                                Burn ℓUSD to unlock staked SHUM
+                                Burn sUSD to unlock staked SHUM
                             </template>
                         </div>
                         <div class="actionRate" v-if="isBinanceNetwork">
-                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
+                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} sUSD
                         </div>
                         <div
                             class="actionInputItem"
@@ -207,7 +207,7 @@
                             {{ errors.amountMsg }}
                         </div>
                         <div class="actionRate">
-                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} ℓUSD
+                            1 SHUM = {{ floor(burnData.LINA2USD, 4) }} sUSD
                         </div>
 
                         <div class="inputGroupBox">
@@ -274,7 +274,7 @@
                                         src="@/static/currency/sUSD.svg"
                                     />
 
-                                    <div class="itemTypeTitle">Burn ℓUSD</div>
+                                    <div class="itemTypeTitle">Burn sUSD</div>
 
                                     <InputNumber
                                         class="input"
@@ -828,7 +828,7 @@ export default {
                     throw {
                         code: 6100004,
                         message:
-                            "Something went wrong while burn ℓUSD, please try again."
+                            "Something went wrong while burn sUSD, please try again."
                     };
                 }
 
@@ -879,7 +879,7 @@ export default {
                     throw {
                         code: 6100004,
                         message:
-                            "Something went wrong while burn ℓUSD, please try again."
+                            "Something went wrong while burn sUSD, please try again."
                     };
                 }
 
@@ -1111,7 +1111,7 @@ export default {
                             this.burnData.debtBN.gt("0")
                         ) {
                             this.errors.unStakeMsg =
-                                "You don't have enough amount of ℓUSD.";
+                                "You don't have enough amount of sUSD.";
                             return;
                         }
 
@@ -1132,7 +1132,7 @@ export default {
                         } else {
                             //sUSD不足还清债务则报错
                             this.errors.unStakeMsg =
-                                "You don't have enough amount of ℓUSD.";
+                                "You don't have enough amount of sUSD.";
                         }
                     } else {
                         //有lock lina
@@ -1209,7 +1209,7 @@ export default {
                             } else {
                                 //sUSD不足还清债务则报错
                                 this.errors.unStakeMsg =
-                                    "You don't have enough amount of ℓUSD.";
+                                    "You don't have enough amount of sUSD.";
                             }
                         }
                     }
@@ -1237,7 +1237,7 @@ export default {
 
                     if (this.burnData.sUSDBN.eq("0")) {
                         this.errors.amountMsg =
-                            "You don't have enough amount of ℓUSD.";
+                            "You don't have enough amount of sUSD.";
                         return;
                     }
 
@@ -1432,7 +1432,7 @@ export default {
 
                         if (this.burnData.sUSDBN.lt(burnsUSD)) {
                             this.errors.ratioMsg =
-                                "You don't have enough amount of ℓUSD.";
+                                "You don't have enough amount of sUSD.";
                         }
 
                         this.inputData.unStake = 0;
@@ -1497,7 +1497,7 @@ export default {
                     ) {
                         this.inputData.unStake = unstakedAmount;
                         this.errors.unStakeMsg =
-                            "You don't have enough amount of ℓUSD.";
+                            "You don't have enough amount of sUSD.";
                         return;
                     }
 
@@ -1555,7 +1555,7 @@ export default {
                         ) {
                             this.inputData.unStake = unstakedAmount;
                             this.errors.unStakeMsg =
-                                "You don't have enough amount of ℓUSD.";
+                                "You don't have enough amount of sUSD.";
                             return;
                         }
 
@@ -1579,7 +1579,7 @@ export default {
                     ) {
                         this.inputData.unStake = unstakedAmount;
                         this.errors.unStakeMsg =
-                            "You don't have enough amount of ℓUSD.";
+                            "You don't have enough amount of sUSD.";
                         return;
                     }
 
@@ -1701,7 +1701,7 @@ export default {
 
                     if (!burnAmount || this.burnData.sUSDBN.eq("0")) {
                         this.errors.amountMsg =
-                            "You can't burn the amount of ℓUSD.";
+                            "You can't burn the amount of sUSD.";
                         return;
                     }
 
@@ -1713,7 +1713,7 @@ export default {
                     if (n2bn(burnAmount.toString()).gt(this.burnData.debtBN)) {
                         this.inputData.amount = burnAmount;
                         this.errors.amountMsg =
-                            "The amount of ℓUSD is larger than your debt.";
+                            "The amount of sUSD is larger than your debt.";
                         // this.inputData.ratio = null;
                         return;
                     }
@@ -1721,7 +1721,7 @@ export default {
                     if (n2bn(burnAmount.toString()).gt(this.burnData.sUSDBN)) {
                         this.inputData.amount = burnAmount;
                         this.errors.amountMsg =
-                            "You don't have enough amount of ℓUSD.";
+                            "You don't have enough amount of sUSD.";
                         this.inputData.ratio = null;
                         return;
                     }

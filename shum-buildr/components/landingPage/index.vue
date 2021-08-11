@@ -86,7 +86,7 @@
                         What is Buildr?
                         <p slot="content">
                             Buildr is part of the Shum's dApp suite. You can
-                            pledge and stake your Shum tokens to build ℓUSD, the
+                            pledge and stake your Shum tokens to build sUSD, the
                             base currency of Shum Exchange.
                         </p>
                     </Panel>
@@ -94,7 +94,7 @@
                         <div class="line"></div>
                         Why stake Shum?
                         <p slot="content">
-                            By staking Shum to build ℓUSD for self use / provide
+                            By staking Shum to build sUSD for self use / provide
                             liquidity for traders, users are entitled to staking
                             rewards and a split of the transaction fees
                             generated on our exchange.
@@ -102,9 +102,9 @@
                     </Panel>
                     <Panel name="4">
                         <div class="line"></div>
-                        What do I do with ℓUSD?
+                        What do I do with sUSD?
                         <p slot="content">
-                            Users can use ℓUSD to purchase synthetic assets on
+                            Users can use sUSD to purchase synthetic assets on
                             our exchange or even move it to other protocols or
                             dapps within the DeFi ecosystem.
                         </p>

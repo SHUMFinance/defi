@@ -7,7 +7,7 @@
                         <div class="actionTitle">Build</div>
                         <div class="actionDesc">
                             <template v-if="isEthereumNetwork">
-                                Earn rewards by staking SHUM and building ℓUSD.
+                                Earn rewards by staking SHUM and building sUSD.
                                 You will need a Binance Chain wallet for the
                                 transaction &nbsp;<span
                                     class="step"
@@ -17,7 +17,7 @@
                                 .
                             </template>
                             <template v-else>
-                                Build ℓUSD and earn staking rewards by staking
+                                Build sUSD and earn staking rewards by staking
                                 SHUM.
                             </template>
                         </div>
@@ -29,7 +29,7 @@
                                     4
                                 )
                             }}
-                            ℓUSD
+                            sUSD
                         </div>
 
                         <div
@@ -105,12 +105,12 @@
                                 </div>
                                 <div class="itemType">
                                     <div class="itemTypeTitle">
-                                        Build ℓUSD
+                                        Build sUSD
                                         <Tooltip
                                             max-width="305"
                                             placement="top"
                                             class="tip globalInfoStyle"
-                                            content="Amount of ℓUSD built may vary due to block times and price fluctuations in pledge tokens."
+                                            content="Amount of sUSD built may vary due to block times and price fluctuations in pledge tokens."
                                             offset="0 4"
                                         >
                                             <img
@@ -147,7 +147,7 @@
                                         toNonExponential(value), DECIMAL_PRECISION )
                                     " -->
                                     <!-- :max="formatEtherToNumber(buildData.maxAvaliablesUSD)" -->
-                                    <!-- <div class="unit">ℓUSD</div> -->
+                                    <!-- <div class="unit">sUSD</div> -->
                                 </div>
                                 <!-- <div class="avaliable">Avaliable : 1,000</div> -->
                             </div>
@@ -246,7 +246,7 @@
                                     4
                                 )
                             }}
-                            ℓUSD
+                            sUSD
                         </div>
 
                         <div class="inputGroupBox">
@@ -285,7 +285,7 @@
                                     <div class="itemType">
                                         <img src="@/static/currency/sUSD.svg" />
                                         <div class="itemTypeTitle">
-                                            Build ℓUSD
+                                            Build sUSD
                                         </div>
                                         <InputNumber
                                             class="input"
@@ -404,9 +404,9 @@
             :mask="true"
             class="introductActionModal"
         >
-            <div class="title">Build ℓUSD</div>
+            <div class="title">Build sUSD</div>
             <div class="context">
-                Amount of ℓUSD built may vary due to block times and price
+                Amount of sUSD built may vary due to block times and price
                 fluctuations in pledge tokens.
             </div>
         </Modal>
@@ -771,7 +771,7 @@ export default {
             }
         },
 
-        //点击最大ℓUSD
+        //点击最大sUSD
         clickMaxBuildAmount() {
             try {
                 this.resetErrorsMsg();
@@ -853,7 +853,7 @@ export default {
                     this.inputData.stake = this.buildData.LINA;
                 } else {
                     if (this.buildData.debtBN.eq(n2bn("0"))) {
-                        this.errors.ratioMsg = "You don't have build ℓUSD.";
+                        this.errors.ratioMsg = "You don't have build sUSD.";
                         return;
                     }
 
@@ -1046,7 +1046,7 @@ export default {
                 if (!this.isEthDevNetwork) {
                     if (!buildAmount) {
                         this.errors.amountMsg =
-                            "You can't build the amount of ℓUSD.";
+                            "You can't build the amount of sUSD.";
                         return;
                     }
 
@@ -1579,7 +1579,7 @@ export default {
                     throw {
                         code: 6100003,
                         message:
-                            "Something went wrong while building your ℓUSD, please try again."
+                            "Something went wrong while building your sUSD, please try again."
                     };
                 }
 
@@ -1704,7 +1704,7 @@ export default {
                     throw {
                         code: 6100003,
                         message:
-                            "Something went wrong while building your ℓUSD, please try again."
+                            "Something went wrong while building your sUSD, please try again."
                     };
                 }
 

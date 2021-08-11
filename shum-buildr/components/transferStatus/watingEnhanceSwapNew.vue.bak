@@ -1350,7 +1350,7 @@ export default {
                         LnProxy = lnrJSConnector.lnrJS.ShumFinance;
                     } else if (this.currency == "sUSD") {
                         LnProxy = lnrJSConnector.lnrJS.sUSD;
-                        replaceCurrency = "ℓUSD";
+                        replaceCurrency = "sUSD";
                     }
 
                     //替换货币名称
@@ -1991,7 +1991,7 @@ export default {
                     throw {
                         code: 6100003,
                         message:
-                            "Something went wrong while building your ℓUSD, please try again."
+                            "Something went wrong while building your sUSD, please try again."
                     };
                 }
 

@@ -402,14 +402,14 @@
                     <img class="tokenIcon" src="@/static/currency/sUSD.svg" />
                     <div class="box">
                         <div class="tokenItems obtrusive">
-                            <div class="left">ℓUSD</div>
+                            <div class="left">sUSD</div>
                             <div class="right">
-                                <b>{{ walletDetails.amountsUSD || 0 }}</b> ℓUSD
+                                <b>{{ walletDetails.amountsUSD || 0 }}</b> sUSD
                             </div>
                         </div>
                         <div class="tokenItems">
                             <div class="left">
-                                1 ℓUSD = ${{ walletDetails.sUSD2USDRate || 1 }}
+                                1 sUSD = ${{ walletDetails.sUSD2USDRate || 1 }}
                                 USD
                             </div>
                             <div class="right">
@@ -489,7 +489,7 @@
                             </div>
                             <div class="right">
                                 <div class="top">
-                                    <b>{{ walletDetails.liquids || 0 }}</b> ℓUSD
+                                    <b>{{ walletDetails.liquids || 0 }}</b> sUSD
                                 </div>
                                 <div class="bottom">
                                     ≈ ${{ walletDetails.liquids2USD || 0 }} USD
@@ -527,7 +527,7 @@
                                         <b>{{
                                             walletDetails.amountDebt || 0
                                         }}</b>
-                                        ℓUSD
+                                        sUSD
                                     </template>
                                     <template v-if="isEthereumNetwork">
                                         N/A

@@ -20,12 +20,12 @@
                         <template v-if="currentRatioStatus == 1">
                             Your P-ratio is below the target ratio. To prevent being liquidated, please either 
                             <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
-                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} ℓUSD</span> to raise up to target ratio to be able to claim rewards.
+                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} sUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} sUSD</span> to raise up to target ratio to be able to claim rewards.
                         </template>
                         <template v-if="currentRatioStatus == 2">
                             Your P-ratio has reached the minimum maintainence level. Please 
                             <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
-                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} ℓUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} ℓUSD</span> to raise up to target ratio. 
+                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} sUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} sUSD</span> to raise up to target ratio. 
                         </template>
                         <template v-if="currentRatioStatus == 3">
                             Your P-raio has fallen below the minimum required level for more than 3 days, 
@@ -35,7 +35,7 @@
                     <div class="btnBox">
                         <div class="btn" v-if="needBuyLINA && currentRatioStatus != 3" @click="actionLink(1)">Buy SHUM →</div>
                         <div class="btn" v-if="!needBuyLINA && currentRatioStatus != 3" @click="actionLink(2)">Stake now →</div>
-                        <div class="btn" v-if="needBuysUSD && currentRatioStatus != 3" @click="actionLink(3)">Buy ℓUSD →</div>
+                        <div class="btn" v-if="needBuysUSD && currentRatioStatus != 3" @click="actionLink(3)">Buy sUSD →</div>
                         <div class="btn" v-if="!needBuysUSD && currentRatioStatus != 3" @click="actionLink(4)">Burn now →</div>
                         <div class="btn" v-if="currentRatioStatus == 3" @click="actionLink(5)">View Details →</div>
                     </div>
@@ -46,7 +46,7 @@
         <div class="title">Welcome to Buildr</div>
         <div class="context">
             Our native token Shum is staked in our collateral pool to build
-            ℓUSD. The collateral pool enables infinite liquidity and no
+            sUSD. The collateral pool enables infinite liquidity and no
             slippage.
         </div>
         <div class="actionsBox">
@@ -72,14 +72,14 @@
                 </div>
                 <div class="boxContext">
                     Stake Shum <br />
-                    Build ℓUSD
+                    Build sUSD
                 </div>
                 <div
                     class="btn"
                     :class="{ isMobile }"
                     @click="!isMobile && btnClick(2)"
                 >
-                    Build ℓUSD
+                    Build sUSD
                 </div>
             </div>
         </div>

@@ -1526,7 +1526,7 @@ export default {
                     throw {
                         code: 6100005,
                         message:
-                            "Something went wrong while building your ℓUSD, please try again."
+                            "Something went wrong while building your sUSD, please try again."
                     };
                 }
 
