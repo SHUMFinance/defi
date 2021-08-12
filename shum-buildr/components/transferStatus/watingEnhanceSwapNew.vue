@@ -936,10 +936,10 @@ export default {
                     this.waitProcessArray = [];
                     this.waitProcessFlow = null;
 
-                    let LnProxy,
-                        LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
+                    let ShumProxy,
+                        ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
                     if (isEthereumNetwork(this.walletNetworkId)) {
-                        // LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
+                        // ShumProxy = lnrJSConnector.lnrJS.ShumProxyERC20;
                         this.BUILD_PROCESS_SETUP.FREEZE =
                             BUILD_PROCESS_SETUP.FREEZE + "ETH";
                         this.BUILD_PROCESS_SETUP.UNFREEZE =
@@ -947,7 +947,7 @@ export default {
                         // this.BUILD_PROCESS_SETUP.STAKING_BUILD =
                         //     BUILD_PROCESS_SETUP.STAKING_BUILD + "ETH";
                     } else if (isBinanceNetwork(this.walletNetworkId)) {
-                        // LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                        // ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                         this.BUILD_PROCESS_SETUP.FREEZE =
                             BUILD_PROCESS_SETUP.FREEZE + "BSC";
                         this.BUILD_PROCESS_SETUP.UNFREEZE =
@@ -958,9 +958,9 @@ export default {
 
                     let replaceCurrency = this.currency;
                     if (this.currency == "SHUM") {
-                        LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                        ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                     } else {
-                        LnProxy = lnrJSConnector.lnrJS[this.currency];
+                        ShumProxy = lnrJSConnector.lnrJS[this.currency];
                         replaceCurrency = currenciesList[this.currency].name;
                     }
 
@@ -978,12 +978,12 @@ export default {
                     );
 
                     //取合约地址
-                    const LnBridgeAddress = LnBridge.contract.address;
+                    const ShumBridgeAddress = ShumBridge.contract.address;
 
                     //获取之前approve的数量
-                    const approveAmount = await LnProxy.allowance(
+                    const approveAmount = await ShumProxy.allowance(
                         this.walletAddress,
-                        LnBridgeAddress
+                        ShumBridgeAddress
                     );
 
                     const freezeAmount = n2bn(this.swapNumber);
@@ -1101,19 +1101,19 @@ export default {
         async startApproveContract(approveAmountLINA) {
             this.confirmTransactionStatus = false;
 
-            let LnProxy,
-                LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
+            let ShumProxy,
+                ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
 
             if (this.currency == "SHUM") {
-                LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
             } else {
-                LnProxy = lnrJSConnector.lnrJS[this.currency];
+                ShumProxy = lnrJSConnector.lnrJS[this.currency];
             }
 
             const { utils } = lnrJSConnector;
 
             //取合约地址
-            const LnBridgeAddress = LnBridge.contract.address;
+            const ShumBridgeAddress = ShumBridge.contract.address;
 
             const transactionSettings = {
                 gasPrice: this.sourceGasPrice,
@@ -1123,12 +1123,12 @@ export default {
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             transactionSettings.gasLimit = await this.getGasEstimateFromApprove(
-                LnBridgeAddress,
+                ShumBridgeAddress,
                 approveAmountLINA
             );
 
-            let transaction = await LnProxy.approve(
-                LnBridgeAddress,
+            let transaction = await ShumProxy.approve(
+                ShumBridgeAddress,
                 approveAmountLINA,
                 transactionSettings
             );
@@ -1163,17 +1163,17 @@ export default {
         //评估Approve的gas
         async getGasEstimateFromApprove(contractAddress, approveAmountLINA) {
             try {
-                let LnProxy;
+                let ShumProxy;
                 // if (isEthereumNetwork(this.walletNetworkId)) {
-                //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
+                //     ShumProxy = lnrJSConnector.lnrJS.ShumProxyERC20;
                 // } else if (isBinanceNetwork(this.walletNetworkId)) {
-                //     LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                //     ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                 // }
 
                 if (this.currency == "SHUM") {
-                    LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                    ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                 } else {
-                    LnProxy = lnrJSConnector.lnrJS[this.currency];
+                    ShumProxy = lnrJSConnector.lnrJS[this.currency];
                 }
 
                 if (
@@ -1183,7 +1183,7 @@ export default {
                     throw new Error("invalid approveAmountLINA");
                 }
 
-                let gasEstimate = await LnProxy.contract.estimateGas.approve(
+                let gasEstimate = await ShumProxy.contract.estimateGas.approve(
                     contractAddress,
                     approveAmountLINA
                 );
@@ -1196,7 +1196,7 @@ export default {
         async startFreezeContract(swapNumber) {
             this.confirmTransactionStatus = false;
 
-            let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
+            let ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                 SETUP;
             if (isEthereumNetwork(this.walletNetworkId)) {
                 SETUP = "ETH";
@@ -1214,11 +1214,11 @@ export default {
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             transactionSettings.gasLimit = await this.getGasEstimateFromFreeze(
-                LnBridge,
+                ShumBridge,
                 swapNumber
             );
 
-            let transaction = await LnBridge.deposit(
+            let transaction = await ShumBridge.deposit(
                 utils.formatBytes32String(this.currency),
                 swapNumber,
                 this.targetNetworkId,
@@ -1267,7 +1267,7 @@ export default {
         },
 
         //评估冻结gas limit
-        async getGasEstimateFromFreeze(LnBridge, swapNumber) {
+        async getGasEstimateFromFreeze(ShumBridge, swapNumber) {
             try {
                 if (
                     swapNumber.lte(n2bn("0")) //小于等于0
@@ -1277,7 +1277,7 @@ export default {
 
                 const { utils } = lnrJSConnector;
 
-                let gasEstimate = await LnBridge.contract.estimateGas.deposit(
+                let gasEstimate = await ShumBridge.contract.estimateGas.deposit(
                     utils.formatBytes32String(this.currency),
                     swapNumber,
                     this.targetNetworkId,
@@ -1360,7 +1360,7 @@ export default {
             }
 
             if (walletStatus) {
-                let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
+                let ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                     SETUP;
                 if (isEthereumNetwork(this.walletNetworkId)) {
                     SETUP = "ETH";
@@ -1386,11 +1386,11 @@ export default {
                     this.confirmTransactionStatus = false;
 
                     transactionSettings.gasLimit = await this.getGasEstimateFromUnFreeze(
-                        LnBridge,
+                        ShumBridge,
                         deposit
                     );
 
-                    let transaction = await LnBridge.withdraw(
+                    let transaction = await ShumBridge.withdraw(
                         deposit.srcChainId,
                         deposit.destChainId,
                         deposit.depositId,
@@ -1444,7 +1444,7 @@ export default {
         },
 
         //评估解冻手续费
-        async getGasEstimateFromUnFreeze(LnBridge, deposit) {
+        async getGasEstimateFromUnFreeze(ShumBridge, deposit) {
             try {
                 const { utils } = lnrJSConnector;
 
@@ -1464,7 +1464,7 @@ export default {
                 // );
 
                 //如果是bridge里面能提取的lina不足,会报错但无法捕捉异常,导致无限等待
-                let gasEstimate = await LnBridge.contract.estimateGas.withdraw(
+                let gasEstimate = await ShumBridge.contract.estimateGas.withdraw(
                     deposit.srcChainId,
                     deposit.destChainId,
                     deposit.depositId,
@@ -1905,9 +1905,9 @@ export default {
 
         //获取冻结手续费
         async getFreezeFee() {
-            let LnBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
+            let ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge;
             const gasLimit = await this.getGasEstimateFromFreeze(
-                LnBridge,
+                ShumBridge,
                 n2bn(this.swapNumber)
             );
 
@@ -1919,9 +1919,9 @@ export default {
 
         //获取解冻手续费
         async getUnfreezeFee() {
-            const LnBridge = await this.getTargetContract();
+            const ShumBridge = await this.getTargetContract();
             // const gasLimit = await this.getGasEstimateFromUnFreeze(
-            //     LnBridge,
+            //     ShumBridge,
             //     n2bn(this.swapNumber)
             // );
 

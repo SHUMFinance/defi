@@ -121,7 +121,7 @@ export default [
         type: 'address'
       },
       {
-        internalType: 'contract ILnAccessControl',
+        internalType: 'contract IShumAccessControl',
         name: '_accessCtrl',
         type: 'address'
       },
@@ -137,7 +137,7 @@ export default [
     name: 'accessCtrl',
     outputs: [
       {
-        internalType: 'contract ILnAccessControl',
+        internalType: 'contract IShumAccessControl',
         name: '',
         type: 'address'
       }

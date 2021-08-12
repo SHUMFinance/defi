@@ -245,7 +245,7 @@ export default [
     name: 'integrationProxy',
     outputs: [
       {
-        internalType: 'contract LnProxyBase',
+        internalType: 'contract ShumProxyBase',
         name: '',
         type: 'address'
       }
@@ -283,7 +283,7 @@ export default [
     name: 'proxy',
     outputs: [
       {
-        internalType: 'contract LnProxyBase',
+        internalType: 'contract ShumProxyBase',
         name: '',
         type: 'address'
       }

@@ -355,7 +355,7 @@
                     </div>
 
                     <div v-else class="burnBtn switchToBSC">
-                        Please switch to BSC network to burn your ℓusd
+                        Please switch to BSC network to burn your susd
                     </div>
 
                     <Spin fix v-if="processing"></Spin>
@@ -579,11 +579,11 @@ export default {
             try {
                 this.processing = true;
 
-                let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                let ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                 // if (this.isEthereumNetwork) {
-                //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
+                //     ShumProxy = lnrJSConnector.lnrJS.ShumProxyERC20;
                 // } else if (this.isBinanceNetwork) {
-                //     LnProxy = lnrJSConnector.lnrJS.LnProxyBEP20;
+                //     ShumProxy = lnrJSConnector.lnrJS.ShumProxyBEP20;
                 // }
 
                 const {
@@ -609,7 +609,7 @@ export default {
                         walletAddress
                     ), //个人全部抵押物兑sUSD,用于计算pratio
                     getBuildRatio(), //目标抵押率
-                    LnProxy.balanceOf(walletAddress), //LINA余额
+                    ShumProxy.balanceOf(walletAddress), //LINA余额
                     ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress) //总债务
                 ]);
 

@@ -682,8 +682,8 @@ export default {
         sendTransaction(currency, amount, destination, settings) {
             if (!currency) return null;
             if (currency === "SHUM") {
-                let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
-                return LnProxy.transfer(destination, amount, settings);
+                let ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
+                return ShumProxy.transfer(destination, amount, settings);
             } else if (["ETH", "BNB"].includes(currency)) {
                 return lnrJSConnector.signer.sendTransaction({
                     value: amount,
@@ -714,13 +714,13 @@ export default {
                 const amountBN = n2bn(amount);
 
                 if (currency === "SHUM") {
-                    let LnProxy = lnrJSConnector.lnrJS.ShumFinance;
+                    let ShumProxy = lnrJSConnector.lnrJS.ShumFinance;
                     // if (this.isEthereumNetwork) {
-                    //     LnProxy = lnrJSConnector.lnrJS.LnProxyERC20;
+                    //     ShumProxy = lnrJSConnector.lnrJS.ShumProxyERC20;
                     // } else if (this.isBinanceNetwork) {
-                    //     LnProxy = lnrJSConnector.lnrJS.LnProxyBEP20;
+                    //     ShumProxy = lnrJSConnector.lnrJS.ShumProxyBEP20;
                     // }
-                    gasEstimate = await LnProxy.contract.estimateGas.transfer(
+                    gasEstimate = await ShumProxy.contract.estimateGas.transfer(
                         destination,
                         amountBN
                     );

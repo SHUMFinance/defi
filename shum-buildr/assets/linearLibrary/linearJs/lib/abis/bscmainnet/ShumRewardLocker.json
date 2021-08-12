@@ -127,7 +127,7 @@
 				"type": "address"
 			},
 			{
-				"internalType": "contract ILnAccessControl",
+				"internalType": "contract IShumAccessControl",
 				"name": "_accessCtrl",
 				"type": "address"
 			},
@@ -147,7 +147,7 @@
 		"name": "accessCtrl",
 		"outputs": [
 			{
-				"internalType": "contract ILnAccessControl",
+				"internalType": "contract IShumAccessControl",
 				"name": "",
 				"type": "address"
 			}

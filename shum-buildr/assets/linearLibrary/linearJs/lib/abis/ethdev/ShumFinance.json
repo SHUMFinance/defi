@@ -331,7 +331,7 @@
 		"name": "integrationProxy",
 		"outputs": [
 			{
-				"internalType": "contract LnProxyBase",
+				"internalType": "contract ShumProxyBase",
 				"name": "",
 				"type": "address"
 			}
@@ -387,7 +387,7 @@
 		"name": "proxy",
 		"outputs": [
 			{
-				"internalType": "contract LnProxyBase",
+				"internalType": "contract ShumProxyBase",
 				"name": "",
 				"type": "address"
 			}
