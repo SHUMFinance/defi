@@ -194,7 +194,7 @@ contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
         uint fee = destAmount.sub(destRecived);
 
         // Fee going into the pool, to be adjusted based on foundation split
-        uint feeForPoolInUsd = mPrices.exchange(exchangeEntry.toCurrency, fee, mPrices.LUSD());
+        uint feeForPoolInUsd = mPrices.exchange(exchangeEntry.toCurrency, fee, mPrices.SUSD());
 
         // Split the fee between pool and foundation when both holder and ratio are set
         uint256 foundationSplit;
@@ -212,7 +212,7 @@ contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
         }
 
         IShumAsset lusd =
-            IShumAsset(mAssets.getAddressWithRequire(mPrices.LUSD(), "ShumExchangeSystem: failed to get lUSD address"));
+            IShumAsset(mAssets.getAddressWithRequire(mPrices.SUSD(), "ShumExchangeSystem: failed to get lUSD address"));
 
         if (feeForPoolInUsd > 0) lusd.mint(mRewardSys, feeForPoolInUsd);
         if (foundationSplit > 0) lusd.mint(foundationFeeHolder, foundationSplit);

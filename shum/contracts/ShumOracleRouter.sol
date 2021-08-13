@@ -37,7 +37,7 @@ contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
     mapping(bytes32 => OracleSettings) public oracleSettings;
     mapping(bytes32 => string) public linearCurrencyKeysToBandCurrencyKeys;
 
-    bytes32 public constant override LUSD = "lUSD";
+    bytes32 public constant override SUSD = "sUSD";
 
     uint8 public constant ORACLE_TYPE_CHAINLINK = 1;
     uint8 public constant ORACLE_TYPE_BAND = 2;
@@ -54,7 +54,7 @@ contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
     }
 
     function isPriceStaled(bytes32 currencyKey) external view returns (bool) {
-        if (currencyKey == LUSD) return false;
+        if (currencyKey == SUSD) return false;
         (, uint256 time) = _getPriceData(currencyKey);
         return _isUpdateTimeStaled(time, getStalePeriodForCurrency(currencyKey));
     }
@@ -201,7 +201,7 @@ contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
     }
 
     function _getPriceData(bytes32 currencyKey) private view returns (uint256 price, uint256 updateTime) {
-        if (currencyKey == LUSD) return (SafeDecimalMath.unit(), block.timestamp);
+        if (currencyKey == SUSD) return (SafeDecimalMath.unit(), block.timestamp);
 
         OracleSettings memory settings = oracleSettings[currencyKey];
         require(settings.oracleAddress != address(0), "ShumOracleRouter: oracle not set");

@@ -95,7 +95,7 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
         return totalCollateralInUsd.sub(minCollateral);
     }
 
-    function maxRedeemableLina(address user) public view returns (uint256) {
+    function maxRedeemableShum(address user) public view returns (uint256) {
         (uint256 debtBalance, ) = debtSystem.GetUserDebtBalanceInUsd(user);
         uint256 stakedLinaAmount = userCollateralData[user][Currency_SHUM].collateral;
 
@@ -420,7 +420,7 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
 
     function _redeemMax(address user, bytes32 _currency) private {
         require(_currency == Currency_SHUM, "ShumCollateralSystem: only LINA is supported");
-        _Redeem(user, Currency_SHUM, maxRedeemableLina(user));
+        _Redeem(user, Currency_SHUM, maxRedeemableShum(user));
     }
 
     function _Redeem(
@@ -431,8 +431,8 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
         require(_currency == Currency_SHUM, "ShumCollateralSystem: only LINA is supported");
         require(_amount > 0, "ShumCollateralSystem: zero amount");
 
-        uint256 maxRedeemableLinaAmount = maxRedeemableLina(user);
-        require(_amount <= maxRedeemableLinaAmount, "ShumCollateralSystem: insufficient collateral");
+        uint256 maxRedeemableShumAmount = maxRedeemableShum(user);
+        require(_amount <= maxRedeemableShumAmount, "ShumCollateralSystem: insufficient collateral");
 
         userCollateralData[user][Currency_SHUM].collateral = userCollateralData[user][Currency_SHUM].collateral.sub(_amount);
 

@@ -19,7 +19,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
 
     // -------------------------------------------------------
     // need set before system running value.
-    IShumAsset private lUSDToken; // this contract need
+    IShumAsset private sUSDToken; // this contract need
 
     IShumDebtSystem private debtSystem;
     IShumPrices private priceGetter;
@@ -38,10 +38,10 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
     }
 
     // -------------------------------------------------------
-    function __ShumBuildBurnSystem_init(address admin, address _lUSDTokenAddr) public initializer {
+    function __ShumBuildBurnSystem_init(address admin, address _sUSDTokenAddr) public initializer {
         __ShumAdminUpgradeable_init(admin);
 
-        lUSDToken = IShumAsset(_lUSDTokenAddr);
+        sUSDToken = IShumAsset(_sUSDTokenAddr);
     }
 
     function setPaused(bool _paused) external onlyAdmin {
@@ -69,8 +69,8 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
     }
 
     function SetSusdTokenAddress(address _address) public onlyAdmin {
-        emit UpdateLusdToken(address(lUSDToken), _address);
-        lUSDToken = IShumAsset(_address);
+        emit UpdateLusdToken(address(sUSDToken), _address);
+        sUSDToken = IShumAsset(_address);
     }
 
     event UpdateLusdToken(address oldAddr, address newAddr);
@@ -109,7 +109,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
         debtSystem.UpdateDebt(user, newUserDebtProportion, oldTotalProportion);
 
         // mint asset
-        lUSDToken.mint(user, amount);
+        sUSDToken.mint(user, amount);
 
         return true;
     }
@@ -135,7 +135,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
         require(oldUserDebtBalance > 0, "no debt, no burn");
         uint256 burnAmount = oldUserDebtBalance < amount ? oldUserDebtBalance : amount;
         // burn asset
-        lUSDToken.burn(burnUser, burnAmount);
+        sUSDToken.burn(burnUser, burnAmount);
 
         uint newTotalDebtIssued = totalAssetSupplyInUsd.sub(burnAmount);
 
@@ -179,7 +179,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
         require(debtAsset > maxBuildAssetToTarget, "You maybe want build to target");
 
         uint256 needBurn = debtAsset.sub(maxBuildAssetToTarget);
-        uint balance = lUSDToken.balanceOf(user); // burn as many as possible
+        uint balance = sUSDToken.balanceOf(user); // burn as many as possible
         if (balance < needBurn) {
             needBurn = balance;
         }

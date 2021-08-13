@@ -54,7 +54,7 @@ describe("Integration | Build", function () {
     );
   });
 
-  it("maxRedeemableLina() should return staked amount when debt is zero regardless of locked collateral", async function () {
+  it("maxRedeemableShum() should return staked amount when debt is zero regardless of locked collateral", async function () {
     // Alice stakes 9,000 SHUM
     await stack.shumCollateralSystem.connect(alice).Collateral(
       ethers.utils.formatBytes32String("SHUM"), // _currency
@@ -63,7 +63,7 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is zero
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
@@ -77,7 +77,7 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is less than staked
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
@@ -91,7 +91,7 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is the same as staked
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
@@ -105,13 +105,13 @@ describe("Integration | Build", function () {
 
     // Returns 9,000 when locked amount is the same as staked
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
   });
 
-  it("maxRedeemableLina() should reflect debt amount", async function () {
+  it("maxRedeemableShum() should reflect debt amount", async function () {
     // Alice stakes 9,000 SHUM
     await stack.shumCollateralSystem.connect(alice).Collateral(
       ethers.utils.formatBytes32String("SHUM"), // _currency
@@ -125,7 +125,7 @@ describe("Integration | Build", function () {
 
     // 5,000 SHUM is set aside
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(4_000));
@@ -139,7 +139,7 @@ describe("Integration | Build", function () {
 
     // Now 8,000 SHUM is withdrawable
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(8_000));
@@ -153,7 +153,7 @@ describe("Integration | Build", function () {
 
     // All staked amount available
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));
@@ -165,7 +165,7 @@ describe("Integration | Build", function () {
       [(await getBlockDateTime(ethers.provider)).plus({ years: 1 }).toSeconds()] // _lockTo
     );
     expect(
-      await stack.shumCollateralSystem.maxRedeemableLina(
+      await stack.shumCollateralSystem.maxRedeemableShum(
         alice.address // user
       )
     ).to.equal(expandTo18Decimals(9_000));

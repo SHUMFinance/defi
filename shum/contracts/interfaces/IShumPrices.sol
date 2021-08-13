@@ -10,5 +10,5 @@ interface IShumPrices {
         bytes32 destKey
     ) external view returns (uint);
 
-    function LUSD() external view returns (bytes32);
+    function SUSD() external view returns (bytes32);
 }

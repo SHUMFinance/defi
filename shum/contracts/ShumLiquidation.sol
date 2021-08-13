@@ -12,6 +12,8 @@ import "./interfaces/IShumRewardLocker.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
+import "hardhat/console.sol";
+
 contract ShumLiquidation is ShumAdminUpgradeable {
     using SafeMathUpgradeable for uint256;
     using SafeDecimalMath for uint256;
@@ -79,7 +81,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
     IShumCollateralSystem public lnCollateralSystem;
     IShumConfig public lnConfig;
     IShumDebtSystem public lnDebtSystem;
-    IShumPrices public lnPrices;
+    IShumPrices public shumPrices;
     IShumRewardLocker public lnRewardLocker;
 
     mapping(address => UndercollateralizationMark) public undercollateralizationMarks;
@@ -107,7 +109,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         IShumCollateralSystem _lnCollateralSystem,
         IShumConfig _lnConfig,
         IShumDebtSystem _lnDebtSystem,
-        IShumPrices _lnPrices,
+        IShumPrices _shumPrices,
         IShumRewardLocker _lnRewardLocker,
         address _admin
     ) public initializer {
@@ -117,20 +119,20 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         require(address(_lnCollateralSystem) != address(0), "ShumLiquidation: zero address");
         require(address(_lnConfig) != address(0), "ShumLiquidation: zero address");
         require(address(_lnDebtSystem) != address(0), "ShumLiquidation: zero address");
-        require(address(_lnPrices) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumPrices) != address(0), "ShumLiquidation: zero address");
         require(address(_lnRewardLocker) != address(0), "ShumLiquidation: zero address");
 
         lnBuildBurnSystem = _lnBuildBurnSystem;
         lnCollateralSystem = _lnCollateralSystem;
         lnConfig = _lnConfig;
         lnDebtSystem = _lnDebtSystem;
-        lnPrices = _lnPrices;
+        shumPrices = _shumPrices;
         lnRewardLocker = _lnRewardLocker;
     }
 
     function setShumPrices(IShumPrices newShumPrices) external onlyAdmin {
         require(address(newShumPrices) != address(0), "ShumLiquidation: zero address");
-        lnPrices = newShumPrices;
+        shumPrices = newShumPrices;
     }
 
     function markPositionAsUndercollateralized(address user) external {
@@ -138,6 +140,11 @@ contract ShumLiquidation is ShumAdminUpgradeable {
 
         EvalUserPositionResult memory evalResult = evalUserPostion(user);
         uint256 liquidationRatio = lnConfig.getUint(LIQUIDATION_RATIO_KEY);
+
+        console.log("evalResult.collateralizationRatio %d",evalResult.collateralizationRatio);
+        console.log("collateralizationRatio %d",liquidationRatio);
+
+
         require(evalResult.collateralizationRatio > liquidationRatio, "ShumLiquidation: not undercollateralized");
 
         undercollateralizationMarks[user] = UndercollateralizationMark({
@@ -290,7 +297,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         (uint256 debtBalance, ) = lnDebtSystem.GetUserDebtBalanceInUsd(user);
         (uint256 stakedCollateral, uint256 lockedCollateral) = lnCollateralSystem.getUserLinaCollateralBreakdown(user);
 
-        uint256 collateralPrice = lnPrices.getPrice("LINA");
+        uint256 collateralPrice = shumPrices.getPrice("SHUM");
         uint256 collateralValue = stakedCollateral.add(lockedCollateral).multiplyDecimal(collateralPrice);
 
         uint256 collateralizationRatio = collateralValue == 0 ? 0 : debtBalance.divideDecimal(collateralValue);

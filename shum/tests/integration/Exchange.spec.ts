@@ -25,8 +25,8 @@ describe("Integration | Exchange", function () {
   let priceUpdateTime: DateTime;
 
   const setLbtcPrice = async (price: number): Promise<void> => {
-    await stack.lnPrices.connect(admin).setPrice(
-      ethers.utils.formatBytes32String("lBTC"), // currencyKey
+    await stack.shumPrices.connect(admin).setPrice(
+      ethers.utils.formatBytes32String("sBTC"), // currencyKey
       expandTo18Decimals(price) // price
     );
   };
@@ -39,7 +39,7 @@ describe("Integration | Exchange", function () {
   };
 
   const settleTrade = (entryId: number): Promise<any> => {
-    return stack.lnExchangeSystem.connect(settler).settle(
+    return stack.shumExchangeSystem.connect(settler).settle(
       entryId // pendingExchangeEntryId
     );
   };
@@ -51,144 +51,150 @@ describe("Integration | Exchange", function () {
 
   beforeEach(async function () {
     [deployer, alice, bob, settler] = await ethers.getSigners();
+    
     admin = deployer;
 
     stack = await deployLinearStack(deployer, admin);
 
     priceUpdateTime = await getBlockDateTime(ethers.provider);
 
-    // Set LINA price to $0.01 and lBTC to $20,000
-    await stack.lnPrices.connect(admin).setPriceAndTime(
-      ethers.utils.formatBytes32String("LINA"), // currencyKey
+    // Set SHUM price to $0.01 and sBTC to $20,000
+    await stack.shumPrices.connect(admin).setPriceAndTime(
+      ethers.utils.formatBytes32String("SHUM"), // currencyKey
       expandTo18Decimals(0.01), // price
       priceUpdateTime.toSeconds() // updateTime
     );
-    await stack.lnPrices.connect(admin).setPriceAndTime(
-      ethers.utils.formatBytes32String("lBTC"), // currencyKey
+
+    await stack.shumPrices.connect(admin).setPriceAndTime(
+      ethers.utils.formatBytes32String("sBTC"), // currencyKey
       expandTo18Decimals(20_000), // price
       priceUpdateTime.toSeconds() // updateTime
     );
 
     // Set BTC exchange fee rate to 1%
-    await stack.lnConfig.connect(admin).setUint(
-      ethers.utils.formatBytes32String("lBTC"), // key
+    await stack.shumConfig.connect(admin).setUint(
+      ethers.utils.formatBytes32String("sBTC"), // key
       expandTo18Decimals(0.01) // value
     );
 
     // Set settlement delay
-    await stack.lnConfig.connect(admin).setUint(
+    await stack.shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String("TradeSettlementDelay"), // key
       settlementDelay.as("seconds")
     );
 
     // Set revert delay
-    await stack.lnConfig.connect(admin).setUint(
+    await stack.shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String("TradeRevertDelay"), // key
       revertDelay.as("seconds")
     );
 
-    // Mint 1,000,000 LINA to Alice
-    await stack.linaToken
+    // Mint 1,000,000 Shum to Alice
+    await stack.shumToken
       .connect(admin)
       .mint(alice.address, expandTo18Decimals(1_000_000));
 
-    // Alice stakes all LINA
-    await stack.linaToken
+    // Alice stakes all Shum
+    await stack.shumToken
       .connect(alice)
-      .approve(stack.lnCollateralSystem.address, uint256Max);
-    await stack.lnCollateralSystem.connect(alice).Collateral(
-      ethers.utils.formatBytes32String("LINA"), // _currency
+      .approve(stack.shumCollateralSystem.address, uint256Max);
+    await stack.shumCollateralSystem.connect(alice).Collateral(
+      ethers.utils.formatBytes32String("SHUM"), // _currency
       expandTo18Decimals(1_000_000) // _amount
     );
 
-    // Alice builds 1,000 lUSD
-    await stack.lnBuildBurnSystem.connect(alice).BuildAsset(
+    // Alice builds 1,000 sUSD
+    await stack.shumBuildBurnSystem.connect(alice).BuildAsset(
       expandTo18Decimals(1_000) // amount
     );
+
   });
 
   it("fee not splitted when fee holder is not set", async () => {
+
     // Set fee split ratio to 30%
-    await stack.lnConfig.connect(admin).setUint(
+    await stack.shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String("FoundationFeeSplit"), // key
       expandTo18Decimals(0.3) // value
     );
 
-    // Alice exchanges 500 lUSD for 0.025 lBTC
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    // Alice exchanges 500 sUSD for 0.025 sBTC
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
+
     await settleTradeWithDelay(1);
 
     // All fees (0.025 * 0.01 * 20000 = 5) go to pool
     expect(
-      await stack.lusdToken.balanceOf(stack.lnRewardSystem.address)
+      await stack.susdToken.balanceOf(stack.shumRewardSystem.address)
     ).to.equal(expandTo18Decimals(5));
 
     // Proceedings after fees: 500 / 20000 * (1 - 0.01) = 0.02475 BTC
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(500)
     );
-    expect(await stack.lbtcToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.sbtcToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(0.02475)
     );
+
   });
 
   it("fee not splitted when split ratio is not set", async () => {
     // Set fee holder to bob
-    await stack.lnExchangeSystem.connect(admin).setFoundationFeeHolder(
+    await stack.shumExchangeSystem.connect(admin).setFoundationFeeHolder(
       bob.address // _foundationFeeHolder
     );
 
-    // Alice exchanges 500 lUSD for 0.025 lBTC
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    // Alice exchanges 500 sUSD for 0.025 sBTC
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
     await settleTradeWithDelay(1);
 
     // All fees (0.025 * 0.01 * 20000 = 5) go to pool
     expect(
-      await stack.lusdToken.balanceOf(stack.lnRewardSystem.address)
+      await stack.susdToken.balanceOf(stack.shumRewardSystem.address)
     ).to.equal(expandTo18Decimals(5));
-    expect(await stack.lusdToken.balanceOf(bob.address)).to.equal(0);
+    expect(await stack.susdToken.balanceOf(bob.address)).to.equal(0);
 
     // Proceedings after fees: 500 / 20000 * (1 - 0.01) = 0.02475 BTC
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(500)
     );
-    expect(await stack.lbtcToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.sbtcToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(0.02475)
     );
   });
 
   it("fee splitted to pool and foundation", async () => {
     // Set fee split ratio to 30%
-    await stack.lnConfig.connect(admin).setUint(
+    await stack.shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String("FoundationFeeSplit"), // key
       expandTo18Decimals(0.3) // value
     );
 
     // Set fee holder to bob
-    await stack.lnExchangeSystem.connect(admin).setFoundationFeeHolder(
+    await stack.shumExchangeSystem.connect(admin).setFoundationFeeHolder(
       bob.address // _foundationFeeHolder
     );
 
-    // Alice exchanges 500 lUSD for 0.025 lBTC
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    // Alice exchanges 500 sUSD for 0.025 sBTC
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
     await passSettlementDelay();
     await expect(settleTrade(1))
-      .to.emit(stack.lnExchangeSystem, "PendingExchangeSettled")
+      .to.emit(stack.shumExchangeSystem, "PendingExchangeSettled")
       .withArgs(
         1, // id
         settler.address, // settler
@@ -199,37 +205,37 @@ describe("Integration | Exchange", function () {
 
     /**
      * Fee split:
-     *   Total = 0.025 * 0.01 * 20000 = 5 lUSD
-     *   Foundation = 5 * 0.3 = 1.5 lUSD
-     *   Pool = 5 - 1.5 = 3.5 lUSD
+     *   Total = 0.025 * 0.01 * 20000 = 5 sUSD
+     *   Foundation = 5 * 0.3 = 1.5 sUSD
+     *   Pool = 5 - 1.5 = 3.5 sUSD
      */
     expect(
-      await stack.lusdToken.balanceOf(stack.lnRewardSystem.address)
+      await stack.susdToken.balanceOf(stack.shumRewardSystem.address)
     ).to.equal(expandTo18Decimals(3.5));
-    expect(await stack.lusdToken.balanceOf(bob.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(bob.address)).to.equal(
       expandTo18Decimals(1.5)
     );
 
     // Proceedings after fees: 500 / 20000 * (1 - 0.01) = 0.02475 BTC
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(500)
     );
-    expect(await stack.lbtcToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.sbtcToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(0.02475)
     );
   });
 
   it("cannot settle when price is staled", async () => {
     const exchangeAction = () =>
-      stack.lnExchangeSystem.connect(alice).exchange(
-        ethers.utils.formatBytes32String("lUSD"), // sourceKey
+      stack.shumExchangeSystem.connect(alice).exchange(
+        ethers.utils.formatBytes32String("sUSD"), // sourceKey
         expandTo18Decimals(500), // sourceAmount
         alice.address, // destAddr
-        ethers.utils.formatBytes32String("lBTC") // destKey
+        ethers.utils.formatBytes32String("sBTC") // destKey
       );
 
     // Temporarily set delay to avoid settlement issue
-    await stack.lnConfig.connect(admin).setUint(
+    await stack.shumConfig.connect(admin).setUint(
       ethers.utils.formatBytes32String("TradeRevertDelay"), // key
       Duration.fromObject({ days: 10 }).as("seconds")
     );
@@ -250,80 +256,85 @@ describe("Integration | Exchange", function () {
       ethers.provider,
       priceUpdateTime.plus(stalePeriod).plus({ seconds: 1 })
     );
+
+
     await expect(settleTrade(2)).to.be.revertedWith(
-      "MockLnPrices: staled price data"
+      "MockShumPrices: staled price data"
     );
+
+
+
   });
 
   it("can sell when position entrance is disabled", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
     await settleTradeWithDelay(1);
 
-    await stack.lnExchangeSystem.connect(admin).setExitPositionOnly(true);
+    await stack.shumExchangeSystem.connect(admin).setExitPositionOnly(true);
 
     // Can still sell
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lBTC"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sBTC"), // sourceKey
       expandTo18Decimals(0.01), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lUSD") // destKey
+      ethers.utils.formatBytes32String("sUSD") // destKey
     );
   });
 
   it("cannot buy when position entrance is disabled", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
-    await stack.lnExchangeSystem.connect(admin).setExitPositionOnly(true);
+    await stack.shumExchangeSystem.connect(admin).setExitPositionOnly(true);
 
     // Can no longer buy
     await expect(
-      stack.lnExchangeSystem.connect(alice).exchange(
-        ethers.utils.formatBytes32String("lUSD"), // sourceKey
+      stack.shumExchangeSystem.connect(alice).exchange(
+        ethers.utils.formatBytes32String("sUSD"), // sourceKey
         expandTo18Decimals(500), // sourceAmount
         alice.address, // destAddr
-        ethers.utils.formatBytes32String("lBTC") // destKey
+        ethers.utils.formatBytes32String("sBTC") // destKey
       )
-    ).to.be.revertedWith("LnExchangeSystem: can only exit position");
+    ).to.be.revertedWith("ShumExchangeSystem: can only exit position");
   });
 
   it("events should be emitted for exchange and settlement", async () => {
     await expect(
-      stack.lnExchangeSystem.connect(alice).exchange(
-        ethers.utils.formatBytes32String("lUSD"), // sourceKey
+      stack.shumExchangeSystem.connect(alice).exchange(
+        ethers.utils.formatBytes32String("sUSD"), // sourceKey
         expandTo18Decimals(500), // sourceAmount
         alice.address, // destAddr
-        ethers.utils.formatBytes32String("lBTC") // destKey
+        ethers.utils.formatBytes32String("sBTC") // destKey
       )
     )
-      .to.emit(stack.lnExchangeSystem, "PendingExchangeAdded")
+      .to.emit(stack.shumExchangeSystem, "PendingExchangeAdded")
       .withArgs(
         1, // id
         alice.address, // fromAddr
         alice.address, // destAddr
         expandTo18Decimals(500), // fromAmount
-        ethers.utils.formatBytes32String("lUSD"), // fromCurrency
-        ethers.utils.formatBytes32String("lBTC") // toCurrency
+        ethers.utils.formatBytes32String("sUSD"), // fromCurrency
+        ethers.utils.formatBytes32String("sBTC") // toCurrency
       );
 
     /**
-     * lBTC price changes to 40,000. Will only receive:
-     *     500 / 40000 * 0.99 = 0.012375 lBTC
+     * sBTC price changes to 40,000. Will only receive:
+     *     500 / 40000 * 0.99 = 0.012375 sBTC
      */
     await passSettlementDelay();
     await setLbtcPrice(40_000);
 
     await expect(settleTrade(1))
-      .to.emit(stack.lnExchangeSystem, "PendingExchangeSettled")
+      .to.emit(stack.shumExchangeSystem, "PendingExchangeSettled")
       .withArgs(
         1, // id
         settler.address, // settler
@@ -334,11 +345,11 @@ describe("Integration | Exchange", function () {
   });
 
   it("cannot settle trade before delay is passed", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
     // Cannot settle before delay is reached
@@ -349,7 +360,7 @@ describe("Integration | Exchange", function () {
         .minus({ seconds: 1 })
     );
     await expect(settleTrade(1)).to.be.revertedWith(
-      "LnExchangeSystem: settlement delay not passed"
+      "ShumExchangeSystem: settlement delay not passed"
     );
 
     // Can settle once delay is reached
@@ -362,34 +373,34 @@ describe("Integration | Exchange", function () {
 
   it("source asset should be locked up on exchange", async () => {
     await expect(
-      stack.lnExchangeSystem.connect(alice).exchange(
-        ethers.utils.formatBytes32String("lUSD"), // sourceKey
+      stack.shumExchangeSystem.connect(alice).exchange(
+        ethers.utils.formatBytes32String("sUSD"), // sourceKey
         expandTo18Decimals(400), // sourceAmount
         alice.address, // destAddr
-        ethers.utils.formatBytes32String("lBTC") // destKey
+        ethers.utils.formatBytes32String("sBTC") // destKey
       )
     )
-      .to.emit(stack.lusdToken, "Transfer")
+      .to.emit(stack.susdToken, "Transfer")
       .withArgs(
         alice.address, // from
-        stack.lnExchangeSystem.address, // to
+        stack.shumExchangeSystem.address, // to
         expandTo18Decimals(400) // value
       );
 
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(600)
     );
     expect(
-      await stack.lusdToken.balanceOf(stack.lnExchangeSystem.address)
+      await stack.susdToken.balanceOf(stack.shumExchangeSystem.address)
     ).to.equal(expandTo18Decimals(400));
   });
 
   it("trade cannot be settled twice", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
     // Trade settled
@@ -397,16 +408,16 @@ describe("Integration | Exchange", function () {
 
     // Cannot double-settle a trade
     await expect(settleTrade(1)).to.be.revertedWith(
-      "LnExchangeSystem: pending entry not found"
+      "ShumExchangeSystem: pending entry not found"
     );
   });
 
   it("can only revert trade after revert delay", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
     const exchangeTime = await getBlockDateTime(ethers.provider);
@@ -416,45 +427,45 @@ describe("Integration | Exchange", function () {
       exchangeTime.plus(revertDelay)
     );
     await expect(
-      stack.lnExchangeSystem.connect(settler).revert(
+      stack.shumExchangeSystem.connect(settler).revert(
         1 // pendingExchangeEntryId
       )
-    ).to.be.revertedWith("LnExchangeSystem: revert delay not passed");
+    ).to.be.revertedWith("ShumExchangeSystem: revert delay not passed");
 
     await setNextBlockTimestamp(
       ethers.provider,
       exchangeTime.plus(revertDelay).plus({ seconds: 1 })
     );
     await expect(
-      stack.lnExchangeSystem.connect(settler).revert(
+      stack.shumExchangeSystem.connect(settler).revert(
         1 // pendingExchangeEntryId
       )
     )
-      .to.emit(stack.lnExchangeSystem, "PendingExchangeReverted")
+      .to.emit(stack.shumExchangeSystem, "PendingExchangeReverted")
       .withArgs(
         1 // id
       )
-      .and.emit(stack.lusdToken, "Transfer")
+      .and.emit(stack.susdToken, "Transfer")
       .withArgs(
-        stack.lnExchangeSystem.address, // from
+        stack.shumExchangeSystem.address, // from
         alice.address, // to
         expandTo18Decimals(500) // value
       );
 
-    expect(await stack.lusdToken.balanceOf(alice.address)).to.equal(
+    expect(await stack.susdToken.balanceOf(alice.address)).to.equal(
       expandTo18Decimals(1_000)
     );
     expect(
-      await stack.lusdToken.balanceOf(stack.lnExchangeSystem.address)
+      await stack.susdToken.balanceOf(stack.shumExchangeSystem.address)
     ).to.equal(0);
   });
 
   it("cannot settle trade after revert delay", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
     const exchangeTime = await getBlockDateTime(ethers.provider);
@@ -464,16 +475,16 @@ describe("Integration | Exchange", function () {
       exchangeTime.plus(revertDelay).plus({ seconds: 1 })
     );
     await expect(settleTrade(1)).to.be.revertedWith(
-      "LnExchangeSystem: trade can only be reverted now"
+      "ShumExchangeSystem: trade can only be reverted now"
     );
   });
 
   it("cannot revert trade twice", async () => {
-    await stack.lnExchangeSystem.connect(alice).exchange(
-      ethers.utils.formatBytes32String("lUSD"), // sourceKey
+    await stack.shumExchangeSystem.connect(alice).exchange(
+      ethers.utils.formatBytes32String("sUSD"), // sourceKey
       expandTo18Decimals(500), // sourceAmount
       alice.address, // destAddr
-      ethers.utils.formatBytes32String("lBTC") // destKey
+      ethers.utils.formatBytes32String("sBTC") // destKey
     );
 
     const exchangeTime = await getBlockDateTime(ethers.provider);
@@ -482,15 +493,15 @@ describe("Integration | Exchange", function () {
       ethers.provider,
       exchangeTime.plus(revertDelay).plus({ seconds: 1 })
     );
-    await stack.lnExchangeSystem.connect(settler).revert(
+    await stack.shumExchangeSystem.connect(settler).revert(
       1 // pendingExchangeEntryId
     );
 
     // Cannot revert again
     await expect(
-      stack.lnExchangeSystem.connect(settler).revert(
+      stack.shumExchangeSystem.connect(settler).revert(
         1 // pendingExchangeEntryId
       )
-    ).to.be.revertedWith("LnExchangeSystem: pending entry not found");
+    ).to.be.revertedWith("ShumExchangeSystem: pending entry not found");
   });
 });

@@ -183,19 +183,14 @@ contract ShumDebtSystem is ShumAdminUpgradeable, ShumAddressCache {
      */
     function GetUserDebtBalanceInUsd(address _user) external view returns (uint256, uint256) {
 
-        console.log("xxl 1");
         uint256 totalAssetSupplyInUsd = assetSys.totalAssetsInUsd();
-
-        console.log("xxl 2");
         uint256 debtProportion = userDebtState[_user].debtProportion;
         uint256 debtFactor = userDebtState[_user].debtFactor;
 
-        console.log("xxl 3");
         if (debtProportion == 0) {
             return (0, totalAssetSupplyInUsd);
         }
 
-        console.log("xxl 4");
         uint256 currentUserDebtProportion =
             _lastSystemDebtFactor().divideDecimalRoundPrecise(debtFactor).multiplyDecimalRoundPrecise(debtProportion);
         uint256 userDebtBalance =
