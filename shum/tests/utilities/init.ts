@@ -370,7 +370,7 @@ export const deployLinearStack = async (
   );
 
   /**
-   * Create synthetic asset lBTC
+   * Create synthetic asset sBTC
    */
   const sbtcToken = await upgrades.deployProxy(
     ShumAssetUpgradeable,

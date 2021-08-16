@@ -97,19 +97,19 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
 
     function maxRedeemableShum(address user) public view returns (uint256) {
         (uint256 debtBalance, ) = debtSystem.GetUserDebtBalanceInUsd(user);
-        uint256 stakedLinaAmount = userCollateralData[user][Currency_SHUM].collateral;
+        uint256 stakedShumAmount = userCollateralData[user][Currency_SHUM].collateral;
 
         if (debtBalance == 0) {
             // User doesn't have debt. All staked collateral is withdrawable
-            return stakedLinaAmount;
+            return stakedShumAmount;
         } else {
             // User has debt. Must keep a certain amount
             uint256 buildRatio = mConfig.getUint(BUILD_RATIO_KEY);
             uint256 minCollateralUsd = debtBalance.divideDecimal(buildRatio);
-            uint256 minCollateralLina = minCollateralUsd.divideDecimal(priceGetter.getPrice(Currency_SHUM));
-            uint256 lockedLinaAmount = mRewardLocker.balanceOf(user);
+            uint256 minCollateralShum = minCollateralUsd.divideDecimal(priceGetter.getPrice(Currency_SHUM));
+            uint256 lockedShumAmount = mRewardLocker.balanceOf(user);
 
-            return MathUpgradeable.min(stakedLinaAmount, stakedLinaAmount.add(lockedLinaAmount).sub(minCollateralLina));
+            return MathUpgradeable.min(stakedShumAmount, stakedShumAmount.add(lockedShumAmount).sub(minCollateralShum));
         }
     }
 
@@ -245,11 +245,11 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
         return mRewardLocker.balanceOf(_user).add(userCollateralData[_user][_currency].collateral);
     }
 
-    function getUserLinaCollateralBreakdown(address _user) external view returns (uint256 staked, uint256 locked) {
-        return (userCollateralData[_user]["LINA"].collateral, mRewardLocker.balanceOf(_user));
+    function getUserShumCollateralBreakdown(address _user) external view returns (uint256 staked, uint256 locked) {
+        return (userCollateralData[_user]["SHUM"].collateral, mRewardLocker.balanceOf(_user));
     }
 
-    // NOTE: LINA collateral not include reward in locker
+    // NOTE: Shum collateral not include reward in locker
     function GetUserCollaterals(address _user) external view returns (bytes32[] memory, uint256[] memory) {
         bytes32[] memory rCurrency = new bytes32[](tokenSymbol.length + 1);
         uint256[] memory rAmount = new uint256[](tokenSymbol.length + 1);
@@ -272,7 +272,7 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
     }
 
     /**
-     * @dev A temporary method for migrating LINA tokens from ShumSimpleStaking to ShumCollateralSystem
+     * @dev A temporary method for migrating Shum tokens from ShumSimpleStaking to ShumCollateralSystem
      * without user intervention.
      */
     function migrateCollateral(
@@ -419,7 +419,7 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
     }
 
     function _redeemMax(address user, bytes32 _currency) private {
-        require(_currency == Currency_SHUM, "ShumCollateralSystem: only LINA is supported");
+        require(_currency == Currency_SHUM, "ShumCollateralSystem: only Shum is supported");
         _Redeem(user, Currency_SHUM, maxRedeemableShum(user));
     }
 
@@ -428,7 +428,7 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
         bytes32 _currency,
         uint256 _amount
     ) internal {
-        require(_currency == Currency_SHUM, "ShumCollateralSystem: only LINA is supported");
+        require(_currency == Currency_SHUM, "ShumCollateralSystem: only Shum is supported");
         require(_amount > 0, "ShumCollateralSystem: zero amount");
 
         uint256 maxRedeemableShumAmount = maxRedeemableShum(user);

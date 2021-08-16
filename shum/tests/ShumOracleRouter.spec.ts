@@ -37,6 +37,7 @@ describe("ShumOracleRouter", function () {
           safeDecimalMath.address,
       },
     });
+    
     const MockChainlinkAggregator = await ethers.getContractFactory(
       "MockChainlinkAggregator"
     );

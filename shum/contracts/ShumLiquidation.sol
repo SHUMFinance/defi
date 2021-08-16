@@ -77,12 +77,12 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         uint256 lockedCollateral;
     }
 
-    IShumBuildBurnSystem public lnBuildBurnSystem;
-    IShumCollateralSystem public lnCollateralSystem;
-    IShumConfig public lnConfig;
-    IShumDebtSystem public lnDebtSystem;
+    IShumBuildBurnSystem public shumBuildBurnSystem;
+    IShumCollateralSystem public shumCollateralSystem;
+    IShumConfig public shumConfig;
+    IShumDebtSystem public shumDebtSystem;
     IShumPrices public shumPrices;
-    IShumRewardLocker public lnRewardLocker;
+    IShumRewardLocker public shumRewardLocker;
 
     mapping(address => UndercollateralizationMark) public undercollateralizationMarks;
 
@@ -105,29 +105,29 @@ contract ShumLiquidation is ShumAdminUpgradeable {
     }
 
     function __ShumLiquidation_init(
-        IShumBuildBurnSystem _lnBuildBurnSystem,
-        IShumCollateralSystem _lnCollateralSystem,
-        IShumConfig _lnConfig,
-        IShumDebtSystem _lnDebtSystem,
+        IShumBuildBurnSystem _shumBuildBurnSystem,
+        IShumCollateralSystem _shumCollateralSystem,
+        IShumConfig _shumConfig,
+        IShumDebtSystem _shumDebtSystem,
         IShumPrices _shumPrices,
-        IShumRewardLocker _lnRewardLocker,
+        IShumRewardLocker _shumRewardLocker,
         address _admin
     ) public initializer {
         __ShumAdminUpgradeable_init(_admin);
 
-        require(address(_lnBuildBurnSystem) != address(0), "ShumLiquidation: zero address");
-        require(address(_lnCollateralSystem) != address(0), "ShumLiquidation: zero address");
-        require(address(_lnConfig) != address(0), "ShumLiquidation: zero address");
-        require(address(_lnDebtSystem) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumBuildBurnSystem) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumCollateralSystem) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumConfig) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumDebtSystem) != address(0), "ShumLiquidation: zero address");
         require(address(_shumPrices) != address(0), "ShumLiquidation: zero address");
-        require(address(_lnRewardLocker) != address(0), "ShumLiquidation: zero address");
+        require(address(_shumRewardLocker) != address(0), "ShumLiquidation: zero address");
 
-        lnBuildBurnSystem = _lnBuildBurnSystem;
-        lnCollateralSystem = _lnCollateralSystem;
-        lnConfig = _lnConfig;
-        lnDebtSystem = _lnDebtSystem;
+        shumBuildBurnSystem = _shumBuildBurnSystem;
+        shumCollateralSystem = _shumCollateralSystem;
+        shumConfig = _shumConfig;
+        shumDebtSystem = _shumDebtSystem;
         shumPrices = _shumPrices;
-        lnRewardLocker = _lnRewardLocker;
+        shumRewardLocker = _shumRewardLocker;
     }
 
     function setShumPrices(IShumPrices newShumPrices) external onlyAdmin {
@@ -139,11 +139,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         require(!isPositionMarkedAsUndercollateralized(user), "ShumLiquidation: already marked");
 
         EvalUserPositionResult memory evalResult = evalUserPostion(user);
-        uint256 liquidationRatio = lnConfig.getUint(LIQUIDATION_RATIO_KEY);
-
-        console.log("evalResult.collateralizationRatio %d",evalResult.collateralizationRatio);
-        console.log("collateralizationRatio %d",liquidationRatio);
-
+        uint256 liquidationRatio = shumConfig.getUint(LIQUIDATION_RATIO_KEY);
 
         require(evalResult.collateralizationRatio > liquidationRatio, "ShumLiquidation: not undercollateralized");
 
@@ -160,7 +156,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
 
         // Can only remove mark if C ratio is restored to issuance ratio
         EvalUserPositionResult memory evalResult = evalUserPostion(user);
-        uint256 issuanceRatio = lnConfig.getUint(BUILD_RATIO_KEY);
+        uint256 issuanceRatio = shumConfig.getUint(BUILD_RATIO_KEY);
         require(evalResult.collateralizationRatio <= issuanceRatio, "ShumLiquidation: still undercollateralized");
 
         delete undercollateralizationMarks[user];
@@ -189,7 +185,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         // Check mark and delay
         UndercollateralizationMark memory mark = undercollateralizationMarks[params.user];
         {
-            uint256 liquidationDelay = lnConfig.getUint(LIQUIDATION_DELAY_KEY);
+            uint256 liquidationDelay = shumConfig.getUint(LIQUIDATION_DELAY_KEY);
             require(mark.timestamp > 0, "ShumLiquidation: not marked for undercollateralized");
             require(block.timestamp > mark.timestamp + liquidationDelay, "ShumLiquidation: liquidation delay not passed");
         }
@@ -216,7 +212,7 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         }
 
         // Burn lUSD and update debt
-        lnBuildBurnSystem.burnForLiquidation(params.user, params.liquidator, params.lusdToBurn);
+        shumBuildBurnSystem.burnForLiquidation(params.user, params.liquidator, params.lusdToBurn);
 
         LiquidationRewardCalculationResult memory rewards =
             calculateRewards(
@@ -294,12 +290,12 @@ contract ShumLiquidation is ShumAdminUpgradeable {
     }
 
     function evalUserPostion(address user) private view returns (EvalUserPositionResult memory) {
-        (uint256 debtBalance, ) = lnDebtSystem.GetUserDebtBalanceInUsd(user);
-        (uint256 stakedCollateral, uint256 lockedCollateral) = lnCollateralSystem.getUserLinaCollateralBreakdown(user);
+        (uint256 debtBalance, ) = shumDebtSystem.GetUserDebtBalanceInUsd(user);
+        (uint256 stakedCollateral, uint256 lockedCollateral) = shumCollateralSystem.getUserShumCollateralBreakdown(user);
 
         uint256 collateralPrice = shumPrices.getPrice("SHUM");
         uint256 collateralValue = stakedCollateral.add(lockedCollateral).multiplyDecimal(collateralPrice);
-
+       
         uint256 collateralizationRatio = collateralValue == 0 ? 0 : debtBalance.divideDecimal(collateralValue);
         return
             EvalUserPositionResult({
@@ -313,9 +309,9 @@ contract ShumLiquidation is ShumAdminUpgradeable {
     }
 
     function fetchRatios() private view returns (FetchRatiosResult memory) {
-        uint256 issuanceRatio = lnConfig.getUint(BUILD_RATIO_KEY);
-        uint256 markerRewardRatio = lnConfig.getUint(LIQUIDATION_MARKER_REWARD_KEY);
-        uint256 liquidatorRewardRatio = lnConfig.getUint(LIQUIDATION_LIQUIDATOR_REWARD_KEY);
+        uint256 issuanceRatio = shumConfig.getUint(BUILD_RATIO_KEY);
+        uint256 markerRewardRatio = shumConfig.getUint(LIQUIDATION_MARKER_REWARD_KEY);
+        uint256 liquidatorRewardRatio = shumConfig.getUint(LIQUIDATION_LIQUIDATOR_REWARD_KEY);
 
         return
             FetchRatiosResult({
@@ -358,11 +354,11 @@ contract ShumLiquidation is ShumAdminUpgradeable {
         require(amountFromLocked <= params.lockedCollateral, "ShumLiquidation: insufficient locked collateral");
 
         if (amountFromStaked > 0) {
-            lnCollateralSystem.moveCollateral(params.user, params.liquidator, "LINA", amountFromStaked);
+            shumCollateralSystem.moveCollateral(params.user, params.liquidator, "SHUM", amountFromStaked);
         }
 
         if (amountFromLocked > 0) {
-            lnRewardLocker.moveReward(params.user, params.liquidator, amountFromLocked, rewardEntryIds);
+            shumRewardLocker.moveReward(params.user, params.liquidator, amountFromLocked, rewardEntryIds);
         }
     }
 
@@ -387,12 +383,12 @@ contract ShumLiquidation is ShumAdminUpgradeable {
             markerRewardFromLocked = markerRewardFromLocked.sub(markerRewardFromStaked);
             liquidatorRewardFromLocked = liquidatorRewardFromLocked.sub(liquidatorRewardFromStaked);
 
-            lnCollateralSystem.moveCollateral(params.user, params.marker, "LINA", markerRewardFromStaked);
-            lnCollateralSystem.moveCollateral(params.user, params.liquidator, "LINA", liquidatorRewardFromStaked);
+            shumCollateralSystem.moveCollateral(params.user, params.marker, "SHUM", markerRewardFromStaked);
+            shumCollateralSystem.moveCollateral(params.user, params.liquidator, "SHUM", liquidatorRewardFromStaked);
         }
 
         if (amountFromLocked > 0) {
-            lnRewardLocker.moveRewardProRata(
+            shumRewardLocker.moveRewardProRata(
                 params.user,
                 params.marker,
                 markerRewardFromLocked,

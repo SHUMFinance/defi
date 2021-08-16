@@ -1,0 +1,138 @@
+----------------------------------------------------- 
+✓ 01 ShumFinance contract deployed
+0x1a5Fe9d313dBD08885449AF9C660AE49bd5Fc7ab
+
+✓ 02 ShumAssetSystem contract deployed
+0x6cfc4926AE74e0b31305B1Ed4364791230982269
+
+✓ 03 ShumBuildBurnSystem contract deployed
+0x82F15FEbaEB75427a1df302Da35B465997ceB643
+
+✓ 04 ShumConfig contract deployed
+0xC8a95a887c872189015C64e490603D3AeE005098
+
+✓ 05 ShumAccessControl contract deployed
+0xF7ef6cE1c29F7b51837b4fc49Efbe87D12B5aADB
+NO
+
+✓ 06 MockShumPrices contract deployed
+0xc39f85c4b1Ab31944d8f7d89cbE927DDb8535f17
+==>ShumOracleRouter
+
+✓ 07 ShumDebtSystem contract deployed
+0xB443657862d3EC149C711C9Da34E4d065a6c7F7D
+
+✓ 08 ShumCollateralSystem contract deployed
+0x76F092344bD640e489e90fF9457c0B5f32FfB73E
+
+✓ 09 ShumRewardLocker contract deployed
+0xd895d8DA2eD0Eac6C97e2bAF805165d423ca24D1
+
+✓ 10 ShumExchangeSystem contract deployed
+0x5E6dd688f59B086F964959E7824eF8C50235c31C
+
+✓ 11 ShumLiquidation contract deployed
+0x17C158B3fb7d8d90fD56Ed90DC0987bf8fE60E03
+
+shumConfig setUint :
+ * - BuildRatio: 0.2
+ * - LiquidationRatio: 0.5
+ * - LiquidationMarkerReward: 0.05
+ * - LiquidationLiquidatorReward: 0.1
+ * - LiquidationDelay: 3 days
+
+shumAccessControl :
+shumBuildBurnSystem ISSUE_ASSET
+shumBuildBurnSystem BURN_ASSET
+shumBuildBurnSystem SetDebtSystemRole
+shumExchangeSystem  SetIssueAssetRole
+shumExchangeSystem  SetBurnAssetRole
+shumExchangeSystem  SetRoles MOVE_ASSET
+shumLiquidation     SetRoles MOVE_REWARD
+
+shumAssetSystem updateAll
+
+shumBuildBurnSystem  updateAddressCache
+shumCollateralSystem updateAddressCache
+
+✓ 12 ShumAssetUpgradeable sUSD deployed
+0x8F9368fb11d15a58d51864FF75ae441bEB1A951c
+
+✓ 13 ShumAssetUpgradeable sBTC deployed
+0xc647c35E1Edb46D19922f6E3BDBa8c1C66bb5909
+
+sUSD shumAssetSystem updateAddressCache
+sBTC shumAssetSystem updateAddressCache
+
+shumBuildBurnSystem sUSD SetSusdTokenAddress
+
+shumAssetSystem sUSD addAsset
+shumAssetSystem sBTC addAsset
+
+shumCollateralSystem SHUM UpdateTokenInfo
+
+✓ 14 ShumRewardSystem contract deployed
+0x9A8493089f5E2C6eb981FF1A1De157C3002CdC11
+
+shumAssetSystem updateAll ShumRewardSystem
+shumExchangeSystem updateAddressCache shumAssetSystem
+
+------------------------------------------------2
+✓ 00 SafeDecimalMath lib deployed
+0x721fEfF9EFf45677D846dC64d59A650030461501
+
+✓ 01 ShumFinance contract deployed
+0x5C2611437B37FE7a962EE4B2aFAd9FE8D6678E6d
+
+✓ 02 ShumAssetSystem contract deployed
+0xB45df97a329C33bBd337F0d2776CBFa4d5c790F5
+
+✓ 03 ShumBuildBurnSystem contract deployed
+0x77Ca9cd0134b18A6471BfBb5BF42E6EFd20adC75
+
+✓ 04 ShumConfig contract deployed
+0x89540DC1DfABcEb1F86c7e4e84d104e9d8b199a4
+
+✓ 05 ShumAccessControl contract deployed
+0xB135A73ad605f06660256b123eA74785ca6Fe4d2
+
+✓ 06 MockShumPrices contract deployed
+0xbE94eb5C6888CC1b00098C866DD84D396Eeb7d0B
+
+✓ 07 ShumDebtSystem contract deployed
+0xbEd78D10BF602765F909A14c9c7747b193e50BEA
+
+✓ 08 ShumCollateralSystem contract deployed
+0x08779e3D4268C35902C37be3e87A368e2f74Aa75
+
+✓ 09 ShumRewardLocker contract deployed
+0x1F2eDE7B937586614799e840D967F3dE1D850DFb
+
+✓ 10 ShumExchangeSystem contract deployed
+0xCD009906D0f96Bb03f8c7CBA81634408eebDFE55
+
+✓ 11 ShumLiquidation contract deployed
+0x28ab5896f6BE87D652B996F185b82d21e69b4843
+
+shumConfig setUint :
+ * - BuildRatio: 0.2
+ * - LiquidationRatio: 0.5
+ * - LiquidationMarkerReward: 0.05
+ * - LiquidationLiquidatorReward: 0.1
+ * - LiquidationDelay: 3 days
+
+shumAccessControl :
+shumBuildBurnSystem ISSUE_ASSET
+shumBuildBurnSystem BURN_ASSET
+shumBuildBurnSystem SetDebtSystemRole
+shumExchangeSystem  SetIssueAssetRole
+shumExchangeSystem  SetBurnAssetRole
+shumExchangeSystem  SetRoles MOVE_ASSET
+shumLiquidation     SetRoles MOVE_REWARD
+
+shumAssetSystem updateAll
+
+
+
+
+

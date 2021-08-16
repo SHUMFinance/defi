@@ -2,7 +2,7 @@
 pragma solidity >=0.6.12 <0.8.0;
 
 interface IShumCollateralSystem {
-    function getUserLinaCollateralBreakdown(address _user) external view returns (uint256 staked, uint256 locked);
+    function getUserShumCollateralBreakdown(address _user) external view returns (uint256 staked, uint256 locked);
 
     function IsSatisfyTargetRatio(address _user) external view returns (bool);
 

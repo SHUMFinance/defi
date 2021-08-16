@@ -27,10 +27,11 @@ const config: HardhatUserConfig = {
 
     
     bsc: {
-      url: `https://data-seed-prebsc-1-s1.binance.org:8545`,
+      url: `https://data-seed-prebsc-2-s1.binance.org:8545`,
       accounts: [
         "0xb284728d5b798fac1282540aa8d13ac168393814f9181f51e4736d1e786b896f",
-        "0x6b4f643e8d5f03536aec429a6375f3e40c47cfccd0e6a3dc1e0716c1d3a51fdc"
+        "0x6b4f643e8d5f03536aec429a6375f3e40c47cfccd0e6a3dc1e0716c1d3a51fdc",
+        "0xcb93f47f4ae6e2ee722517f3a2d3e7f55a5074f430c9860bcfe1d6d172492ed0"
       ]
     },
 
@@ -38,7 +39,8 @@ const config: HardhatUserConfig = {
       url: `http://localhost:6111`,
       accounts: [
         "0xb284728d5b798fac1282540aa8d13ac168393814f9181f51e4736d1e786b896f",
-        "0x6b4f643e8d5f03536aec429a6375f3e40c47cfccd0e6a3dc1e0716c1d3a51fdc"
+        "0x6b4f643e8d5f03536aec429a6375f3e40c47cfccd0e6a3dc1e0716c1d3a51fdc",
+        "0xcb93f47f4ae6e2ee722517f3a2d3e7f55a5074f430c9860bcfe1d6d172492ed0"
       ]
     },
 
@@ -47,7 +49,7 @@ const config: HardhatUserConfig = {
       accounts: [
         {privateKey:"0xb284728d5b798fac1282540aa8d13ac168393814f9181f51e4736d1e786b896f",balance:"10000000000000000000000"},
         {privateKey:"0x6b4f643e8d5f03536aec429a6375f3e40c47cfccd0e6a3dc1e0716c1d3a51fdc",balance:"10000000000000000000000"},
-        {privateKey:"0xc03b0a988e2e18794f2f0e881d7ffcd340d583f63c1be078426ae09ddbdec9f5",balance:"10000000000000000000000"},
+        {privateKey:"0xcb93f47f4ae6e2ee722517f3a2d3e7f55a5074f430c9860bcfe1d6d172492ed0",balance:"10000000000000000000000"},
         {privateKey:"0x54e6e01600b66af71b9827429ff32599383d7694684bc09e26c3b13d95980650",balance:"10000000000000000000000"}
       ]
     }
