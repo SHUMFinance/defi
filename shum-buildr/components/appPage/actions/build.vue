@@ -675,23 +675,26 @@ export default {
                     );
 
                     this.buildData.LINABN = avaliableLINA;
-                } else {
-                    const LINABytes = utils.formatBytes32String("SHUM");
-                    //取合约地址
+                } else { 
+                    const SHUMBytes = utils.formatBytes32String("SHUM");
+                    //get contract address
                     const ShumCollateralSystemAddress =
                         ShumCollateralSystem.contract.address;
+                    console.log("xxl get ShumCollateralSystemAddress " + ShumCollateralSystemAddress);
 
                     const results = await Promise.all([
-                        ShumFinance.balanceOf(walletAddress), //LINA余额
+                        ShumFinance.balanceOf(walletAddress), //Shum 
                         ShumCollateralSystem.userCollateralData(
                             walletAddress,
-                            LINABytes
-                        ), //staked lina
+                            SHUMBytes
+                        ), //staked Shum
+
                         ShumRewardLocker.balanceOf(walletAddress), //lock lina
                         ShumFinance.allowance(
                             walletAddress,
                             ShumCollateralSystemAddress
                         ), //已 approved 的 lina 额度
+
                         ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
                         getBuildRatio(), //目标抵押率
                         ShumCollateralSystem.GetUserTotalCollateralInUsd(
@@ -718,25 +721,34 @@ export default {
                         );
                     }
 
+                    console.log("xxl 01");
                     const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
                     const priceRates = await getPriceRates(["SHUM", "sUSD"]);
                     // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
 
-                    const LINAPrice = priceRates.LINA / priceRates.sUSD;
-                    const LINAPriceBN = bnDiv(priceRates.LINA, priceRates.sUSD);
+                    console.log("xxl 012");
+                    console.log(priceRates.SHUM);
 
+                    const SHUMPrice = priceRates.SHUM / priceRates.sUSD;
+                    console.log(SHUMPrice);
+
+                    const SHUMPriceBN = bnDiv(priceRates.SHUM, priceRates.sUSD);
+
+console.log("xxl 0121");
                     this.buildData.LINA = _.floor(
                         avaliableLINA,
                         DECIMAL_PRECISION
                     );
                     this.buildData.LINABN = results[0];
+                    console.log("xxl 013");
 
                     this.buildData.LINA2USD = _.floor(
-                        LINAPrice,
+                        SHUMPrice,
                         DECIMAL_PRECISION
                     );
-                    this.buildData.LINA2USDBN = LINAPriceBN;
+                    this.buildData.LINA2USDBN = SHUMPriceBN;
+                    console.log("xxl 015");
 
                     this.buildData.staked = _.floor(
                         stakedLina,
@@ -755,6 +767,7 @@ export default {
                     );
                     this.buildData.debtBN = results[4][0];
 
+                    console.log("xxl 02");
                     this.buildData.targetRatio = targetRatioPercent;
                     this.buildData.currentRatio = formatEtherToNumber(
                         currentRatioPercent
@@ -1544,10 +1557,15 @@ export default {
                 gasLimit: this.gasLimit
             };
 
+            console.log("xxl getGasEstimateFromStakingAndBuild 01");
+            console.log(stakeAmountLINA);
+            console.log(buildAmountsUSD);
+
             transactionSettings.gasLimit = await this.getGasEstimateFromStakingAndBuild(
                 stakeAmountLINA,
                 buildAmountsUSD
             );
+            console.log("xxl getGasEstimateFromStakingAndBuild end ");
 
             let transaction = await ShumCollateralSystem.stakeAndBuild(
                 utils.formatBytes32String("SHUM"),
@@ -1756,12 +1774,19 @@ export default {
                     throw new Error("invalid input");
                 }
 
+                //xxl TODO STOP HERE
+                console.log("xxl getGasEstimateFromStakingAndBuild ...");
+                console.log(utils.formatBytes32String("SHUM"));
+                console.log(stakeAmountLINA);
+                console.log(buildAmountsUSD);
+
                 let gasEstimate = await ShumCollateralSystem.contract.estimateGas.stakeAndBuild(
                     utils.formatBytes32String("SHUM"),
                     stakeAmountLINA,
                     buildAmountsUSD
                 );
-
+                console.log("xxl getGasEstimateFromStakingAndBuild end ");
+                
                 return bufferGasLimit(gasEstimate);
             } catch (e) {
                 console.log(e, "getGasEstimateFromStakingAndBuild");

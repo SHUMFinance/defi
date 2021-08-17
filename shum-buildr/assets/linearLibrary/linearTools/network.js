@@ -48,11 +48,12 @@ export const ETHDEV_NETWORKS = {
     10001: "ETHDEV"
 };
 
-// export const BSCDEV_NETWORKS = {
-//     10056: "BSCDEV"
-// };
+export const BSCDEV_NETWORKS = {
+    10056: "BSCDEV",
+    97: "BSCTESTNET",
+};
 
-// export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
+export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
 
 // const MAINNET_RELATIVE_NETWORKS = {
 //     1: "MAINNET",

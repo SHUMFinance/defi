@@ -41,7 +41,7 @@ export default {
         if (isMainnetNetwork(walletNetworkId)) {
             url = "https://bsc-dataseed.binance.org";
         } else {
-            url = "https://data-seed-prebsc-1-s3.binance.org:8545";
+            url = "https://data-seed-prebsc-2-s1.binance.org:8545";
         }
         return await $nuxt.$axios
             .$post(url, {

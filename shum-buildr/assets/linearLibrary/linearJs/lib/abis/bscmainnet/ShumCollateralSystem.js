@@ -441,7 +441,7 @@ export default [
   },
   {
     inputs: [ { internalType: 'address', name: '_user', type: 'address' } ],
-    name: 'getUserLinaCollateralBreakdown',
+    name: 'getUserShumCollateralBreakdown',
     outputs: [
       { internalType: 'uint256', name: 'staked', type: 'uint256' },
       { internalType: 'uint256', name: 'locked', type: 'uint256' }

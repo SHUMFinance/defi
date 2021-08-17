@@ -128,9 +128,9 @@
         return await this.contract.debtSystem(txParams);
       };
     
-      this.getUserLinaCollateralBreakdown = async (_user, txParams) => {
+      this.getUserShumCollateralBreakdown = async (_user, txParams) => {
         txParams = txParams || {};
-        return await this.contract.getUserLinaCollateralBreakdown(_user, txParams);
+        return await this.contract.getUserShumCollateralBreakdown(_user, txParams);
       };
     
       this.liquidation = async (txParams) => {

@@ -7,6 +7,9 @@
         this.contractSettings = contractSettings || new ContractSettings();
         
         
+        console.log("xxl bscmainnet get shumFinace address : " + this.contractSettings.addressList['ShumFinance']);
+        console.log(this.contractSettings.signer);
+
         this.contract = new Contract(
           this.contractSettings.addressList['ShumFinance'],
           abi,

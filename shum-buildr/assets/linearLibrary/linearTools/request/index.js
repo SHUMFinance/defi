@@ -131,26 +131,52 @@ export const getPriceRates = async currency => {
     } else if (isBinance) {
         contract = lnrJSConnector.lnrJS.ShumOracleRouter;
         if (_.isString(currency)) {
-            ["ETH", "BNB"].includes(currency) && (currency = "l" + currency);
+            ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
+
+            console.log("xxl string currency : " + currency);
             rates[currency] = await contract.getPrice(
                 utils.formatBytes32String(currency)
             );
+            console.log("xxl string rates : " + rates[currency]);    
+
         } else if (_.isArray(currency)) {
+
+            console.log("xxl array currency : " + currency);
             for (let index = 0; index < currency.length; index++) {
+
+
                 let name = currency[index];
-                ["ETH", "BNB"].includes(name) && (name = "l" + name);
+                console.log("xxl array before name : " + name);
+
+                ["ETH", "BNB"].includes(name) && (name = "s" + name);
+
+                //xxl TODO END
+                if(name == "sUSD"){
+                    name = name;
+                }else if(name.substr(0,1) == "s"){
+                    name = name.substr(1)
+                }
+                //xxl TODO END
+
+                console.log("xxl array after name : " + name + " : bytes : " + utils.formatBytes32String(name));
+
                 pricesPromise.push(
                     contract.getPrice(utils.formatBytes32String(name))
                 );
             }
 
             let prices = await Promise.all(pricesPromise);
+            console.log("xxl array prices : ");
+            console.log(prices);
 
             for (let index = 0; index < currency.length; index++) {
                 const name = currency[index];
                 let price = prices[index];
                 rates[name] = price;
             }
+
+            console.log("xxl array rates : ");
+            console.log(rates);
         }
     }
 
@@ -288,7 +314,11 @@ export const storeDetailsData = async () => {
             const priceRates = await getPriceRates(CRYPTO_CURRENCIES);
             // const priceRates = await getPriceRatesFromApi(CRYPTO_CURRENCIES);
 
-            const LINA2USDRate = priceRates.LINA / 1e18 || 0;
+
+            console.log("xxl storeDetailsData 0 ");
+            const LINA2USDRate = priceRates.SHUM / 1e18 || 0;
+            console.log("xxl priceRates.SHUM :" + priceRates.SHUM);
+
             const sUSD2USDRate = priceRates.sUSD / 1e18 || 1;
             const ETH2USDRate =
                 (isEthereum ? priceRates.ETH : isBinance ? priceRates.BNB : 1) /
@@ -383,7 +413,10 @@ export const storeDetailsData = async () => {
                 "currentRatioPercent",
                 "targetRatioPercent"
             ]);
+
+            console.log("xxl storeDetailsData 1");
             formatData.LINA2USDRate = _.floor(LINA2USDRate, 4);
+
             formatData.priceRates = priceRates;
             //不需要格式化
             formatData.transferableAssets = transferableAssets;

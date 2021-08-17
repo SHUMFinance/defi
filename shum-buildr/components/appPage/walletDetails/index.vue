@@ -772,25 +772,26 @@ export default {
             try {
                 clearInterval(this.liquidationCountDownId);
 
-                //如果是bsc main/bsc(私链)则检查liquidation
-                if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
-                    let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
+                //xxl TODO userPositionMarked
+                // //如果是bsc main/bsc(私链)则检查liquidation
+                // if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
+                //     let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
 
-                    if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
-                        this.$store.commit("setLiquidationStatus", {
-                            status: liquidationStatus[0].state,
-                            timestamp: liquidationStatus[0].timestamp / 1000
-                        });
+                //     if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
+                //         this.$store.commit("setLiquidationStatus", {
+                //             status: liquidationStatus[0].state,
+                //             timestamp: liquidationStatus[0].timestamp / 1000
+                //         });
 
-                        this.liquidationCal();
-                        this.liquidationCountDownId = setInterval(this.liquidationCal, 60000);    
-                    } else { //未标记要清除
-                        this.$store.commit("setLiquidationStatus", {
-                            status: false,
-                            timestamp: 0
-                        });
-                    }
-                }
+                //         this.liquidationCal();
+                //         this.liquidationCountDownId = setInterval(this.liquidationCal, 60000);    
+                //     } else { //未标记要清除
+                //         this.$store.commit("setLiquidationStatus", {
+                //             status: false,
+                //             timestamp: 0
+                //         });
+                //     }
+                // }
             } catch(e) {
                 console.log(e, "wallet details check liquidation err");
             }

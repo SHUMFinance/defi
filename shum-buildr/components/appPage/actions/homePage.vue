@@ -220,16 +220,13 @@ export default {
 
                     //xxl ShumFinance
                     let balance = await ShumFinance.balanceOf(this.walletAddress);
-                    console.log("xxl ShumFinance balance is : " + balance);
- 
+                    console.log("xxl ShumFinance balance is : " + balance); 
                     //
                     let shumRewardBalance = await ShumRewardLocker.balanceOf(this.walletAddress);
                     console.log("xxl ShumRewardLocker balance is : " + shumRewardBalance);
  
-
                     let userDebtBalanceInUsd = await ShumDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress);
                     console.log("xxl ShumDebtSystem userDebtBalanceInUsd is : " + userDebtBalanceInUsd);
-
 
                     ////
                     const results = await Promise.all([
@@ -277,28 +274,32 @@ export default {
                     this.walletData.amountsUSD = amountsUSD;
                     this.walletData.currentRatio = currentRatioPercent;
 
-                    let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
+                    console.log(lnr);
 
-                    console.log("xxl 4 ...");
-                    if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
-                        this.targetRatioCal();
-                        this.currentRatioStatus = 2;
-                    } else if (this.walletData.currentRatio > 0 && this.walletData.currentRatio < 500) { //警告
-                        this.targetRatioCal();
-                        this.currentRatioStatus = 1;
-                    } else { //pratio为0，检查最近一天有无爆仓
-                        let liquidatedStatus = await lnr.positionLiquidated({ account: this.walletAddress });
-                        let currentTimstamp = Math.round(new Date() / 1000);
+                    //xxl TODO userPositionMarked
+                    // let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
+                    // console.log(liquidationStatus);
 
-                        if (liquidatedStatus.length > 0) {
-                            let liquidatedTime = currentTimstamp - (liquidatedStatus[0].timestamp/1000);
+                    //console.log("xxl 4 ...");
+                    // if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
+                    //     this.targetRatioCal();
+                    //     this.currentRatioStatus = 2;
+                    // } else if (this.walletData.currentRatio > 0 && this.walletData.currentRatio < 500) { //警告
+                    //     this.targetRatioCal();
+                    //     this.currentRatioStatus = 1;
+                    // } else { //pratio为0，检查最近一天有无爆仓
+                    //     let liquidatedStatus = await lnr.positionLiquidated({ account: this.walletAddress });
+                    //     let currentTimstamp = Math.round(new Date() / 1000);
+
+                    //     if (liquidatedStatus.length > 0) {
+                    //         let liquidatedTime = currentTimstamp - (liquidatedStatus[0].timestamp/1000);
                             
-                            if (liquidatedTime < 86400) {
-                                this.currentRatioStatus = 3;
-                            }
-                        }
-                    }
-                    console.log("xxl 5 ...");
+                    //         if (liquidatedTime < 86400) {
+                    //             this.currentRatioStatus = 3;
+                    //         }
+                    //     }
+                    // }
+                    //console.log("xxl 5 ...");
 
                 }
             } catch(e) {
