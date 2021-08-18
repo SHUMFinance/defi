@@ -27,7 +27,11 @@ const main = async () => {
     
     let ShumAccessControlAddress = await readConfig("bconfig","ShumAccessControl");
     let ShumConfigAddress = await readConfig("bconfig","ShumConfig");
-    let MockShumPricesAddress = await readConfig("bconfig","MockShumPrices");
+    
+    
+    //let MockShumPricesAddress = await readConfig("bconfig","MockShumPrices"); //xxl 01
+    let ShumOracleRouter = await readConfig("aconfig","ShumOracleRouter");
+
     let ShumDebtSystemAddress = await readConfig("bconfig","ShumDebtSystem");
     let ShumCollateralSystemAddress = await readConfig("bconfig","ShumCollateralSystem");
     let ShumBuildBurnSystemAddress = await readConfig("bconfig","ShumBuildBurnSystem");
@@ -67,7 +71,7 @@ const main = async () => {
       ShumAssetSystemAddress,
       ShumAccessControlAddress,
       ShumConfigAddress,
-      MockShumPricesAddress,
+      ShumOracleRouter,
       ShumDebtSystemAddress,
       ShumCollateralSystemAddress,
       ShumBuildBurnSystemAddress,
