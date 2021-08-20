@@ -132,33 +132,26 @@ export const getPriceRates = async currency => {
         contract = lnrJSConnector.lnrJS.ShumOracleRouter;
         if (_.isString(currency)) {
             ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
-
-            console.log("xxl string currency : " + currency);
             rates[currency] = await contract.getPrice(
                 utils.formatBytes32String(currency)
             );
-            console.log("xxl string rates : " + rates[currency]);    
-
         } else if (_.isArray(currency)) {
-
-            console.log("xxl array currency : " + currency);
             for (let index = 0; index < currency.length; index++) {
-
-
                 let name = currency[index];
-                console.log("xxl array before name : " + name);
-
                 ["ETH", "BNB"].includes(name) && (name = "s" + name);
 
                 //xxl TODO END
-                if(name == "sUSD"){
-                    name = name;
-                }else if(name.substr(0,1) == "s"){
-                    name = name.substr(1)
-                }
+                // if(name == "sUSD"){
+                //     name = name;
+                // }else if(name.substr(0,1) == "s" & (name = "sSHUM")){
+                //     name = name.substr(1)
+                // }else{
+                //     name = "sUSD"
+                // }
                 //xxl TODO END
+                console.log("xxl name is " + name);
 
-                console.log("xxl array after name : " + name + " : bytes : " + utils.formatBytes32String(name));
+
 
                 pricesPromise.push(
                     contract.getPrice(utils.formatBytes32String(name))
@@ -166,17 +159,12 @@ export const getPriceRates = async currency => {
             }
 
             let prices = await Promise.all(pricesPromise);
-            console.log("xxl array prices : ");
-            console.log(prices);
 
             for (let index = 0; index < currency.length; index++) {
                 const name = currency[index];
                 let price = prices[index];
                 rates[name] = price;
             }
-
-            console.log("xxl array rates : ");
-            console.log(rates);
         }
     }
 
@@ -272,6 +260,8 @@ export const storeDetailsData = async () => {
                 provider
             } = lnrJSConnector;
 
+
+            console.log(1);
             let promiseArray = [
                 ShumFinance.balanceOf(walletAddress),
                 sUSD.balanceOf(walletAddress),
@@ -294,9 +284,10 @@ export const storeDetailsData = async () => {
                 ];
             }
 
+            console.log(2);
             //可以直接转换数值的组
             const result = await Promise.all(promiseArray);
-
+            console.log(2.1);
             let [
                 avaliableLINA,
                 amountsUSD,
@@ -311,10 +302,12 @@ export const storeDetailsData = async () => {
             let liquidsData = await getLiquids(walletAddress);
 
             //获取货币->USD 兑换率
+            console.log(2.2);
             const priceRates = await getPriceRates(CRYPTO_CURRENCIES);
             // const priceRates = await getPriceRatesFromApi(CRYPTO_CURRENCIES);
+            console.log("getPriceRates end ");
 
-
+            console.log(3);
             console.log("xxl storeDetailsData 0 ");
             const LINA2USDRate = priceRates.SHUM / 1e18 || 0;
             console.log("xxl priceRates.SHUM :" + priceRates.SHUM);

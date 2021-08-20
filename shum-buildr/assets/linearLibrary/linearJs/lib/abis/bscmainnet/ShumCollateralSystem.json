@@ -637,7 +637,7 @@
 				"type": "address"
 			}
 		],
-		"name": "getUserShumCollateralBreakdown",
+		"name": "getUserLinaCollateralBreakdown",
 		"outputs": [
 			{
 				"internalType": "uint256",

@@ -81,17 +81,15 @@
       this.getPrice = async (currencyKey, txParams) => {
         txParams = txParams || {};
 
-        //xxl TODO END
-        // let price ;
-        // try{
-        //   price = await this.contract.getPrice(currencyKey, txParams);
-        // }catch(e){
-        //   console.log("xxl getPrice error ...");
-        //   console.log(currencyKey);
-        //   console.log(txParams);
-        //   console.log(e);
-        // }
-
+        //xxl TODO
+        console.log("xxl bsctestnet  ...");
+        try{
+          await this.contract.getPrice(currencyKey, txParams);
+        }catch(e){
+          console.log("xxl bsctestnet oralce get price error " );
+          console.log(e);
+        }
+        //xxl TODO END 
 
         return await this.contract.getPrice(currencyKey, txParams);
       };

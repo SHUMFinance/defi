@@ -6,20 +6,16 @@
   function ShumFinance(contractSettings) {
     this.contractSettings = contractSettings || new ContractSettings();
 
-    console.log("xxl bscdev get shumFinace address : " + this.contractSettings.addressList['ShumFinance']);
-    console.log(this.contractSettings.signer);
-    console.log(this.contractSettings.provider);
+    console.log("xxl ShumFinance ...");
+    console.log(this.contractSettings);
 
-    try{
-      this.contract = new Contract(
-        this.contractSettings.addressList['ShumFinance'],
-        abi,
-        this.contractSettings.signer  || this.contractSettings.provider
-      );
-    }catch(e){
-      console.log("xxl this.contract = new Contract error");
-      console.log(e);
-    }
+    console.log(this.contractSettings.addressList['ShumFinance']);
+
+    this.contract = new Contract(
+      this.contractSettings.addressList['ShumFinance'],
+      abi,
+      this.contractSettings.signer || this.contractSettings.provider
+    );
 
     
   this.MAX_SUPPLY = async (txParams) => {
@@ -53,10 +49,8 @@
   };
 
   this.balanceOf = async (account, txParams) => {
-
     txParams = txParams || {};
     return await this.contract.balanceOf(account, txParams);
-    
   };
 
   this.becomeAdmin = async (txParams) => {

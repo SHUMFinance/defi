@@ -128,9 +128,9 @@
         return await this.contract.debtSystem(txParams);
       };
     
-      this.getUserShumCollateralBreakdown = async (_user, txParams) => {
+      this.getUserLinaCollateralBreakdown = async (_user, txParams) => {
         txParams = txParams || {};
-        return await this.contract.getUserShumCollateralBreakdown(_user, txParams);
+        return await this.contract.getUserLinaCollateralBreakdown(_user, txParams);
       };
     
       this.liquidation = async (txParams) => {
@@ -180,21 +180,6 @@
     
       this.stakeAndBuild = async (stakeCurrency, stakeAmount, buildAmount, txParams) => {
         txParams = txParams || {};
-
-        //xxl TODO 
-        try{
-          let result = await this.contract.stakeAndBuild(stakeCurrency, stakeAmount, buildAmount, txParams);
-        }catch(e){
-          console.log("xxl stakeAndBuild error");
-          console.log(stakeCurrency);
-          console.log(stakeAmount);
-          console.log(buildAmount);
-          console.log(txParams);
-          console.log(e); 
-        }
-        ////
-
-
         return await this.contract.stakeAndBuild(stakeCurrency, stakeAmount, buildAmount, txParams);
       };
     

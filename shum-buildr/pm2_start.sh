@@ -1,1 +1,1 @@
-pm2 start npm --name "buildr-demo" -- run start
+pm2 start npm --name "shum-buildr" -- run dev

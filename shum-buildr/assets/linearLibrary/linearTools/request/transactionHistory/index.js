@@ -99,7 +99,7 @@ export const fetchTransactionHistory = async (
                         ? (event.rewardsLina = _.floor(event.rewardsLina, 2))
                         : null;
                     event.source
-                        ? (event.source = event.source.replace(/l/, "s"))
+                        ? (event.source = event.source.replace(/l/, "ℓ"))
                         : null;
                     return event.type
                         ? { networkId, chain, ...event }

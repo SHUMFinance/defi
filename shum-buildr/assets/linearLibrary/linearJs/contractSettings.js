@@ -18,23 +18,18 @@ const API_KEY = {
 
 export const RPC_URL = {
     56: "https://bsc-dataseed1.binance.org",
-    97: "https://data-seed-prebsc-2-s1.binance.org:8545",
+    97: "https://data-seed-prebsc-1-s3.binance.org:8545",
     // 10001: "https://master.http.eth.dev.linear.finance",
     // 10056: "https://master.http.bsc.dev.linear.finance"
 };
 
 class ContractSettings {
     constructor(contractSettings) {
-
-        console.log("xxl contractSettings ...");
-        console.log(contractSettings);
-
         contractSettings = contractSettings || {};
         const { provider, signer, networkId } = contractSettings;
         this.networkId = networkId || 1;
         this.network = SUPPORTED_NETWORKS[Number(this.networkId)];
         this.provider = provider || getDefaultProvider();
-
         if (!provider && networkId) {
             let tempNetwork = this.network;
 
@@ -47,6 +42,8 @@ class ContractSettings {
         this.signer = signer;
         this.addressList = addresses[this.networkId];
 
+        console.log("xxl ContractSettings ...");
+        console.log(this.addressList);
     }
 }
 

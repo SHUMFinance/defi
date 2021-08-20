@@ -18,17 +18,17 @@
                     </div>
                     <div class="context">
                         <template v-if="currentRatioStatus == 1">
-                            Your P-ratio is below the target ratio. To prevent being liquidated, please either 
-                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
+                            Your P-ratio is below the target ratio. To prevent being liquidated, please either
+                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or
                             <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} sUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} sUSD</span> to raise up to target ratio to be able to claim rewards.
                         </template>
                         <template v-if="currentRatioStatus == 2">
-                            Your P-ratio has reached the minimum maintainence level. Please 
-                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or 
-                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} sUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} sUSD</span> to raise up to target ratio. 
+                            Your P-ratio has reached the minimum maintainence level. Please
+                            <span v-if="needBuyLINA">buy and stake {{formatNumber(needLINANum)}} SHUM</span><span v-else>stake {{formatNumber(needLINANum)}} SHUM</span> or
+                            <span v-if="needBuysUSD">buy and burn {{formatNumber(needsUSDNum)}} sUSD</span><span v-else>burn {{formatNumber(needsUSDNum)}} sUSD</span> to raise up to target ratio.
                         </template>
                         <template v-if="currentRatioStatus == 3">
-                            Your P-raio has fallen below the minimum required level for more than 3 days, 
+                            Your P-raio has fallen below the minimum required level for more than 3 days,
                             your LINA has been liquidated. Please view in the transaction history for more information.
                         </template>
                     </div>
@@ -43,7 +43,7 @@
                 <img class="close" src="@/static/icon-cancel.svg" alt="" @click="colseAttention">
             </div>
         </div>
-        <div class="title">Welcome to Buildr</div>
+        <div class="title">Welcome to ShumFinance</div>
         <div class="context">
             Our native token Shum is staked in our collateral pool to build
             sUSD. The collateral pool enables infinite liquidity and no
@@ -209,7 +209,7 @@ export default {
                     const LINABytes = utils.formatBytes32String("SHUM");
 
                     console.log("xxl checkLiquidation 1 ...");
-                    
+
                     //xxl TODO ShumCollateralSystemAddress do not need ...
                     const ShumCollateralSystemAddress =
                         ShumCollateralSystem.contract.address;
@@ -220,13 +220,15 @@ export default {
 
                     //xxl ShumFinance
                     let balance = await ShumFinance.balanceOf(this.walletAddress);
-                    console.log("xxl ShumFinance balance is : " + balance); 
+                    console.log("xxl ShumFinance balance is : " + balance);
+
                     //
                     let shumRewardBalance = await ShumRewardLocker.balanceOf(this.walletAddress);
                     console.log("xxl ShumRewardLocker balance is : " + shumRewardBalance);
- 
+
                     let userDebtBalanceInUsd = await ShumDebtSystem.GetUserDebtBalanceInUsd(this.walletAddress);
                     console.log("xxl ShumDebtSystem userDebtBalanceInUsd is : " + userDebtBalanceInUsd);
+
 
                     ////
                     const results = await Promise.all([
@@ -274,13 +276,9 @@ export default {
                     this.walletData.amountsUSD = amountsUSD;
                     this.walletData.currentRatio = currentRatioPercent;
 
-                    console.log(lnr);
-
                     //xxl TODO userPositionMarked
-                    // let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
-                    // console.log(liquidationStatus);
-
-                    //console.log("xxl 4 ...");
+                    //let liquidationStatus = await lnr.userPositionMarked({ account: this.walletAddress });
+                    // console.log("xxl 4 ...");
                     // if (liquidationStatus.length > 0 && liquidationStatus[0].state) { //已标记
                     //     this.targetRatioCal();
                     //     this.currentRatioStatus = 2;
@@ -293,13 +291,13 @@ export default {
 
                     //     if (liquidatedStatus.length > 0) {
                     //         let liquidatedTime = currentTimstamp - (liquidatedStatus[0].timestamp/1000);
-                            
+
                     //         if (liquidatedTime < 86400) {
                     //             this.currentRatioStatus = 3;
                     //         }
                     //     }
                     // }
-                    //console.log("xxl 5 ...");
+
 
                 }
             } catch(e) {
@@ -314,7 +312,7 @@ export default {
             //计算达到target需要补stake多少lina
             let needStakeWhenTargetRatio = ((5*this.walletData.debt)/this.walletData.LINA2USD)
             -this.walletData.lock;
-            
+
             this.needLINANum = needStakeWhenTargetRatio - this.walletData.staked;
             if (this.needLINANum < 0) this.needLINANum = 0;
             if (this.needLINANum > this.walletData.avaliableLINA) this.needBuyLINA = true; //可用lina数量不足
@@ -354,7 +352,7 @@ export default {
                 case 5:
                     this.$pub.publish("transactionModalChange", true);
                     break;
-                
+
             }
         },
         walletStatusChange() {

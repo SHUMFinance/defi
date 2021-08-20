@@ -368,8 +368,6 @@ module.exports = {
             account = undefined,
             networkId = $nuxt.$store.state?.walletNetworkId
         } = {}) {
-
-
             return pageResults({
                 api: graphAPIEndpoints[networkId],
                 max,

@@ -48,6 +48,9 @@ export const ETHDEV_NETWORKS = {
     10001: "ETHDEV"
 };
 
+// export const BSCDEV_NETWORKS = {
+//     10056: "BSCDEV"
+// };
 export const BSCDEV_NETWORKS = {
     10056: "BSCDEV",
     97: "BSCTESTNET",
@@ -65,10 +68,10 @@ export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
 //     97: "BSCTESTNET"
 // };
 
-// const DEV_RELATIVE_NETWORKS = {
-//     10001: "ETHDEV",
-//     10056: "BSCDEV"
-// };
+const DEV_RELATIVE_NETWORKS = {
+    10001: "ETHDEV",
+    10056: "BSCDEV"
+};
 
 //有liquidation的网络
 export const LIQUIDATION_NETWORKS = {
@@ -101,6 +104,8 @@ export const isSupportNetwork = walletNetworkId =>
  */
 export const getOtherNetworks = walletNetworkId => {
     let other = [];
+
+    console.log("xxl getOtherNetworks :" + walletNetworkId);
     if (isMainnetNetwork(walletNetworkId)) {
         other = Object.keys(
             _.omit(MAINNET_RELATIVE_NETWORKS, [walletNetworkId])

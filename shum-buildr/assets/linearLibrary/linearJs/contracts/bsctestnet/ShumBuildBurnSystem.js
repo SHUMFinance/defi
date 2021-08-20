@@ -15,22 +15,6 @@
         
       this.BuildAsset = async (amount, txParams) => {
         txParams = txParams || {};
-
-        //xxl TODO
-        console.log("xxl BuildAsset start.... ");
-        try{
-          let result = this.contract.BuildAsset(amount, txParams);
-        }catch(e){
-
-          console.log("xxl BuildAsset erro");
-          console.log(amount);
-          console.log(amotxParamsunt);
-          console.log(e);
-        }
-         
-
-
-
         return await this.contract.BuildAsset(amount, txParams);
       };
     

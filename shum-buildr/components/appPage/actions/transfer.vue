@@ -11,8 +11,7 @@
                                 wallet address
                             </div>
                         </div>
-                        <div
-                            class="from actionInputItem"
+                        <div class="from actionInputItem"
                             :class="{
                                 error: transactionErrMsg,
                                 showDropdown
@@ -27,12 +26,10 @@
                                 <div class="p_1">
                                     {{ currentSelectCurrency.name }}
                                 </div>
-                                <span
-                                    class="p_2"
+                                <span class="p_2"
                                     :class="{ active: activeItemBtn == 0 }"
                                     @click="clickMaxAmount"
-                                >
-                                    MAX
+                                > MAX
                                 </span>
                             </div>
                             <div
@@ -302,8 +299,7 @@
                         <gasEditor v-if="isMobile"></gasEditor>
                     </div>
 
-                    <div
-                        class="transferBtn"
+                    <div class="transferBtn"
                         :class="{ disabled: transferDisabled || walletError }"
                         @click="clickTransfer"
                     >
@@ -642,7 +638,7 @@ export default {
                 bn2n(sendAmount),
                 recieveAddress
             );
-            
+
             const transactionSettings = {
                 gasPrice: this.$store.state?.gasDetails?.price,
                 gasLimit: gasLimit

@@ -1,7 +1,8 @@
 <template>
     <div id="maintenance">
         <div class="content">
-            <img class="logo" src="@/static/linear_buildr_logo.svg" />
+            <img class="logo" src="@/static/LINA_logo.svg" />
+            <p v-if="currentAction == 0">ShumFinance</p>
 
             <img class="bg" src="@/static/maintenance.svg" />
 
