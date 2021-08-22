@@ -24,41 +24,15 @@
             />
          </a>
 
-         <div
-             class="introductActionBox"
-             v-if="currentAction != 0 || othersAction != 0"
+         <div class="introductActionBox" v-if="currentAction != 0 || othersAction != 0"
          >
-            <div
-                class="title"
-                v-if="currentAction == 1 && othersAction == 0"
-            >
-               Build
-            </div>
-            <div
-                class="title"
-                v-if="currentAction == 2 && othersAction == 0"
-            >
-               Burn
-            </div>
-            <div
-                class="title"
-                v-if="currentAction == 3 && othersAction == 0"
-            >
-               Claim
-            </div>
-            <div
-                class="title"
-                v-if="currentAction == 4 && othersAction == 0"
-            >
-               Transfer
-            </div>
-            <div
-                class="title"
-                v-if="currentAction == 5 && othersAction == 0"
-            >
-               Swap
-            </div>
-
+            <div class="title" v-if="currentAction == 1 && othersAction == 0">Dashboard</div>
+            <div class="title" v-if="currentAction == 2 && othersAction == 0">Exchange</div>
+            <div class="title" v-if="currentAction == 3 && othersAction == 0">Build</div>
+            <div class="title" v-if="currentAction == 4 && othersAction == 0">Burn</div>
+            <div class="title" v-if="currentAction == 5 && othersAction == 0">Claim</div>
+            <div class="title" v-if="currentAction == 6 && othersAction == 0">Transfer</div>
+            <div class="title" v-if="currentAction == 7 && othersAction == 0">Swap</div>
             <div class="title" v-if="othersAction == 1">Track Debt</div>
             <div class="title" v-if="othersAction == 2">Transaction</div>
             <div class="title" v-if="othersAction == 3">Referral</div>
@@ -71,6 +45,7 @@
             />
          </div>
 
+
          <Modal
              v-model="introductActionModal"
              :footer-hide="true"
@@ -79,25 +54,33 @@
              :mask="true"
              class="introductActionModal"
          >
-            <div class="title" v-if="currentAction == 1">Build</div>
-            <div class="title" v-if="currentAction == 2">Burn</div>
-            <div class="title" v-if="currentAction == 3">Claim</div>
-            <div class="title" v-if="currentAction == 4">Transfer</div>
-            <div class="title" v-if="currentAction == 5">Swap</div>
+            <div class="title" v-if="currentAction == 1">Dashboard</div>
+            <div class="title" v-if="currentAction == 2">Exchange</div>
+            <div class="title" v-if="currentAction == 3">Build</div>
+            <div class="title" v-if="currentAction == 4">Burn</div>
+            <div class="title" v-if="currentAction == 5">Claim</div>
+            <div class="title" v-if="currentAction == 6">Transfer</div>
+            <div class="title" v-if="currentAction == 7">Swap</div>
 
             <div class="context" v-if="currentAction == 1">
-               Build sUSD and earn staking rewards by staking SHUM
+               Dashboard show by staking SHUM
             </div>
             <div class="context" v-if="currentAction == 2">
-               Burn sUSD to unlock staked SHUM
+               Exchange show by staking SHUM
             </div>
             <div class="context" v-if="currentAction == 3">
-               Claim rewards from staking SHUM and building sUSD
+               Build sUSD and earn staking rewards by staking SHUM
             </div>
             <div class="context" v-if="currentAction == 4">
-               Transfer different currencies to specified wallet address
+               Burn sUSD to unlock staked SHUM
             </div>
             <div class="context" v-if="currentAction == 5">
+               Claim rewards from staking SHUM and building sUSD
+            </div>
+            <div class="context" v-if="currentAction == 6">
+               Transfer different currencies to specified wallet address
+            </div>
+            <div class="context" v-if="currentAction == 7">
                You can select the type of liquids and enter the amount you
                want to swap to the other chain.
             </div>
@@ -165,12 +148,14 @@
          </div>
       </div>
 
-      <div class="actionsBox">
+      <div class="actionsBox" :style="(currentAction == 1 ||currentAction == 2) ? 'width:1200px;box-shadow:none;border-radius:0;': 'width:786px' ">
          <homePage v-if="currentAction == 0"></homePage>
-         <build v-else-if="currentAction == 1"></build>
-         <burn v-else-if="currentAction == 2"></burn>
-         <claim v-else-if="currentAction == 3"></claim>
-         <transfer v-else-if="currentAction == 4"></transfer>
+         <dashboard v-else-if="currentAction == 1"></dashboard>
+         <exchange v-else-if="currentAction == 2"></exchange>
+         <build v-else-if="currentAction == 3"></build>
+         <burn v-else-if="currentAction == 4"></burn>
+         <claim v-else-if="currentAction ==5"></claim>
+         <transfer v-else-if="currentAction == 6"></transfer>
          <swap v-else></swap>
 
          <referralModal/>
@@ -190,6 +175,8 @@
    import claim from "@/components/appPage/actions/claim";
    import transfer from "@/components/appPage/actions/transfer";
    import swap from "@/components/appPage/actions/swap";
+   import dashboard from "@/components/appPage/actions/dashboard";
+   import exchange from "@/components/appPage/actions/exchange";
 
    import referralModal from "@/components/appPage/walletDetails/actions/referralModal";
    import transactionModal from "@/components/appPage/walletDetails/actions/transactionModal";
@@ -201,6 +188,8 @@
       name: "actions",
       components: {
          homePage,
+         dashboard,
+         exchange,
          build,
          burn,
          claim,
@@ -216,7 +205,7 @@
             introductActionModal: false,
             // currentAction: this.$store.state.currentAction,
             othersAction: 0, // 0没有 1track 2transaction 3referral
-            actions: ["Build", "Burn", "Claim", "Transfer", "Swap"]
+            actions: ["DASHBOARD","EXCHANGE","Build", "Burn", "Claim", "Transfer", "Swap"]
          };
       },
       created() {
@@ -284,7 +273,10 @@
          actionChange(action) {
             //正在交易中无法点击其他按钮
             if (!this.isTransaction) {
+
+               console.log("xxl1 start : " + action);
                if (this.currentAction != action) {
+
                   this.$store.commit("setCurrentAction", action);
                   this.$router.push("/" + common.SUBPAGE_OPTIONS_MAP[action]);
 
@@ -343,10 +335,11 @@
                color: #000000;
                margin-right: 10px;
             }
+
             p {
                font-size: 22px;
                font-weight: 600;
-               margin-right:30px;
+               margin-right: 30px;
             }
          }
 
@@ -355,7 +348,7 @@
          }
 
          .action {
-            margin-right: 8px;
+            margin-right: 0;
             border: solid 1px rgba(#fff, 0);
             cursor: pointer;
             font-family: Gilroy-Bold;
@@ -364,7 +357,7 @@
             letter-spacing: 1.5px;
             text-align: center;
             transition: $animete-time linear;
-            padding: 8px 24px;
+            padding: 8px 12px;
             font-stretch: normal;
             font-style: normal;
             line-height: 1.33;

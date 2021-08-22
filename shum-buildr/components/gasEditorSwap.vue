@@ -1,86 +1,85 @@
 <template>
    <div id="gasEditorSwap">
       <div class="simple" v-if="simple">
-<!--         <div class="source">-->
+         <div class="source">
+            <div class="editInfo">
+               <template v-if="isEthereumNetwork">ETH</template>
+               <template v-else>BSC</template>
+               network fee
+
+               <span class="editBtn"
+                     @click.stop="sourceGasEditorModal = true"
+               >
+                         <template v-if="!isMobile">{{ sourcePrice }} Gwei</template>
+                                 <img src="@/static/appPage/Vectoreditt.svg"/>
+                             </span>
+            </div>
+
+            <!--            <div class="editFee">{{ sourcePrice }} Gwei</div>-->
+         </div>
+
+         <div class="target">
 <!--            <div class="editInfo">-->
-<!--               <template v-if="isEthereumNetwork">ETH</template>-->
-<!--               <template v-else>BSC</template>-->
+<!--               <template v-if="isEthereumNetwork">BSC</template>-->
+<!--               <template v-else>ETH</template>-->
 <!--               network fee-->
 
 <!--               <span-->
 <!--                   class="editBtn"-->
-<!--                   @click.stop="sourceGasEditorModal = true"-->
+<!--                   @click.stop="targetGasEditorModal = true"-->
 <!--               >-->
-<!--                <template v-if="!isMobile">{{ sourcePrice }} Gwei</template>-->
-<!--                        <img src="@/static/edit_pencil.svg"/>-->
+<!--                  <template v-if="!isMobile">{{ targetPrice }} Gwei</template>-->
+<!--                        <img src="@/static/appPage/Vectoreditt.svg"/>-->
 <!--                    </span>-->
 <!--            </div>-->
 
-<!--            &lt;!&ndash;            <div class="editFee">{{ sourcePrice }} Gwei</div>&ndash;&gt;-->
-<!--         </div>-->
-
-         <div class="target">
-            <div class="editInfo">
-               <template v-if="isEthereumNetwork">BSC</template>
-               <template v-else>ETH</template>
-               network fee
-
-               <span
-                   class="editBtn"
-                   @click.stop="targetGasEditorModal = true"
-               >
-                  <template v-if="!isMobile">{{ targetPrice }} Gwei</template>
-                        <img src="@/static/appPage/Vectoreditt.svg"/>
-                    </span>
-            </div>
-
-<!--            <div class="editFee">{{ targetPrice }} Gwei</div>-->
+            <!--            <div class="editFee">{{ targetPrice }} Gwei</div>-->
          </div>
       </div>
-
+      <!-- 滴滴-->
       <div class="normal" v-else>
-<!--         <div class="source">-->
-<!--            <div class="editInfo">-->
-<!--&lt;!&ndash;               <template v-if="isEthereumNetwork">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                  <img class="editLogo" src="@/static/ETH.svg"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="editNetwork">&ndash;&gt;-->
-<!--&lt;!&ndash;                     <template v-if="!isMobile">ETH Network</template>&ndash;&gt;-->
-<!--&lt;!&ndash;                     <template v-else>Ethereum Network</template>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;               </template>&ndash;&gt;-->
-<!--&lt;!&ndash;               <template v-if="isBinanceNetwork">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <img class="editLogo" src="@/static/binance.svg"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="editNetwork">&ndash;&gt;-->
-<!--&lt;!&ndash;                     <template v-if="isMobile">BSC Network</template>&ndash;&gt;-->
-<!--&lt;!&ndash;                     <template v-else> Binance Smart Chain</template>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;               </template>&ndash;&gt;-->
+         <!--         <div class="source">-->
+         <!--            <div class="editInfo">-->
+         <!--         <template v-if="isEthereumNetwork">-->
+         <!--            &lt;!&ndash; <img class="editLogo" src="@/static/ETH.svg"/>&ndash;&gt;-->
+         <!--            <div class="editNetwork">-->
+         <!--               <template v-if="!isMobile">ETH Network</template>-->
+         <!--               <template v-else>Ethereum Network</template>-->
+         <!--            </div>-->
+         <!--         </template>-->
+         <template v-if="isBinanceNetwork">
+            <img class="editLogo" src="@/static/binance.svg"/>
+            <div class="editNetwork">
+               <template v-if="isMobile">BSC Network</template>
+               <template v-else> Binance Smart Chain</template>
+            </div>
+         </template>
 
-<!--               <div class="editFee">-->
-<!--                  <template v-if="!isMobile">Network</template>-->
-<!--                  Fee : {{ sourcePrice }} Gwei-->
-<!--                  <img-->
-<!--                      class="editBtn"-->
-<!--                      @click="sourceGasEditorModal = true"-->
-<!--                      src="@/static/appPage/Vectoreditt.svg"-->
-<!--                  />-->
-<!--               </div>-->
-<!--            </div>-->
-<!--         </div>-->
+         <!--               <div class="editFee">-->
+         <!--                  <template v-if="!isMobile">Network</template>-->
+         <!--                  Fee : {{ sourcePrice }} Gwei-->
+         <!--                  <img-->
+         <!--                      class="editBtn"-->
+         <!--                      @click="sourceGasEditorModal = true"-->
+         <!--                      src="@/static/appPage/Vectoreditt.svg"-->
+         <!--                  />-->
+         <!--               </div>-->
+         <!--            </div>-->
+         <!--         </div>-->
 
-<!--         <div class="arrow">-->
-<!--            <img src="@/static/transferProgress/arrow_right.svg"/>-->
-<!--         </div>-->
+         <!--         <div class="arrow">-->
+         <!--            <img src="@/static/transferProgress/arrow_right.svg"/>-->
+         <!--         </div>-->
 
          <div class="target">
             <div class="editInfo">
-<!--               <template v-if="isEthereumNetwork">-->
-<!--                  <img class="editLogo" src="@/static/binance.svg"/>-->
-<!--                  <div class="editNetwork">-->
-<!--                     <template v-if="isMobile">BSC Network</template>-->
-<!--                     <template v-else> Binance Smart Chain</template>-->
-<!--                  </div>-->
-<!--               </template>-->
+               <!--               <template v-if="isEthereumNetwork">-->
+               <!--                  <img class="editLogo" src="@/static/binance.svg"/>-->
+               <!--                  <div class="editNetwork">-->
+               <!--                     <template v-if="isMobile">BSC Network</template>-->
+               <!--                     <template v-else> Binance Smart Chain</template>-->
+               <!--                  </div>-->
+               <!--               </template>-->
                <template v-if="isBinanceNetwork">
                   <img class="editLogo" src="@/static/ETH.svg"/>
                   <div class="editNetwork">
@@ -91,8 +90,8 @@
 
                <div class="editFee">
                   <template v-if="!isMobile">Network</template>
-                  Fee :
-                  <span style="color:orange">{{ targetPrice }} Gwei</span>
+                  Fee
+                  <span style="color:orange;margin-left:20px;">{{ targetPrice }} Gwei</span>
                   <img
                       class="editBtn"
                       @click="targetGasEditorModal = true"
@@ -460,7 +459,7 @@
       props: {
          simple: {
             type: Boolean,
-            default: false
+            default: true
          }
       },
       data() {
@@ -680,6 +679,11 @@
                     });
                }
                if (targetNetwork) {
+
+                  console.log("xxl targetNetwork ...");
+                  console.log(targetNetworkId);
+
+
                   await getNetworkSpeeds(targetNetworkId)
                     .then(res => {
                        // console.log(res, "target");
@@ -875,13 +879,15 @@
             font-style: normal;
             line-height: 1.5;
             letter-spacing: normal;
-            color: #5a575c;
+            color: #4F4D51;
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
-
+            justify-content: flex-start;
+            margin-top:30px;
+            margin-left:10px;
 
             .editInfo {
+               display:flex;
                .editBtn {
                   margin-left: 11px;
                   padding: 3px 7px;
@@ -898,7 +904,7 @@
                   transition: border $animete-time linear;
 
                   img {
-                     display:inline-block;
+                     display: inline-block;
                      width: 16px;
                      height: 16px;
                   }
@@ -936,7 +942,7 @@
             flex: 1;
 
             .editInfo {
-               text-align:left;
+               text-align: left;
                /*display: flex;*/
                /*flex-direction: column;*/
                /*align-items: center;*/
@@ -963,14 +969,14 @@
 
                .editFee {
                   font-family: Gilroy-Medium;
-                  font-size: 12px;
+                  font-size: 14px;
                   font-weight: 500;
                   font-stretch: normal;
                   font-style: normal;
                   line-height: 1.33;
                   letter-spacing: normal;
                   text-align: center;
-                  color: #99999a;
+                  color: #4F4D51;
                   display: flex;
                   align-items: center;
 
@@ -1000,7 +1006,7 @@
             img {
                width: 15px;
                height: 15px;
-               color:red;
+               color: red;
             }
          }
       }

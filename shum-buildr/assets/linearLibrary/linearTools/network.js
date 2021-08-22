@@ -12,7 +12,7 @@ import api from "@/api";
  */
 export const ETHEREUM_NETWORKS = {
     1: "MAINNET",
-    3: "ROPSTEN",
+    42: "ROPSTEN",
     //10001: "ETHDEV"
 };
 
@@ -37,7 +37,7 @@ export const MAINNET_NETWORKS = {
  * 测试网网络
  */
 export const TESTNET_NETWORKS = {
-    3: "ROPSTEN",
+    42: "ROPSTEN",
     97: "BSCTESTNET",
     //10001: "ETHDEV",
     //10056: "BSCDEV"
@@ -45,7 +45,9 @@ export const TESTNET_NETWORKS = {
 
 //xxl TODO need To change ...
 export const ETHDEV_NETWORKS = {
-    10001: "ETHDEV"
+     42: "ETHDEV",
+    //42: "ROPSTEN"
+    
 };
 
 // export const BSCDEV_NETWORKS = {
@@ -64,13 +66,16 @@ export const DEV_NETWORKS = { ...ETHDEV_NETWORKS, ...BSCDEV_NETWORKS };
 // };
 
 // const TESTNET_RELATIVE_NETWORKS = {
-//     3: "ROPSTEN",
+//     42: "ROPSTEN",
 //     97: "BSCTESTNET"
 // };
 
 const DEV_RELATIVE_NETWORKS = {
-    10001: "ETHDEV",
-    10056: "BSCDEV"
+    // 10001: "ETHDEV",
+    // 10056: "BSCDEV"
+    42:"ETHDEV",
+    97:"BSCDEV"
+
 };
 
 //有liquidation的网络
@@ -117,6 +122,7 @@ export const getOtherNetworks = walletNetworkId => {
             _.omit(TESTNET_RELATIVE_NETWORKS, [walletNetworkId])
         );
     }
+
     return other.join();
 };
 
@@ -145,7 +151,7 @@ export const WALLET_EXTENSIONS = {
  */
 export const BLOCKCHAIN_BROWSER = {
     1: "https://etherscan.io/tx/",
-    3: "https://ropsten.etherscan.io/tx/",
+    42: "https://kovan.etherscan.io/tx/",
     56: "https://bscscan.com/tx/",
     97: "https://testnet.bscscan.com/tx/",
     10001: "https://master.explorer.eth.dev.linear.finance/tx/",
@@ -154,7 +160,7 @@ export const BLOCKCHAIN_BROWSER = {
 
 export const BLOCKCHAIN_BROWSER_API = {
     1: "https://api.etherscan.io/api",
-    3: "https://api-ropsten.etherscan.io/api",
+    42: "https://api-kovan.etherscan.io/api",
     56: "https://api.bscscan.com/api",
     97: "https://api-testnet.bscscan.com/api",
     10001: "https://master.explorer.eth.dev.linear.finance/api",
@@ -163,7 +169,7 @@ export const BLOCKCHAIN_BROWSER_API = {
 
 export const TOKEN_BRIDGE_API = {
     1: process.env.TOKEN_BRIDGE_MAINNET,
-    3: process.env.TOKEN_BRIDGE_TESTNET,
+    42: process.env.TOKEN_BRIDGE_TESTNET,
     56: process.env.TOKEN_BRIDGE_MAINNET,
     97: process.env.TOKEN_BRIDGE_TESTNET,
     10001: process.env.TOKEN_BRIDGE_DEV,
@@ -210,7 +216,7 @@ export const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID;
 
 export const INFURA_JSON_RPC_URLS = {
     1: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
-    3: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`
+    42: `https://kovan.infura.io/v3/${INFURA_PROJECT_ID}`
 };
 
 // export const BLOCKCHAIN = {

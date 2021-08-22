@@ -1390,6 +1390,15 @@ export default {
                         deposit
                     );
 
+                    //xxl 
+                    console.log("xxl await ShumBridge.withdraw start");
+                    console.log("xxl srcChainId " + deposit.srcChainId)
+                    console.log("xxl destChainId " + deposit.destChainId)
+
+                    console.log("xxl await ShumBridge.withdraw end");    
+
+
+
                     let transaction = await ShumBridge.withdraw(
                         deposit.srcChainId,
                         deposit.destChainId,

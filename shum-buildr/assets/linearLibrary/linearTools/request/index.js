@@ -284,8 +284,21 @@ export const storeDetailsData = async () => {
                 ];
             }
 
+            //xxl TODO
             console.log(2);
             //可以直接转换数值的组
+            //console.log(promiseArray[0]);
+            try{
+                let data = await getBuildRatio();
+                console.log("xxl index OK ...");
+                console.log(data);
+            }catch(e){
+                console.log("xxl getBuildRatio error");
+                console.log(e);
+            }
+
+            console.log(2.01);
+
             const result = await Promise.all(promiseArray);
             console.log(2.1);
             let [

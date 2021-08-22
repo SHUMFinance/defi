@@ -32,12 +32,12 @@ const main = async () => {
         },
     });
 
-    let ShumOracleRouterAddress = await readConfig("fconfig","ShumOracleRouter");
+    let ShumOracleRouterAddress = await readConfig("6config","ShumOracleRouter");
     let shumOracleRouter = await ShumOracleRouter.connect(admin).attach(
         ShumOracleRouterAddress
     );
 
-    let ChainlinkAggregatorAddress = await readConfig("gconfig","ChainlinkAggregator");
+    let ChainlinkAggregatorAddress = await readConfig("6config","ChainlinkAggregator");
     const ChainlinkAggregator = await ethers.getContractFactory("MockChainlinkAggregator", deployer);
     let chainlinkAggregator = await ChainlinkAggregator.connect(admin).attach(
         ChainlinkAggregatorAddress

@@ -72,7 +72,7 @@ contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
     bytes32 private constant CONFIG_TRADE_SETTLEMENT_DELAY = "TradeSettlementDelay";
     bytes32 private constant CONFIG_TRADE_REVERT_DELAY = "TradeRevertDelay";
 
-    bytes32 private constant LUSD_KEY = "lUSD";
+    bytes32 private constant LUSD_KEY = "sUSD";
 
     function __ShumExchangeSystem_init(address _admin) public initializer {
         __ShumAdminUpgradeable_init(_admin);

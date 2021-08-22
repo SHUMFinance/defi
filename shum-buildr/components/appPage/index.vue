@@ -1,7 +1,7 @@
 <template>
     <div id="appPage">
-        <actions></actions>
-        <walletDetails></walletDetails>
+        <actions ></actions>
+        <walletDetails v-if="isShow"></walletDetails>
 
         <Modal
             v-model="hasUnfreeze"
@@ -33,7 +33,9 @@ export default {
     },
     data() {
         return {
-            hasUnfreeze: false
+            hasUnfreeze: false,
+            action:'',
+            isShow:true
         };
     },
     watch: {
@@ -67,9 +69,15 @@ export default {
             }
         }
     },
+    created(){
+      this.action = this.$store.state.currentAction;
+      if(this.action === 1 || this.action === 2){
+          this.isShow = false
+      }
+    },
     methods: {
         jumoToSwap() {
-            this.$store.commit("setCurrentAction", 5);
+            this.$store.commit("setCurrentAction", 7);
             this.$router.push('/swap')
             this.$store.commit("setSwapUnfreezeContinue", true);
             this.hasUnfreeze = false;

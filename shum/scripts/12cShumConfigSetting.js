@@ -24,7 +24,7 @@ const main = async () => {
     console.log("admin address is :" + admin.address);
 
 
-    let shumConfigAddress = await readConfig("aconfig","ShumConfig");
+    let shumConfigAddress = await readConfig("11config","ShumConfig");
     const ShumConfig = await ethers.getContractFactory('ShumConfig',deployer)
     shumConfig = await ShumConfig.connect(admin).attach(
         shumConfigAddress

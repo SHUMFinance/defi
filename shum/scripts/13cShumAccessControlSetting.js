@@ -24,10 +24,10 @@ const main = async () => {
     admin = deployer;
     console.log("admin address is :" + admin.address);
 
-    let ShumAccessControlAddress = await readConfig("bconfig","ShumAccessControl");
-    let ShumBuildBurnSystemAddress = await readConfig("bconfig","ShumBuildBurnSystem");
-    let ShumExchangeSystemAddress = await readConfig("bconfig","ShumExchangeSystem");
-    let ShumLiquidationAddress = await readConfig("bconfig","ShumLiquidation");
+    let ShumAccessControlAddress = await readConfig("11config","ShumAccessControl");
+    let ShumBuildBurnSystemAddress = await readConfig("11config","ShumBuildBurnSystem");
+    let ShumExchangeSystemAddress = await readConfig("11config","ShumExchangeSystem");
+    let ShumLiquidationAddress = await readConfig("11config","ShumLiquidation");
 
     const ShumAccessControl = await ethers.getContractFactory('ShumAccessControl',deployer)
     shumAccessControl = await ShumAccessControl.connect(admin).attach(

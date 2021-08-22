@@ -42,7 +42,7 @@ const main = async () => {
 
 
 
-    await writeConfig("9config","aconfig","ShumExchangeSystem",shumExchangeSystem.address);
+    await writeConfig("9config","10config","ShumExchangeSystem",shumExchangeSystem.address);
     await sleep(2000);
 
 }

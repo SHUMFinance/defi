@@ -82,8 +82,8 @@ describe("ShumErc20Bridge", function () {
     currentChainId = BigNumber.from(
       (await ethers.provider.getNetwork()).chainId
     );
-    //console.log(currentChainId);
 
+    //console.log(currentChainId);
     shum = await MockERC20.deploy(
       "Shum Token", // _name
       "Shum" // _symbol
@@ -122,6 +122,7 @@ describe("ShumErc20Bridge", function () {
       lusd.address, // tokenAddress
       TOKEN_LOCK_TYPE_MINT_BURN // lockType
     );
+
     await shumErc20Bridge.connect(admin).addChainSupportForToken(
       formatBytes32String("Shum"), // tokenKey
       mockChainId // chainId
@@ -130,6 +131,7 @@ describe("ShumErc20Bridge", function () {
       formatBytes32String("lUSD"), // tokenKey
       mockChainId // chainId
     );
+    
   });
 
   it("cannot deposit with unsupported token", async () => {

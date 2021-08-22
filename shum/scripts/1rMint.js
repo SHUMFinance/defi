@@ -28,7 +28,7 @@ const main = async () => {
     );
 
     //n1
-    let sendValue = utils.parseEther("10.1");
+    let sendValue = utils.parseEther("10.2");
     let tx = await ShumFinance.mint("0x46A26B330c0988a58aFF56e2a106F8256Ca89872",sendValue);
     
     console.log("✓ ShumFinance contract mint")

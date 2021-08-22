@@ -40,75 +40,79 @@ const main = async () => {
       "gasLimit":0x7a1200,
     }
 
-    // Set token "LINK" to use Chainlink
+    // Set token "sLINK" to use Chainlink
     await shumOracleRouter
           .connect(admin)
           .addChainlinkOracle(
-            ethers.utils.formatBytes32String("LINK"), // currencyKey
-            "0x1B329402Cb1825C6F30A0d92aB9E2862BE47333f", // oracleAddress
+            ethers.utils.formatBytes32String("sLINK"), // currencyKey
+            "0x396c5E36DD0a0F5a5D33dae44368D4193f69a1F0", // oracleAddress
             false,// removeExisting
             { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
     );
 
     let LinkPrice = await shumOracleRouter
                             .connect(admin)
-                            .getPrice(ethers.utils.formatBytes32String("LINK")
+                            .getPrice(ethers.utils.formatBytes32String("sLINK")
                             ,{ gasPrice: args.gasPrice, gasLimit: args.gasLimit});
 
+    console.log("sLINK");                        
     console.log(LinkPrice);
 
-    // Set token "LINK" to use Chainlink
+    // Set token "sBNB" to use Chainlink
     await shumOracleRouter
       .connect(admin)
       .addChainlinkOracle(
-      ethers.utils.formatBytes32String("BNB"), // currencyKey
-      "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526", // oracleAddress
+      ethers.utils.formatBytes32String("sBNB"), // currencyKey
+      "0x8993ED705cdf5e84D0a3B754b5Ee0e1783fcdF16", // oracleAddress
       false,// removeExisting
       { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
     );
 
     let BNBPrice = await shumOracleRouter
                             .connect(admin)
-                            .getPrice(ethers.utils.formatBytes32String("BNB")
+                            .getPrice(ethers.utils.formatBytes32String("sBNB")
                             ,{ gasPrice: args.gasPrice, gasLimit: args.gasLimit});
 
+    console.log("sBNB");   
     console.log(BNBPrice);
 
 
-    // Set token "LINK" to use Chainlink
+    // Set token "sETH" to use Chainlink
     await shumOracleRouter
     .connect(admin)
     .addChainlinkOracle(
-      ethers.utils.formatBytes32String("ETH"), // currencyKey
-      "0x143db3CEEfbdfe5631aDD3E50f7614B6ba708BA7", // oracleAddress
+      ethers.utils.formatBytes32String("sETH"), // currencyKey
+      "0x9326BFA02ADD2366b30bacB125260Af641031331", // oracleAddress
       false,// removeExisting
       { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
     );
 
   let ETHPrice = await shumOracleRouter
                           .connect(admin)
-                          .getPrice(ethers.utils.formatBytes32String("ETH")
+                          .getPrice(ethers.utils.formatBytes32String("sETH")
                           ,{ gasPrice: args.gasPrice, gasLimit: args.gasLimit});
 
+  console.log("sETH");  
   console.log(ETHPrice);
 
 
-    console.log("BTC : " + ethers.utils.formatBytes32String("BTC"));
+    console.log("sBTC : " + ethers.utils.formatBytes32String("sBTC"));
     // Set token "LINK" to use Chainlink
     await shumOracleRouter
       .connect(admin)
       .addChainlinkOracle(
-        ethers.utils.formatBytes32String("BTC"), // currencyKey
-        "0x5741306c21795FdCBb9b265Ea0255F499DFe515C", // oracleAddress
+        ethers.utils.formatBytes32String("sBTC"), // currencyKey
+        "0x6135b13325bfC4B00278B4abC5e20bbce2D6580e", // oracleAddress
         false,// removeExisting
         { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
       );
 
     let BTCPrice = await shumOracleRouter
             .connect(admin)
-            .getPrice(ethers.utils.formatBytes32String("BTC")
+            .getPrice(ethers.utils.formatBytes32String("sBTC")
             ,{ gasPrice: args.gasPrice, gasLimit: args.gasLimit});
 
+    console.log("sBTC");          
     console.log(BTCPrice);
 
 }

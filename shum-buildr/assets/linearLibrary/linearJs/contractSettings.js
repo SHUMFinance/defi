@@ -3,7 +3,7 @@ import addresses from "./lib/addresses";
 
 const SUPPORTED_NETWORKS = {
     1: "mainnet",
-    3: "ropsten",
+    42: "ropsten",
     56: "bscmainnet", //bsc主网
     97: "bsctestnet", //bsc测试网
     //10001: "ethdev", // eth dev
