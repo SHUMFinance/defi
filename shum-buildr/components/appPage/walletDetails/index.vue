@@ -537,12 +537,19 @@
 											: '0px',
 									}"
 								>
+									<!-- <template>
+										<b>{{
+											walletDetails.amountDebt || 0
+										}}</b>
+										sUSD
+									</template> -->
 									<template v-if="!isEthereumNetwork">
 										<b>{{
 											walletDetails.amountDebt || 0
 										}}</b>
 										sUSD
 									</template>
+									
 									<template v-if="isEthereumNetwork">
 										N/A
 									</template>

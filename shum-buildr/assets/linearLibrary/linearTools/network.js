@@ -12,7 +12,7 @@ import api from "@/api";
  */
 export const ETHEREUM_NETWORKS = {
     1: "MAINNET",
-    42: "ROPSTEN",
+    42: "KOVAN",
     //10001: "ETHDEV"
 };
 
@@ -37,7 +37,7 @@ export const MAINNET_NETWORKS = {
  * 测试网网络
  */
 export const TESTNET_NETWORKS = {
-    42: "ROPSTEN",
+    42: "KOVAN",
     97: "BSCTESTNET",
     //10001: "ETHDEV",
     //10056: "BSCDEV"

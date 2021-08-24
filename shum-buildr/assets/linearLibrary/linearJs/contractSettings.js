@@ -18,7 +18,8 @@ const API_KEY = {
 
 export const RPC_URL = {
     56: "https://bsc-dataseed1.binance.org",
-    97: "https://data-seed-prebsc-1-s3.binance.org:8545",
+    97: "https://data-seed-prebsc-2-s1.binance.org:8545",
+    42: "https://kovan.infura.io/v3/7e31d49d7c8a48f4a4539aff9da768e7"
     // 10001: "https://master.http.eth.dev.linear.finance",
     // 10056: "https://master.http.bsc.dev.linear.finance"
 };
@@ -34,15 +35,18 @@ class ContractSettings {
             let tempNetwork = this.network;
 
             // if ([56, 97, 10001, 10056].includes(this.networkId)) {
-            if ([56, 97].includes(this.networkId)) {
+            if ([42,56, 97].includes(this.networkId)) {
                 tempNetwork = RPC_URL[this.networkId];
             }
+            console.log("xxl3 ContractSettings start");
+            console.log("xxl3 " + tempNetwork + " : " + API_KEY.infura);
+
             this.provider = getDefaultProvider(tempNetwork, API_KEY);
         }
         this.signer = signer;
         this.addressList = addresses[this.networkId];
 
-        console.log("xxl ContractSettings ...");
+        console.log("xxl3 ContractSettings ");
         console.log(this.addressList);
     }
 }

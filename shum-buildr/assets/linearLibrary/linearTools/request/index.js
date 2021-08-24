@@ -31,6 +31,7 @@ export const getLiquids = async (wallet, all = false) => {
         }
     } = lnrJSConnector;
 
+    //xxl TODO getAssetAddresses
     //获取资产列表
     const assetAddress = await ShumAssetSystem.getAssetAddresses();
 
@@ -47,7 +48,7 @@ export const getLiquids = async (wallet, all = false) => {
                 let asset = lnrJSConnector.lnrJS[key];
                 //汇总获取price的key
                 assetKeys.push(key);
-
+                console.log("xxl getLiquids key : " + key);
                 //汇总取余额的token
                 assetPromise.push(asset.balanceOf(wallet));
             }
@@ -60,21 +61,35 @@ export const getLiquids = async (wallet, all = false) => {
 
         let priceFunc;
         if (isEthereum) {
-            priceFunc = band.pricesLast({ sources: assetKeys });
+            console.log("xxl getLiquids isEthereum 01");
+            //priceFunc = band.pricesLast({ sources: assetKeys });
+            priceFunc = getPriceRates(assetKeys);
+            //priceFunc = getPriceRates(assetKeys);
+            console.log("xxl getLiquids isEthereum 02");
         } else {
             priceFunc = getPriceRates(assetKeys);
         }
 
+        console.log(assetPromise);
         //获取汇总数据
         const [assetPrices, assetBalances] = await Promise.all([
             priceFunc,
             Promise.all(assetPromise)
         ]);
 
+        console.log("xxl getLiquids isEthereum 03");
+
         //计算资产总数
         for (const index in assetKeys) {
             const key = assetKeys[index]; //资产名称
             const balance = assetBalances[index]; //余额
+
+
+            console.log("xxl assetBalances : " + index + " : key " + key);
+            console.log(assetPrices);
+
+
+
             let price = key == "sUSD" ? (price = n2bn(1)) : assetPrices[key]; //价格
 
             //如果不是获取所有且余额为0则跳过
@@ -107,7 +122,19 @@ export const getBuildRatio = async () => {
     const {
         lnrJS: { ShumConfig }
     } = lnrJSConnector;
+
+    console.log("xxl getBuildRatio start ");
+    console.log(ShumConfig);
+
     let BUILD_RATIO = await ShumConfig.BUILD_RATIO();
+
+    console.log("xxl BUILD_RATIO ...");
+    console.log(BUILD_RATIO);
+
+
+
+
+
     let uint = await ShumConfig.getUint(BUILD_RATIO);
     return uint;
 };
@@ -124,49 +151,114 @@ export const getPriceRates = async currency => {
     let rates = {};
     const { utils } = lnrJSConnector;
 
-    let contract,
-        pricesPromise = [];
-    if (isEthereum) {
-        rates = await band.pricesLast({ sources: currency });
-    } else if (isBinance) {
-        contract = lnrJSConnector.lnrJS.ShumOracleRouter;
-        if (_.isString(currency)) {
-            ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
-            rates[currency] = await contract.getPrice(
-                utils.formatBytes32String(currency)
+    let contract,pricesPromise = [];
+    contract = lnrJSConnector.lnrJS.ShumOracleRouter;
+
+    if (_.isString(currency)) {
+        ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
+        rates[currency] = await contract.getPrice(
+            utils.formatBytes32String(currency)
+        );
+    } else if (_.isArray(currency)) {
+        for (let index = 0; index < currency.length; index++) {
+            let name = currency[index];
+            ["ETH", "BNB"].includes(name) && (name = "s" + name);
+
+            console.log("xxl name is " + name);
+            pricesPromise.push(
+                contract.getPrice(utils.formatBytes32String(name))
             );
-        } else if (_.isArray(currency)) {
-            for (let index = 0; index < currency.length; index++) {
-                let name = currency[index];
-                ["ETH", "BNB"].includes(name) && (name = "s" + name);
+        }
 
-                //xxl TODO END
-                // if(name == "sUSD"){
-                //     name = name;
-                // }else if(name.substr(0,1) == "s" & (name = "sSHUM")){
-                //     name = name.substr(1)
-                // }else{
-                //     name = "sUSD"
-                // }
-                //xxl TODO END
-                console.log("xxl name is " + name);
+        let prices = await Promise.all(pricesPromise);
 
-
-
-                pricesPromise.push(
-                    contract.getPrice(utils.formatBytes32String(name))
-                );
-            }
-
-            let prices = await Promise.all(pricesPromise);
-
-            for (let index = 0; index < currency.length; index++) {
-                const name = currency[index];
-                let price = prices[index];
-                rates[name] = price;
-            }
+        for (let index = 0; index < currency.length; index++) {
+            const name = currency[index];
+            let price = prices[index];
+            rates[name] = price;
         }
     }
+
+
+    // if (isEthereum) {
+    //     rates = await band.pricesLast({ sources: currency });
+    // } else if (isBinance) {
+    //     contract = lnrJSConnector.lnrJS.ShumOracleRouter;
+
+    //     if (_.isString(currency)) {
+    //         ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
+    //         rates[currency] = await contract.getPrice(
+    //             utils.formatBytes32String(currency)
+    //         );
+    //     } else if (_.isArray(currency)) {
+    //         for (let index = 0; index < currency.length; index++) {
+    //             let name = currency[index];
+    //             ["ETH", "BNB"].includes(name) && (name = "s" + name);
+
+    //             //xxl TODO END
+    //             // if(name == "sUSD"){
+    //             //     name = name;
+    //             // }else if(name.substr(0,1) == "s" & (name = "sSHUM")){
+    //             //     name = name.substr(1)
+    //             // }else{
+    //             //     name = "sUSD"
+    //             // }
+    //             //xxl TODO END
+    //             console.log("xxl name is " + name);
+
+
+
+    //             pricesPromise.push(
+    //                 contract.getPrice(utils.formatBytes32String(name))
+    //             );
+    //         }
+
+    //         let prices = await Promise.all(pricesPromise);
+
+    //         for (let index = 0; index < currency.length; index++) {
+    //             const name = currency[index];
+    //             let price = prices[index];
+    //             rates[name] = price;
+    //         }
+    //     }
+    
+    //     // if (_.isString(currency)) {
+    //     //     ["ETH", "BNB"].includes(currency) && (currency = "s" + currency);
+    //     //     rates[currency] = await contract.getPrice(
+    //     //         utils.formatBytes32String(currency)
+    //     //     );
+    //     // } else if (_.isArray(currency)) {
+    //     //     for (let index = 0; index < currency.length; index++) {
+    //     //         let name = currency[index];
+    //     //         ["ETH", "BNB"].includes(name) && (name = "s" + name);
+
+    //     //         //xxl TODO END
+    //     //         // if(name == "sUSD"){
+    //     //         //     name = name;
+    //     //         // }else if(name.substr(0,1) == "s" & (name = "sSHUM")){
+    //     //         //     name = name.substr(1)
+    //     //         // }else{
+    //     //         //     name = "sUSD"
+    //     //         // }
+    //     //         //xxl TODO END
+    //     //         console.log("xxl name is " + name);
+
+
+
+    //     //         pricesPromise.push(
+    //     //             contract.getPrice(utils.formatBytes32String(name))
+    //     //         );
+    //     //     }
+
+    //     //     let prices = await Promise.all(pricesPromise);
+
+    //     //     for (let index = 0; index < currency.length; index++) {
+    //     //         const name = currency[index];
+    //     //         let price = prices[index];
+    //     //         rates[name] = price;
+    //     //     }
+    //     // }
+    // }
 
     // console.log(rates, "rates");
     return rates;
@@ -311,6 +403,8 @@ export const storeDetailsData = async () => {
                 lockLINA,
                 buildRatio
             ] = result.map(formatEtherToNumber);
+
+            console.log("2.1.1");
 
             let liquidsData = await getLiquids(walletAddress);
 

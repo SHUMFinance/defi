@@ -1,5 +1,5 @@
 
-  import ShumFinance from './ShumFinance';
+import ShumFinance from './ShumFinance';
 import sUSD from './sUSD';
 import sBTC from './sBTC';
 import sETH from './sETH';

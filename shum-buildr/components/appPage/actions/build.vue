@@ -16,7 +16,7 @@
                         SHUM.
                      </template>
                   </div>
-                  <div class="actionRate" v-if="isBinanceNetwork">
+                  <div class="actionRate" v-if="isBinanceNetworkData">
                      1 SHUM = {{formatNumberFromBigNumber(buildData.LINA2USDBN,4)}}sUSD
                   </div>
                   <div class="webitem">
@@ -157,7 +157,7 @@
                               <img src="@/static/percentage.svg"/>
                            </div>
                            <div class="itemType">
-                              <div class="itemTypeTitle">P Ratio</div>
+                              <div class="itemTypeTitle">P Ratio1</div>
                            </div>
                         </div>
                         <div class="itemRight">
@@ -485,7 +485,7 @@
             toleranceDifference: 0.01, //build容错差值
 
             introductActionModal: false,
-            isBinanceNetwork:true,
+            isBinanceNetworkData:true,
 
             //输入框展示数据
             inputData: {
@@ -655,119 +655,132 @@
                     utils
                 } = lnrJSConnector;
 
-                if (this.isEthDevNetwork) {
-                    const avaliableLINA = await ShumFinance.balanceOf(
+                console.log("xxl getBuildData ... ");
+               //  if (this.isEthDevNetwork) {
+               //      const avaliableLINA = await ShumFinance.balanceOf(
+               //          walletAddress
+               //      ); //SHUM
+
+               //      this.buildData.LINA = _.floor(
+               //          formatEtherToNumber(avaliableLINA),
+               //          DECIMAL_PRECISION
+               //      );
+
+               //      this.buildData.LINABN = avaliableLINA;
+               //  } else {
+
+               const SHUMBytes = utils.formatBytes32String("SHUM");
+               //get contract address
+               const ShumCollateralSystemAddress =
+                  ShumCollateralSystem.contract.address;
+               console.log("xxl get ShumCollateralSystemAddress " + ShumCollateralSystemAddress);
+
+               const results = await Promise.all([
+                  ShumFinance.balanceOf(walletAddress), //Shum
+                  ShumCollateralSystem.userCollateralData(
+                        walletAddress,
+                        SHUMBytes
+                  ), //staked Shum
+
+                  ShumRewardLocker.balanceOf(walletAddress), //lock lina
+                  ShumFinance.allowance(
+                        walletAddress,
+                        ShumCollateralSystemAddress
+                  ), //已 approved 的 lina 额度
+
+                  ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
+                  getBuildRatio(), //目标抵押率
+                  ShumCollateralSystem.GetUserTotalCollateralInUsd(
                         walletAddress
-                    ); //SHUM
+                  ) //个人全部抵押物兑sUSD,用于计算pratio
+               ]);
 
-                    this.buildData.LINA = _.floor(
-                        formatEtherToNumber(avaliableLINA),
-                        DECIMAL_PRECISION
-                    );
+               const [
+                  avaliableLINA,
+                  stakedLina,
+                  lockLina,
+                  approvedLina,
+                  amountDebt,
+                  buildRatio,
+                  totalCollateralInUsd
+               ] = results.map(formatEtherToNumber);
 
-                    this.buildData.LINABN = avaliableLINA;
-                } else {
-                    const SHUMBytes = utils.formatBytes32String("SHUM");
-                    //get contract address
-                    const ShumCollateralSystemAddress =
-                        ShumCollateralSystem.contract.address;
-                    console.log("xxl get ShumCollateralSystemAddress " + ShumCollateralSystemAddress);
+               let currentRatioPercent = n2bn("0");
+               console.log("xxl --00 " + currentRatioPercent);
+               console.log(results);
 
-                    const results = await Promise.all([
-                        ShumFinance.balanceOf(walletAddress), //Shum
-                        ShumCollateralSystem.userCollateralData(
-                            walletAddress,
-                            SHUMBytes
-                        ), //staked Shum
+               if (results[6].gt("0") && results[4][0].gt("0")) {
+                  currentRatioPercent = bnMul(
+                        bnDiv(results[6], results[4][0]),
+                        n2bn("100")
+                  );
+               }
 
-                        ShumRewardLocker.balanceOf(walletAddress), //lock lina
-                        ShumFinance.allowance(
-                            walletAddress,
-                            ShumCollateralSystemAddress
-                        ), //已 approved 的 lina 额度
+               console.log("xxl 01 " + currentRatioPercent);
+               const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-                        ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
-                        getBuildRatio(), //目标抵押率
-                        ShumCollateralSystem.GetUserTotalCollateralInUsd(
-                            walletAddress
-                        ) //个人全部抵押物兑sUSD,用于计算pratio
-                    ]);
+               const priceRates = await getPriceRates(["SHUM", "sUSD"]);
+               // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
 
-                    const [
-                        avaliableLINA,
-                        stakedLina,
-                        lockLina,
-                        approvedLina,
-                        amountDebt,
-                        buildRatio,
-                        totalCollateralInUsd
-                    ] = results.map(formatEtherToNumber);
+               console.log("xxl 012");
+               console.log(priceRates.SHUM);
 
-                    let currentRatioPercent = n2bn("0");
+               const SHUMPrice = priceRates.SHUM / priceRates.sUSD;
+               console.log(SHUMPrice);
 
-                    if (results[6].gt("0") && results[4][0].gt("0")) {
-                        currentRatioPercent = bnMul(
-                            bnDiv(results[6], results[4][0]),
-                            n2bn("100")
-                        );
-                    }
+               const SHUMPriceBN = bnDiv(priceRates.SHUM, priceRates.sUSD);
 
-                    console.log("xxl 01");
-                    const targetRatioPercent = 100 / buildRatio; //目标抵押率
+               console.log("xxl 0121");
+               this.buildData.LINA = _.floor(
+                  avaliableLINA,
+                  DECIMAL_PRECISION
+               );
+               this.buildData.LINABN = results[0];
+               console.log("xxl 013");
 
-                    const priceRates = await getPriceRates(["SHUM", "sUSD"]);
-                    // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
+               this.buildData.LINA2USD = _.floor(
+                  SHUMPrice,
+                  DECIMAL_PRECISION
+               );
 
-                    console.log("xxl 012");
-                    console.log(priceRates.SHUM);
+               console.log(SHUMPriceBN);
+               this.buildData.LINA2USDBN = SHUMPriceBN;
+               console.log("xxl 015");
 
-                    const SHUMPrice = priceRates.SHUM / priceRates.sUSD;
-                    console.log(SHUMPrice);
+               this.buildData.staked = _.floor(
+                  stakedLina,
+                  DECIMAL_PRECISION
+               );
+               this.buildData.stakedBN = results[1];
 
-                    const SHUMPriceBN = bnDiv(priceRates.SHUM, priceRates.sUSD);
+               this.buildData.lock = _.floor(lockLina, DECIMAL_PRECISION);
+               this.buildData.lockBN = results[2];
 
-console.log("xxl 0121");
-                    this.buildData.LINA = _.floor(
-                        avaliableLINA,
-                        DECIMAL_PRECISION
-                    );
-                    this.buildData.LINABN = results[0];
-                    console.log("xxl 013");
+               this.buildData.approvedBN = results[3];
 
-                    this.buildData.LINA2USD = _.floor(
-                        SHUMPrice,
-                        DECIMAL_PRECISION
-                    );
-                    this.buildData.LINA2USDBN = SHUMPriceBN;
-                    console.log("xxl 015");
+               this.buildData.debt = _.floor(
+                  amountDebt[0],
+                  DECIMAL_PRECISION
+               );
+               this.buildData.debtBN = results[4][0];
 
-                    this.buildData.staked = _.floor(
-                        stakedLina,
-                        DECIMAL_PRECISION
-                    );
-                    this.buildData.stakedBN = results[1];
+               console.log("xxl 02 " + currentRatioPercent);
+               this.buildData.targetRatio = targetRatioPercent;
+               this.buildData.currentRatio = formatEtherToNumber(
+                  currentRatioPercent
+               );
+               this.buildData.currentRatioBN = currentRatioPercent;
 
-                    this.buildData.lock = _.floor(lockLina, DECIMAL_PRECISION);
-                    this.buildData.lockBN = results[2];
+               //获取当前抵押率
+               //xxl TODO
+               //this.inputData.ratio = this.buildData.currentRatio;
+               this.inputData.ratio = 500
 
-                    this.buildData.approvedBN = results[3];
+               console.log("xxl this.inputData.ratio : " + this.inputData.ratio);
+               console.log(this.inputData.ratio);
 
-                    this.buildData.debt = _.floor(
-                        amountDebt[0],
-                        DECIMAL_PRECISION
-                    );
-                    this.buildData.debtBN = results[4][0];
 
-                    console.log("xxl 02");
-                    this.buildData.targetRatio = targetRatioPercent;
-                    this.buildData.currentRatio = formatEtherToNumber(
-                        currentRatioPercent
-                    );
-                    this.buildData.currentRatioBN = currentRatioPercent;
-
-                    //获取当前抵押率
-                    this.inputData.ratio = this.buildData.currentRatio;
-                }
+               //  }
             } catch (e) {
                 console.log(e, "getBuildData err");
             } finally {
@@ -961,6 +974,9 @@ console.log("xxl 0121");
          //stakeAmount改变事件
          changeStakeAmount(stakeAmount) {
             try {
+
+
+               console.log(1);
                this.resetErrorsMsg();
                // this.resetInputData();
 
@@ -976,7 +992,8 @@ console.log("xxl 0121");
                   return;
                }
 
-               if (!this.isEthDevNetwork) {
+               //xxl TODO
+               //if (!this.isEthDevNetwork) {
                   //抵押输入的lina时能生成的最大sUSD
                   let canBuildMaxAfterStake = bnDiv(
                     bnMul(
@@ -1035,7 +1052,7 @@ console.log("xxl 0121");
                   this.inputData.ratio = formatEtherToNumber(
                     this.actionData.ratio
                   );
-               }
+               //}
             } catch (error) {
                console.log(error, "stake change error");
                this.errors.stakeMsg = "Invalid number";
@@ -1348,7 +1365,7 @@ console.log("xxl 0121");
                if (!this.buildDisabled) {
                   if (this.isEthereumNetwork) {
                      this.actionTabs = "m1"; //进入swap流程
-                  } else if (this.isBinanceNetwork) {
+                  } else if (this.isBinanceNetworkData) {
                      this.processing = true;
 
                      //清空之前数据
@@ -1853,6 +1870,8 @@ console.log("xxl 0121");
          //改变激活元素
          //Select item here
          changeFocusItem(index) {
+
+            console.log("xxl index is : " + index);
             // this.activeItem = index;
             this.$nextTick(() => {
                this.$refs["itemInput" + index].$el

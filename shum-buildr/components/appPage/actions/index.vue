@@ -148,7 +148,7 @@
          </div>
       </div>
 
-      <div class="actionsBox" :style="(currentAction == 1 ||currentAction == 2) ? 'width:1200px;box-shadow:none;border-radius:0;': 'width:786px' ">
+      <div class="actionsBox" :style="(currentAction == 1 ||currentAction == 2) ? 'overflow:visible;width:1200px;box-shadow:none;border-radius:0;': 'width:786px' ">
          <homePage v-if="currentAction == 0"></homePage>
          <dashboard v-else-if="currentAction == 1"></dashboard>
          <exchange v-else-if="currentAction == 2"></exchange>
