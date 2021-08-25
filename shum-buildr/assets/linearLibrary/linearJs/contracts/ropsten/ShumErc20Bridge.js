@@ -74,6 +74,15 @@
       };
     
       this.deposit = async (token, amount, destChainId, recipient, txParams) => {
+        //xxl TODO 
+        console.log("xxl001 deposit start ");
+        console.log(token);
+        console.log(amount);
+        console.log(destChainId);
+        console.log(recipient);
+        console.log(txParams);
+        console.log("xxl001 deposit end ");
+
         txParams = txParams || {};
         return await this.contract.deposit(token, amount, destChainId, recipient, txParams);
       };
@@ -134,11 +143,17 @@
       };
     
       this.withdraw = async (srcChainId, destChainId, depositId, depositor, recipient, currency, amount, signature, txParams) => {
+        
+        console.log("xxl001 withdraw start ");
+
         txParams = txParams || {};
         return await this.contract.withdraw(srcChainId, destChainId, depositId, depositor, recipient, currency, amount, signature, txParams);
       };
     
       this.withdrawnDeposits = async (uint256_1, uint256_2, txParams) => {
+
+        console.log("xxl001 withdrawnDeposits start ");
+
         txParams = txParams || {};
         return await this.contract.withdrawnDeposits(uint256_1, uint256_2, txParams);
       };

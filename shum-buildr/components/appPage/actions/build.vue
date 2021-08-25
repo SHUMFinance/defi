@@ -656,18 +656,18 @@
                 } = lnrJSConnector;
 
                 console.log("xxl getBuildData ... ");
-               //  if (this.isEthDevNetwork) {
-               //      const avaliableLINA = await ShumFinance.balanceOf(
-               //          walletAddress
-               //      ); //SHUM
+                if (this.isEthDevNetwork) {
+                    const avaliableLINA = await ShumFinance.balanceOf(
+                        walletAddress
+                    ); //SHUM
 
-               //      this.buildData.LINA = _.floor(
-               //          formatEtherToNumber(avaliableLINA),
-               //          DECIMAL_PRECISION
-               //      );
+                    this.buildData.LINA = _.floor(
+                        formatEtherToNumber(avaliableLINA),
+                        DECIMAL_PRECISION
+                    );
 
-               //      this.buildData.LINABN = avaliableLINA;
-               //  } else {
+                    this.buildData.LINABN = avaliableLINA;
+                } else {
 
                const SHUMBytes = utils.formatBytes32String("SHUM");
                //get contract address
@@ -773,14 +773,14 @@
 
                //获取当前抵押率
                //xxl TODO
-               //this.inputData.ratio = this.buildData.currentRatio;
-               this.inputData.ratio = 500
+               this.inputData.ratio = this.buildData.currentRatio;
+               //this.inputData.ratio = 500
 
                console.log("xxl this.inputData.ratio : " + this.inputData.ratio);
                console.log(this.inputData.ratio);
 
 
-               //  }
+               }
             } catch (e) {
                 console.log(e, "getBuildData err");
             } finally {

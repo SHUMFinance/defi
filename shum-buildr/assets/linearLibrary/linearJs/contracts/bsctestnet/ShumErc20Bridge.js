@@ -98,7 +98,13 @@
     
       this.deposit = async (token, amount, destChainId, recipient, txParams) => {
 
-        console.log("xxl0 come deposit");
+        console.log("xxl0 come deposit start");
+        console.log(token);
+        console.log(amount);
+        console.log(destChainId);
+        console.log(recipient);
+        console.log("xxl0 come deposit end");
+
         txParams = txParams || {};
         return await this.contract.deposit(token, amount, destChainId, recipient, txParams);
       };

@@ -286,7 +286,7 @@
 						<div
 							class="cursor"
 							:style="{
-								left: cursorPosition + '%!important',
+								left: (cursorPosition + 3) + '%!important',
 								marginLeft:
 									cursorPosition > 2
 										? '-6px!important'
