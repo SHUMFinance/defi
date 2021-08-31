@@ -4,11 +4,12 @@
 		<div class="mian box">
 			<div class="market">
 				<div class="title">MARKET</div>
-				<z-input value="0" placeholder="SEARCH">
-					<template v-slot:prefix>
-						<img src="@/static/appPage/search.png" alt="">
-					</template>
-				</z-input>
+				<div class="handler">
+					<Select >
+						<Option v-for="item in 5" :value="item" :key="item">{{ item }}</Option>
+					</Select>
+					<Input placeholder="SEARCH"  prefix="md-search" />
+				</div>
 				<div class="customTable">
 					<div class="tabelHeader">
 						<div class="th sort pair">
@@ -28,28 +29,31 @@
 						<div class="tableBody">
 							<div
 								class="tr"
-								v-for="index in 50"
-								:key="index"
+								v-for="(item, i) in marketList"
+								:key="i"
+								@mouseover="item.active = true"
+								@mouseout="item.active = false"
 							>
 								<div class="td pair">
-									<img src="@/static/appPage/round.png" alt="">
-									<IconName />
+									<img v-if="item.active" src="@/static/ETH_logo.svg" alt="">
+									<img v-else src="@/static/ETH_inactive.svg" alt="">
+									<IconName :name="item.name"/>
 								</div>
 								<div class="td price">
-									$1.7324
+									${{item.price}}
 								</div>
 								<div class="td change" >
-									<template v-if="Math.random() > 0.5">
+									<template v-if="item.change > 0">
 										<img src="@/static/appPage/up.png" alt="">
-										<span style="color:#108C1C">0.48%</span>
+										<span style="color:#108C1C">{{item.change}}%</span>
 									</template>
 									<template v-else>
 										<img src="@/static/appPage/down.png" alt="">
-										<span style="color:#DA3620">- 2.43%</span>
+										<span style="color:#DA3620">{{item.change}}%</span>
 									</template>
 								</div>
 								<div class="td star" >
-									<img v-if="Math.random() > 0.5" src="@/static/appPage/star.png" alt="">
+									<img v-if="item.like" src="@/static/appPage/star.png" alt="">
 									<img v-else src="@/static/appPage/star1.png" alt="">
 								</div>
 							</div>
@@ -194,10 +198,10 @@
 				<div class="box-continer">
 					<div class="title">Wallet Balance</div>
 				</div>
-				<z-button size="large">
+				<z-button size="large" @click.native="bayUsd">
 					BUY sUSD
 				</z-button>
-				<z-button size="large">
+				<z-button size="large" @click.native="buildUsd">
 					BUILD sUSD
 				</z-button>
 			</div>
@@ -206,59 +210,107 @@
 					<div class="title">MARKET ORDER</div>
 					<div class="floor buy-or-sell">
 						<div class="floor-continer">
-							<z-button shape="round">
+							<z-button :class="{selected: orderType}" shape="round" @click="orderType = true">
 								BUY sADA
 							</z-button>
-							<z-button shape="round">
+							<z-button :class="{selected: !orderType}" shape="round" @click="orderType = false">
 								SELL sADA
 							</z-button>
 						</div>
 					</div>
-					<div class="floor buy-or-sell">
-						<div class="floor-continer floor-title">
-							Minimum Received
-						</div>
-						<z-input value="0" placeholder="placeholder" suffix="sUSD"></z-input>
-						<div class="tag-box">
-							<span class="tag">25%</span>
-							<span class="tag">50%</span>
-							<span class="tag">75%</span>
-							<span class="tag">MAX</span>
-						</div>
-					</div>
-					<div class="floor">
-						<div class="floor-continer floor-title">
-							Market  Price
-						</div>
-						<z-input value="1.7325" placeholder="placeholder">
-							<template v-slot:suffix>
-								<img src="@/static/appPage/refresh.png" alt="">
-							</template>
-						</z-input>
-					</div>
-					<div class="floor">
-						<div class="floor-continer floor-title">
-							Market  Price
-						</div>
-						<z-input value="0 sADA" placeholder="placeholder"></z-input>
-					</div>
-					<div class="floor fee">
-						<div class="floor-continer">
-							<div class="fee-item">
-								<span>Fee</span>
-								<span>0    USD（0.25%)</span>
+					<template v-if="orderType">
+						<div class="floor buy-or-sell">
+							<div class="floor-continer floor-title">
+								Minimum Received
 							</div>
-							<div class="fee-item">
-								<span>Gas  Price</span>
-								<span>5 GWEI</span>
-							</div>
-							<div class="fee-item">
-								<span>Minimum Received</span>
-								<span>0 sADA</span>
+							<z-input value="0" placeholder="placeholder" suffix="sUSD"></z-input>
+							<div class="tag-box">
+								<span class="tag">25%</span>
+								<span class="tag">50%</span>
+								<span class="tag">75%</span>
+								<span class="tag">MAX</span>
 							</div>
 						</div>
-					</div>
-					<z-button size="large">
+						<div class="floor">
+							<div class="floor-continer floor-title">
+								Market  Price
+							</div>
+							<z-input value="1.7325" placeholder="placeholder">
+								<template v-slot:suffix>
+									<img src="@/static/appPage/refresh.png" alt="">
+								</template>
+							</z-input>
+						</div>
+						<div class="floor">
+							<div class="floor-continer floor-title">
+								Market  Price
+							</div>
+							<z-input value="0 sADA" placeholder="placeholder"></z-input>
+						</div>
+						<div class="floor fee">
+							<div class="floor-continer">
+								<div class="fee-item">
+									<span>Fee</span>
+									<span>0    USD（0.25%)</span>
+								</div>
+								<div class="fee-item">
+									<span>Gas  Price</span>
+									<span>5 GWEI</span>
+								</div>
+								<div class="fee-item">
+									<span>Minimum Received</span>
+									<span>0 sADA</span>
+								</div>
+							</div>
+						</div>
+					</template>
+					<template v-else>
+						<div class="floor buy-or-sell">
+							<div class="floor-continer floor-title">
+								Minimum Received
+							</div>
+							<z-input value="0" placeholder="placeholder" suffix="sUSD"></z-input>
+							<div class="tag-box">
+								<span class="tag">25%</span>
+								<span class="tag">50%</span>
+								<span class="tag">75%</span>
+								<span class="tag">MAX</span>
+							</div>
+						</div>
+						<div class="floor">
+							<div class="floor-continer floor-title">
+								Market  Price
+							</div>
+							<z-input value="1.7325" placeholder="placeholder">
+								<template v-slot:suffix>
+									<img src="@/static/appPage/refresh.png" alt="">
+								</template>
+							</z-input>
+						</div>
+						<div class="floor">
+							<div class="floor-continer floor-title">
+								Market  Price
+							</div>
+							<z-input value="0 sADA" placeholder="placeholder"></z-input>
+						</div>
+						<div class="floor fee">
+							<div class="floor-continer">
+								<div class="fee-item">
+									<span>Fee</span>
+									<span>0    USD（0.25%)</span>
+								</div>
+								<div class="fee-item">
+									<span>Gas  Price</span>
+									<span>5 GWEI</span>
+								</div>
+								<div class="fee-item">
+									<span>Minimum Received</span>
+									<span>0 sUSD</span>
+								</div>
+							</div>
+						</div>
+					</template>
+					<z-button size="large"  @click="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)">
 						CONNECT WALLET
 					</z-button>
 				</div>
@@ -268,7 +320,17 @@
 </template>
 
 <script>
- import echarts from "echarts";
+import echarts from "echarts";
+import {selectedWallet} from "@/assets/linearLibrary/linearTools/lnrJSConnector";
+import {
+	addEthereumChain,
+	checkNetwork,
+	SUPPORTED_NETWORKS_MAP,
+	SUPPORTED_WALLETS_MAP
+} from "@/assets/linearLibrary/linearTools/network";
+
+const marketMock = { "data": { "pricesLasts": [{ "currentPrice": "2801397150000000000", "id": "lADA", "lastPrice": "2812025310000000000" }, { "currentPrice": "463075423110000000000", "id": "lBNB", "lastPrice": "473963879190000000000" }, { "currentPrice": "47435231433850000000000", "id": "lBTC", "lastPrice": "47891750000000000000000" }, { "currentPrice": "23107583740000000000", "id": "lCAKE", "lastPrice": "24344089970000000000" }, { "currentPrice": "4542617121000000000", "id": "lDEFI", "lastPrice": "4363827774000000000" }, { "currentPrice": "28211140110000000000", "id": "lDOT", "lastPrice": "24833428640000000000" }, { "currentPrice": "3337217203700000000000", "id": "lETH", "lastPrice": "3185079305240000000000" }, { "currentPrice": "1183505000000000000", "id": "lEUR", "lastPrice": "1179790000000000000" }, { "currentPrice": "9096500000000000", "id": "lJPY", "lastPrice": "9101000000000000" }, { "currentPrice": "26069077720000000000", "id": "lLINK", "lastPrice": "24883629290000000000" }, { "currentPrice": "87657120000000000", "id": "lTRX", "lastPrice": "87224840000000000" }, { "currentPrice": "28126027610000000000", "id": "lUNI", "lastPrice": "26087196230000000000" }, { "currentPrice": "1000000000000000000", "id": "lUSD", "lastPrice": "1000000000000000000" }, { "currentPrice": "120100000000000000", "id": "lVET", "lastPrice": "119591770000000000" }, { "currentPrice": "24067241500000000000", "id": "lXAG", "lastPrice": "24172983000000000000" }, { "currentPrice": "1812720000000000000000", "id": "lXAU", "lastPrice": "1817380000000000000000" }, { "currentPrice": "1362900202233000000000", "id": "lXBCI", "lastPrice": "1321099195405000000000" }, { "currentPrice": "875510926927000000000", "id": "lXLCI", "lastPrice": "869580036982000000000" }, { "currentPrice": "336645000000000000", "id": "lXLM", "lastPrice": "338334525000000000" }, { "currentPrice": "37113577556570000000000", "id": "lYFI", "lastPrice": "36471342587570000000000" }] } }
+
 
 const ZButton  = {
 	props: {
@@ -282,7 +344,8 @@ const ZButton  = {
 				'z-btn-round': this.shape === 'round',
 				'z-btn-sm': this.size === 'small',
 				'z-btn-lg': this.size === 'large'
-			}
+			},
+			on: { click: () => { this.$emit('click') } }
 		}, [
 			h('span', this.$slots.default)
 		])
@@ -368,7 +431,8 @@ const ZInput  = {
 
 const IconName = {
 	props: {
-		size: Number
+		size: Number,
+		name: String
 	},
 	render: function(h) {
 		return h('span', {
@@ -378,7 +442,7 @@ const IconName = {
 				fontSize: this.size ? `${this.size}px` : 'inherit'
 			}
 		}, [
-			h('span', ['sADA']),
+			h('span', [this.name]),
 			h('span', {
 				style: {
 					display: 'inline-block',
@@ -392,10 +456,55 @@ const IconName = {
 export default {
 	name: 'Exchange',
 	components: { ZButton, ZInput, IconName },
+	data: function data() {
+		return {
+			marketList: [],
+			orderType: false,
+			SUPPORTED_WALLETS_MAP
+		};
+	},
 	mounted: function () {
 		this.lineChart();
+		this.marketList = marketMock.data.pricesLasts.map(v => {
+			const { id, currentPrice, lastPrice } = v;
+			return {
+				name: (id || '').replace('l', 's'),
+				price: (Number(currentPrice) / Math.pow(10, 17)).toFixed(4),
+				change: ((Number(currentPrice) - Number(lastPrice)) / Number(lastPrice) * 100).toFixed(2),
+				active: false,
+				like: Math.random() > 0.5
+			}
+		});
 	},
 	methods: {
+		async selectedWallet(walletType) {
+            console.log("xxl index.vue 00 selectedWallet " + walletType);
+            const status = await checkNetwork();
+
+            console.log("xxl index.vue 01 selectedWallet " + status);
+
+            if (status) {
+               await selectedWallet(walletType);
+            } else {
+               try {
+                  await addEthereumChain(SUPPORTED_NETWORKS_MAP.BSCMAINNET);
+                  this.$store.commit("setAutoConnect", true);
+                  this.$store.commit("setWalletType", walletType);
+                  location.reload();
+               } catch (error) {
+                  this.$store.commit("setSetupModal", true);
+               }
+            }
+		},
+		bayUsd: function() {
+			window.open('https://pancakeswap.finance/swap#/swap', '_blank');
+		},
+		buildUsd: function() {
+			let routeUrl = this.$router.resolve({
+				path: "/build"
+			});
+     		window.open(routeUrl.href, '_blank');
+		},
 		 lineChart() {
 			// 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
 			const data = splitData([
@@ -469,6 +578,8 @@ export default {
          },
 	}
 }
+
+
 </script>
 
 <style lang="scss">
@@ -496,26 +607,39 @@ export default {
 				margin-left: 8px;
 				margin-bottom: 16px;
 			}
-			> .z-input-affix-wrapper {
-				margin-bottom: 24px;
-				padding: 11px 15px;
-				width: 320px;
-				font-size: 14px;
-				.z-input-prefix {
-					margin-right: 11px;
-					line-height: 16px;
+			.handler {
+				display: flex;
+				.ivu-input-wrapper {
+					margin-left: 10px;
 				}
-				.z-input {
-					line-height: 16px;
-				}
-				>input::placeholder {
-					font-family: Apple LiGothic;
-					// line-height: 14px;
-					letter-spacing: 0.245em;
-					text-align: left;
-				}
+
 			}
+			// > .z-input-affix-wrapper {
+			// 	margin-bottom: 24px;
+			// 	padding: 11px 15px;
+			// 	width: 320px;
+			// 	font-size: 14px;
+			// 	.z-input-prefix {
+			// 		margin-right: 11px;
+			// 		line-height: 16px;
+			// 	}
+			// 	.z-input {
+			// 		line-height: 16px;
+			// 	}
+			// 	>input::placeholder {
+			// 		font-family: Apple LiGothic;
+			// 		// line-height: 14px;
+			// 		letter-spacing: 0.245em;
+			// 		text-align: left;
+			// 	}
+			// }
 			.customTable {
+				.td, .th {
+					flex: 1;
+					display: flex;
+					align-items: center;
+					word-break: keep-all;
+				}
 				.sort img {
 					margin-right: 4px;
 				} 
@@ -523,23 +647,28 @@ export default {
 					padding-right: 10px;
 					height: 568px;
 				}
-				.pair {
+				.th.pair ,.td.pair {
+					flex: unset;
 					display: flex;
 					align-items: center;
-					width: 146px;
-					>img {
-						margin-right: 8px;
-					}
+					width: 110px;
+					word-break: keep-all;
 				}
-				.price {
-					width: 54px;
+				.td.pair >img {
+					margin-right: 8px;
+					width: 24px;
+					height: 24px;
 				}
-				.change {
-					width: 64px;
-				}
-				.star {
-					width: 18px;
-					text-align: center;
+				// .price {
+				// 	padding: 0 4px;
+				// }
+				// .change {
+				// 	flex: 1;
+				// 	padding: 0 4px;
+				// }
+				.th.star ,.td.star {
+					flex: unset;
+					width: 30px;
 				}
 			}
 		}
@@ -715,17 +844,20 @@ export default {
 			.buy-or-sell {
 				.z-btn {
 					width: 114px;
-					&:nth-of-type(1) {
+					color: #8B8B8C;
+					background: #F2F2F2;
+					border-color: #F2F2F2;
+					// &:nth-of-type(1) {
+						
+					// }
+					&:nth-of-type(2) {
+						margin-left: 13px;
+					}
+					&.selected {
 						font-weight: 700;
 						color: #4B72F0;
 						background: #ECF1FF;
 						border-color: #ECF1FF;
-					}
-					&:nth-of-type(2) {
-						margin-left: 13px;
-						color: #8B8B8C;
-						background: #F2F2F2;
-						border-color: #F2F2F2;
 					}
 				}
 			}
@@ -908,16 +1040,21 @@ input[type=number], input[type=password], input[type=text], textarea {
 	}
 	.hasData {
 		.tableBody {
-			overflow-y: auto;
+			// padding: 2px 12px;
+			overflow: auto;
 			.tr {
 				display: flex;
 				align-items: center;
 				padding: 0 16px;
-				margin-bottom: 4px;
+				margin-bottom: 8px;
 				height: 40px;
 				cursor: default;
 				background: #F9FAFF;
 				border-radius: 8px;
+				// &:hover {
+				// 	box-shadow: 0 2px 12px 0 #deddde;
+				// 	border-color: #fff;
+				// }
 				.td {
 					word-break: keep-all !important;
 				}

@@ -50,7 +50,7 @@
                                class="globalInfoStyle"
                                max-width="150"
                                content="Reward can only be claimed when target ratio is reached."
-                               placement="top"
+                               placement="right"
                            >
                               <img src="@/static/info_white.svg"/>
                            </Tooltip>

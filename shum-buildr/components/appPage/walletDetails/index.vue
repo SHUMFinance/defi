@@ -1,1408 +1,2070 @@
 <template>
-	<div id="walletDetails" :class="{ mScroll: mShowWallet }">
-		<div class="walletAndAddressBox" v-if="!mShowWallet">
-			<div class="info">
-				<img
-					class="network"
-					v-if="isEthereumNetwork"
-					src="@/static/ETH.svg"
-				/>
-				<img class="network" v-else src="@/static/binance.svg" />
+   <div id="walletDetails" :class="{ mScroll: mShowWallet }">
+      <div class="walletAndAddressBox" v-if="!mShowWallet">
+         <div class="info">
+            <img
+                class="network"
+                v-if="isEthereumNetwork"
+                src="@/static/ETH.svg"
+            />
+            <img class="network" v-else src="@/static/binance.svg"/>
 
-				<div class="wallet">
-					{{ walletNetworkName }}
-				</div>
-				<div class="address">
-					{{ abbreviateAddress }}
-				</div>
-				<Tooltip
-					class="globalInfoStyle"
-					:content="tooltipContent"
-					offset="0 6"
-					placement="bottom"
-					@on-popper-hide="resetTooltipContent"
-				>
-					<svg
-						class="copyBtn"
-						:data-clipboard-text="walletAddress"
-						data-clipboard-action="copy"
-						@click="copyAddress()"
-						width="24px"
-						height="24px"
-						viewBox="0 0 24 24"
-						version="1.1"
-						xmlns:xlink="http://www.w3.org/1999/xlink"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<desc>Created with Lunacy</desc>
-						<g id="Icon/Copy">
-							<path
-								d="M12.9947 2.33562C12.91 1.03154 11.8255 0 10.5 0L2.5 0L2.33562 0.00531768C1.03154 0.0899613 0 1.17452 0 2.5L0 10.5L0.00531768
+            <div class="wallet">
+               {{ walletNetworkName }}
+            </div>
+            <div class="address">
+               {{ abbreviateAddress }}
+            </div>
+            <Tooltip
+                class="globalInfoStyle"
+                :content="tooltipContent"
+                offset="0 6"
+                placement="bottom"
+                @on-popper-hide="resetTooltipContent"
+            >
+               <svg
+                   class="copyBtn"
+                   :data-clipboard-text="walletAddress"
+                   data-clipboard-action="copy"
+                   @click="copyAddress()"
+                   width="24px"
+                   height="24px"
+                   viewBox="0 0 24 24"
+                   version="1.1"
+                   xmlns:xlink="http://www.w3.org/1999/xlink"
+                   xmlns="http://www.w3.org/2000/svg"
+               >
+                  <desc>Created with Lunacy</desc>
+                  <g id="Icon/Copy">
+                     <path
+                         d="M12.9947 2.33562C12.91 1.03154 11.8255 0 10.5 0L2.5 0L2.33562 0.00531768C1.03154 0.0899613 0 1.17452 0 2.5L0 10.5L0.00531768
                                 10.6644C0.0899613 11.9685 1.17452 13 2.5 13L4.44938 13L4.44938 12L2.5 12L2.35554 11.9931C1.59489 11.9204 1 11.2797 1 10.5L1 2.5L1.00687
                                 2.35554C1.07955 1.59489 1.7203 1 2.5 1L10.5 1L10.6445 1.00687C11.4051 1.07955 12 1.7203 12 2.5L12 4.69901L13 4.69901L13 2.5L12.9947
                                 2.33562ZM16.5 6L8.5 6C7.11929 6 6 7.11929 6 8.5L6 16.5C6 17.8807 7.11929 19 8.5 19L16.5 19C17.8807 19 19 17.8807 19 16.5L19 8.5C19 7.11929
                                 17.8807 6 16.5 6ZM8.5 7L16.5 7C17.3284 7 18 7.67157 18 8.5L18 16.5C18 17.3284 17.3284 18 16.5 18L8.5 18C7.67157 18 7 17.3284 7 16.5L7 8.5C7
                                 7.67157 7.67157 7 8.5 7Z"
-								transform="translate(2.5 2.5)"
-								id="Combined-Shape"
-								fill="#5a575c"
-								fill-rule="evenodd"
-								stroke="none"
-							/>
-						</g>
-					</svg>
-				</Tooltip>
+                         transform="translate(2.5 2.5)"
+                         id="Combined-Shape"
+                         fill="#5a575c"
+                         fill-rule="evenodd"
+                         stroke="none"
+                     />
+                  </g>
+               </svg>
+            </Tooltip>
 
-				<div class="disconnect" @click.stop="disconnect">
-					Disconnect
-				</div>
-			</div>
-			<!-- <div class="chainChange" :class="{ chainChanging }">
-             <div
-                 class="ethBox"
-                 :class="{
-                     selected: isEthereumNetwork
-                 }"
-                 @click="changeChain(SUPPORTED_WALLETS_MAP.METAMASK)"
-             >
-                 <ethereumSvg :selected="isEthereumNetwork" />
-             </div>
-             <div
-                 class="bscBox"
-                 :class="{
-                     selected: isBinanceNetwork
-                 }"
-                 @click="changeChain(SUPPORTED_WALLETS_MAP.BINANCE_CHAIN)"
-             >
-                 <binanceSvg :selected="isBinanceNetwork" />
-             </div>
-             <div class="mNetworkName" @click="mShowWallet = true">
-                 {{ walletNetworkName }}
-             </div>
-         </div> -->
+            <div class="disconnect" @click.stop="disconnect">
+               Disconnect
+            </div>
+         </div>
+         <!-- <div class="chainChange" :class="{ chainChanging }">
+                <div
+                    class="ethBox"
+                    :class="{
+                        selected: isEthereumNetwork
+                    }"
+                    @click="changeChain(SUPPORTED_WALLETS_MAP.METAMASK)"
+                >
+                    <ethereumSvg :selected="isEthereumNetwork" />
+                </div>
+                <div
+                    class="bscBox"
+                    :class="{
+                        selected: isBinanceNetwork
+                    }"
+                    @click="changeChain(SUPPORTED_WALLETS_MAP.BINANCE_CHAIN)"
+                >
+                    <binanceSvg :selected="isBinanceNetwork" />
+                </div>
+                <div class="mNetworkName" @click="mShowWallet = true">
+                    {{ walletNetworkName }}
+                </div>
+            </div> -->
 
-			<div v-if="isMobile" class="mNetwork" @click="mShowWallet = true">
-				<ethereumSvg v-if="isEthereumNetwork" :selected="true" />
-				<binanceSvg v-else :selected="true" />
-				<div class="mNetworkName">
-					{{ walletNetworkName }}
-				</div>
-			</div>
+         <div v-if="isMobile" class="mNetwork" @click="mShowWallet = true">
+            <ethereumSvg v-if="isEthereumNetwork" :selected="true"/>
+            <binanceSvg v-else :selected="true"/>
+            <div class="mNetworkName">
+               {{ walletNetworkName }}
+            </div>
+         </div>
 
-			<div class="mMenu" @click="mShowMenuFun">
-				<img src="@/static/icon-menu.svg" />
-			</div>
-		</div>
+         <div class="mMenu" @click="mShowMenuFun">
+            <img src="@/static/icon-menu.svg"/>
+         </div>
+      </div>
 
-		<div
-			class="walletDetailsBox"
-			:class="{ mShowWalletClass: mShowWallet }"
-		>
-			<div class="mWalletHead">
-				<ethereumSvg
-					class="networkIcon"
-					v-if="isEthereumNetwork"
-					:selected="true"
-				/>
-				<binanceSvg class="networkIcon" v-else :selected="true" />
+      <div
+          class="walletDetailsBox"
+          :class="{ mShowWalletClass: mShowWallet }"
+      >
+         <div class="mWalletHead">
+            <ethereumSvg
+                class="networkIcon"
+                v-if="isEthereumNetwork"
+                :selected="true"
+            />
+            <binanceSvg class="networkIcon" v-else :selected="true"/>
 
-				<div class="mInfo">
-					<div class="wallet">
-						{{ walletNetworkName }}
-					</div>
-					<div class="address">
-						{{ abbreviateAddress }}
-					</div>
-					<Tooltip
-						class="globalInfoStyle"
-						:content="tooltipContent"
-						offset="0 6"
-						placement="bottom"
-						@on-popper-hide="resetTooltipContent"
-					>
-						<svg
-							class="copyBtn"
-							:data-clipboard-text="walletAddress"
-							data-clipboard-action="copy"
-							@click="copyAddress()"
-							width="24px"
-							height="24px"
-							viewBox="0 0 24 24"
-							version="1.1"
-							xmlns:xlink="http://www.w3.org/1999/xlink"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<desc>Created with Lunacy</desc>
-							<g id="Icon/Copy">
-								<path
-									d="M12.9947 2.33562C12.91 1.03154 11.8255 0 10.5 0L2.5 0L2.33562 0.00531768C1.03154 0.0899613 0 1.17452 0 2.5L0 10.5L0.00531768
+            <div class="mInfo">
+               <div class="wallet">
+                  {{ walletNetworkName }}
+               </div>
+               <div class="address">
+                  {{ abbreviateAddress }}
+               </div>
+               <Tooltip
+                   class="globalInfoStyle"
+                   :content="tooltipContent"
+                   offset="0 6"
+                   placement="bottom"
+                   @on-popper-hide="resetTooltipContent"
+               >
+                  <svg
+                      class="copyBtn"
+                      :data-clipboard-text="walletAddress"
+                      data-clipboard-action="copy"
+                      @click="copyAddress()"
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      version="1.1"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns="http://www.w3.org/2000/svg"
+                  >
+                     <desc>Created with Lunacy</desc>
+                     <g id="Icon/Copy">
+                        <path
+                            d="M12.9947 2.33562C12.91 1.03154 11.8255 0 10.5 0L2.5 0L2.33562 0.00531768C1.03154 0.0899613 0 1.17452 0 2.5L0 10.5L0.00531768
                                     10.6644C0.0899613 11.9685 1.17452 13 2.5 13L4.44938 13L4.44938 12L2.5 12L2.35554 11.9931C1.59489 11.9204 1 11.2797 1 10.5L1 2.5L1.00687
                                     2.35554C1.07955 1.59489 1.7203 1 2.5 1L10.5 1L10.6445 1.00687C11.4051 1.07955 12 1.7203 12 2.5L12 4.69901L13 4.69901L13 2.5L12.9947
                                     2.33562ZM16.5 6L8.5 6C7.11929 6 6 7.11929 6 8.5L6 16.5C6 17.8807 7.11929 19 8.5 19L16.5 19C17.8807 19 19 17.8807 19 16.5L19 8.5C19 7.11929
                                     17.8807 6 16.5 6ZM8.5 7L16.5 7C17.3284 7 18 7.67157 18 8.5L18 16.5C18 17.3284 17.3284 18 16.5 18L8.5 18C7.67157 18 7 17.3284 7 16.5L7 8.5C7
                                     7.67157 7.67157 7 8.5 7Z"
-									transform="translate(2.5 2.5)"
-									id="Combined-Shape"
-									fill="#5a575c"
-									fill-rule="evenodd"
-									stroke="none"
-								/>
-							</g>
-						</svg>
-					</Tooltip>
-				</div>
-				<img
-					@click="mShowWallet = false"
-					class="mClose"
-					src="@/static/icon-cancel.svg"
-				/>
-			</div>
-			<div class="actionsBox">
-				<div class="box">
-					<div
-						class="boxItem"
-						:class="{ selected: trackStatus }"
-						@click="trackModalClick"
-						@mouseenter="trackIconStatus = 1"
-						@mouseleave="trackIconStatus = 0"
-					>
-						<div class="placeholder">
-							<transition-group name="img-fade">
-								<img
-									key="1"
-									v-show="!trackStatus && !trackIconStatus"
-									src="@/static/appPage/01.png"
-								/>
-								<img
-									key="2"
-									v-show="!trackStatus && trackIconStatus"
-									src="@/static/appPage/01.png"
-								/>
-								<img
-									key="3"
-									v-show="trackStatus"
-									src="@/static/appPage/01.png"
-								/>
-							</transition-group>
-						</div>
-						TRACK DEBT
-					</div>
-				</div>
-				<div class="box">
-					<div
-						class="boxItem"
-						:class="{ selected: transactionStatus }"
-						@click="transactionModalClick"
-						@mouseenter="transactionIconStatus = 1"
-						@mouseleave="transactionIconStatus = 0"
-					>
-						<div class="placeholder">
-							<transition-group name="img-fade">
-								<img
-									key="1"
-									v-show="
+                            transform="translate(2.5 2.5)"
+                            id="Combined-Shape"
+                            fill="#5a575c"
+                            fill-rule="evenodd"
+                            stroke="none"
+                        />
+                     </g>
+                  </svg>
+               </Tooltip>
+            </div>
+            <img
+                @click="mShowWallet = false"
+                class="mClose"
+                src="@/static/icon-cancel.svg"
+            />
+         </div>
+         <div class="actionsBox">
+            <div class="box">
+               <div
+                   class="boxItem"
+                   :class="{ selected: trackStatus }"
+                   @click="trackModalClick"
+                   @mouseenter="trackIconStatus = 1"
+                   @mouseleave="trackIconStatus = 0"
+               >
+                  <div class="placeholder">
+                     <transition-group name="img-fade">
+                        <img
+                            key="1"
+                            v-show="!trackStatus && !trackIconStatus"
+                            src="@/static/appPage/01.png"
+                        />
+                        <img
+                            key="2"
+                            v-show="!trackStatus && trackIconStatus"
+                            src="@/static/appPage/01.png"
+                        />
+                        <img
+                            key="3"
+                            v-show="trackStatus"
+                            src="@/static/appPage/01.png"
+                        />
+                     </transition-group>
+                  </div>
+                  TRACK DEBT
+               </div>
+            </div>
+            <div class="box">
+               <div
+                   class="boxItem"
+                   :class="{ selected: transactionStatus }"
+                   @click="transactionModalClick"
+                   @mouseenter="transactionIconStatus = 1"
+                   @mouseleave="transactionIconStatus = 0"
+               >
+                  <div class="placeholder">
+                     <transition-group name="img-fade">
+                        <img
+                            key="1"
+                            v-show="
 										!transactionStatus &&
 											!transactionIconStatus
 									"
-									src="@/static/appPage/02.png"
-								/>
-								<img
-									key="2"
-									v-show="
+                            src="@/static/appPage/02.png"
+                        />
+                        <img
+                            key="2"
+                            v-show="
 										!transactionStatus &&
 											transactionIconStatus
 									"
-									src="@/static/appPage/02.png"
-								/>
-								<img
-									key="3"
-									v-show="transactionStatus"
-									src="@/static/appPage/02.png"
-								/>
-							</transition-group>
-						</div>
-						TRANSACTION
-					</div>
-				</div>
-				<div class="box">
-					<div
-						class="boxItem"
-						:class="{ selected: referStatus }"
-						@click="referralModalClick"
-						@mouseenter="referIconStatus = 1"
-						@mouseleave="referIconStatus = 0"
-					>
-						<div class="placeholder">
-							<transition-group name="img-fade">
-								<img
-									key="1"
-									v-show="!referStatus && !referIconStatus"
-									src="@/static/appPage/03.png"
-								/>
-								<img
-									key="2"
-									v-show="!referStatus && referIconStatus"
-									src="@/static/appPage/03.png"
-								/>
-								<img
-									key="3"
-									v-show="referStatus"
-									src="@/static/appPage/03.png"
-								/>
-							</transition-group>
-						</div>
-						REFERRAL
-					</div>
-				</div>
-			</div>
-			<div class="ratioBox">
-				<div class="countDown" v-if="liquidationStatus.status">
-					Liquidating in {{ liquidationCountDown }}
-				</div>
-				<div class="context">
-					My Current Pledge Ratio :
-					<div
-						class="currentRatio"
-						:class="{ inLiquidation: liquidationStatus.status }"
-					>
-						{{
-							walletDetails.amountDebtBeforeFormat < 0.01
-								? 0
-								: walletDetails.currentRatioPercent || 0
-						}}
-					</div>
-					<!--               <Tooltip-->
-					<!--                   max-width="200"-->
-					<!--                   class="globalInfoStyle"-->
-					<!--                   content="Target ratio is the minimum threshold that needs to be maintained to claim rewards or unlock collateral."-->
-					<!--                   placement="bottom"-->
-					<!--                   offset="0 6"-->
-					<!--               >-->
-					<!--                  <img src="@/static/info_white.svg"/>-->
-					<!--               </Tooltip>-->
-				</div>
-				<div class="percentBox">
-					<div class="cursorBox">
-						<div
-							class="cursor"
-							:style="{
+                            src="@/static/appPage/02.png"
+                        />
+                        <img
+                            key="3"
+                            v-show="transactionStatus"
+                            src="@/static/appPage/02.png"
+                        />
+                     </transition-group>
+                  </div>
+                  TRANSACTION
+               </div>
+            </div>
+            <div class="box">
+               <div
+                   class="boxItem"
+                   :class="{ selected: referStatus }"
+                   @click="referralModalClick"
+                   @mouseenter="referIconStatus = 1"
+                   @mouseleave="referIconStatus = 0"
+               >
+                  <div class="placeholder">
+                     <transition-group name="img-fade">
+                        <img
+                            key="1"
+                            v-show="!referStatus && !referIconStatus"
+                            src="@/static/appPage/03.png"
+                        />
+                        <img
+                            key="2"
+                            v-show="!referStatus && referIconStatus"
+                            src="@/static/appPage/03.png"
+                        />
+                        <img
+                            key="3"
+                            v-show="referStatus"
+                            src="@/static/appPage/03.png"
+                        />
+                     </transition-group>
+                  </div>
+                  REFERRAL
+               </div>
+            </div>
+         </div>
+         <div class="ratioBox">
+            <div class="countDown" v-if="liquidationStatus.status">
+               Liquidating in {{ liquidationCountDown }}
+            </div>
+            <div class="context">
+               My Current Pledge Ratio :
+               <div
+                   class="currentRatio"
+                   :class="{ inLiquidation: liquidationStatus.status }"
+               >
+                  {{
+                  walletDetails.amountDebtBeforeFormat < 0.01
+                  ? 0
+                  : walletDetails.currentRatioPercent || 0
+                  }}
+               </div>
+               <!--               <Tooltip-->
+               <!--                   max-width="200"-->
+               <!--                   class="globalInfoStyle"-->
+               <!--                   content="Target ratio is the minimum threshold that needs to be maintained to claim rewards or unlock collateral."-->
+               <!--                   placement="bottom"-->
+               <!--                   offset="0 6"-->
+               <!--               >-->
+               <!--                  <img src="@/static/info_white.svg"/>-->
+               <!--               </Tooltip>-->
+            </div>
+            <div class="percentBox">
+               <div class="cursorBox">
+                  <div
+                      class="cursor"
+                      :style="{
 								left: (cursorPosition + 3) + '%!important',
 								marginLeft:
 									cursorPosition > 2
 										? '-6px!important'
 										: '0px!important',
 							}"
-						></div>
-					</div>
-					<div class="scale200"></div>
-					<div class="scale500"></div>
-					<div class="colorBlock">
-						<div class="leftBlock"></div>
-						<div class="centerBlock"></div>
-						<div class="rightBlock"></div>
-					</div>
-					<div class="flag">
-						<div class="item">Liquidate: 200</div>
-						<div class="item">Target: 500</div>
-					</div>
-				</div>
-			</div>
+                  ></div>
+               </div>
+               <div class="scale200"></div>
+               <div class="scale500"></div>
+               <div class="colorBlock">
+                  <div class="leftBlock"></div>
+                  <div class="centerBlock"></div>
+                  <div class="rightBlock"></div>
+               </div>
+               <div class="flag">
+                  <div class="item">Liquidate: 200</div>
+                  <div class="item">Target: 500</div>
+               </div>
+            </div>
+         </div>
 
-			<!-- <div class="ratioBox">
-             <div class="title">
-                 Pledge Ratio
-                 <Tooltip
-                     max-width="200"
-                     class="globalInfoStyle"
-                     content="Target ratio is the minimum threshold that needs to be maintained to claim rewards or unlock collateral."
-                     placement="bottom"
-                     offset="0 6"
-                 >
-                     <img src="@/static/info_white.svg" />
-                 </Tooltip>
-             </div>
-             <div class="ratio">
-                 <div class="box">
-                     <div class="value">
-                         <template v-if="!isEthereumNetwork">
-                             {{
-                                 walletDetails.amountDebtBeforeFormat < 0.01
-                                     ? 0
-                                     : walletDetails.currentRatioPercent || 0
-                             }}
-                         </template>
-                         <template v-if="isEthereumNetwork">
-                             N/A
-                         </template>
+         <!-- <div class="ratioBox">
+                <div class="title">
+                    Pledge Ratio
+                    <Tooltip
+                        max-width="200"
+                        class="globalInfoStyle"
+                        content="Target ratio is the minimum threshold that needs to be maintained to claim rewards or unlock collateral."
+                        placement="bottom"
+                        offset="0 6"
+                    >
+                        <img src="@/static/info_white.svg" />
+                    </Tooltip>
+                </div>
+                <div class="ratio">
+                    <div class="box">
+                        <div class="value">
+                            <template v-if="!isEthereumNetwork">
+                                {{
+                                    walletDetails.amountDebtBeforeFormat < 0.01
+                                        ? 0
+                                        : walletDetails.currentRatioPercent || 0
+                                }}
+                            </template>
+                            <template v-if="isEthereumNetwork">
+                                N/A
+                            </template>
+                        </div>
+                        <div class="context">Current</div>
+                    </div>
+                    <div class="box">
+                        <div class="value">
+                            {{ walletDetails.targetRatioPercent || 0 }}
+                        </div>
+                        <div class="context">Target</div>
+                    </div>
+                </div>
+                <Progress
+                    stroke-color="#f6f5f6"
+                    :percent="100"
+                    :success-percent="currentRatio"
+                    :stroke-width="8"
+                    hide-info
+                />
+            </div> -->
+         <div class="walletInfo">
+            <div class="title">Wallet Balance</div>
+            <div class=" tokenBox">
+               <img class="tokenIcon" src="@/static/logoshum.jpg"/>
+               <div class="box">
+                  <div class="tokenItems obtrusive">
+                     <div class="left">SHUM</div>
+                     <div class="right">
+                        <b>{{
+                           isEthereumNetwork
+                           ? walletDetails.avaliableLINA || 0
+                           : walletDetails.amountLINA || 0
+                           }}</b>
+                        SHUM
                      </div>
-                     <div class="context">Current</div>
-                 </div>
-                 <div class="box">
-                     <div class="value">
-                         {{ walletDetails.targetRatioPercent || 0 }}
+                  </div>
+                  <div class="tokenItems">
+                     <div class="left">
+                        1 SHUM = ${{ walletDetails.LINA2USDRate || 0 }}
+                        USD
                      </div>
-                     <div class="context">Target</div>
-                 </div>
-             </div>
-             <Progress
-                 stroke-color="#f6f5f6"
-                 :percent="100"
-                 :success-percent="currentRatio"
-                 :stroke-width="8"
-                 hide-info
-             />
-         </div> -->
-			<div class="walletInfo">
-				<div class="title">Wallet Balance</div>
-				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/logoshum.jpg" />
-					<div class="box">
-						<div class="tokenItems obtrusive">
-							<div class="left">SHUM</div>
-							<div class="right">
-								<b>{{
-									isEthereumNetwork
-										? walletDetails.avaliableLINA || 0
-										: walletDetails.amountLINA || 0
-								}}</b>
-								SHUM
-							</div>
-						</div>
-						<div class="tokenItems">
-							<div class="left">
-								1 SHUM = ${{ walletDetails.LINA2USDRate || 0 }}
-								USD
-							</div>
-							<div class="right">
-								≈ ${{
-									isEthereumNetwork
-										? walletDetails.avaliableLINA2USD || 0
-										: walletDetails.amountLINA2USD || 0
-								}}
-								USD
-							</div>
-						</div>
-						<div class="tokenItems unobtrusive">
-							<div class="left">Available</div>
-							<div class="right">
-								{{ walletDetails.avaliableLINA || 0 }} SHUM
-							</div>
-						</div>
-						<div class="tokenItems unobtrusive">
-							<div class="left">Staked</div>
-							<div class="right">
-								<template v-if="isEthereumNetwork">
-									N/A
-								</template>
-								<template v-else>
-									{{ walletDetails.stakedLINA || 0 }} SHUM
-								</template>
-							</div>
-						</div>
-						<div class="tokenItems unobtrusive">
-							<div class="left ">Locked</div>
-							<div class="right">
-								<template v-if="isEthereumNetwork">
-									N/A
-								</template>
-								<template v-else>
-									{{ walletDetails.lockLINA || 0 }} SHUM
-								</template>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/logoshum.jpg" />
-					<div class="box">
-						<div class="tokenItems obtrusive">
-							<div class="left">sUSD</div>
-							<div class="right">
-								<b>{{ walletDetails.amountsUSD || 0 }}</b> sUSD
-							</div>
-						</div>
-						<div class="tokenItems">
-							<div class="left">
-								1 sUSD = ${{ walletDetails.sUSD2USDRate || 1 }}
-								USD
-							</div>
-							<div class="right">
-								≈ ${{ walletDetails.amountsUSD2USD || 0 }} USD
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class=" tokenBox">
-					<template v-if="isEthereumNetwork">
-						<img class="tokenIcon" src="@/static/ETH_logo.svg" />
-						<div class="box">
-							<div class="tokenItems obtrusive">
-								<div class="left">ETH</div>
-								<div class="right">
-									<b>{{ walletDetails.amountETH || 0 }}</b>
-									ETH
-								</div>
-							</div>
-							<div class="tokenItems">
-								<div class="left">
-									1 ETH = ${{
-										walletDetails.ETH2USDRate || 0
-									}}
-									USD
-								</div>
-								<div class="right">
-									≈ ${{ walletDetails.amountETH2USD || 0 }}
-									USD
-								</div>
-							</div>
-						</div>
-					</template>
-					<template v-else-if="isBinanceNetwork">
-						<img
-							class="tokenIcon bsc"
-							src="@/static/currency/sBNB.svg"
-						/>
-						<div class="box">
-							<div class="tokenItems obtrusive">
-								<div class="left">BNB</div>
-								<div class="right">
-									<b>{{ walletDetails.amountETH || 0 }}</b>
-									BNB
-								</div>
-							</div>
-							<div class="tokenItems">
-								<div class="left">
-									1 BNB = ${{
-										walletDetails.ETH2USDRate || 0
-									}}
-									USD
-								</div>
-								<div class="right">
-									≈ ${{ walletDetails.amountETH2USD || 0 }}
-									USD
-								</div>
-							</div>
-						</div>
-					</template>
-				</div>
-				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/logoshum.jpg" />
-					<div class="box">
-						<div class="tokenItems obtrusive singer">
-							<div class="left">
-								Liquids
-								<Tooltip
-									max-width="200"
-									class="globalInfoStyle"
-									content="Total value of synthetic exposure created using Shum.Exchange."
-									placement="bottom"
-									offset="0 6"
-								>
-									<img src="@/static/info_white.svg" />
-								</Tooltip>
-							</div>
-							<div class="right">
-								<div class="top">
-									<b>{{ walletDetails.liquids || 0 }}</b> sUSD
-								</div>
-								<div class="bottom">
-									≈ ${{ walletDetails.liquids2USD || 0 }} USD
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/logoshum.jpg" />
-					<div class="box">
-						<div class="tokenItems obtrusive singer">
-							<div class="left">
-								Debt
-								<Tooltip
-									max-width="200"
-									class="globalInfoStyle"
-									content="Total value that must be paid off before unlocking collateral. Fluctuates depending on trading activity."
-									placement="bottom"
-									offset="0 6"
-								>
-									<img src="@/static/info_white.svg" />
-								</Tooltip>
-							</div>
-							<div class="right">
-								<div
-									class="top"
-									:style="{
+                     <div class="right">
+                        ≈ ${{
+                        isEthereumNetwork
+                        ? walletDetails.avaliableLINA2USD || 0
+                        : walletDetails.amountLINA2USD || 0
+                        }}
+                        USD
+                     </div>
+                  </div>
+                  <div class="tokenItems unobtrusive">
+                     <div class="left">Available</div>
+                     <div class="right">
+                        {{ walletDetails.avaliableLINA || 0 }} SHUM
+                     </div>
+                  </div>
+                  <div class="tokenItems unobtrusive">
+                     <div class="left">Staked</div>
+                     <div class="right">
+                        <template v-if="isEthereumNetwork">
+                           N/A
+                        </template>
+                        <template v-else>
+                           {{ walletDetails.stakedLINA || 0 }} SHUM
+                        </template>
+                     </div>
+                  </div>
+                  <div class="tokenItems unobtrusive">
+                     <div class="left ">Locked</div>
+                     <div class="right">
+                        <template v-if="isEthereumNetwork">
+                           N/A
+                        </template>
+                        <template v-else>
+                           {{ walletDetails.lockLINA || 0 }} SHUM
+                        </template>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class=" tokenBox">
+               <img class="tokenIcon" src="@/static/logoshum.jpg"/>
+               <div class="box">
+                  <div class="tokenItems obtrusive">
+                     <div class="left">USD</div>
+                     <div class="right">
+                        <b>{{ walletDetails.amountsUSD || 0 }}</b>
+                        <img style="margin-left:5px;" src="@/static/Sfont2.png"/>USD
+                     </div>
+                  </div>
+                  <div class="tokenItems">
+                     <div class="left">
+                        1 sUSD = ${{ walletDetails.sUSD2USDRate || 1 }}
+                        USD
+                     </div>
+                     <div class="right">
+                        ≈ ${{ walletDetails.amountsUSD2USD || 0 }} USD
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class=" tokenBox">
+               <template v-if="isEthereumNetwork">
+                  <img class="tokenIcon" src="@/static/ETH_logo.svg"/>
+                  <div class="box">
+                     <div class="tokenItems obtrusive">
+                        <div class="left">ETH</div>
+                        <div class="right">
+                           <b>{{ walletDetails.amountETH || 0 }}</b>
+                           ETH
+                        </div>
+                     </div>
+                     <div class="tokenItems">
+                        <div class="left">
+                           1 ETH = ${{
+                           walletDetails.ETH2USDRate || 0
+                           }}
+                           USD
+                        </div>
+                        <div class="right">
+                           ≈ ${{ walletDetails.amountETH2USD || 0 }}
+                           USD
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <template v-else-if="isBinanceNetwork">
+                  <img
+                      class="tokenIcon bsc"
+                      src="@/static/currency/sBNB.svg"
+                  />
+                  <div class="box">
+                     <div class="tokenItems obtrusive">
+                        <div class="left">BNB</div>
+                        <div class="right">
+                           <b>{{ walletDetails.amountETH || 0 }}</b>
+                           BNB
+                        </div>
+                     </div>
+                     <div class="tokenItems">
+                        <div class="left">
+                           1 BNB = ${{
+                           walletDetails.ETH2USDRate || 0
+                           }}
+                           USD
+                        </div>
+                        <div class="right">
+                           ≈ ${{ walletDetails.amountETH2USD || 0 }}
+                           USD
+                        </div>
+                     </div>
+                  </div>
+               </template>
+            </div>
+            <div class=" tokenBox">
+               <img class="tokenIcon" src="@/static/logoshum.jpg"/>
+               <div class="box">
+                  <div class="tokenItems obtrusive singer">
+                     <div class="left">
+                        Liquids
+                        <Tooltip
+                            max-width="200"
+                            class="globalInfoStyle"
+                            content="Total value of synthetic exposure created using Shum.Exchange."
+                            placement="bottom"
+                            offset="0 6"
+                        >
+                           <img src="@/static/info_white.svg"/>
+                        </Tooltip>
+                     </div>
+                     <div class="right">
+                        <div class="top">
+                           <b>{{ walletDetails.liquids || 0 }}</b>
+                           <img style="margin-left:5px;" src="@/static/Sfont2.png"/>USD
+                        </div>
+                        <div class="bottom">
+                           ≈ ${{ walletDetails.liquids2USD || 0 }} USD
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class=" tokenBox">
+               <img class="tokenIcon" src="@/static/logoshum.jpg"/>
+               <div class="box">
+                  <div class="tokenItems obtrusive singer">
+                     <div class="left">
+                        Debt
+                        <Tooltip
+                            max-width="200"
+                            class="globalInfoStyle"
+                            content="Total value that must be paid off before unlocking collateral. Fluctuates depending on trading activity."
+                            placement="bottom"
+                            offset="0 6"
+                        >
+                           <img src="@/static/info_white.svg"/>
+                        </Tooltip>
+                     </div>
+                     <div class="right">
+                        <div
+                            class="top"
+                            :style="{
 										marginTop: isEthereumNetwork
 											? '9px'
 											: '0px',
 									}"
-								>
-									<!-- <template>
-										<b>{{
-											walletDetails.amountDebt || 0
-										}}</b>
-										sUSD
-									</template> -->
-									<template v-if="!isEthereumNetwork">
-										<b>{{
-											walletDetails.amountDebt || 0
-										}}</b>
-										sUSD
-									</template>
+                        >
+                           <!-- <template>
+                             <b>{{
+                               walletDetails.amountDebt || 0
+                             }}</b>
+                             sUSD
+                           </template> -->
+                           <template v-if="!isEthereumNetwork">
+                              <b>{{
+                                 walletDetails.amountDebt || 0
+                                 }}</b>
+                              <img style="margin-left:5px;" src="@/static/Sfont2.png"/>USD
+                           </template>
 
-									<template v-if="isEthereumNetwork">
-										N/A
-									</template>
-								</div>
-								<div class="bottom" v-if="!isEthereumNetwork">
-									≈ ${{ walletDetails.amountDebt2USD || 0 }}
-									USD
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="totalBalanceToUSD">
-				<div class="box">
-					<div class="title">Total Crypto Balance in USD</div>
-					<div class="foot">
-						<div class="amount">
-							${{ walletDetails.totalCryptoBalanceInUSD || 0 }}
-						</div>
-						<div class="refBtn">
-							<img src="@/static/appPage/Vectorrefs.svg" alt="" />
-							<span>refresh</span>
-						</div>
+                           <template v-if="isEthereumNetwork">
+                              N/A
+                           </template>
+                        </div>
+                        <div class="bottom" v-if="!isEthereumNetwork">
+                           ≈ ${{ walletDetails.amountDebt2USD || 0 }}
+                           USD
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="totalBalanceToUSD">
+            <div class="box">
+               <div class="title">Total Crypto Balance in USD</div>
+               <div class="foot">
+                  <div class="amount">
+                     ${{ walletDetails.totalCryptoBalanceInUSD || 0 }}
+                  </div>
+                  <div class="refBtn">
+                     <img src="@/static/appPage/Vectorrefs.svg" alt=""/>
+                     <span>refresh</span>
+                  </div>
 
-						<!--                  <svg class="refreshBtn"-->
-						<!--                      :class="{-->
-						<!--                        selected: refreshSelected,-->
-						<!--                        refreshing: walletStatus == 0-->
-						<!--                    }"-->
-						<!--                      @click="getdata"-->
-						<!--                      xmlns="http://www.w3.org/2000/svg"-->
-						<!--                      :width="mShowWallet ? 40 : 64"-->
-						<!--                      :height="mShowWallet ? 40 : 64"-->
-						<!--                      viewBox="0 0 64 64"-->
-						<!--                      @mousedown="refreshSelected = true"-->
-						<!--                      @mouseup="refreshSelected = false"-->
-						<!--                  >-->
-						<!-- :class="{ refreshing: walletStatus == 0 }" -->
-						<!--                     <g fill="none" fill-rule="evenodd">-->
-						<!--                        <g>-->
-						<!--                           <g>-->
-						<!--                              <g-->
-						<!--                                  class="border"-->
-						<!--                                  stroke="#E5E5E5"-->
-						<!--                                  transform="translate(-1110 -917) translate(1110 917)"-->
-						<!--                              >-->
-						<!--                                 <circle cx="32" cy="32" r="31.5"/>-->
-						<!--                              </g>-->
-						<!--                              <g fill="#99999A" class="shape">-->
-						<!--                                 <path-->
-						<!--                                     d="M9.062 22.422C10.185 27.514 14.718 31.2 20 31.2c4.593 0 8.646-2.79 10.353-6.917l-6.214 1.094c-.387.068-.758-.154-.89-.51l-.037-.139c-.068-.387.154-.757.51-.889l.14-.038 7.878-1.389c.386-.068.757.154.889.51l.037.14 1.39 7.878c.076.435-.214.85-.65.926-.386.069-.757-.153-.889-.51l-.037-.139-.984-5.581C29.385 29.943 24.97 32.8 20 32.8c-6.037 0-11.217-4.212-12.5-10.033-.095-.432.178-.859.609-.954.432-.095.858.178.953.61zm11.22-16.628c6.037 0 11.216 4.213 12.5 10.034.094.431-.178.858-.61.953-.431.095-.858-.178-.953-.609-1.122-5.091-5.655-8.778-10.938-8.778-4.593 0-8.646 2.79-10.352 6.918l6.213-1.095c.387-.068.758.154.89.51l.037.14c.068.386-.154.757-.51.889l-.139.037-7.878 1.39c-.387.068-.758-.154-.89-.51l-.037-.14-1.39-7.878c-.076-.435.215-.85.65-.927.386-.068.757.154.889.51l.037.14.984 5.58c2.112-4.307 6.527-7.164 11.496-7.164z"-->
-						<!--                                     transform="translate(-1110 -917) translate(1110 917) translate(11.8 12.8)"-->
-						<!--                                 />-->
-						<!--                              </g>-->
-						<!--                           </g>-->
-						<!--                        </g>-->
-						<!--                     </g>-->
-						<!--                     refresh-->
-						<!--                  </svg>-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                  <!--                  <svg class="refreshBtn"-->
+                  <!--                      :class="{-->
+                  <!--                        selected: refreshSelected,-->
+                  <!--                        refreshing: walletStatus == 0-->
+                  <!--                    }"-->
+                  <!--                      @click="getdata"-->
+                  <!--                      xmlns="http://www.w3.org/2000/svg"-->
+                  <!--                      :width="mShowWallet ? 40 : 64"-->
+                  <!--                      :height="mShowWallet ? 40 : 64"-->
+                  <!--                      viewBox="0 0 64 64"-->
+                  <!--                      @mousedown="refreshSelected = true"-->
+                  <!--                      @mouseup="refreshSelected = false"-->
+                  <!--                  >-->
+                  <!-- :class="{ refreshing: walletStatus == 0 }" -->
+                  <!--                     <g fill="none" fill-rule="evenodd">-->
+                  <!--                        <g>-->
+                  <!--                           <g>-->
+                  <!--                              <g-->
+                  <!--                                  class="border"-->
+                  <!--                                  stroke="#E5E5E5"-->
+                  <!--                                  transform="translate(-1110 -917) translate(1110 917)"-->
+                  <!--                              >-->
+                  <!--                                 <circle cx="32" cy="32" r="31.5"/>-->
+                  <!--                              </g>-->
+                  <!--                              <g fill="#99999A" class="shape">-->
+                  <!--                                 <path-->
+                  <!--                                     d="M9.062 22.422C10.185 27.514 14.718 31.2 20 31.2c4.593 0 8.646-2.79 10.353-6.917l-6.214 1.094c-.387.068-.758-.154-.89-.51l-.037-.139c-.068-.387.154-.757.51-.889l.14-.038 7.878-1.389c.386-.068.757.154.889.51l.037.14 1.39 7.878c.076.435-.214.85-.65.926-.386.069-.757-.153-.889-.51l-.037-.139-.984-5.581C29.385 29.943 24.97 32.8 20 32.8c-6.037 0-11.217-4.212-12.5-10.033-.095-.432.178-.859.609-.954.432-.095.858.178.953.61zm11.22-16.628c6.037 0 11.216 4.213 12.5 10.034.094.431-.178.858-.61.953-.431.095-.858-.178-.953-.609-1.122-5.091-5.655-8.778-10.938-8.778-4.593 0-8.646 2.79-10.352 6.918l6.213-1.095c.387-.068.758.154.89.51l.037.14c.068.386-.154.757-.51.889l-.139.037-7.878 1.39c-.387.068-.758-.154-.89-.51l-.037-.14-1.39-7.878c-.076-.435.215-.85.65-.927.386-.068.757.154.889.51l.037.14.984 5.58c2.112-4.307 6.527-7.164 11.496-7.164z"-->
+                  <!--                                     transform="translate(-1110 -917) translate(1110 917) translate(11.8 12.8)"-->
+                  <!--                                 />-->
+                  <!--                              </g>-->
+                  <!--                           </g>-->
+                  <!--                        </g>-->
+                  <!--                     </g>-->
+                  <!--                     refresh-->
+                  <!--                  </svg>-->
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </template>
 
 <script>
-import _ from 'lodash';
-import Clipboard from 'clipboard';
-import { storeDetailsData } from '@/assets/linearLibrary/linearTools/request';
-import {
-	CHAIN_CHANGE_TYPE,
-	isBinanceNetwork,
-	isEthereumNetwork,
-	SUPPORTED_WALLETS_MAP,
-	LIQUIDATION_NETWORKS,
-} from '@/assets/linearLibrary/linearTools/network';
-import lnrJSConnector, {
-	selectedWallet,
-} from '@/assets/linearLibrary/linearTools/lnrJSConnector';
-import ethereumSvg from '@/components/svg/ethereum';
-import binanceSvg from '@/components/svg/binance';
-import { abbreviateAddress } from '@/assets/linearLibrary/linearTools/format';
-import { lnr } from '@/assets/linearLibrary/linearTools/request/linearData/transactionData';
+   import _ from 'lodash';
+   import Clipboard from 'clipboard';
+   import {storeDetailsData} from '@/assets/linearLibrary/linearTools/request';
+   import {
+      CHAIN_CHANGE_TYPE,
+      isBinanceNetwork,
+      isEthereumNetwork,
+      SUPPORTED_WALLETS_MAP,
+      LIQUIDATION_NETWORKS,
+   } from '@/assets/linearLibrary/linearTools/network';
+   import lnrJSConnector, {
+      selectedWallet,
+   } from '@/assets/linearLibrary/linearTools/lnrJSConnector';
+   import ethereumSvg from '@/components/svg/ethereum';
+   import binanceSvg from '@/components/svg/binance';
+   import {abbreviateAddress} from '@/assets/linearLibrary/linearTools/format';
+   import {lnr} from '@/assets/linearLibrary/linearTools/request/linearData/transactionData';
 
-export default {
-	name: 'walletDetails',
-	data() {
-		return {
-			tooltipContent: 'Copy to clipboard',
-			// refreshing: false, //刷新钱包详情数据中
+   export default {
+      name: 'walletDetails',
+      data() {
+         return {
+            tooltipContent: 'Copy to clipboard',
+            // refreshing: false, //刷新钱包详情数据中
 
-			transactionStatus: false, //历史记录窗口状态
-			transactionIconStatus: 0, //鼠标状态 0离开,1进入
+            transactionStatus: false, //历史记录窗口状态
+            transactionIconStatus: 0, //鼠标状态 0离开,1进入
 
-			trackStatus: false, //踪迹窗口状态
-			trackIconStatus: 0, //鼠标状态 0离开,1进入
+            trackStatus: false, //踪迹窗口状态
+            trackIconStatus: 0, //鼠标状态 0离开,1进入
 
-			referStatus: false, //推荐窗口状态
-			referIconStatus: 0, //鼠标状态 0离开,1进入
+            referStatus: false, //推荐窗口状态
+            referIconStatus: 0, //鼠标状态 0离开,1进入
 
-			chainChanging: false,
+            chainChanging: false,
 
-			SUPPORTED_WALLETS_MAP,
+            SUPPORTED_WALLETS_MAP,
 
-			refreshSelected: false,
+            refreshSelected: false,
 
-			cursorPosition: 0,
+            cursorPosition: 0,
 
-			liquidationCountDown: '',
-			liquidationCountDownId: 0,
+            liquidationCountDown: '',
+            liquidationCountDownId: 0,
 
-			//移动端 显示钱包状态
-			mShowWallet: false,
-		};
-	},
-	components: {
-		ethereumSvg,
-		binanceSvg,
-	},
-	watch: {
-		trackStatusChange() {},
-		walletStatus() {},
-		walletAddress() {},
-		abbreviateAddress() {},
-		walletDetails(data) {},
-		isEthereumNetwork() {},
-		isBinanceNetwork() {},
-		walletNetworkId() {},
-		walletType() {},
-		isMobile() {},
-	},
-	computed: {
-		isMobile() {
-			return this.$store.state.isMobile;
-		},
+            //移动端 显示钱包状态
+            mShowWallet: false,
+         };
+      },
+      components: {
+         ethereumSvg,
+         binanceSvg,
+      },
+      watch: {
+         trackStatusChange() {
+         },
+         walletStatus() {
+         },
+         walletAddress() {
+         },
+         abbreviateAddress() {
+         },
+         walletDetails(data) {
+         },
+         isEthereumNetwork() {
+         },
+         isBinanceNetwork() {
+         },
+         walletNetworkId() {
+         },
+         walletType() {
+         },
+         isMobile() {
+         },
+      },
+      computed: {
+         isMobile() {
+            return this.$store.state.isMobile;
+         },
 
-		isEthereumNetwork() {
-			return isEthereumNetwork(this.walletNetworkId);
-		},
+         isEthereumNetwork() {
+            return isEthereumNetwork(this.walletNetworkId);
+         },
 
-		isBinanceNetwork() {
-			return isBinanceNetwork(this.walletNetworkId);
-		},
+         isBinanceNetwork() {
+            return isBinanceNetwork(this.walletNetworkId);
+         },
 
-		walletNetworkId() {
-			return this.$store.state?.walletNetworkId;
-		},
-		walletType() {
-			return this.$store.state?.walletType;
-		},
-		walletStatus() {
-			return this.$store.state?.wallet?.status;
-		},
-		walletNetworkName() {
-			return this.$store.state?.walletNetworkName;
-		},
-		walletAddress() {
-			return this.$store.state?.wallet?.address;
-		},
-		liquidationStatus() {
-			return this.$store.state?.liquidationStatus;
-		},
-		abbreviateAddress() {
-			return abbreviateAddress(this.walletAddress);
-		},
-		walletDetails() {
-			if (this.$store.state?.walletDetails.currentRatioPercent > 700) {
-				this.cursorPosition = 98;
-			} else {
-				this.cursorPosition =
-					(this.$store.state?.walletDetails.currentRatioPercent /
-						700) *
-					100;
-			}
-			return _.clone(this.$store.state?.walletDetails);
-		},
-		//当前抵押率占目标抵押率的百分比
-		currentRatio() {
-			var currentRatio = 0;
+         walletNetworkId() {
+            return this.$store.state?.walletNetworkId;
+         },
+         walletType() {
+            return this.$store.state?.walletType;
+         },
+         walletStatus() {
+            return this.$store.state?.wallet?.status;
+         },
+         walletNetworkName() {
+            return this.$store.state?.walletNetworkName;
+         },
+         walletAddress() {
+            return this.$store.state?.wallet?.address;
+         },
+         liquidationStatus() {
+            return this.$store.state?.liquidationStatus;
+         },
+         abbreviateAddress() {
+            return abbreviateAddress(this.walletAddress);
+         },
+         walletDetails() {
+            if (this.$store.state?.walletDetails.currentRatioPercent > 700) {
+               this.cursorPosition = 98;
+            } else {
+               this.cursorPosition =
+                 (this.$store.state?.walletDetails.currentRatioPercent /
+                   700) *
+                 100;
+            }
+            return _.clone(this.$store.state?.walletDetails);
+         },
+         //当前抵押率占目标抵押率的百分比
+         currentRatio() {
+            var currentRatio = 0;
 
-			if (Object.keys(this.walletDetails).length !== 0) {
-				currentRatio =
-					(this.walletDetails.currentRatioPercent /
-						this.walletDetails.targetRatioPercent) *
-					100;
-				if (currentRatio > 100) currentRatio = 100;
-			}
+            if (Object.keys(this.walletDetails).length !== 0) {
+               currentRatio =
+                 (this.walletDetails.currentRatioPercent /
+                   this.walletDetails.targetRatioPercent) *
+                 100;
+               if (currentRatio > 100) currentRatio = 100;
+            }
 
-			return currentRatio;
-		},
-	},
-	created() {
-		//订阅历史记录窗口关闭事件
-		this.$pub.subscribe('transactionModalCloseEvent', (msg, params) => {
-			this.transactionStatus = false;
-		});
-		//订阅历史记录窗口关闭事件
-		this.$pub.subscribe('trackModalCloseEvent', (msg, params) => {
-			this.trackStatus = false;
-		});
-		//订阅推荐窗口关闭事件
-		this.$pub.subscribe('referralModalCloseEvent', (msg, params) => {
-			this.referStatus = false;
-		});
-		//订阅钱包账户改变事件
-		this.$pub.subscribe('onWalletAccountChange', (msg, params) => {
-			this.walletStatusChange(true);
-		});
-		//订阅链改变事件
-		this.$pub.subscribe('onWalletChainChange', (msg, params) => {
-			this.walletStatusChange();
-		});
-	},
-	destroyed() {
-		//关闭自动刷新
-		this.$pub.publish('onWalletDetailsLoopRefreshStop');
-	},
-	mounted() {
-		// 测试用,无用时删除
-		// _.delay(this.trackModalClick, 500)
-		// 测试用,无用时删除
+            return currentRatio;
+         },
+      },
+      created() {
+         //订阅历史记录窗口关闭事件
+         this.$pub.subscribe('transactionModalCloseEvent', (msg, params) => {
+            this.transactionStatus = false;
+         });
+         //订阅历史记录窗口关闭事件
+         this.$pub.subscribe('trackModalCloseEvent', (msg, params) => {
+            this.trackStatus = false;
+         });
+         //订阅推荐窗口关闭事件
+         this.$pub.subscribe('referralModalCloseEvent', (msg, params) => {
+            this.referStatus = false;
+         });
+         //订阅钱包账户改变事件
+         this.$pub.subscribe('onWalletAccountChange', (msg, params) => {
+            this.walletStatusChange(true);
+         });
+         //订阅链改变事件
+         this.$pub.subscribe('onWalletChainChange', (msg, params) => {
+            this.walletStatusChange();
+         });
+      },
+      destroyed() {
+         //关闭自动刷新
+         this.$pub.publish('onWalletDetailsLoopRefreshStop');
+      },
+      mounted() {
+         // 测试用,无用时删除
+         // _.delay(this.trackModalClick, 500)
+         // 测试用,无用时删除
 
-		//this.checkLiquidation();
+         //this.checkLiquidation();
 
-		//根据url参数判断是否打开track transaction referral
-		if (this.$store.state?.walletDetailsActionURL) {
-			switch (this.$store.state?.walletDetailsActionURL) {
-				case 'referral':
-					this.referStatus = true;
-					this.$pub.publish('referralModalChange', true);
-					break;
-				case 'transaction':
-					this.transactionStatus = true;
-					this.$pub.publish('transactionModalChange', true);
-					break;
-				case 'track':
-					this.trackStatus = true;
-					this.$pub.publish('trackModalChange', true);
-					break;
-			}
+         //根据url参数判断是否打开track transaction referral
+         if (this.$store.state?.walletDetailsActionURL) {
+            switch (this.$store.state?.walletDetailsActionURL) {
+               case 'referral':
+                  this.referStatus = true;
+                  this.$pub.publish('referralModalChange', true);
+                  break;
+               case 'transaction':
+                  this.transactionStatus = true;
+                  this.$pub.publish('transactionModalChange', true);
+                  break;
+               case 'track':
+                  this.trackStatus = true;
+                  this.$pub.publish('trackModalChange', true);
+                  break;
+            }
 
-			this.$store.commit('setWalletDetailsActionURL', '');
-		}
-	},
-	methods: {
-		async checkLiquidation() {
-			try {
-				clearInterval(this.liquidationCountDownId);
+            this.$store.commit('setWalletDetailsActionURL', '');
+         }
+      },
+      methods: {
+         async checkLiquidation() {
+            try {
+               clearInterval(this.liquidationCountDownId);
 
-				//如果是bsc main/bsc(私链)则检查liquidation
-				if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
-					let liquidationStatus = await lnr.userPositionMarked({
-						account: this.walletAddress,
-					});
+               //如果是bsc main/bsc(私链)则检查liquidation
+               if (LIQUIDATION_NETWORKS[this.walletNetworkId] !== undefined) {
+                  let liquidationStatus = await lnr.userPositionMarked({
+                     account: this.walletAddress,
+                  });
 
-					if (
-						liquidationStatus.length > 0 &&
-						liquidationStatus[0].state
-					) {
-						//已标记
-						this.$store.commit('setLiquidationStatus', {
-							status: liquidationStatus[0].state,
-							timestamp: liquidationStatus[0].timestamp / 1000,
-						});
+                  if (
+                    liquidationStatus.length > 0 &&
+                    liquidationStatus[0].state
+                  ) {
+                     //已标记
+                     this.$store.commit('setLiquidationStatus', {
+                        status: liquidationStatus[0].state,
+                        timestamp: liquidationStatus[0].timestamp / 1000,
+                     });
 
-						this.liquidationCal();
-						this.liquidationCountDownId = setInterval(
-							this.liquidationCal,
-							60000
-						);
-					} else {
-						//未标记要清除
-						this.$store.commit('setLiquidationStatus', {
-							status: false,
-							timestamp: 0,
-						});
-					}
-				}
-			} catch (e) {
-				console.log(e, 'wallet details check liquidation err');
-			}
-		},
+                     this.liquidationCal();
+                     this.liquidationCountDownId = setInterval(
+                       this.liquidationCal,
+                       60000
+                     );
+                  } else {
+                     //未标记要清除
+                     this.$store.commit('setLiquidationStatus', {
+                        status: false,
+                        timestamp: 0,
+                     });
+                  }
+               }
+            } catch (e) {
+               console.log(e, 'wallet details check liquidation err');
+            }
+         },
 
-		//liquidated清算倒计时
-		liquidationCal() {
-			let currentTimstamp = Math.round(new Date() / 1000);
-			let liquidationWindow =
-				this.$store.state?.liquidationStatus.timestamp +
-				259200 -
-				currentTimstamp;
+         //liquidated清算倒计时
+         liquidationCal() {
+            let currentTimstamp = Math.round(new Date() / 1000);
+            let liquidationWindow =
+              this.$store.state?.liquidationStatus.timestamp +
+              259200 -
+              currentTimstamp;
 
-			if (liquidationWindow < 0) {
-				//已经过了三天窗口
-				clearInterval(this.liquidationCountDownId);
-				this.liquidationCountDown = '0h 0m';
-				return;
-			}
+            if (liquidationWindow < 0) {
+               //已经过了三天窗口
+               clearInterval(this.liquidationCountDownId);
+               this.liquidationCountDown = '0h 0m';
+               return;
+            }
 
-			let liquidationWindowHour = _.floor(liquidationWindow / 3600);
-			let liquidationWindowMinute = _.floor(
-				(liquidationWindow % 3600) / 60
-			);
+            let liquidationWindowHour = _.floor(liquidationWindow / 3600);
+            let liquidationWindowMinute = _.floor(
+              (liquidationWindow % 3600) / 60
+            );
 
-			if (liquidationWindowHour != 0) {
-				this.liquidationCountDown =
-					liquidationWindowHour +
-					'h ' +
-					liquidationWindowMinute +
-					'm';
-			} else {
-				this.liquidationCountDown = liquidationWindowMinute + 'm';
-			}
-		},
+            if (liquidationWindowHour != 0) {
+               this.liquidationCountDown =
+                 liquidationWindowHour +
+                 'h ' +
+                 liquidationWindowMinute +
+                 'm';
+            } else {
+               this.liquidationCountDown = liquidationWindowMinute + 'm';
+            }
+         },
 
-		//测试复制文字
-		copyAddress() {
-			var that = this;
-			var clipboarda = new Clipboard('.copyBtn');
-			clipboarda.on('success', function(e) {
-				that.tooltipContent = 'Copied';
-				e.clearSelection();
-			});
-			clipboarda.on('error', function(e) {
-				that.tooltipContent = 'Error';
-			});
-		},
+         //测试复制文字
+         copyAddress() {
+            var that = this;
+            var clipboarda = new Clipboard('.copyBtn');
+            clipboarda.on('success', function (e) {
+               that.tooltipContent = 'Copied';
+               e.clearSelection();
+            });
+            clipboarda.on('error', function (e) {
+               that.tooltipContent = 'Error';
+            });
+         },
 
-		//重置复制提示框的文本
-		resetTooltipContent() {
-			var that = this;
-			setTimeout(function() {
-				that.tooltipContent = 'Copy to clipboard';
-			}, 300);
-		},
+         //重置复制提示框的文本
+         resetTooltipContent() {
+            var that = this;
+            setTimeout(function () {
+               that.tooltipContent = 'Copy to clipboard';
+            }, 300);
+         },
 
-		async changeChain(walletType) {
-			return;
+         async changeChain(walletType) {
+            return;
 
-			//不重复连接
-			if (walletType == this.walletType || this.chainChanging) return;
+            //不重复连接
+            if (walletType == this.walletType || this.chainChanging) return;
 
-			// this.chainChanging = true;
-			const staus = await selectedWallet(walletType);
-			staus &&
-				this.$pub.publish(
-					'onWalletChainChange',
-					CHAIN_CHANGE_TYPE.WALLET
-				);
-			// this.chainChanging = false;
-		},
+            // this.chainChanging = true;
+            const staus = await selectedWallet(walletType);
+            staus &&
+            this.$pub.publish(
+              'onWalletChainChange',
+              CHAIN_CHANGE_TYPE.WALLET
+            );
+            // this.chainChanging = false;
+         },
 
-		//获取当前钱包详情数据
-		async getdata() {
-			// this.refreshing = true;
-			await storeDetailsData();
-			// this.refreshing = false;
-		},
+         //获取当前钱包详情数据
+         async getdata() {
+            // this.refreshing = true;
+            await storeDetailsData();
+            // this.refreshing = false;
+         },
 
-		//历史记录窗口状态改变
-		transactionModalClick() {
-			this.transactionStatus = !this.transactionStatus;
-			this.$pub.publish('transactionModalChange', this.transactionStatus);
+         //历史记录窗口状态改变
+         transactionModalClick() {
+            this.transactionStatus = !this.transactionStatus;
+            this.$pub.publish('transactionModalChange', this.transactionStatus);
 
-			//窗口打开时关闭其他两个窗口
-			if (this.transactionStatus) {
-				this.referStatus = false;
-				this.trackStatus = false;
-				this.$pub.publish('referralModalChange', this.referStatus);
-				this.$pub.publish('trackModalChange', this.trackStatus);
+            //窗口打开时关闭其他两个窗口
+            if (this.transactionStatus) {
+               this.referStatus = false;
+               this.trackStatus = false;
+               this.$pub.publish('referralModalChange', this.referStatus);
+               this.$pub.publish('trackModalChange', this.trackStatus);
 
-				if (this.mShowWallet) {
-					this.mShowWallet = false;
-				}
-			}
-		},
+               if (this.mShowWallet) {
+                  this.mShowWallet = false;
+               }
+            }
+         },
 
-		//推荐窗口状态改变
-		referralModalClick() {
-			this.referStatus = !this.referStatus;
-			this.$pub.publish('referralModalChange', this.referStatus);
+         //推荐窗口状态改变
+         referralModalClick() {
+            this.referStatus = !this.referStatus;
+            this.$pub.publish('referralModalChange', this.referStatus);
 
-			//窗口打开时关闭其他两个窗口
-			if (this.referStatus) {
-				this.transactionStatus = false;
-				this.trackStatus = false;
-				this.$pub.publish(
-					'transactionModalChange',
-					this.transactionStatus
-				);
-				this.$pub.publish('trackModalChange', this.trackStatus);
+            //窗口打开时关闭其他两个窗口
+            if (this.referStatus) {
+               this.transactionStatus = false;
+               this.trackStatus = false;
+               this.$pub.publish(
+                 'transactionModalChange',
+                 this.transactionStatus
+               );
+               this.$pub.publish('trackModalChange', this.trackStatus);
 
-				if (this.mShowWallet) {
-					this.mShowWallet = false;
-				}
-			}
-		},
+               if (this.mShowWallet) {
+                  this.mShowWallet = false;
+               }
+            }
+         },
 
-		//踪迹窗口状态改变
-		trackModalClick() {
-			this.trackStatus = !this.trackStatus;
-			this.$pub.publish('trackModalChange', this.trackStatus);
+         //踪迹窗口状态改变
+         trackModalClick() {
+            this.trackStatus = !this.trackStatus;
+            this.$pub.publish('trackModalChange', this.trackStatus);
 
-			//窗口打开时关闭其他两个窗口
-			if (this.trackStatus) {
-				this.transactionStatus = false;
-				this.referStatus = false;
-				this.$pub.publish(
-					'transactionModalChange',
-					this.transactionStatus
-				);
-				this.$pub.publish('referralModalChange', this.referStatus);
+            //窗口打开时关闭其他两个窗口
+            if (this.trackStatus) {
+               this.transactionStatus = false;
+               this.referStatus = false;
+               this.$pub.publish(
+                 'transactionModalChange',
+                 this.transactionStatus
+               );
+               this.$pub.publish('referralModalChange', this.referStatus);
 
-				if (this.mShowWallet) {
-					this.mShowWallet = false;
-				}
-			}
-		},
+               if (this.mShowWallet) {
+                  this.mShowWallet = false;
+               }
+            }
+         },
 
-		walletStatusChange(forceAction = false) {
-			//切换钱包关闭窗口,防止出错
-			this.referStatus = false;
-			this.transactionStatus = false;
-			this.trackStatus = false;
-			this.$pub.publish('referralModalChange', this.referStatus);
-			this.$pub.publish('transactionModalChange', this.transactionStatus);
-			this.$pub.publish('trackModalChange', this.trackStatus);
+         walletStatusChange(forceAction = false) {
+            //切换钱包关闭窗口,防止出错
+            this.referStatus = false;
+            this.transactionStatus = false;
+            this.trackStatus = false;
+            this.$pub.publish('referralModalChange', this.referStatus);
+            this.$pub.publish('transactionModalChange', this.transactionStatus);
+            this.$pub.publish('trackModalChange', this.trackStatus);
 
-			const currentAction = this.$store.state?.currentAction;
+            const currentAction = this.$store.state?.currentAction;
 
-			this.checkLiquidation();
+            this.checkLiquidation();
 
-			//build,swap
-			if (![1, 5].includes(currentAction) || forceAction) {
-				this.$store.commit('setCurrentAction', 0);
-				this.$router.push('/');
-			}
-		},
-		mShowMenuFun() {
-			this.$store.commit('setmMenuState', true);
-		},
+            //build,swap
+            if (![1, 5].includes(currentAction) || forceAction) {
+               this.$store.commit('setCurrentAction', 0);
+               this.$router.push('/');
+            }
+         },
+         mShowMenuFun() {
+            this.$store.commit('setmMenuState', true);
+         },
 
-		//断开连接
-		async disconnect() {
-			// this.$store.commit("setWallet", "");
-			this.$store.commit('setAutoConnect', false);
-			let registeredWalletConnectEvents =
-				$nuxt.$store.state?.registeredWalletConnectEvents;
-			if (registeredWalletConnectEvents) {
-				await lnrJSConnector.signer.provider.provider.disconnect();
-				this.$store.commit('setRegisteredWalletConnectEvents', false);
-			}
-			location.reload();
-		},
-	},
-};
+         //断开连接
+         async disconnect() {
+            // this.$store.commit("setWallet", "");
+            this.$store.commit('setAutoConnect', false);
+            let registeredWalletConnectEvents =
+              $nuxt.$store.state?.registeredWalletConnectEvents;
+            if (registeredWalletConnectEvents) {
+               await lnrJSConnector.signer.provider.provider.disconnect();
+               this.$store.commit('setRegisteredWalletConnectEvents', false);
+            }
+            location.reload();
+         },
+      },
+   };
 </script>
 
 <style lang="scss">
-#walletDetails {
-	width: 374px;
+   #walletDetails {
+      width: 374px;
 
-	@-webkit-keyframes spin {
-		from {
-			-webkit-transform: rotate(360deg);
-		}
-		to {
-			-webkit-transform: rotate(0deg);
-		}
-	}
+      @-webkit-keyframes spin {
+         from {
+            -webkit-transform: rotate(360deg);
+         }
+         to {
+            -webkit-transform: rotate(0deg);
+         }
+      }
 
-	@keyframes spin {
-		from {
-			transform: rotate(360deg);
-		}
-		to {
-			transform: rotate(0deg);
-		}
-	}
+      @keyframes spin {
+         from {
+            transform: rotate(360deg);
+         }
+         to {
+            transform: rotate(0deg);
+         }
+      }
 
-	.img-fade-enter-active,
-	.img-fade-leave-active {
-		transition: opacity $animete-time;
-	}
+      .img-fade-enter-active,
+      .img-fade-leave-active {
+         transition: opacity $animete-time;
+      }
 
-	.img-fade-enter,
-	.img-fade-leave-to {
-		opacity: 0;
-	}
+      .img-fade-enter,
+      .img-fade-leave-to {
+         opacity: 0;
+      }
 
-	.walletAndAddressBox {
-		height: 120px;
-		// background-color: springgreen;
-		display: flex;
-		// display: none;
-		justify-content: space-between;
-		align-items: center;
+      .walletAndAddressBox {
+         height: 120px;
+         // background-color: springgreen;
+         display: flex;
+         // display: none;
+         justify-content: space-between;
+         align-items: center;
 
-		.info {
-			width: 100%;
-			padding: 7px 16px;
-			display: flex;
-			justify-content: space-evenly;
-			align-items: center;
-			border-radius: 20px;
-			background: #f6f5f6;
+         .info {
+            width: 100%;
+            padding: 7px 16px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            border-radius: 20px;
+            background: #f6f5f6;
 
-			.network {
-				margin-right: 8px;
-				width: 16px;
-				height: 16px;
-			}
+            .network {
+               margin-right: 8px;
+               width: 16px;
+               height: 16px;
+            }
 
-			.wallet {
-				margin-right: 8px;
-				font-family: Gilroy-Bold;
-				font-size: 14px;
-				font-weight: bold;
-				font-stretch: normal;
-				font-style: normal;
-				line-height: 1.29;
-				letter-spacing: normal;
-				color: #5a575c;
-			}
+            .wallet {
+               margin-right: 8px;
+               font-family: Gilroy-Bold;
+               font-size: 14px;
+               font-weight: bold;
+               font-stretch: normal;
+               font-style: normal;
+               line-height: 1.29;
+               letter-spacing: normal;
+               color: #5a575c;
+            }
 
-			.address {
-				flex: 1;
-				font-family: Gilroy-Regular;
-				font-size: 14px;
-				margin-right: 4px;
-				text-align: center;
-				// white-space: nowrap;
-				// overflow: hidden;
-				// text-overflow: ellipsis;
-				font-weight: normal;
-				font-stretch: normal;
-				font-style: normal;
-				line-height: 1.29;
-				letter-spacing: normal;
-				color: #99999a;
-			}
+            .address {
+               flex: 1;
+               font-family: Gilroy-Regular;
+               font-size: 14px;
+               margin-right: 4px;
+               text-align: center;
+               // white-space: nowrap;
+               // overflow: hidden;
+               // text-overflow: ellipsis;
+               font-weight: normal;
+               font-stretch: normal;
+               font-style: normal;
+               line-height: 1.29;
+               letter-spacing: normal;
+               color: #99999a;
+            }
 
-			.copyBtn {
-				cursor: pointer;
-				width: 16px;
-				height: 16px;
-				margin-top: 4px;
-				margin-right: 12px;
+            .copyBtn {
+               cursor: pointer;
+               width: 16px;
+               height: 16px;
+               margin-top: 4px;
+               margin-right: 12px;
 
-				&:hover {
-					#Combined-Shape {
-						fill: #1a38f8;
-						stroke: #1a38f8;
-					}
-				}
-			}
+               &:hover {
+                  #Combined-Shape {
+                     fill: #1a38f8;
+                     stroke: #1a38f8;
+                  }
+               }
+            }
 
-			.disconnect {
-				font-family: Gilroy-Bold;
-				font-size: 10px;
-				font-weight: bold;
-				font-stretch: normal;
-				font-style: normal;
-				letter-spacing: 1.25px;
-				text-align: center;
-				color: #99999a;
-				text-transform: uppercase;
-				cursor: pointer;
-				transition: $animete-time linear;
+            .disconnect {
+               font-family: Gilroy-Bold;
+               font-size: 10px;
+               font-weight: bold;
+               font-stretch: normal;
+               font-style: normal;
+               letter-spacing: 1.25px;
+               text-align: center;
+               color: #99999a;
+               text-transform: uppercase;
+               cursor: pointer;
+               transition: $animete-time linear;
 
-				&:hover {
-					color: #1a38f8;
-				}
-			}
-		}
+               &:hover {
+                  color: #1a38f8;
+               }
+            }
+         }
 
-		// .chainChange {
-		//     width: 64px;
-		//     height: 32px;
-		//     display: flex;
-		//     border-radius: 20px;
-		//     background: #f6f5f6;
+         // .chainChange {
+         //     width: 64px;
+         //     height: 32px;
+         //     display: flex;
+         //     border-radius: 20px;
+         //     background: #f6f5f6;
 
-		//     &.chainChanging {
-		//         .ethBox,
-		//         .bscBox {
-		//             opacity: 0.2 !important;
-		//             cursor: not-allowed !important;
-		//         }
-		//     }
+         //     &.chainChanging {
+         //         .ethBox,
+         //         .bscBox {
+         //             opacity: 0.2 !important;
+         //             cursor: not-allowed !important;
+         //         }
+         //     }
 
-		//     .ethBox,
-		//     .bscBox {
-		//         width: 32px;
-		//         height: 32px;
-		//         border-radius: 50%;
-		//         display: flex;
-		//         justify-content: center;
-		//         align-items: center;
-		//         transition: $animete-time linear;
+         //     .ethBox,
+         //     .bscBox {
+         //         width: 32px;
+         //         height: 32px;
+         //         border-radius: 50%;
+         //         display: flex;
+         //         justify-content: center;
+         //         align-items: center;
+         //         transition: $animete-time linear;
 
-		//         &.selected {
-		//             box-shadow: 0 2px 6px 0 #deddde;
-		//             background-color: #ffffff;
-		//         }
-		//     }
-		//     .mNetworkName {
-		//         display: none;
-		//     }
-		// }
+         //         &.selected {
+         //             box-shadow: 0 2px 6px 0 #deddde;
+         //             background-color: #ffffff;
+         //         }
+         //     }
+         //     .mNetworkName {
+         //         display: none;
+         //     }
+         // }
 
-		.mMenu {
-			display: none;
-		}
-	}
+         .mMenu {
+            display: none;
+         }
+      }
 
-	.walletDetailsBox {
-		width: 100%;
-		//xxl TODO
-		//height: 840px;
-		/* margin-top: 120px;*/
-		/*border-radius: 20px;*/
-		/*box-shadow: 0 2px 6px #deddde;*/
-		/*background-color: #ffffff;*/
+      .walletDetailsBox {
+         width: 100%;
+         //xxl TODO
+         //height: 840px;
+         /* margin-top: 120px;*/
+         /*border-radius: 20px;*/
+         /*box-shadow: 0 2px 6px #deddde;*/
+         /*background-color: #ffffff;*/
 
-		.ivu-tooltip-rel {
-			transition: $animete-time linear;
-			line-height: 1;
+         .ivu-tooltip-rel {
+            transition: $animete-time linear;
+            line-height: 1;
 
-			img {
-				width: 16px;
-				height: 16px;
-			}
-		}
+            img {
+               width: 16px;
+               height: 16px;
+            }
+         }
 
-		.mWalletHead {
-			display: none;
-		}
+         .mWalletHead {
+            display: none;
+         }
 
-		.actionsBox {
-			margin-bottom: 30px;
-			border-radius: 20px;
-			box-shadow: 0 2px 6px #deddde;
-			background-color: #ffffff;
-			display: flex;
-			justify-content: space-around;
+         .actionsBox {
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px #deddde;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
 
-			.box {
-				.boxItem {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					flex-direction: column;
-					color: #045ff0;
-					text-align: center;
-					text-transform: uppercase;
-					cursor: pointer;
-					transition: $animete-time linear;
-					font-weight: bold;
-					letter-spacing: 1.5px;
-					font-family: Gilroy-bold;
-					font-size: 12px;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.33;
-					padding: 30px 0;
+            .box {
+               .boxItem {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  flex-direction: column;
+                  color: #045ff0;
+                  text-align: center;
+                  text-transform: uppercase;
+                  cursor: pointer;
+                  transition: $animete-time linear;
+                  font-weight: bold;
+                  letter-spacing: 1.5px;
+                  font-family: Gilroy-bold;
+                  font-size: 12px;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.33;
+                  padding: 30px 0;
 
-					.placeholder {
-						width: 40px;
-						height: 20px;
-						margin-bottom: 15px;
-						position: relative;
+                  .placeholder {
+                     width: 40px;
+                     height: 20px;
+                     margin-bottom: 15px;
+                     position: relative;
 
-						img {
-							left: 0;
-							height: 20px;
-							width: 40px;
-							position: absolute;
-							transform: translateZ(0);
-						}
-					}
+                     img {
+                        left: 0;
+                        height: 20px;
+                        width: 40px;
+                        position: absolute;
+                        transform: translateZ(0);
+                     }
+                  }
 
-					&:hover,
-					&.selected {
-						color: #1a38f8;
-					}
-				}
-			}
-		}
+                  &:hover,
+                  &.selected {
+                     color: #1a38f8;
+                  }
+               }
+            }
+         }
 
-		.ratioBox {
-			margin: 16px 0 24px;
-			border-radius: 20px;
-			box-shadow: 0 2px 6px #deddde;
-			background-color: #ffffff;
-			padding: 15px 0 24px;
+         .ratioBox {
+            margin: 16px 0 24px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px #deddde;
+            background-color: #ffffff;
+            padding: 15px 0 24px;
 
-			.currentRatio {
-				font-family: Gilroy-Bold;
-				font-size: 16px;
-				text-align: left;
-				display: inline;
-				color: #5a575c;
+            .currentRatio {
+               font-family: Gilroy-Bold;
+               font-size: 16px;
+               text-align: left;
+               display: inline;
+               color: #5a575c;
 
-				&.inLiquidation {
-					color: #df434c;
-				}
-			}
+               &.inLiquidation {
+                  color: #df434c;
+               }
+            }
 
-			.countDown {
-				font-family: Gilroy-Bold;
-				font-size: 12px;
-				text-align: center;
-				color: #df434c;
-			}
+            .countDown {
+               font-family: Gilroy-Bold;
+               font-size: 12px;
+               text-align: center;
+               color: #df434c;
+            }
 
-			.context {
-				font-family: Gilroy-Bold;
-				font-size: 14px;
-				text-align: left;
-				text-indent: 25px;
-				margin-bottom: 5px;
-				color: #5a575c;
+            .context {
+               font-family: Gilroy-Bold;
+               font-size: 14px;
+               text-align: left;
+               text-indent: 25px;
+               margin-bottom: 5px;
+               color: #5a575c;
 
-				img {
-					margin-top: -12px;
-					position: absolute;
-					left: -25px;
-				}
-			}
+               img {
+                  margin-top: -12px;
+                  position: absolute;
+                  left: -25px;
+               }
+            }
 
-			.percentBox {
-				position: relative;
+            .percentBox {
+               position: relative;
 
-				.cursorBox {
-					margin-top: 15px;
-					.cursor {
-						background: #4b72f0;
-						border: 3px solid #ffffff;
-						box-sizing: border-box;
-						width: 20px;
-						height: 20px;
-						position: absolute;
-						left: 80px;
-						top: -15px;
-						transform: rotate(-135deg);
-						border-radius: 0 50% 50% 50%;
-					}
-				}
+               .cursorBox {
+                  margin-top: 15px;
 
-				.scale200,
-				.scale500 {
-					display: none;
-					width: 1px;
-					height: 24px;
-					background-color: #5a575c;
-					position: absolute;
-				}
+                  .cursor {
+                     background: #4b72f0;
+                     border: 3px solid #ffffff;
+                     box-sizing: border-box;
+                     width: 20px;
+                     height: 20px;
+                     position: absolute;
+                     left: 80px;
+                     top: -15px;
+                     transform: rotate(-135deg);
+                     border-radius: 0 50% 50% 50%;
+                  }
+               }
 
-				/*.scale200 {*/
-				/*   left: 28.6%;*/
-				/*}*/
+               .scale200,
+               .scale500 {
+                  display: none;
+                  width: 1px;
+                  height: 24px;
+                  background-color: #5a575c;
+                  position: absolute;
+               }
 
-				/*.scale500 {*/
-				/*   left: 71.4%;*/
-				/*}*/
+               /*.scale200 {*/
+               /*   left: 28.6%;*/
+               /*}*/
 
-				.colorBlock {
-					width: 374px;
-					height: 16px;
-					display: flex;
-					margin: 0 5%;
+               /*.scale500 {*/
+               /*   left: 71.4%;*/
+               /*}*/
 
-					.leftBlock {
-						width: 92px;
-						height: 16px;
-						border-radius: 8px 0 0 8px;
-						background-color: #8dd92d;
-					}
+               .colorBlock {
+                  width: 374px;
+                  height: 16px;
+                  display: flex;
+                  margin: 0 5%;
 
-					.centerBlock {
-						width: 143px;
-						height: 16px;
-						background-color: #ffd166;
-					}
+                  .leftBlock {
+                     width: 92px;
+                     height: 16px;
+                     border-radius: 8px 0 0 8px;
+                     background-color: #8dd92d;
+                  }
 
-					.rightBlock {
-						width: 93px;
-						height: 16px;
-						border-radius: 0 8px 8px 0;
-						background-color: #ff9999;
-					}
-				}
+                  .centerBlock {
+                     width: 143px;
+                     height: 16px;
+                     background-color: #ffd166;
+                  }
 
-				.flag {
-					display: flex;
-					margin-top: 6px;
+                  .rightBlock {
+                     width: 93px;
+                     height: 16px;
+                     border-radius: 0 8px 8px 0;
+                     background-color: #ff9999;
+                  }
+               }
 
-					.item {
-						font-family: Gilroy;
-						font-size: 10px;
-						text-align: center;
-						color: #99999a;
+               .flag {
+                  display: flex;
+                  margin-top: 6px;
 
-						&:first-child {
-							margin-left: 69px;
-						}
+                  .item {
+                     font-family: Gilroy;
+                     font-size: 10px;
+                     text-align: center;
+                     color: #99999a;
 
-						&:last-child {
-							margin-left: 92px;
-						}
-					}
-				}
-			}
-		}
+                     &:first-child {
+                        margin-left: 69px;
+                     }
 
-		/*.ratioBox {
-             margin: 16px 0 24px;
-             border-top: solid 1px #e5e5e5;
-             border-bottom: solid 1px #e5e5e5;
-             padding: 24px 0;
-             display: flex;
-             flex-direction: column;
-             align-items: center;
+                     &:last-child {
+                        margin-left: 92px;
+                     }
+                  }
+               }
+            }
+         }
 
-             .title {
-                 width: 100%;
-                 display: flex;
-                 align-items: center;
-                 margin-bottom: 27px;
-                 font-family: Gilroy-bold;
-                 font-size: 14px;
-                 font-weight: bold;
-                 font-stretch: normal;
-                 font-style: normal;
-                 line-height: 1.29;
-                 letter-spacing: normal;
-                 color: #5a575c;
+         /*.ratioBox {
+                  margin: 16px 0 24px;
+                  border-top: solid 1px #e5e5e5;
+                  border-bottom: solid 1px #e5e5e5;
+                  padding: 24px 0;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
 
-                 .ivu-tooltip {
+                  .title {
+                      width: 100%;
+                      display: flex;
+                      align-items: center;
+                      margin-bottom: 27px;
+                      font-family: Gilroy-bold;
+                      font-size: 14px;
+                      font-weight: bold;
+                      font-stretch: normal;
+                      font-style: normal;
+                      line-height: 1.29;
+                      letter-spacing: normal;
+                      color: #5a575c;
+
+                      .ivu-tooltip {
+                          margin-left: 8px;
+                      }
+                  }
+
+                  .ratio {
+                      display: flex;
+                      width: 100%;
+
+                      .box {
+                          flex: 1;
+                          font-family: Gilroy-bold;
+                          font-size: 32px;
+                          font-weight: bold;
+                          font-stretch: normal;
+                          font-style: normal;
+                          line-height: 1.25;
+                          letter-spacing: normal;
+                          text-align: center;
+                          color: #5a575c;
+
+                          .context {
+                              font-size: 14px;
+                              font-family: Gilroy-Regular;
+                              line-height: 1.29;
+                          }
+
+                          &:nth-child(1) {
+                              border-right: solid 1px #eae9ea;
+                          }
+
+                          &:nth-child(2) {
+                              color: #99999a;
+                          }
+                      }
+                  }
+
+                  .ivu-progress {
+                      margin-top: 4px;
+                      width: 278px;
+                      .ivu-progress-outer {
+                          .ivu-progress-inner {
+                              .ivu-progress-bg {
+                                  background-color: rgba(#7eb5ff, 0.2) !important;
+                              }
+                              .ivu-progress-success-bg {
+                                  background-color: #1a38f8;
+                              }
+                          }
+                      }
+                  }
+              }*/
+
+         .walletInfo {
+            margin-bottom: 24px;
+
+            .tokenIcon {
+               border-radius: 50%;
+            }
+
+            .title {
+               font-family: Gilroy-bold;
+               font-size: 14px;
+               font-weight: bold;
+               font-stretch: normal;
+               font-style: normal;
+               line-height: 1.29;
+               letter-spacing: normal;
+               color: #5a575c;
+               margin-bottom: 18px;
+            }
+
+            .tokenBox {
+               border-bottom: solid 1px #e5e5e5;
+               display: flex;
+               padding: 16px 20px;
+               border-radius: 20px;
+               box-shadow: 0 2px 6px #deddde;
+               background-color: #ffffff;
+               margin-bottom: 10px;
+
+               .tokenIcon {
+                  width: 36px;
+                  height: 36px;
+                  margin-right: 8px;
+               }
+
+               .box {
+                  flex: 1;
+
+                  .tokenItems {
+                     font-family: Gilroy-Medium;
+                     font-size: 12px;
+                     font-weight: 500;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.33;
+                     letter-spacing: normal;
+                     color: #5a575c;
+                     display: flex;
+                     justify-content: space-between;
+
+                     &.obtrusive {
+                        .left {
+                           font-family: Gilroy-bold;
+                           font-size: 16px;
+                           line-height: 1.5;
+                           text-align: left;
+                        }
+
+                        .right {
+                           font-family: Gilroy-Medium;
+                           font-size: 16px;
+                           text-align: right;
+                        }
+
+                        &.singer {
+                           height: 100%;
+
+                           .left {
+                              display: flex;
+                              align-items: center;
+
+                              .ivu-tooltip {
+                                 margin-left: 8px;
+                              }
+                           }
+
+                           .right {
+                              font-family: Gilroy-Medium;
+                              font-weight: 500;
+                              font-stretch: normal;
+                              font-style: normal;
+                              letter-spacing: normal;
+                              color: #5a575c;
+
+                              .top {
+                                 font-size: 16px;
+                                 line-height: 1.5;
+                              }
+
+                              .bottom {
+                                 font-size: 12px;
+                                 line-height: 1.33;
+                              }
+                           }
+                        }
+                     }
+
+                     &.unobtrusive {
+                        color: #99999a;
+                        margin-top: 8px;
+                     }
+                  }
+               }
+            }
+         }
+
+         .totalBalanceToUSD {
+            display: flex;
+
+            .box {
+               display: block;
+
+               .title {
+                  font-family: Gilroy-bold;
+                  font-size: 14px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #5a575c;
+                  margin-bottom: 8px;
+               }
+
+               .foot {
+                  width: 374px;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 16px 20px;
+                  border-radius: 20px;
+                  box-shadow: 0 2px 6px #deddde;
+                  background-color: #ffffff;
+                  margin-bottom: 10px;
+
+                  .amount {
+                     font-family: Gilroy-Bold;
+                     font-size: 32px;
+                     font-weight: bold;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.25;
+                     letter-spacing: normal;
+                     color: #5a575c;
+                  }
+
+                  .refBtn {
+                     width: 134px;
+                     height: 48px;
+                     display: flex;
+                     flex-direction: row;
+                     justify-content: center;
+                     align-items: center;
+                     padding: 10px;
+                     cursor: pointer;
+                     border-radius: 8px;
+                     background-color: #ecf1ff;
+                     color: #4b72f0;
+                     font-size: 16px;
+
+                     img {
+                        display: inline-block;
+                        margin-right: 15px;
+                     }
+
+                     .border,
+                     .shape {
+                        transition: fill $animete-time linear;
+                     }
+
+                     &:hover {
+                        &:not(.selected) {
+                           .border {
+                              stroke: #1a38f8;
+                           }
+
+                           .shape {
+                              fill: #1a38f8;
+                           }
+                        }
+                     }
+
+                     &.selected {
+                        .border {
+                           stroke: #1a38f8;
+                           fill: #1a38f8;
+                        }
+
+                        .shape {
+                           fill: #fff;
+                        }
+                     }
+
+                     &.refreshing {
+                        -webkit-animation: spin 1s linear 1s 5 alternate;
+                        animation: spin 1s linear infinite;
+                        cursor: not-allowed;
+
+                        //     .border {
+                        //         stroke: #1A38F8;
+                        //         fill: #1A38F8;
+                        //     }
+                        //     .shape {
+                        //         fill: #fff;
+                        //     }
+
+                        //     &:hover {
+                        //         cursor: not-allowed;
+                        //     }
+                     }
+                  }
+               }
+            }
+
+            // .refreshBtn:active {
+            //     .background {
+            //         fill: #1b05a1;
+            //     }
+            //     .border {
+            //         stroke: #fff;
+            //     }
+            //     .shape {
+            //         fill: #fff;
+            //     }
+            // }
+         }
+      }
+   }
+
+   @media only screen and (max-width: $max-phone-width) {
+      #walletDetails {
+         width: 10vw;
+         position: fixed;
+         right: 0;
+         top: 30px;
+         z-index: 9999;
+
+         &.mScroll {
+            overflow-y: scroll;
+            height: 100%;
+            width: 100vw;
+         }
+
+         @-webkit-keyframes spin {
+            from {
+               -webkit-transform: rotate(360deg);
+            }
+            to {
+               -webkit-transform: rotate(0deg);
+            }
+         }
+
+         @keyframes spin {
+            from {
+               transform: rotate(360deg);
+            }
+            to {
+               transform: rotate(0deg);
+            }
+         }
+
+         .img-fade-enter-active,
+         .img-fade-leave-active {
+            transition: opacity $animete-time;
+         }
+
+         .img-fade-enter,
+         .img-fade-leave-to {
+            opacity: 0;
+         }
+
+         .walletAndAddressBox {
+            height: 44px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 10px;
+            margin-right: 16px;
+            float: right;
+
+            .info {
+               width: 294px;
+               padding: 7px 16px;
+               display: flex;
+               justify-content: space-evenly;
+               align-items: center;
+               border-radius: 20px;
+               background: #f6f5f6;
+               display: none;
+
+               .wallet {
+                  margin-right: 8px;
+                  font-family: Gilroy-Bold;
+                  font-size: 14px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #5a575c;
+               }
+
+               .address {
+                  flex: 1;
+                  font-family: Gilroy-Regular;
+                  font-size: 14px;
+                  margin-right: 4px;
+                  text-align: center;
+                  // white-space: nowrap;
+                  // overflow: hidden;
+                  // text-overflow: ellipsis;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #99999a;
+               }
+
+               .copyBtn {
+                  cursor: pointer;
+                  width: 16px;
+                  height: 16px;
+                  display: none;
+                  margin-right: 12px;
+
+                  &:hover {
+                     #Combined-Shape {
+                        fill: #1a38f8;
+                        stroke: #1a38f8;
+                     }
+                  }
+               }
+            }
+
+            // .chainChange {
+            //     width: 90px;
+            //     height: 32px;
+            //     display: flex;
+            //     border-radius: 20px;
+            //     background: #fff;
+            //     box-shadow: 0 2px 6px 0 #deddde;
+            //     padding: 0 0;
+            //     position: relative;
+
+            //     &.chainChanging {
+            //         .ethBox,
+            //         .bscBox {
+            //             opacity: 0.2 !important;
+            //             cursor: not-allowed !important;
+            //         }
+            //     }
+
+            //     .ethBox,
+            //     .bscBox {
+            //         width: 32px;
+            //         height: 32px;
+            //         border-radius: 50%;
+            //         display: flex;
+            //         justify-content: center;
+            //         align-items: center;
+            //         transition: $animete-time linear;
+
+            //         &.selected {
+            //             box-shadow: 0 0 0 0 #deddde;
+            //             background-color: #ffffff;
+            //         }
+            //     }
+
+            //     .bscBox {
+            //         display: none;
+            //     }
+
+            //     .mNetworkName {
+            //         display: block;
+            //         font-family: Gilroy;
+            //         font-size: 12px;
+            //         font-weight: 500;
+            //         font-stretch: normal;
+            //         font-style: normal;
+            //         line-height: 32px;
+            //         letter-spacing: normal;
+            //         color: #99999a;
+            //         position: absolute;
+            //         padding-left: 29px;
+            //         left: 0;
+            //         top: 0px;
+            //     }
+            // }
+
+            .mNetwork {
+               display: flex;
+               align-items: center;
+               padding: 8px 12px;
+               box-shadow: 0 2px 6px 0 #deddde;
+               background-color: #ffffff;
+               border-radius: 16px;
+               margin-right: 8px;
+
+               #ethereumSvg,
+               #binanceSvg {
+                  width: 16px;
+                  height: 16px;
+                  margin-right: 4px;
+               }
+
+               .mNetworkName {
+                  font-family: Gilroy-Medium;
+                  font-size: 12px;
+                  font-weight: 500;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.33;
+                  letter-spacing: normal;
+                  color: #99999a;
+               }
+            }
+
+            .mMenu {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               width: 32px;
+               height: 32px;
+               border-radius: 50%;
+               box-shadow: 0 2px 6px 0 #deddde;
+               background-color: #ffffff;
+            }
+         }
+
+         .mShowWalletClass {
+            display: block !important;
+         }
+
+         .walletDetailsBox {
+            width: 100%;
+            height: 890px;
+            display: none;
+            background-color: #ffffff;
+
+            .mWalletHead {
+               width: 100%;
+               height: 64px;
+               padding: 16px 24px;
+               display: flex;
+               margin-bottom: 16px;
+
+               .networkIcon {
+                  width: 32px;
+                  height: 32px;
+                  padding: 8px 8px 8px 8px;
+                  box-shadow: 0 2px 6px 0 #deddde;
+                  background-color: #ffffff;
+                  text-align: center;
+                  border-radius: 16px;
+
+                  span {
+                     width: 100%;
+                     height: 100%;
+                     display: block;
+                  }
+
+                  img {
+                     width: 16px;
+                     height: 16px;
+                     left: 50%;
+                     transform: translateX(-50%);
+                  }
+               }
+
+               .mInfo {
+                  width: 65.3333333317vw;
+                  padding: 7px 16px;
+                  display: flex;
+                  justify-content: space-evenly;
+                  align-items: center;
+                  border-radius: 20px;
+                  background: #f6f5f6;
+                  margin-left: 10px;
+
+                  .wallet {
+                     margin-right: 8px;
+                     font-family: Gilroy-Bold;
+                     font-size: 14px;
+                     font-weight: bold;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.29;
+                     letter-spacing: normal;
+                     color: #5a575c;
+                  }
+
+                  .address {
+                     flex: 1;
+                     font-family: Gilroy-Regular;
+                     font-size: 14px;
+                     text-align: center;
+                     // white-space: nowrap;
+                     // overflow: hidden;
+                     // text-overflow: ellipsis;
+                     font-weight: normal;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.29;
+                     letter-spacing: normal;
+                     color: #99999a;
+                  }
+
+                  .copyBtn {
+                     cursor: pointer;
+                     width: 16px;
+                     height: 16px;
+
+                     &:hover {
+                        #Combined-Shape {
+                           fill: #1a38f8;
+                           stroke: #1a38f8;
+                        }
+                     }
+                  }
+               }
+
+               .mClose {
+                  position: relative;
+                  left: 16px;
+               }
+            }
+
+            .actionsBox {
+               display: flex;
+               justify-content: space-around;
+
+               .box {
+                  .boxItem {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     flex-direction: column;
+                     color: #99999a;
+                     text-align: center;
+                     text-transform: uppercase;
+                     cursor: pointer;
+                     transition: $animete-time linear;
+                     font-weight: bold;
+                     letter-spacing: 1.5px;
+                     font-family: Gilroy-bold;
+                     font-size: 12px;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.33;
+
+                     .placeholder {
+                        width: 40px;
+                        height: 40px;
+                        margin-bottom: 8px;
+                        position: relative;
+
+                        img {
+                           left: 0;
+                           width: 40px;
+                           position: absolute;
+                           transform: translateZ(0);
+                        }
+                     }
+
+                     &:hover,
+                     &.selected {
+                        color: #1a38f8;
+                     }
+                  }
+               }
+            }
+
+            .ratioBox {
+               margin: 24px 0 24px;
+               border-top: solid 1px #e5e5e5;
+               border-bottom: solid 1px #e5e5e5;
+               padding: 16px 24px;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+
+               .title {
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  margin-bottom: 27px;
+                  font-family: Gilroy-bold;
+                  font-size: 14px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #5a575c;
+
+                  .ivu-tooltip {
                      margin-left: 8px;
-                 }
-             }
+                  }
+               }
 
-             .ratio {
-                 display: flex;
-                 width: 100%;
+               .ratio {
+                  display: flex;
+                  width: 100%;
 
-                 .box {
+                  .box {
                      flex: 1;
                      font-family: Gilroy-bold;
-                     font-size: 32px;
+                     font-size: 24px;
                      font-weight: bold;
                      font-stretch: normal;
                      font-style: normal;
@@ -1412,879 +2074,232 @@ export default {
                      color: #5a575c;
 
                      .context {
-                         font-size: 14px;
-                         font-family: Gilroy-Regular;
-                         line-height: 1.29;
+                        font-size: 14px;
+                        font-family: Gilroy;
+                        line-height: 1.29;
+                        font-weight: 100;
                      }
 
                      &:nth-child(1) {
-                         border-right: solid 1px #eae9ea;
+                        border-right: solid 1px #eae9ea;
                      }
 
                      &:nth-child(2) {
-                         color: #99999a;
+                        color: #99999a;
                      }
-                 }
-             }
+                  }
+               }
 
-             .ivu-progress {
-                 margin-top: 4px;
-                 width: 278px;
-                 .ivu-progress-outer {
+               .ivu-progress {
+                  margin-top: 4px;
+                  width: 87.46666666448vw;
+
+                  .ivu-progress-outer {
                      .ivu-progress-inner {
-                         .ivu-progress-bg {
-                             background-color: rgba(#7eb5ff, 0.2) !important;
-                         }
-                         .ivu-progress-success-bg {
-                             background-color: #1a38f8;
-                         }
+                        .ivu-progress-bg {
+                           background-color: rgba(#7eb5ff, 0.2) !important;
+                        }
+
+                        .ivu-progress-success-bg {
+                           background-color: #1a38f8;
+                        }
                      }
-                 }
-             }
-         }*/
-
-		.walletInfo {
-			margin-bottom: 24px;
-
-			.tokenIcon {
-				border-radius: 50%;
-			}
-
-			.title {
-				font-family: Gilroy-bold;
-				font-size: 14px;
-				font-weight: bold;
-				font-stretch: normal;
-				font-style: normal;
-				line-height: 1.29;
-				letter-spacing: normal;
-				color: #5a575c;
-				margin-bottom: 18px;
-			}
-
-			.tokenBox {
-				border-bottom: solid 1px #e5e5e5;
-				display: flex;
-				padding: 16px 20px;
-				border-radius: 20px;
-				box-shadow: 0 2px 6px #deddde;
-				background-color: #ffffff;
-				margin-bottom: 10px;
-
-				.tokenIcon {
-					width: 36px;
-					height: 36px;
-					margin-right: 8px;
-				}
-
-				.box {
-					flex: 1;
-
-					.tokenItems {
-						font-family: Gilroy-Medium;
-						font-size: 12px;
-						font-weight: 500;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.33;
-						letter-spacing: normal;
-						color: #5a575c;
-						display: flex;
-						justify-content: space-between;
-
-						&.obtrusive {
-							.left {
-								font-family: Gilroy-bold;
-								font-size: 16px;
-								line-height: 1.5;
-								text-align: left;
-							}
-
-							.right {
-								font-family: Gilroy-Medium;
-								font-size: 16px;
-								text-align: right;
-							}
-
-							&.singer {
-								height: 100%;
-
-								.left {
-									display: flex;
-									align-items: center;
-
-									.ivu-tooltip {
-										margin-left: 8px;
-									}
-								}
-
-								.right {
-									font-family: Gilroy-Medium;
-									font-weight: 500;
-									font-stretch: normal;
-									font-style: normal;
-									letter-spacing: normal;
-									color: #5a575c;
-
-									.top {
-										font-size: 16px;
-										line-height: 1.5;
-									}
-
-									.bottom {
-										font-size: 12px;
-										line-height: 1.33;
-									}
-								}
-							}
-						}
-
-						&.unobtrusive {
-							color: #99999a;
-							margin-top: 8px;
-						}
-					}
-				}
-			}
-		}
-
-		.totalBalanceToUSD {
-			display: flex;
-
-			.box {
-				display: block;
-				.title {
-					font-family: Gilroy-bold;
-					font-size: 14px;
-					font-weight: bold;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.29;
-					letter-spacing: normal;
-					color: #5a575c;
-					margin-bottom: 8px;
-				}
-
-				.foot {
-					width: 374px;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					align-items: center;
-					padding: 16px 20px;
-					border-radius: 20px;
-					box-shadow: 0 2px 6px #deddde;
-					background-color: #ffffff;
-					margin-bottom: 10px;
-
-					.amount {
-						font-family: Gilroy-Bold;
-						font-size: 32px;
-						font-weight: bold;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.25;
-						letter-spacing: normal;
-						color: #5a575c;
-					}
-
-					.refBtn {
-						width: 134px;
-						height: 48px;
-						display: flex;
-						flex-direction: row;
-						justify-content: center;
-						align-items: center;
-						padding: 10px;
-						cursor: pointer;
-						border-radius: 8px;
-						background-color: #ecf1ff;
-						color: #4b72f0;
-						font-size: 16px;
-						img {
-							display: inline-block;
-							margin-right: 15px;
-						}
-
-						.border,
-						.shape {
-							transition: fill $animete-time linear;
-						}
-
-						&:hover {
-							&:not(.selected) {
-								.border {
-									stroke: #1a38f8;
-								}
-
-								.shape {
-									fill: #1a38f8;
-								}
-							}
-						}
-
-						&.selected {
-							.border {
-								stroke: #1a38f8;
-								fill: #1a38f8;
-							}
-
-							.shape {
-								fill: #fff;
-							}
-						}
-
-						&.refreshing {
-							-webkit-animation: spin 1s linear 1s 5 alternate;
-							animation: spin 1s linear infinite;
-							cursor: not-allowed;
-
-							//     .border {
-							//         stroke: #1A38F8;
-							//         fill: #1A38F8;
-							//     }
-							//     .shape {
-							//         fill: #fff;
-							//     }
-
-							//     &:hover {
-							//         cursor: not-allowed;
-							//     }
-						}
-					}
-				}
-			}
-
-			// .refreshBtn:active {
-			//     .background {
-			//         fill: #1b05a1;
-			//     }
-			//     .border {
-			//         stroke: #fff;
-			//     }
-			//     .shape {
-			//         fill: #fff;
-			//     }
-			// }
-		}
-	}
-}
-
-@media only screen and (max-width: $max-phone-width) {
-	#walletDetails {
-		width: 10vw;
-		position: fixed;
-		right: 0;
-		top: 30px;
-		z-index: 9999;
-
-		&.mScroll {
-			overflow-y: scroll;
-			height: 100%;
-			width: 100vw;
-		}
-
-		@-webkit-keyframes spin {
-			from {
-				-webkit-transform: rotate(360deg);
-			}
-			to {
-				-webkit-transform: rotate(0deg);
-			}
-		}
-
-		@keyframes spin {
-			from {
-				transform: rotate(360deg);
-			}
-			to {
-				transform: rotate(0deg);
-			}
-		}
-
-		.img-fade-enter-active,
-		.img-fade-leave-active {
-			transition: opacity $animete-time;
-		}
-
-		.img-fade-enter,
-		.img-fade-leave-to {
-			opacity: 0;
-		}
-
-		.walletAndAddressBox {
-			height: 44px;
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			margin-top: 10px;
-			margin-right: 16px;
-			float: right;
-
-			.info {
-				width: 294px;
-				padding: 7px 16px;
-				display: flex;
-				justify-content: space-evenly;
-				align-items: center;
-				border-radius: 20px;
-				background: #f6f5f6;
-				display: none;
-
-				.wallet {
-					margin-right: 8px;
-					font-family: Gilroy-Bold;
-					font-size: 14px;
-					font-weight: bold;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.29;
-					letter-spacing: normal;
-					color: #5a575c;
-				}
-
-				.address {
-					flex: 1;
-					font-family: Gilroy-Regular;
-					font-size: 14px;
-					margin-right: 4px;
-					text-align: center;
-					// white-space: nowrap;
-					// overflow: hidden;
-					// text-overflow: ellipsis;
-					font-weight: normal;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.29;
-					letter-spacing: normal;
-					color: #99999a;
-				}
-
-				.copyBtn {
-					cursor: pointer;
-					width: 16px;
-					height: 16px;
-					display: none;
-					margin-right: 12px;
-
-					&:hover {
-						#Combined-Shape {
-							fill: #1a38f8;
-							stroke: #1a38f8;
-						}
-					}
-				}
-			}
-
-			// .chainChange {
-			//     width: 90px;
-			//     height: 32px;
-			//     display: flex;
-			//     border-radius: 20px;
-			//     background: #fff;
-			//     box-shadow: 0 2px 6px 0 #deddde;
-			//     padding: 0 0;
-			//     position: relative;
-
-			//     &.chainChanging {
-			//         .ethBox,
-			//         .bscBox {
-			//             opacity: 0.2 !important;
-			//             cursor: not-allowed !important;
-			//         }
-			//     }
-
-			//     .ethBox,
-			//     .bscBox {
-			//         width: 32px;
-			//         height: 32px;
-			//         border-radius: 50%;
-			//         display: flex;
-			//         justify-content: center;
-			//         align-items: center;
-			//         transition: $animete-time linear;
-
-			//         &.selected {
-			//             box-shadow: 0 0 0 0 #deddde;
-			//             background-color: #ffffff;
-			//         }
-			//     }
-
-			//     .bscBox {
-			//         display: none;
-			//     }
-
-			//     .mNetworkName {
-			//         display: block;
-			//         font-family: Gilroy;
-			//         font-size: 12px;
-			//         font-weight: 500;
-			//         font-stretch: normal;
-			//         font-style: normal;
-			//         line-height: 32px;
-			//         letter-spacing: normal;
-			//         color: #99999a;
-			//         position: absolute;
-			//         padding-left: 29px;
-			//         left: 0;
-			//         top: 0px;
-			//     }
-			// }
-
-			.mNetwork {
-				display: flex;
-				align-items: center;
-				padding: 8px 12px;
-				box-shadow: 0 2px 6px 0 #deddde;
-				background-color: #ffffff;
-				border-radius: 16px;
-				margin-right: 8px;
-
-				#ethereumSvg,
-				#binanceSvg {
-					width: 16px;
-					height: 16px;
-					margin-right: 4px;
-				}
-
-				.mNetworkName {
-					font-family: Gilroy-Medium;
-					font-size: 12px;
-					font-weight: 500;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.33;
-					letter-spacing: normal;
-					color: #99999a;
-				}
-			}
-
-			.mMenu {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 32px;
-				height: 32px;
-				border-radius: 50%;
-				box-shadow: 0 2px 6px 0 #deddde;
-				background-color: #ffffff;
-			}
-		}
-
-		.mShowWalletClass {
-			display: block !important;
-		}
-
-		.walletDetailsBox {
-			width: 100%;
-			height: 890px;
-			display: none;
-			background-color: #ffffff;
-
-			.mWalletHead {
-				width: 100%;
-				height: 64px;
-				padding: 16px 24px;
-				display: flex;
-				margin-bottom: 16px;
-
-				.networkIcon {
-					width: 32px;
-					height: 32px;
-					padding: 8px 8px 8px 8px;
-					box-shadow: 0 2px 6px 0 #deddde;
-					background-color: #ffffff;
-					text-align: center;
-					border-radius: 16px;
-
-					span {
-						width: 100%;
-						height: 100%;
-						display: block;
-					}
-
-					img {
-						width: 16px;
-						height: 16px;
-						left: 50%;
-						transform: translateX(-50%);
-					}
-				}
-
-				.mInfo {
-					width: 65.3333333317vw;
-					padding: 7px 16px;
-					display: flex;
-					justify-content: space-evenly;
-					align-items: center;
-					border-radius: 20px;
-					background: #f6f5f6;
-					margin-left: 10px;
-
-					.wallet {
-						margin-right: 8px;
-						font-family: Gilroy-Bold;
-						font-size: 14px;
-						font-weight: bold;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.29;
-						letter-spacing: normal;
-						color: #5a575c;
-					}
-
-					.address {
-						flex: 1;
-						font-family: Gilroy-Regular;
-						font-size: 14px;
-						text-align: center;
-						// white-space: nowrap;
-						// overflow: hidden;
-						// text-overflow: ellipsis;
-						font-weight: normal;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.29;
-						letter-spacing: normal;
-						color: #99999a;
-					}
-
-					.copyBtn {
-						cursor: pointer;
-						width: 16px;
-						height: 16px;
-
-						&:hover {
-							#Combined-Shape {
-								fill: #1a38f8;
-								stroke: #1a38f8;
-							}
-						}
-					}
-				}
-
-				.mClose {
-					position: relative;
-					left: 16px;
-				}
-			}
-
-			.actionsBox {
-				display: flex;
-				justify-content: space-around;
-
-				.box {
-					.boxItem {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						flex-direction: column;
-						color: #99999a;
-						text-align: center;
-						text-transform: uppercase;
-						cursor: pointer;
-						transition: $animete-time linear;
-						font-weight: bold;
-						letter-spacing: 1.5px;
-						font-family: Gilroy-bold;
-						font-size: 12px;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.33;
-
-						.placeholder {
-							width: 40px;
-							height: 40px;
-							margin-bottom: 8px;
-							position: relative;
-
-							img {
-								left: 0;
-								width: 40px;
-								position: absolute;
-								transform: translateZ(0);
-							}
-						}
-
-						&:hover,
-						&.selected {
-							color: #1a38f8;
-						}
-					}
-				}
-			}
-
-			.ratioBox {
-				margin: 24px 0 24px;
-				border-top: solid 1px #e5e5e5;
-				border-bottom: solid 1px #e5e5e5;
-				padding: 16px 24px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-
-				.title {
-					width: 100%;
-					display: flex;
-					align-items: center;
-					margin-bottom: 27px;
-					font-family: Gilroy-bold;
-					font-size: 14px;
-					font-weight: bold;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.29;
-					letter-spacing: normal;
-					color: #5a575c;
-
-					.ivu-tooltip {
-						margin-left: 8px;
-					}
-				}
-
-				.ratio {
-					display: flex;
-					width: 100%;
-
-					.box {
-						flex: 1;
-						font-family: Gilroy-bold;
-						font-size: 24px;
-						font-weight: bold;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.25;
-						letter-spacing: normal;
-						text-align: center;
-						color: #5a575c;
-
-						.context {
-							font-size: 14px;
-							font-family: Gilroy;
-							line-height: 1.29;
-							font-weight: 100;
-						}
-
-						&:nth-child(1) {
-							border-right: solid 1px #eae9ea;
-						}
-
-						&:nth-child(2) {
-							color: #99999a;
-						}
-					}
-				}
-
-				.ivu-progress {
-					margin-top: 4px;
-					width: 87.46666666448vw;
-
-					.ivu-progress-outer {
-						.ivu-progress-inner {
-							.ivu-progress-bg {
-								background-color: rgba(#7eb5ff, 0.2) !important;
-							}
-
-							.ivu-progress-success-bg {
-								background-color: #1a38f8;
-							}
-						}
-					}
-				}
-			}
-
-			.walletInfo {
-				margin-bottom: 24px;
-				padding: 0 24px;
-
-				.tokenIcon {
-					border-radius: 50%;
-				}
-
-				.title {
-					font-family: Gilroy-bold;
-					font-size: 14px;
-					font-weight: bold;
-					font-stretch: normal;
-					font-style: normal;
-					line-height: 1.29;
-					letter-spacing: normal;
-					color: #5a575c;
-					margin-bottom: 8px;
-				}
-
-				.tokenBox {
-					border-bottom: solid 1px #e5e5e5;
-					display: flex;
-					padding: 16px 0;
-
-					&:nth-last-child(1) {
-						border: 0px;
-					}
-
-					.tokenIcon {
-						width: 40px;
-						height: 40px;
-						margin-right: 8px;
-					}
-
-					.box {
-						flex: 1;
-
-						.tokenItems {
-							font-family: Gilroy-Medium;
-							font-size: 12px;
-							font-weight: 500;
-							font-stretch: normal;
-							font-style: normal;
-							line-height: 1.33;
-							letter-spacing: normal;
-							color: #5a575c;
-							display: flex;
-							justify-content: space-between;
-
-							&.obtrusive {
-								.left {
-									font-family: Gilroy-bold;
-									font-size: 16px;
-									line-height: 1.5;
-									text-align: left;
-								}
-
-								.right {
-									font-family: Gilroy-Medium;
-									font-size: 16px;
-									text-align: right;
-								}
-
-								&.singer {
-									height: 100%;
-
-									.left {
-										display: flex;
-										align-items: center;
-
-										.ivu-tooltip {
-											margin-left: 8px;
-										}
-									}
-
-									.right {
-										font-family: Gilroy-Medium;
-										font-weight: 500;
-										font-stretch: normal;
-										font-style: normal;
-										letter-spacing: normal;
-										color: #5a575c;
-
-										.top {
-											font-size: 16px;
-											line-height: 1.5;
-										}
-
-										.bottom {
-											font-size: 12px;
-											line-height: 1.33;
-										}
-									}
-								}
-							}
-
-							&.unobtrusive {
-								color: #99999a;
-								margin-top: 8px;
-							}
-						}
-					}
-				}
-			}
-
-			.totalBalanceToUSD {
-				height: 90px;
-				width: 100vw;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 24px;
-				box-shadow: 0 -2px 6px 0 #deddde;
-				position: fixed;
-				left: 0;
-				bottom: 0;
-				background-color: #ffffff;
-
-				.box {
-					.title {
-						font-family: Gilroy-bold;
-						font-size: 14px;
-						font-weight: bold;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.29;
-						letter-spacing: normal;
-						color: #5a575c;
-						margin-bottom: 8px;
-					}
-
-					.amount {
-						font-family: Gilroy-Bold;
-						font-size: 24px;
-						font-weight: bold;
-						font-stretch: normal;
-						font-style: normal;
-						line-height: 1.25;
-						letter-spacing: normal;
-						color: #5a575c;
-					}
-				}
-
-				.refreshBtn {
-					cursor: pointer;
-
-					.border,
-					.shape {
-						transition: fill $animete-time linear;
-					}
-
-					&:hover {
-						&:not(.selected) {
-							.border {
-								stroke: #1a38f8;
-							}
-
-							.shape {
-								fill: #1a38f8;
-							}
-						}
-					}
-
-					&.selected {
-						.border {
-							stroke: #1a38f8;
-							fill: #1a38f8;
-						}
-
-						.shape {
-							fill: #fff;
-						}
-					}
-
-					&.refreshing {
-						-webkit-animation: spin 1s linear 1s 5 alternate;
-						animation: spin 1s linear infinite;
-						cursor: not-allowed;
-					}
-				}
-			}
-		}
-
-		.mNavigate {
-			width: 100vw;
-			position: fixed;
-			height: 100%;
-			position: fixed;
-			left: 0;
-			top: 0;
-		}
-	}
-}
+                  }
+               }
+            }
+
+            .walletInfo {
+               margin-bottom: 24px;
+               padding: 0 24px;
+
+               .tokenIcon {
+                  border-radius: 50%;
+               }
+
+               .title {
+                  font-family: Gilroy-bold;
+                  font-size: 14px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #5a575c;
+                  margin-bottom: 8px;
+               }
+
+               .tokenBox {
+                  border-bottom: solid 1px #e5e5e5;
+                  display: flex;
+                  padding: 16px 0;
+
+                  &:nth-last-child(1) {
+                     border: 0px;
+                  }
+
+                  .tokenIcon {
+                     width: 40px;
+                     height: 40px;
+                     margin-right: 8px;
+                  }
+
+                  .box {
+                     flex: 1;
+
+                     .tokenItems {
+                        font-family: Gilroy-Medium;
+                        font-size: 12px;
+                        font-weight: 500;
+                        font-stretch: normal;
+                        font-style: normal;
+                        line-height: 1.33;
+                        letter-spacing: normal;
+                        color: #5a575c;
+                        display: flex;
+                        justify-content: space-between;
+
+                        &.obtrusive {
+                           .left {
+                              font-family: Gilroy-bold;
+                              font-size: 16px;
+                              line-height: 1.5;
+                              text-align: left;
+                           }
+
+                           .right {
+                              font-family: Gilroy-Medium;
+                              font-size: 16px;
+                              text-align: right;
+                           }
+
+                           &.singer {
+                              height: 100%;
+
+                              .left {
+                                 display: flex;
+                                 align-items: center;
+
+                                 .ivu-tooltip {
+                                    margin-left: 8px;
+                                 }
+                              }
+
+                              .right {
+                                 font-family: Gilroy-Medium;
+                                 font-weight: 500;
+                                 font-stretch: normal;
+                                 font-style: normal;
+                                 letter-spacing: normal;
+                                 color: #5a575c;
+
+                                 .top {
+                                    font-size: 16px;
+                                    line-height: 1.5;
+                                 }
+
+                                 .bottom {
+                                    font-size: 12px;
+                                    line-height: 1.33;
+                                 }
+                              }
+                           }
+                        }
+
+                        &.unobtrusive {
+                           color: #99999a;
+                           margin-top: 8px;
+                        }
+                     }
+                  }
+               }
+            }
+
+            .totalBalanceToUSD {
+               height: 90px;
+               width: 100vw;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               padding: 0 24px;
+               box-shadow: 0 -2px 6px 0 #deddde;
+               position: fixed;
+               left: 0;
+               bottom: 0;
+               background-color: #ffffff;
+
+               .box {
+                  .title {
+                     font-family: Gilroy-bold;
+                     font-size: 14px;
+                     font-weight: bold;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.29;
+                     letter-spacing: normal;
+                     color: #5a575c;
+                     margin-bottom: 8px;
+                  }
+
+                  .amount {
+                     font-family: Gilroy-Bold;
+                     font-size: 24px;
+                     font-weight: bold;
+                     font-stretch: normal;
+                     font-style: normal;
+                     line-height: 1.25;
+                     letter-spacing: normal;
+                     color: #5a575c;
+                  }
+               }
+
+               .refreshBtn {
+                  cursor: pointer;
+
+                  .border,
+                  .shape {
+                     transition: fill $animete-time linear;
+                  }
+
+                  &:hover {
+                     &:not(.selected) {
+                        .border {
+                           stroke: #1a38f8;
+                        }
+
+                        .shape {
+                           fill: #1a38f8;
+                        }
+                     }
+                  }
+
+                  &.selected {
+                     .border {
+                        stroke: #1a38f8;
+                        fill: #1a38f8;
+                     }
+
+                     .shape {
+                        fill: #fff;
+                     }
+                  }
+
+                  &.refreshing {
+                     -webkit-animation: spin 1s linear 1s 5 alternate;
+                     animation: spin 1s linear infinite;
+                     cursor: not-allowed;
+                  }
+               }
+            }
+         }
+
+         .mNavigate {
+            width: 100vw;
+            position: fixed;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+         }
+      }
+   }
 </style>
