@@ -20,7 +20,7 @@
                      </template>
                   </div>
                   <div class="actionRate" v-if="isBinanceNetwork">
-                     1 SHUM = {{ floor(burnData.LINA2USD, 4) }} sUSD
+                     1 SHUM = {{ floor(burnData.LINA2USD, 4) }}<img style="margin-left:5px;"  src="@/static/font.png"/> USD
                   </div>
                   <div class="webitem">
                      <div
@@ -32,7 +32,7 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/LINA_logo.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">
@@ -93,7 +93,7 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/currency/sUSD.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">Burn</div>
@@ -140,7 +140,7 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/percentage.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">P Ratio</div>
@@ -202,7 +202,7 @@
                      {{ errors.amountMsg }}
                   </div>
                   <div class="actionRate">
-                     1 SHUM = {{ floor(burnData.LINA2USD, 4) }} sUSD
+                     1 SHUM = {{ floor(burnData.LINA2USD, 4) }}<img style="margin-left:5px;"  src="@/static/font.png"/> USD
                   </div>
 
                   <div class="inputGroupBox">
@@ -222,7 +222,7 @@
 
                            <img
                                class="logo"
-                               src="@/static/LINA_logo.svg"
+                               src="@/static/logoshum.jpg"
                            />
 
                            <div class="itemTypeTitle">
@@ -266,7 +266,7 @@
                         <div class="inputBox">
                            <img
                                class="logo"
-                               src="@/static/currency/sUSD.svg"
+                               src="@/static/logoshum.jpg"
                            />
 
                            <div class="itemTypeTitle">Burn sUSD</div>
@@ -628,13 +628,15 @@
 
                let currentRatioPercent = n2bn("0");
 
-               console.log("xxl 4");
-               if (results[3].gt("0") && results[6][0].gt("0")) {
-                  currentRatioPercent = bnMul(
-                    bnDiv(results[3], results[6][0]),
-                    n2bn("100")
-                  );
-               }
+               //xxl bug 00
+               // if (results[3].gt("0") && results[6][0].gt("0")) {
+               //    currentRatioPercent = bnMul(
+               //      bnDiv(results[3], results[6][0]),
+               //      n2bn("100")
+               //    );
+               // }
+               currentRatioPercent = bnMul(results[4],n2bn("100"))
+
 
                const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
@@ -1217,6 +1219,11 @@
                         }
                      }
                   }
+
+                  //xxl bug 00
+                  //this.burnData.targetRatio = n2bn("100");
+                   this.inputData.ratio = 100;
+
                }
             } catch (error) {
             }
@@ -1358,6 +1365,8 @@
                        this.burnData.targetRatio.toString()
                      );
                   }
+                  //xxl bug 00
+                  this.inputData.ratio = 100;
                }
             } catch (error) {
             }
@@ -1482,7 +1491,7 @@
                      this.errors.unStakeMsg = "";
                   }
 
-                  //一个LINA都解锁不了
+                  //一个SHUM都解锁不了
                   if (
                     n2bn(unstakedAmount.toString()).gt(
                       this.burnData.stakedBN
@@ -1680,15 +1689,19 @@
                        n2bn("100")
                      );
 
+                     //xxl bug 00
                      //修复除不尽的显示错误
-                     if (ratioAfterAction.lt(n2bn("500"))) {
-                        ratioAfterAction = n2bn("500");
-                     }
-
+                     // if (ratioAfterAction.lt(n2bn("500"))) {
+                     //    ratioAfterAction = n2bn("500");
+                     // }
+                     ratioAfterAction = n2bn("100");
+                     //
                      this.inputData.ratio = formatEtherToNumber(
                        ratioAfterAction
                      );
                      this.actionDatas.ratio = ratioAfterAction;
+
+
 
                      //this.inputData.ratio = this.burnData.targetRatio;
                      //this.actionDatas.ratio = n2bn(this.burnData.targetRatio.toString());

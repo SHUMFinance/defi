@@ -35,7 +35,7 @@ const main = async () => {
     /**
      * Set config items:
      *
-     * - BuildRatio: 0.2
+     * - BuildRatio: 1
      * - LiquidationRatio: 0.5
      * - LiquidationMarkerReward: 0.05
      * - LiquidationLiquidatorReward: 0.1
@@ -44,7 +44,7 @@ const main = async () => {
     for (const config of [
     {
         key: "BuildRatio",
-        value: expandTo18Decimals(0.2),
+        value: expandTo18Decimals(1),
     },
     {
         key: "LiquidationRatio",
@@ -68,7 +68,7 @@ const main = async () => {
         config.value // value
     );
     console.log("shumConfig setUint :");
-    console.log(" * - BuildRatio: 0.2 ");
+    console.log(" * - BuildRatio: 1 ");
     console.log(" * - LiquidationRatio: 0.5 ");
     console.log(" * - LiquidationMarkerReward: 0.05 ");
     console.log(" * - LiquidationLiquidatorReward: 0.1");

@@ -20,7 +20,7 @@
                         <span>44%</span>
                      </p>
                   </div>
-                  <div class="btn" @xlick="buildBtn">GO TO BUILD</div>
+                  <div class="btn" @click="buildBtn">GO TO BUILD</div>
                </div>
             </div>
          </div>
@@ -340,10 +340,12 @@
             })
          },
          buildBtn() {
-
+            this.$store.commit("setCurrentAction", 3);
+            this.$router.push("/build");
          },
          toExchange() {
-
+            this.$store.commit("setCurrentAction",2);
+            this.$router.push("/exchange");
          }
       }
    }

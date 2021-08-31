@@ -9,7 +9,7 @@ module.exports = {
 	},
 	server: {
 		port: process.env.SERVER_PORT,
-		host: '127.0.0.1', // default: localhost
+		host: '0.0.0.0', // default: localhost
 	},
 	/*
 	 ** Headers of the page

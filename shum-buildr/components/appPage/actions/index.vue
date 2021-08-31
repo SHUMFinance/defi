@@ -4,7 +4,7 @@
          <a href="/" class="webLogo" style="color:#000000;font-size:14px;font-weight:400">
             <img
                 class="linearBuildrlogo"
-                src="@/static/LINA_logo.svg"
+                src="@/static/logoshum.jpg"
             />
             <p v-if="currentAction == 0">ShumFinance</p>
             <p v-if="currentAction != 0">Shum<span style="color:#1A38F8">Finance</span></p>
@@ -13,7 +13,7 @@
          <a href="/" class="mobileLogo">
             <img
                 class="linearBuildrlogo"
-                src="@/static/LINA_logo.svg"
+                src="@/static/logoshum.jpg"
                 v-show="currentAction == 0 && othersAction == 0"
             />
             <img
@@ -148,7 +148,13 @@
          </div>
       </div>
 
-      <div class="actionsBox" :style="(currentAction == 1 ||currentAction == 2) ? 'overflow:visible;width:1200px;box-shadow:none;border-radius:0;': 'width:786px' ">
+      <div class="actionsBox" :style="(currentAction == 1 ||currentAction == 2) ?
+         'overflow:visible;width:1200px;box-shadow:none;border-radius:0;':
+         currentAction === 7 ?
+         'width: unset;height: unset;' :
+         currentAction === 5 ?
+         'overflow:visible;width:786px' :
+         'width:786px' ">
          <homePage v-if="currentAction == 0"></homePage>
          <dashboard v-else-if="currentAction == 1"></dashboard>
          <exchange v-else-if="currentAction == 2"></exchange>

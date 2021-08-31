@@ -45,7 +45,6 @@ const main = async () => {
     let susdToken = await ShumAssetUpgradeable.connect(admin).attach(
         SUSDTokenAddress
     );
-    
     console.log(SUSDTokenAddress);
 
     ///
@@ -61,7 +60,7 @@ const main = async () => {
         expandTo18Decimals(1),                      // buildAmount
         { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
     );
-    //console.log(result);
+    console.log(result);
 
     let recipt = await result.wait();
     console.log(recipt);

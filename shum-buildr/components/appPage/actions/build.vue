@@ -17,7 +17,8 @@
                      </template>
                   </div>
                   <div class="actionRate" v-if="isBinanceNetworkData">
-                     1 SHUM = {{formatNumberFromBigNumber(buildData.LINA2USDBN,4)}}sUSD
+                     1 SHUM = {{formatNumberFromBigNumber(buildData.LINA2USDBN,4)}}
+                     <img style="margin-left:5px;" src="@/static/font.png"/>USD
                   </div>
                   <div class="webitem">
                      <div class="actionInputItem"
@@ -28,7 +29,7 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/LINA_logo.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">Stake SHUM</div>
@@ -86,7 +87,7 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/currency/sUSD.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">
@@ -154,10 +155,10 @@
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
-                              <img src="@/static/percentage.svg"/>
+                              <img src="@/static/logoshum.jpg"/>
                            </div>
                            <div class="itemType">
-                              <div class="itemTypeTitle">P Ratio1</div>
+                              <div class="itemTypeTitle">P Ratio</div>
                            </div>
                         </div>
                         <div class="itemRight">
@@ -232,7 +233,8 @@
                      4
                      )
                      }}
-                     sUSD
+                     <img style="margin-left:5px;"  src="@/static/font.png"/>
+                     USD
                   </div>
 
                   <div class="inputGroupBox">
@@ -709,12 +711,15 @@
                console.log("xxl --00 " + currentRatioPercent);
                console.log(results);
 
-               if (results[6].gt("0") && results[4][0].gt("0")) {
-                  currentRatioPercent = bnMul(
-                        bnDiv(results[6], results[4][0]),
-                        n2bn("100")
-                  );
-               }
+               // xxl bug 00
+               // if (results[6].gt("0") && results[4][0].gt("0")) {
+               //    currentRatioPercent = bnMul(
+               //          bnDiv(results[6], results[4][0]),
+               //          n2bn("100")
+               //    );
+               // }
+               currentRatioPercent = bnMul(results[5],n2bn("100"))
+
 
                console.log("xxl 01 " + currentRatioPercent);
                const targetRatioPercent = 100 / buildRatio; //目标抵押率
@@ -799,9 +804,12 @@
                if (this.isEthDevNetwork) {
                   this.inputData.stake = this.buildData.LINA;
                } else {
+
+
+
                   let allCanBuildsUSDAfterStakeAll = n2bn("0");
 
-                  //抵押所有lina后能生成多少sUSD
+                  //抵押所有shum后能生成多少sUSD
                   allCanBuildsUSDAfterStakeAll = bnDiv(
                     bnMul(
                       bnAdd(
@@ -815,6 +823,10 @@
                     ),
                     n2bn((this.buildData.targetRatio / 100).toString())
                   );
+
+                  console.log("xxl allCanBuildsUSDAfterStakeAll : " + allCanBuildsUSDAfterStakeAll);
+
+
 
                   //可以生成的sUSD小于等于债务
                   if (
@@ -836,26 +848,43 @@
                   this.inputData.stake = formatEtherToNumber(
                     this.buildData.LINABN
                   );
-                  this.inputData.amount = formatEtherToNumber(
-                    bnSub(
-                      allCanBuildsUSDAfterStakeAll,
-                      this.buildData.debtBN
-                    )
-                  );
-                  this.inputData.ratio = 500;
+                  console.log("xxl this.inputData.stake ",this.inputData.stake);
+
+                  //xxl 00
+                  // this.inputData.amount = formatEtherToNumber(
+                  //   bnSub(
+                  //     allCanBuildsUSDAfterStakeAll,
+                  //     this.buildData.debtBN
+                  //   )
+                  // );
+                  console.log("xxl this.buildData.LINA2USD " + this.buildData.LINA2USD);
+
+                  this.inputData.amount = this.inputData.stake * this.buildData.LINA2USD;
+
+
+
+                  console.log("xxl this.inputData.amount ",this.inputData.amount);
+
+
+
+
+                  // xxl bug 00
+                  this.inputData.ratio = 100;
 
                   this.actionData.stake = this.buildData.LINABN;
                   this.actionData.amount = bnSub(
                     allCanBuildsUSDAfterStakeAll,
                     this.buildData.debtBN
                   );
-                  this.actionData.ratio = n2bn("500");
+                  this.actionData.ratio = n2bn("100");
 
                   this.adjustMinStake();
                }
+
             } catch (error) {
                console.log(error, "clickMaxBuildAmount error");
             }
+
          },
 
          //点击target
@@ -976,25 +1005,27 @@
             try {
 
 
-               console.log(1);
+               console.log("xxl changeStakeAmount ... ");
                this.resetErrorsMsg();
-               // this.resetInputData();
+               //this.resetInputData();
 
                if (!stakeAmount) {
                   this.errors.stakeMsg =
-                    "You can't stake the amount of LINA.";
+                    "You can't stake the amount of SHUM.";
                   return;
                }
 
                if (n2bn(stakeAmount.toString()).gt(this.buildData.LINABN)) {
                   this.errors.stakeMsg =
-                    "You don't have enough amount of LINA.";
+                    "You don't have enough amount of SHUM.";
                   return;
                }
 
+               console.log("xxl stakeAmount : " + stakeAmount);
+
                //xxl TODO
-               //if (!this.isEthDevNetwork) {
-                  //抵押输入的lina时能生成的最大sUSD
+               if (!this.isEthDevNetwork) {
+                  //抵押输入的shum时能生成的最大sUSD
                   let canBuildMaxAfterStake = bnDiv(
                     bnMul(
                       bnAdd(
@@ -1014,15 +1045,29 @@
                     this.buildData.debtBN
                   );
 
-                  if (canBuildAfterStake.lt(n2bn("0"))) {
-                     this.inputData.amount = 0;
-                     this.actionData.amount = n2bn("0");
-                  } else {
-                     this.inputData.amount = formatEtherToNumber(
+
+                  console.log("xxl : this.buildData.LINA2USDBN " + this.buildData.LINA2USDBN);
+                  //xxl bug 00
+                  canBuildAfterStake = bnMul(this.buildData.LINA2USDBN,n2bn(stakeAmount));
+                  console.log("xxl : canBuildAfterStake " + canBuildAfterStake);
+                  this.inputData.amount = formatEtherToNumber(
                        canBuildAfterStake
-                     );
-                     this.actionData.amount = canBuildAfterStake;
-                  }
+                  );
+                  this.actionData.amount = canBuildAfterStake;
+                  //
+
+
+                  // if (canBuildAfterStake.lt(n2bn("0"))) {
+                  //    this.inputData.amount = 0;
+                  //    this.actionData.amount = n2bn("0");
+                  // } else {
+                  //    this.inputData.amount = formatEtherToNumber(
+                  //      canBuildAfterStake
+                  //    );
+                  //    this.actionData.amount = canBuildAfterStake;
+                  // }
+
+                  console.log("xxl this.inputData.amount :" + this.inputData.amount);
 
                   //需要approve
                   if (
@@ -1036,23 +1081,29 @@
                   this.inputData.stake = stakeAmount;
                   this.actionData.stake = n2bn(stakeAmount.toString());
 
-                  this.adjustMinStake();
 
-                  this.actionData.ratio = bnMul(
-                    bnDiv(
-                      bnMul(
-                        canBuildMaxAfterStake,
-                        n2bn(this.buildData.targetRatio / 100)
-                      ),
-                      bnAdd(this.actionData.amount, this.buildData.debtBN)
-                    ),
-                    n2bn("100")
-                  );
+                  console.log("this.actionData.stake :" + this.actionData.stake);
 
-                  this.inputData.ratio = formatEtherToNumber(
-                    this.actionData.ratio
-                  );
-               //}
+                  // xxl bug 00
+                  // this.adjustMinStake();
+
+                  // this.actionData.ratio = bnMul(
+                  //   bnDiv(
+                  //     bnMul(
+                  //       canBuildMaxAfterStake,
+                  //       n2bn(this.buildData.targetRatio / 100)
+                  //     ),
+                  //     bnAdd(this.actionData.amount, this.buildData.debtBN)
+                  //   ),
+                  //   n2bn("100")
+                  // );
+
+                  // this.inputData.ratio = formatEtherToNumber(
+                  //   this.actionData.ratio
+                  // );
+
+                  // console.log("xxl change : " + this.inputData.ratio);
+               }
             } catch (error) {
                console.log(error, "stake change error");
                this.errors.stakeMsg = "Invalid number";

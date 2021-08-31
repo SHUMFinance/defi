@@ -1,136 +1,118 @@
 <template>
-   <div>
-      <div class="c_chart" ref="progressChartRef"></div>
-
-   </div>
+  <div
+    class="c_chart"
+    ref="progressChartRef"
+  ></div>
 </template>
-<script>
-   import echarts from "echarts";
 
-   export default {
-      name: 'prosess',
-      props: {
-         chartData1: {
-            type: Object
-         },
-         chartData2: {
-            type: Object
-         },
-         chartData3: {
-            type: Object
-         },
+<script lang='js'>
+import echarts from "echarts";
+
+export default {
+   name: 'Prosess',
+   props: {
+      chartData: {
+         type: Object
+      }
+   },
+   data: function() {
+      return {
+         chart: null,
+      };
+   },
+   computed: {
+      barObj: function() {
+         return this.chartData &&
+            this.chartData.barObj;
       },
-      data() {
-         return {
-            chart: null,
+      barData: function() {
+         const num = this.barObj &&
+            this.barObj.barData && 
+            this.barObj.barData[0] || 0;
+         return Number(num) || 0;
+      },
+      barWidth: function() {
+         return this.barObj &&
+            this.barObj.barWidth || 10;
+      },
+      color: function() {
+         return this.barObj &&
+            this.barObj.color || '#ED8D8B';
+      },
+   },
+   mounted() {
+      this.initChart();
+   },
+   beforeDestroy() {
+      if (this.chart) {
+         this.chart.clear();
+         this.chart.dispose();
+      }
+   },
+   methods: {
+      initChart() {
+         const color = "#eee";
+         this.chart = echarts.init(this.$refs.progressChartRef);
+         const option = {
+            grid: {
+               top: 0,
+               bottom: 0,
+               left: 0,
+               right: 0,
+            },
+            color: [this.color, color],
+            xAxis: {
+               show: false,
+               type: "value",
+               boundaryGap: [0, 0],
+            },
+            yAxis: [
+               {
+                  type: "category",
+                  data: [""],
+                  axisLine: { show: false },
+                  axisTick: [
+                     {
+                     show: false,
+                     },
+                  ],
+               },
+            ],
+            series: [
+               {
+                  type: "bar",
+                  name: "已完成",
+                  stack: "总量",
+                  barMaxWidth: 20,
+                  itemStyle: {
+                     barBorderRadius: [10, 10, 10, 10],
+                  },
+                  data: [this.barData],
+               },
+               {
+                  type: "bar",
+                  name: "未完成",
+                  stack: "总量",
+                  barMaxWidth: 20,
+                  showBackground: true,
+                  backgroundStyle: {
+                     color: color,
+                     barBorderRadius: [10, 10, 10, 10],
+                  },
+                  itemStyle: {
+                     color: color,
+                     barBorderRadius: [0, 10, 10, 0],
+                  },
+                  silent: true,
+                  data: [100 - this.barData],
+               },
+            ],
          };
+         this.chart.setOption(option);
       },
-      computed: {
-         queryChartData() {
-            debugger
-            return this.chartData1;
-         },
-
-      },
-      mounted() {
-         this.initChart();
-      },
-      methods: {
-         initChart() {
-            // 基于准备好的dom，初始化echarts
-            this.chart = echarts.init(this.$refs.progressChartRef);
-            let option = {
-               grid: {
-                  left: "0",
-                  right: "0",
-                  top: "0",
-                  bottom: "0"
-               },
-               xAxis: {
-                  type: "value",
-                  show: false,
-               },
-               yAxis: [
-                  {
-                     inverse: true,
-                     type: 'category',
-                     splitLine: {//设置网格
-                        show: false,
-                     },
-                     axisTick: {//设置刻度朝向
-                        show: false,
-                     },
-                     axisLine: {//设置箭头
-                        show: false,
-                     },
-                     data: [""], //数据点名称
-                  },
-               ],
-               legend: {
-                  orient: "horizontal",
-                  x: "left",
-                  show: true,
-               },
-               series: [
-                  {
-                     name: "38888888888",
-                     type: "bar",
-                     silent: true, //取消点击高亮
-                     zlevel: 1,
-                     itemStyle: {
-                        normal: {
-                           // color: "#A7B0FA",
-                           barBordeRadius: 3
-                        },
-                     },
-                     barWidth: 6,
-                     data: [this.chartData1], //值
-                  },
-                  {
-                     name: "2222222",
-                     type: "bar",
-                     silent: true, //取消点击高亮
-                     zlevel: 1,
-                     itemStyle: {
-                        normal: {
-                           // color: "#ED8D8B",
-                           barBordeRadius: 3
-                        },
-                     },
-                     barWidth: 6,
-                     data: [this.chartData2], //值
-                  },
-                  {
-                     name: "38888888",
-                     type: "bar",
-                     silent: true, //取消点击高亮
-                     zlevel: 1,
-                     itemStyle: {
-                        normal: {
-                           // color: "#9DCB79",
-                           barBordeRadius:3
-                        },
-                     },
-                     barWidth: 6,
-                     data: [this.chartData3], //值
-                  }
-               ],
-            };
-            this.chart.setOption(option);
-         },
-      },
-      beforeDestroy() {
-         if (this.chart) {
-            this.chart.clear();
-            this.chart.dispose();
-         }
-      },
-   };
-</script>
-<style lang="scss" scoped>
-   .c_chart {
-      margin-top: 50px;
-      padding: 50px 0;
    }
-</style>
+};
 
+</script>
+
+<style lang='less' scoped></style>

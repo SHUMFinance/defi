@@ -52,7 +52,7 @@
         <div class="actionsBox">
             <div class="boxItem" @click="isMobile && btnClick(1)">
                 <div class="imgBox">
-                    <img src="@/static/LINA_logo.svg"  />
+                    <img src="@/static/logoshum.jpg"  />
                 </div>
                 <div class="boxContext">
                     Buy Shum <br />
@@ -68,7 +68,7 @@
             </div>
             <div class="boxItem" @click="isMobile && btnClick(2)">
                 <div class="imgBox">
-                    <img src="@/static/currency/sUSD.svg"  />
+                    <img src="@/static/logoshum.jpg"  />
                 </div>
                 <div class="boxContext">
                     Stake Shum <br />
@@ -336,14 +336,15 @@ export default {
         actionLink(value) {
             switch(value) {
                 case 1:
-                    window.open("https://app.uniswap.org/#/swap?inputCurrency=0x3e9bc21c9b189c09df3ef1b824798658d5011937&outputCurrency=0xdac17f958d2ee523a2206206994597c13d831ec7");
+                    //window.open("https://app.uniswap.org/#/swap?inputCurrency=0x3e9bc21c9b189c09df3ef1b824798658d5011937&outputCurrency=0xdac17f958d2ee523a2206206994597c13d831ec7");
+                    window.open("https://app.uniswap.org/#/swap?inputCurrency=0x07de306FF27a2B630B1141956844eB1552B956B5&outputCurrency=0xc79C8882282574f71449ea7b7f281f45C4c6B973");
                     break;
                 case 2:
                     this.$store.commit("setCurrentAction", 1);
                     this.$router.push("/build");
                     break;
                 case 3:
-                    window.open("https://exchange.pancakeswap.finance/#/swap");
+                    window.open("http://47.242.107.228:6113/swap");
                     break;
                 case 4:
                     this.$store.commit("setCurrentAction", 2);

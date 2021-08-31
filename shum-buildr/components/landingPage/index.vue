@@ -2,7 +2,7 @@
    <div id="landingPage">
       <div class="headerBox">
          <img class="linearBuildrlogo"
-              src="@/static/LINA_logo.svg"
+              src="@/static/logoshum.jpg"
          />
          <p>ShumFinance</p>
          <div class="mBuyLINA mobileShow" @click.stop="openBuyLINA">

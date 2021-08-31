@@ -19,5 +19,6 @@ yarn scripts scripts/15dUSDAndBTCDeployer.js --network kovan &&
 yarn scripts scripts/15r1USDAndBTCSetting.js --network kovan &&
 yarn scripts scripts/15r2ShumCollateralSystem.js --network kovan &&
 yarn scripts scripts/16dShumRewardSystem.js --network kovan &&
-yarn scripts scripts/16rShumAssetSystemSetting.js --network kovan
+yarn scripts scripts/16rShumAssetSystemSetting.js --network kovan &&
+yarn scripts scripts/17dShumErc20Bridge.js --network kovan &&
 

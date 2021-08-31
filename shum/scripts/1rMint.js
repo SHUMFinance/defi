@@ -28,15 +28,15 @@ const main = async () => {
     );
 
     //n1
-    let sendValue = utils.parseEther("10.2");
-    let tx = await ShumFinance.mint("0x46A26B330c0988a58aFF56e2a106F8256Ca89872",sendValue);
+    let sendValue = utils.parseEther("100");
+    let tx = await ShumFinance.mint("0xA1F8b18c63C1De16477EeCF9AC86061B58489EC7",sendValue);
     
     console.log("✓ ShumFinance contract mint")
     console.log(tx.hash);
 
     await sleep(5000);
 
-    let balance = await ShumFinance.balanceOf("0x46A26B330c0988a58aFF56e2a106F8256Ca89872");
+    let balance = await ShumFinance.balanceOf("0xA1F8b18c63C1De16477EeCF9AC86061B58489EC7");
     console.log(balance);
 
 

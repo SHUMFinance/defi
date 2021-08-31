@@ -18,9 +18,9 @@
                         <div class="titleMobile">Staking Rewards</div>
                         <img
                             v-if="feesAreClaimable"
-                            src="@/static/LINA_logo.svg"
+                            src="@/static/logoshum.jpg"
                         />
-                        <img v-else src="@/static/LINA_gray_logo.svg"/>
+                        <img v-else src="@/static/logoshum.jpg"/>
                         <div class="title">Staking Rewards</div>
                         <div class="amount">
                            <span>{{ stakingRewards }}</span>
@@ -31,9 +31,9 @@
                         <div class="titleMobile">Exchange Rewards</div>
                         <img
                             v-if="feesAreClaimable"
-                            src="@/static/currency/sUSD.svg"
+                            src="@/static/logoshum.jpg"
                         />
-                        <img v-else src="@/static/sUSD_gray_logo.svg"/>
+                        <img v-else src="@/static/logoshum.jpg"/>
                         <div class="title">Exchange Rewards</div>
                         <div class="amount">
                            <span>{{ tradingRewards }}</span>
@@ -48,7 +48,7 @@
                            Reward Status
                            <Tooltip
                                class="globalInfoStyle"
-                               max-width="275"
+                               max-width="150"
                                content="Reward can only be claimed when target ratio is reached."
                                placement="top"
                            >

@@ -232,6 +232,9 @@ export const openBuyLINA = () => {
     //主网时打开购买LINA
     if (isMainnetNetwork(walletNetworkId)) {
         window.open(URLS.BUY_LINA);
+    }else{
+        //xxl TODO testnet 
+        window.open(URLS.BUY_LINA);
     }
 };
 

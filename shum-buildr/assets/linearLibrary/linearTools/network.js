@@ -86,8 +86,16 @@ export const LIQUIDATION_NETWORKS = {
     97: "BSCTESTNET"
 };
 
-export const isEthereumNetwork = walletNetworkId =>
+export const isEthereumNetwork = walletNetworkId =>{
+
+    console.log("xxl isEthereumNetwork start ");
+    console.log(ETHEREUM_NETWORKS);
+    console.log(walletNetworkId);
+    console.log("xxl isEthereumNetwork end ");
+
     ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
+}
+    
 export const isBinanceNetwork = walletNetworkId =>
     BINANCE_NETWORKS.hasOwnProperty(walletNetworkId);
 export const isMainnetNetwork = walletNetworkId =>

@@ -355,7 +355,7 @@
 			<div class="walletInfo">
 				<div class="title">Wallet Balance</div>
 				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/LINA_logo.svg" />
+					<img class="tokenIcon" src="@/static/logoshum.jpg" />
 					<div class="box">
 						<div class="tokenItems obtrusive">
 							<div class="left">SHUM</div>
@@ -413,7 +413,7 @@
 					</div>
 				</div>
 				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/currency/sUSD.svg" />
+					<img class="tokenIcon" src="@/static/logoshum.jpg" />
 					<div class="box">
 						<div class="tokenItems obtrusive">
 							<div class="left">sUSD</div>
@@ -486,7 +486,7 @@
 					</template>
 				</div>
 				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/currency/sUSD.svg" />
+					<img class="tokenIcon" src="@/static/logoshum.jpg" />
 					<div class="box">
 						<div class="tokenItems obtrusive singer">
 							<div class="left">
@@ -494,7 +494,7 @@
 								<Tooltip
 									max-width="200"
 									class="globalInfoStyle"
-									content="Total value of synthetic exposure created using Linear.Exchange."
+									content="Total value of synthetic exposure created using Shum.Exchange."
 									placement="bottom"
 									offset="0 6"
 								>
@@ -513,7 +513,7 @@
 					</div>
 				</div>
 				<div class=" tokenBox">
-					<img class="tokenIcon" src="@/static/currency/sUSD.svg" />
+					<img class="tokenIcon" src="@/static/logoshum.jpg" />
 					<div class="box">
 						<div class="tokenItems obtrusive singer">
 							<div class="left">
@@ -549,7 +549,7 @@
 										}}</b>
 										sUSD
 									</template>
-									
+
 									<template v-if="isEthereumNetwork">
 										N/A
 									</template>
@@ -1169,7 +1169,8 @@ export default {
 
 	.walletDetailsBox {
 		width: 100%;
-		height: 840px;
+		//xxl TODO
+		//height: 840px;
 		/* margin-top: 120px;*/
 		/*border-radius: 20px;*/
 		/*box-shadow: 0 2px 6px #deddde;*/
@@ -1471,8 +1472,8 @@ export default {
 				margin-bottom: 10px;
 
 				.tokenIcon {
-					width: 40px;
-					height: 40px;
+					width: 36px;
+					height: 36px;
 					margin-right: 8px;
 				}
 
