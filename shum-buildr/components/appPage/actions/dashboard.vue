@@ -25,7 +25,9 @@
             </div>
          </div>
          <div class="shum">
-            <div class="tit">SHUM & sUSD APY</div>
+            <div class="tit">SHUM &
+               <img style="display:inline;margin-left:5px;" src="@/static/Sfont4.png"/>
+               USD APY</div>
             <div class="shumcont">
                <div class="shumleft">
                   <p><img src="@/static/newPage/shum466a.svg" alt="">
@@ -42,14 +44,14 @@
                </div>
                <div class="shumright">
                   <p><img src="@/static/newPage/usd466b.svg" alt="">
-                     sUSD
+                     <img style="margin-left:5px;margin-right:0;"  src="@/static/Sfont4.png"/> USD
                   </p>
                   <h1>{{ this.chartData2.value}}
                      <span>Est. APY</span>
                   </h1>
                   <prosess :chartData="chartData2" style="width:136px;height:6px;padding:0 20px;"></prosess>
                   <div class="total">
-                     <span>0 sUSD </span><br>
+                     <span>0 <img style="margin-left:5px;"  src="@/static/Sfont4.png"/> USD </span><br>
                      <span>Weekly Reward</span>
                   </div>
                </div>
@@ -469,7 +471,7 @@
             border-radius: 16px;
 
             .tit {
-               width: 114px;
+               width: 214px;
                height: 24px;
                position: relative;
                left: 32px;

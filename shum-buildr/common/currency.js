@@ -14,11 +14,11 @@ const currencies = {
         fullName: "Liquid Ether",
         type: "crypto"
     },
-    //lBCH: {
-    //    name: "sBCH",
-    //    fullName: "sBCH",
-    //    type: "crypto"
-    //},
+    sBCH: {
+       name: "sBCH",
+       fullName: "sBCH",
+       type: "crypto"
+    },
     //lEOS: {
     //    name: "sEOS",
     //    fullName: "sEOS",
@@ -34,41 +34,41 @@ const currencies = {
     //     fullName: "sXRP",
     //     type: "crypto"
     // },
-    // sTRX: {
-    //     name: "sTRX",
-    //     fullName: "sTRX",
-    //     type: "crypto"
-    // },
-    //lBSV: {
-    //    name: "sBSV",
-    //    fullName: "sBSV",
-    //    type: "crypto"
-    //},
-    // sLINK: {
-    //     name: "sLINK",
-    //     fullName: "sLINK",
-    //     type: "crypto"
-    // },
+    sTRX: {
+        name: "sTRX",
+        fullName: "sTRX",
+        type: "crypto"
+    },
+    sBSV: {
+       name: "sBSV",
+       fullName: "sBSV",
+       type: "crypto"
+    },
+    sLINK: {
+        name: "sLINK",
+        fullName: "sLINK",
+        type: "crypto"
+    },
     //lZEC: {
     //    name: "sZEC",
     //    fullName: "sZEC",
     //    type: "crypto"
     //},
-    //lNEO: {
-    //    name: "sNEO",
-    //    fullName: "sNEO",
-    //    type: "crypto"
-    //},
+    sNEO: {
+       name: "sNEO",
+       fullName: "sNEO",
+       type: "crypto"
+    },
     // sBNB: {
     //     name: "sBNB",
     //     fullName: "sBNB",
     //     type: "crypto"
     // },
-    //lDASH: {
-    //    name: "sDASH",
-    //    fullName: "sDASH",
-    //    type: "crypto"
-    //},
+    sDASH: {
+       name: "sDASH",
+       fullName: "sDASH",
+       type: "crypto"
+    },
     //lJUST: {
     //    name: "sJUST",
     //    fullName: "sJUST",
@@ -84,21 +84,21 @@ const currencies = {
     //     fullName: "Yearn.finance",
     //     type: "crypto"
     // },
-    // sADA: {
-    //     name: "sADA",
-    //     fullName: "Cardano",
-    //     type: "crypto"
-    // },
+    sADA: {
+        name: "sADA",
+        fullName: "Cardano",
+        type: "crypto"
+    },
     // sXLM: {
     //     name: "sXLM",
     //     fullName: "Stellar",
     //     type: "crypto"
     // },
-    //lXCF: {
+    // lXCF: {
     //    name: "sXCF",
     //    fullName: "sXCF",
     //    type: " "
-    //},
+    // },
     // sXAU: {
     //     name: "sXAU",
     //     fullName: "sXAU",
@@ -109,36 +109,36 @@ const currencies = {
     //     fullName: "sXAG",
     //     type: "commodity"
     // },
-    //lSOY: {
+    // lSOY: {
     //    name: "sSOY",
     //    fullName: "sSOY",
     //    type: "commodity"
-    //},
-    //lOIL: {
-    //    name: "sOIL",
-    //    fullName: "sOIL",
-    //    type: "commodity"
-    //},
-    //lNIKK: {
+    // },
+    sOIL: {
+       name: "sOIL",
+       fullName: "sOIL",
+       type: "commodity"
+    },
+    // lNIKK: {
     //    name: "sNIKK",
     //    fullName: "sNIKK",
     //    type: "index"
-    //},
-    //lFTSE: {
-    //    name: "sFTSE",
-    //    fullName: "sFTSE",
-    //    type: "index"
-    //},
-    //lCAC: {
-    //    name: "sCAC",
-    //    fullName: "sCAC",
-    //    type: "index"
-    //},
-    //lDAX: {
-    //    name: "sDAX",
-    //    fullName: "sDAX",
-    //    type: "index"
-    //},
+    // },
+    sFTSE: {
+       name: "sFTSE",
+       fullName: "sFTSE",
+       type: "index"
+    },
+    sCAC: {
+       name: "sCAC",
+       fullName: "sCAC",
+       type: "index"
+    },
+    sDAX: {
+       name: "sDAX",
+       fullName: "sDAX",
+       type: "index"
+    },
     
     // sHB10: {
     //     name: "sHB-10",
@@ -165,36 +165,36 @@ const currencies = {
     //     fullName: "Uniswap",
     //     type: "crypto"
     // },
-    // sXCU: {
-    //     name: "sXCU",
-    //     fullName: "sXCU",
-    //     type: "commodity"
-    // },
-    // sCHF: {
-    //     name: "sCHF",
-    //     fullName: "sCHF",
-    //     type: "currencies"
-    // },
-    // sJPY: {
-    //     name: "sJPY",
-    //     fullName: "sJPY",
-    //     type: "currencies"
-    // },
+    sXCU: {
+        name: "sXCU",
+        fullName: "sXCU",
+        type: "commodity"
+    },
+    sCHF: {
+        name: "sCHF",
+        fullName: "sCHF",
+        type: "currencies"
+    },
+    sJPY: {
+        name: "sJPY",
+        fullName: "sJPY",
+        type: "currencies"
+    },
     // sEUR: {
     //     name: "sEUR",
     //     fullName: "sEUR",
     //     type: "currencies"
     // },
-    // sDOGE: {
-    //     name: "sDOGE",
-    //     fullName: "Doge Coin",
-    //     type: "crypto"
-    // },
-    // sVET: {
-    //     name: "sVET",
-    //     fullName: "Vechain",
-    //     type: "crypto",
-    // }
+    sDOGE: {
+        name: "sDOGE",
+        fullName: "Doge Coin",
+        type: "crypto"
+    },
+    sVET: {
+        name: "sVET",
+        fullName: "Vechain",
+        type: "crypto",
+    }
 };
 
 //导入资源路径

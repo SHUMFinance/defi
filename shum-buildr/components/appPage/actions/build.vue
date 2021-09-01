@@ -91,7 +91,7 @@
                            </div>
                            <div class="itemType">
                               <div class="itemTypeTitle">
-                                 Build sUSD
+                                 Build USD
                                  <Tooltip
                                      max-width="305"
                                      placement="top"
