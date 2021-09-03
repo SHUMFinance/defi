@@ -76,12 +76,13 @@ describe("ShumRewardSystem", function () {
   };
 
   beforeEach(async function () {
+    
     [deployer, admin, alice, bob] = await ethers.getSigners();
     rewardSigner = Wallet.createRandom();
 
     const MockERC20 = await ethers.getContractFactory("MockERC20");
-    const MockLnRewardLocker = await ethers.getContractFactory(
-      "MockLnRewardLocker"
+    const MockShumRewardLocker = await ethers.getContractFactory(
+      "MockShumRewardLocker"
     );
     const ShumRewardSystem = await ethers.getContractFactory("ShumRewardSystem");
 
@@ -100,7 +101,7 @@ describe("ShumRewardSystem", function () {
     );
     await lnCollateralSystem.mock.IsSatisfyTargetRatio.returns(true);
 
-    lnRewardLocker = await MockLnRewardLocker.deploy();
+    lnRewardLocker = await MockShumRewardLocker.deploy();
 
     shumRewardSystem = await ShumRewardSystem.deploy();
     await shumRewardSystem.connect(deployer).__ShumRewardSystem_init(

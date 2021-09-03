@@ -7,7 +7,7 @@
                   <div class="actionTitle">Burn</div>
                   <div class="actionDesc">
                      <template v-if="isEthereumNetwork">
-                        Burn sUSD to unlock staked SHUM. You can perform
+                        Burn <img src="@/static/Sfont5.png"/>USD to unlock staked SHUM. You can perform
                         this on Binance Smart Chain network.
                         <!--                        &nbsp;<span-->
                         <!--                         class="step"-->
@@ -16,7 +16,7 @@
                         <!--                     /></span>-->
                      </template>
                      <template v-else>
-                        Burn sUSD to unlock staked SHUM
+                        Burn <img src="@/static/Sfont5.png"/>USD to unlock staked SHUM
                      </template>
                   </div>
                   <div class="actionRate" v-if="isBinanceNetwork">
@@ -2118,7 +2118,7 @@
                         line-height: 1.29;
                         letter-spacing: normal;
                         text-align: left;
-                        color: #99999a;
+                        color: #848898;
                         margin-bottom: 15px;
 
                         .step {

@@ -409,15 +409,9 @@ export const storeDetailsData = async () => {
             let liquidsData = await getLiquids(walletAddress);
 
             //获取货币->USD 兑换率
-            console.log(2.2);
             const priceRates = await getPriceRates(CRYPTO_CURRENCIES);
             // const priceRates = await getPriceRatesFromApi(CRYPTO_CURRENCIES);
-            console.log("getPriceRates end ");
-
-            console.log(3);
-            console.log("xxl storeDetailsData 0 ");
             const LINA2USDRate = priceRates.SHUM / 1e18 || 0;
-            console.log("xxl priceRates.SHUM :" + priceRates.SHUM);
 
             const sUSD2USDRate = priceRates.sUSD / 1e18 || 1;
             const ETH2USDRate =
@@ -439,7 +433,19 @@ export const storeDetailsData = async () => {
                     ? (totalCollateralInUsd / amountDebt[0]) * 100
                     : 0;
 
+            //xxl bug 01
+            avaliableLINA = Math.round(avaliableLINA * 100) / 100;
+            stakedLINA = Math.round(stakedLINA * 100) / 100;
+            lockLINA = Math.round(lockLINA * 100) / 100;
+
+
             const amountLINA = avaliableLINA + stakedLINA + lockLINA;
+            console.log("xxl amountLINA avaliableLINA " + avaliableLINA + 
+            " stakedLINA " + stakedLINA + " lockLINA " + lockLINA);
+
+
+
+
             const amountLINA2USD = amountLINA * LINA2USDRate;
             const avaliableLINA2USD = avaliableLINA * LINA2USDRate;
             const amountsUSD2USD = amountsUSD * sUSD2USDRate;

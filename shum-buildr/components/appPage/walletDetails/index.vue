@@ -788,6 +788,7 @@
 
          //this.checkLiquidation();
 
+
          //根据url参数判断是否打开track transaction referral
          if (this.$store.state?.walletDetailsActionURL) {
             switch (this.$store.state?.walletDetailsActionURL) {

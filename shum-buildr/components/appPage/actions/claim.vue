@@ -6,7 +6,7 @@
                <div class="actionBody">
                   <div class="actionTitle">Claim</div>
                   <div class="actionDesc">
-                     Claim rewards from staking SHUM and building sUSD
+                     Claim rewards from staking SHUM and building <img src="@/static/Sfont5.png"/>USD
                   </div>
 
                   <div class="rewardsBox"
@@ -37,7 +37,7 @@
                         <div class="title">Exchange Rewards</div>
                         <div class="amount">
                            <span>{{ tradingRewards }}</span>
-                           <span>sUSD</span>
+                           <span><img style="margin:0;width:22px;height:26px;" src="@/static/Sfont6.png"/>USD</span>
                         </div>
                      </div>
                   </div>
@@ -550,7 +550,7 @@
                         line-height: 1.29;
                         letter-spacing: normal;
                         text-align: center;
-                        color: #99999a;
+                        color: #848898;
                      }
 
                      .rewardsBox {
@@ -630,10 +630,10 @@
                            }
 
                            .amount {
-                              color: #99999a;
+                              color: #BFC2CC;
 
                               span {
-                                 color: #99999a;
+                                 color: #BFC2CC;
                               }
                            }
                         }
@@ -863,7 +863,7 @@
                                  flex-direction: column;
                                  align-items: center;
                                  justify-content: center;
-                                 color: #99999a;
+                                 color: #BFC2CC;
                                  font-family: Gilroy-Regular;
                                  font-size: 12px;
                                  font-stretch: normal;
@@ -872,7 +872,7 @@
                                  letter-spacing: normal;
 
                                  span {
-                                    color: #99999a;
+                                    color: #BFC2CC;
                                     font-family: Gilroy-Bold;
                                     font-size: 16px;
                                     font-weight: bold;
@@ -895,14 +895,14 @@
                               background: #f6f5f6;
 
                               .title {
-                                 color: #99999a;
+                                 color: #BFC2CC;
                               }
 
                               .amount {
-                                 color: #99999a;
+                                 color: #BFC2CC;
 
                                  span {
-                                    color: #99999a;
+                                    color: #BFC2CC;
                                  }
                               }
                            }

@@ -43,8 +43,8 @@
                         <div class="td pair">
                            <img v-if="item.active" :src="currencies[item.name].icon"/>
                            <img v-else :src="currencies[item.name].icon_inactive"/>
-
-                           <IconName :name="item.name"/>
+                           <span class="iconfont icon-s" style="font-size: 10px"></span>
+                           <IconName :name="replaceS(item.name)"/>
                         </div>
                         <div class="td price">${{ item.price }}</div>
                         <div class="td change">
@@ -75,7 +75,9 @@
                <div class="title">MARKET PAIR</div>
                <div class="name">
                   <img src="@/static/appPage/round.png" alt=""/>
-                  <IconName :size="24"/>
+                  <span style="font-size: 24px; color: #ACB1C7">
+                     <span class="iconfont icon-s" style="font-size: 18px;"></span>USD
+                  </span>
                   <img src="@/static/appPage/star.png" alt=""/>
                </div>
                <div class="info">
@@ -165,8 +167,9 @@
                         <div class="tr" v-for="index in 2" :key="index">
                            <div class="td time">2021/07/28 16:30:26</div>
                            <div class="td pair">
-                              <img src="@/static/appPage/round.png" alt=""/>
-                              <IconName/>
+                              <span style="font-size: 14px; color: #ACB1C7">
+                                 <span class="iconfont icon-s" style="font-size: 10px;"></span>USD
+                              </span>
                            </div>
                            <div class="td buying">$1.7324</div>
                            <div class="td selling">$1.7324</div>
@@ -228,8 +231,13 @@
                      <z-input
                          value="0"
                          placeholder="placeholder"
-                         suffix="sUSD"
-                     ></z-input>
+                     >
+                        <template v-slot:suffix>
+                           <span style="font-size: 14px;">
+                                 <span class="iconfont icon-s" style="font-size: 10px;"></span>USD
+                              </span>
+                        </template>
+                     </z-input>
                      <div class="tag-box">
                         <span class="tag">25%</span>
                         <span class="tag">50%</span>
@@ -272,8 +280,13 @@
                      <z-input
                          value="0"
                          placeholder="placeholder"
-                         suffix="sUSD"
-                     ></z-input>
+                     >
+                        <template v-slot:suffix>
+                           <span style="font-size: 14px;">
+                                 <span class="iconfont icon-s" style="font-size: 10px;"></span>USD
+                              </span>
+                        </template>
+                     </z-input>
                      <div class="tag-box">
                         <span class="tag">25%</span>
                         <span class="tag">50%</span>
@@ -671,6 +684,9 @@
          });
       },
       methods: {
+         replaceS: function(str) {
+            return str.startsWith('s') ? str.replace('s', '') : str;
+         },
          async selectedWallet(walletType) {
             console.log("xxl index.vue 00 selectedWallet " + walletType);
             const status = await checkNetwork();
@@ -879,7 +895,7 @@
                   flex: unset;
                   display: flex;
                   align-items: center;
-                  width: 110px;
+                  width: 120px;
                   word-break: keep-all;
                }
 

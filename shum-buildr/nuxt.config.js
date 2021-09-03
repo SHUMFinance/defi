@@ -46,6 +46,7 @@ module.exports = {
 	 */
 	css: [
 		'@/static/font/Gilroy/Gilroy.css', // 全局字体
+		'@/static/font/aliIcon/iconfont.css',
 	],
 	/*
 	 ** 全局 SCSS

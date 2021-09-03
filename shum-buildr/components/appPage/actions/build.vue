@@ -12,7 +12,7 @@
                         transaction
                      </template>
                      <template v-else>
-                        Build sUSD and earn staking rewards by staking
+                        Build <img src="@/static/Sfont5.png"/>USD and earn staking rewards by staking
                         SHUM.
                      </template>
                   </div>
@@ -22,10 +22,10 @@
                   </div>
                   <div class="webitem">
                      <div class="actionInputItem"
-                         :class="{
+                          :class="{
                                 error: errors.stakeMsg
                             }"
-                         @click="changeFocusItem(0)"
+                          @click="changeFocusItem(0)"
                      >
                         <div class="itemLeft">
                            <div class="itemIcon">
@@ -210,7 +210,7 @@
 
                <div class="actionBodyMobile">
                   <div class="errMsg"
-                      :style="{
+                       :style="{
                                 display:
                                     errors.stakeMsg ||
                                     errors.ratioMsg ||
@@ -233,7 +233,7 @@
                      4
                      )
                      }}
-                     <img style="margin-left:5px;"  src="@/static/font.png"/>
+                     <img style="margin-left:5px;" src="@/static/font.png"/>
                      USD
                   </div>
 
@@ -301,10 +301,10 @@
                   </div>
 
                   <div class="actionInputItem"
-                      :class="{
+                       :class="{
                                 error: errors.ratioMsg
                             }"
-                      @click="changeFocusItem(5)"
+                       @click="changeFocusItem(5)"
                   >
                      <div class="ratioInputBox">
                         <div class="box">
@@ -487,7 +487,7 @@
             toleranceDifference: 0.01, //build容错差值
 
             introductActionModal: false,
-            isBinanceNetworkData:true,
+            isBinanceNetworkData: true,
 
             //输入框展示数据
             inputData: {
@@ -640,158 +640,158 @@
             }
          },
 
-        /**
-         * 获取数据
-        */
-        async getBuildData(walletAddress) {
+         /**
+          * 获取数据
+          */
+         async getBuildData(walletAddress) {
             try {
-                this.processing = true;
+               this.processing = true;
 
-                const {
-                    lnrJS: {
-                        ShumFinance,
-                        ShumCollateralSystem,
-                        ShumRewardLocker,
-                        ShumDebtSystem
-                    },
-                    utils
-                } = lnrJSConnector;
+               const {
+                  lnrJS: {
+                     ShumFinance,
+                     ShumCollateralSystem,
+                     ShumRewardLocker,
+                     ShumDebtSystem
+                  },
+                  utils
+               } = lnrJSConnector;
 
-                console.log("xxl getBuildData ... ");
-                if (this.isEthDevNetwork) {
-                    const avaliableLINA = await ShumFinance.balanceOf(
-                        walletAddress
-                    ); //SHUM
+               console.log("xxl getBuildData ... ");
+               if (this.isEthDevNetwork) {
+                  const avaliableLINA = await ShumFinance.balanceOf(
+                    walletAddress
+                  ); //SHUM
 
-                    this.buildData.LINA = _.floor(
-                        formatEtherToNumber(avaliableLINA),
-                        DECIMAL_PRECISION
-                    );
+                  this.buildData.LINA = _.floor(
+                    formatEtherToNumber(avaliableLINA),
+                    DECIMAL_PRECISION
+                  );
 
-                    this.buildData.LINABN = avaliableLINA;
-                } else {
+                  this.buildData.LINABN = avaliableLINA;
+               } else {
 
-               const SHUMBytes = utils.formatBytes32String("SHUM");
-               //get contract address
-               const ShumCollateralSystemAddress =
-                  ShumCollateralSystem.contract.address;
-               console.log("xxl get ShumCollateralSystemAddress " + ShumCollateralSystemAddress);
+                  const SHUMBytes = utils.formatBytes32String("SHUM");
+                  //get contract address
+                  const ShumCollateralSystemAddress =
+                    ShumCollateralSystem.contract.address;
+                  console.log("xxl get ShumCollateralSystemAddress " + ShumCollateralSystemAddress);
 
-               const results = await Promise.all([
-                  ShumFinance.balanceOf(walletAddress), //Shum
-                  ShumCollateralSystem.userCollateralData(
-                        walletAddress,
-                        SHUMBytes
-                  ), //staked Shum
+                  const results = await Promise.all([
+                     ShumFinance.balanceOf(walletAddress), //Shum
+                     ShumCollateralSystem.userCollateralData(
+                       walletAddress,
+                       SHUMBytes
+                     ), //staked Shum
 
-                  ShumRewardLocker.balanceOf(walletAddress), //lock lina
-                  ShumFinance.allowance(
-                        walletAddress,
-                        ShumCollateralSystemAddress
-                  ), //已 approved 的 lina 额度
+                     ShumRewardLocker.balanceOf(walletAddress), //lock lina
+                     ShumFinance.allowance(
+                       walletAddress,
+                       ShumCollateralSystemAddress
+                     ), //已 approved 的 lina 额度
 
-                  ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
-                  getBuildRatio(), //目标抵押率
-                  ShumCollateralSystem.GetUserTotalCollateralInUsd(
-                        walletAddress
-                  ) //个人全部抵押物兑sUSD,用于计算pratio
-               ]);
+                     ShumDebtSystem.GetUserDebtBalanceInUsd(walletAddress), //总债务
+                     getBuildRatio(), //目标抵押率
+                     ShumCollateralSystem.GetUserTotalCollateralInUsd(
+                       walletAddress
+                     ) //个人全部抵押物兑sUSD,用于计算pratio
+                  ]);
 
-               const [
-                  avaliableLINA,
-                  stakedLina,
-                  lockLina,
-                  approvedLina,
-                  amountDebt,
-                  buildRatio,
-                  totalCollateralInUsd
-               ] = results.map(formatEtherToNumber);
+                  const [
+                     avaliableLINA,
+                     stakedLina,
+                     lockLina,
+                     approvedLina,
+                     amountDebt,
+                     buildRatio,
+                     totalCollateralInUsd
+                  ] = results.map(formatEtherToNumber);
 
-               let currentRatioPercent = n2bn("0");
-               console.log("xxl --00 " + currentRatioPercent);
-               console.log(results);
+                  let currentRatioPercent = n2bn("0");
+                  console.log("xxl --00 " + currentRatioPercent);
+                  console.log(results);
 
-               // xxl bug 00
-               // if (results[6].gt("0") && results[4][0].gt("0")) {
-               //    currentRatioPercent = bnMul(
-               //          bnDiv(results[6], results[4][0]),
-               //          n2bn("100")
-               //    );
-               // }
-               currentRatioPercent = bnMul(results[5],n2bn("100"))
+                  // xxl bug 00
+                  // if (results[6].gt("0") && results[4][0].gt("0")) {
+                  //    currentRatioPercent = bnMul(
+                  //          bnDiv(results[6], results[4][0]),
+                  //          n2bn("100")
+                  //    );
+                  // }
+                  currentRatioPercent = bnMul(results[5], n2bn("100"))
 
 
-               console.log("xxl 01 " + currentRatioPercent);
-               const targetRatioPercent = 100 / buildRatio; //目标抵押率
+                  console.log("xxl 01 " + currentRatioPercent);
+                  const targetRatioPercent = 100 / buildRatio; //目标抵押率
 
-               const priceRates = await getPriceRates(["SHUM", "sUSD"]);
-               // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
+                  const priceRates = await getPriceRates(["SHUM", "sUSD"]);
+                  // const priceRates = await getPriceRatesFromApi(["SHUM", "sUSD"]);
 
-               console.log("xxl 012");
-               console.log(priceRates.SHUM);
+                  console.log("xxl 012");
+                  console.log(priceRates.SHUM);
 
-               const SHUMPrice = priceRates.SHUM / priceRates.sUSD;
-               console.log(SHUMPrice);
+                  const SHUMPrice = priceRates.SHUM / priceRates.sUSD;
+                  console.log(SHUMPrice);
 
-               const SHUMPriceBN = bnDiv(priceRates.SHUM, priceRates.sUSD);
+                  const SHUMPriceBN = bnDiv(priceRates.SHUM, priceRates.sUSD);
 
-               console.log("xxl 0121");
-               this.buildData.LINA = _.floor(
-                  avaliableLINA,
-                  DECIMAL_PRECISION
-               );
-               this.buildData.LINABN = results[0];
-               console.log("xxl 013");
+                  console.log("xxl 0121");
+                  this.buildData.LINA = _.floor(
+                    avaliableLINA,
+                    DECIMAL_PRECISION
+                  );
+                  this.buildData.LINABN = results[0];
+                  console.log("xxl 013");
 
-               this.buildData.LINA2USD = _.floor(
-                  SHUMPrice,
-                  DECIMAL_PRECISION
-               );
+                  this.buildData.LINA2USD = _.floor(
+                    SHUMPrice,
+                    DECIMAL_PRECISION
+                  );
 
-               console.log(SHUMPriceBN);
-               this.buildData.LINA2USDBN = SHUMPriceBN;
-               console.log("xxl 015");
+                  console.log(SHUMPriceBN);
+                  this.buildData.LINA2USDBN = SHUMPriceBN;
+                  console.log("xxl 015");
 
-               this.buildData.staked = _.floor(
-                  stakedLina,
-                  DECIMAL_PRECISION
-               );
-               this.buildData.stakedBN = results[1];
+                  this.buildData.staked = _.floor(
+                    stakedLina,
+                    DECIMAL_PRECISION
+                  );
+                  this.buildData.stakedBN = results[1];
 
-               this.buildData.lock = _.floor(lockLina, DECIMAL_PRECISION);
-               this.buildData.lockBN = results[2];
+                  this.buildData.lock = _.floor(lockLina, DECIMAL_PRECISION);
+                  this.buildData.lockBN = results[2];
 
-               this.buildData.approvedBN = results[3];
+                  this.buildData.approvedBN = results[3];
 
-               this.buildData.debt = _.floor(
-                  amountDebt[0],
-                  DECIMAL_PRECISION
-               );
-               this.buildData.debtBN = results[4][0];
+                  this.buildData.debt = _.floor(
+                    amountDebt[0],
+                    DECIMAL_PRECISION
+                  );
+                  this.buildData.debtBN = results[4][0];
 
-               console.log("xxl 02 " + currentRatioPercent);
-               this.buildData.targetRatio = targetRatioPercent;
-               this.buildData.currentRatio = formatEtherToNumber(
-                  currentRatioPercent
-               );
-               this.buildData.currentRatioBN = currentRatioPercent;
+                  console.log("xxl 02 " + currentRatioPercent);
+                  this.buildData.targetRatio = targetRatioPercent;
+                  this.buildData.currentRatio = formatEtherToNumber(
+                    currentRatioPercent
+                  );
+                  this.buildData.currentRatioBN = currentRatioPercent;
 
-               //获取当前抵押率
-               //xxl TODO
-               this.inputData.ratio = this.buildData.currentRatio;
-               //this.inputData.ratio = 500
+                  //获取当前抵押率
+                  //xxl TODO
+                  this.inputData.ratio = this.buildData.currentRatio;
+                  //this.inputData.ratio = 500
 
-               console.log("xxl this.inputData.ratio : " + this.inputData.ratio);
-               console.log(this.inputData.ratio);
+                  console.log("xxl this.inputData.ratio : " + this.inputData.ratio);
+                  console.log(this.inputData.ratio);
 
 
                }
             } catch (e) {
-                console.log(e, "getBuildData err");
+               console.log(e, "getBuildData err");
             } finally {
-                this.processing = false;
+               this.processing = false;
             }
-        },
+         },
 
          //点击最大sUSD
          clickMaxBuildAmount() {
@@ -804,7 +804,6 @@
                if (this.isEthDevNetwork) {
                   this.inputData.stake = this.buildData.LINA;
                } else {
-
 
 
                   let allCanBuildsUSDAfterStakeAll = n2bn("0");
@@ -827,7 +826,6 @@
                   console.log("xxl allCanBuildsUSDAfterStakeAll : " + allCanBuildsUSDAfterStakeAll);
 
 
-
                   //可以生成的sUSD小于等于债务
                   if (
                     allCanBuildsUSDAfterStakeAll.lte(this.buildData.debtBN)
@@ -848,7 +846,7 @@
                   this.inputData.stake = formatEtherToNumber(
                     this.buildData.LINABN
                   );
-                  console.log("xxl this.inputData.stake ",this.inputData.stake);
+                  console.log("xxl this.inputData.stake ", this.inputData.stake);
 
                   //xxl 00
                   // this.inputData.amount = formatEtherToNumber(
@@ -862,10 +860,7 @@
                   this.inputData.amount = this.inputData.stake * this.buildData.LINA2USD;
 
 
-
-                  console.log("xxl this.inputData.amount ",this.inputData.amount);
-
-
+                  console.log("xxl this.inputData.amount ", this.inputData.amount);
 
 
                   // xxl bug 00
@@ -1048,10 +1043,10 @@
 
                   console.log("xxl : this.buildData.LINA2USDBN " + this.buildData.LINA2USDBN);
                   //xxl bug 00
-                  canBuildAfterStake = bnMul(this.buildData.LINA2USDBN,n2bn(stakeAmount));
+                  canBuildAfterStake = bnMul(this.buildData.LINA2USDBN, n2bn(stakeAmount));
                   console.log("xxl : canBuildAfterStake " + canBuildAfterStake);
                   this.inputData.amount = formatEtherToNumber(
-                       canBuildAfterStake
+                    canBuildAfterStake
                   );
                   this.actionData.amount = canBuildAfterStake;
                   //
@@ -2048,7 +2043,7 @@
                         line-height: 1.29;
                         letter-spacing: normal;
                         text-align: left;
-                        color: #99999a;
+                        color: #848898;
                         margin-bottom: 15px;
 
                         .step {
@@ -2082,9 +2077,9 @@
                      }
 
                      .webitem {
-                        height:400px;
-                        margin-top:30px;
-                        display:flex;
+                        height: 400px;
+                        margin-top: 30px;
+                        display: flex;
                         justify-content: space-between;
 
                         .actionInputItem {
@@ -2093,7 +2088,7 @@
                            border-bottom: none;
                            display: inline-block;
                            width: 28%;
-                           height:300px;
+                           height: 300px;
                            transition: $animete-time linear;
                            position: relative;
 
@@ -2111,7 +2106,7 @@
                               .itemIcon {
                                  width: 40px;
                                  height: 40px;
-                                 margin:  40px auto 30px;
+                                 margin: 40px auto 30px;
                                  display: flex;
                                  justify-content: center;
                                  align-items: center;
@@ -2126,7 +2121,7 @@
 
                               .itemType {
                                  .itemTypeTitle {
-                                    text-align:center;
+                                    text-align: center;
                                     font-family: Gilroy-bold;
                                     font-size: 16px;
                                     font-weight: bold;
@@ -2159,10 +2154,10 @@
                                  // margin-bottom: 8px;
                                  .input {
                                     width: 100%;
-                                    margin-top:35px;
+                                    margin-top: 35px;
                                     border: none;
                                     box-shadow: none;
-                                    text-align:center;
+                                    text-align: center;
 
                                     .ivu-input-number-handler-wrap {
                                        display: none;
@@ -2208,10 +2203,10 @@
                            .itemTypeBtn {
                               transition: $animete-time linear;
                               cursor: pointer;
-                              width:100%;
-                              position:absolute;
-                              bottom:0;
-                              border-radius:5px;
+                              width: 100%;
+                              position: absolute;
+                              bottom: 0;
+                              border-radius: 5px;
                               opacity: 0.2;
                               text-transform: uppercase;
                               font-family: Gilroy-bold;
@@ -2223,11 +2218,11 @@
                               letter-spacing: 1.5px;
                               text-align: center;
                               background-color: #1a38f8;
-                              color:#ffffff;
+                              color: #ffffff;
 
                               img {
                                  margin-left: 6px;
-                                 color:#ffffff;
+                                 color: #ffffff;
                               }
 
                               &:hover {
