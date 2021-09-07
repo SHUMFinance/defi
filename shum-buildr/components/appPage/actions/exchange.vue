@@ -43,8 +43,8 @@
                         <div class="td pair">
                            <img v-if="item.active" :src="currencies[item.name].icon"/>
                            <img v-else :src="currencies[item.name].icon_inactive"/>
-                           <span class="iconfont icon-s" style="font-size: 10px"></span>
-                           <IconName :name="replaceS(item.name)"/>
+                           <span class="iconfont icon-s">{{replaceS(item.name)}}</span>
+                           <span class="iconfont icon-s" style="color: #ACB1C7;margin-left: 4px">USD</span>
                         </div>
                         <div class="td price">${{ item.price }}</div>
                         <div class="td change">
@@ -588,42 +588,9 @@
          }
       },
    };
-
-   const IconName = {
-      props: {
-         size: Number,
-         name: String,
-      },
-      render: function (h) {
-         return h(
-           "span",
-           {
-              class: "icon-name",
-              style: {
-                 color: "#343B55",
-                 fontSize: this.size ? `${this.size}px` : "inherit",
-              },
-           },
-           [
-              h("span", [this.name]),
-              h(
-                "span",
-                {
-                   style: {
-                      display: "inline-block",
-                      marginLeft: "4px",
-                      color: "#ACB1C7",
-                   },
-                },
-                ["sUSD"]
-              ),
-           ]
-         );
-      },
-   };
    export default {
       name: "Exchange",
-      components: {ZButton, ZInput, IconName},
+      components: {ZButton, ZInput},
       data: function data() {
          return {
             marketList: [],
@@ -931,7 +898,7 @@
                   display: flex;
                   align-items: center;
                   margin-bottom: 24px;
-
+                  
                   img:first-child {
                      margin-right: 16px;
                      width: 32px;

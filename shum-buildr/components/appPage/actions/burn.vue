@@ -509,7 +509,7 @@
          },
          isEthereumNetwork() {
          },
-         isBinanceNetwork() {
+         isBinanceNetworkFunc() {
          },
          walletNetworkId() {
          },
@@ -538,7 +538,7 @@
             return isEthereumNetwork(this.walletNetworkId);
          },
 
-         isBinanceNetwork() {
+         isBinanceNetworkFunc() {
             return isBinanceNetwork(this.walletNetworkId);
          },
 

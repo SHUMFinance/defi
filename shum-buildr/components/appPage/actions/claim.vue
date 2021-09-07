@@ -37,7 +37,7 @@
                         <div class="title">Exchange Rewards</div>
                         <div class="amount">
                            <span>{{ tradingRewards }}</span>
-                           <span><img style="margin:0;width:22px;height:26px;" src="@/static/Sfont6.png"/>USD</span>
+                           <span class="iconfont icon-s">USD</span>
                         </div>
                      </div>
                   </div>
@@ -362,9 +362,14 @@
                   lnrJS: {ShumRewardSystem, ShumCollateralSystem, ShumDebtSystem}
                } = lnrJSConnector;
 
+               // xxl bug 02
+               // const apiUrl = isMainnetNetwork(this.walletNetworkId)
+               //   ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
+               //   : `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
                const apiUrl = isMainnetNetwork(this.walletNetworkId)
-                 ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
-                 : `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
+                    ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
+                    //: `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
+                    : `http://localhost:7789/rewards/${walletAddress}`;  
 
                const [
                   firstPeriodStartTimeRes,
@@ -393,7 +398,12 @@
 
                const firstPeriodStartTime = firstPeriodStartTimeRes.toNumber();
                const lastClaimPeriodId = lastClaimPeriodIdRes.toNumber();
-               const allRewardEntries = await allRewardEntriesRes.json();
+               //xxl bug 02 
+               //const allRewardEntries = await allRewardEntriesRes.json();
+               const allRewardEntriesJson = await allRewardEntriesRes.json();
+               const allRewardEntries = allRewardEntriesJson.data
+               console.log("xxl allRewardEntries start ...");
+               console.log(allRewardEntries);
 
                const pendingRewardEntries = allRewardEntries.filter(
                  entry => entry.periodId > lastClaimPeriodId
