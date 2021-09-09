@@ -362,7 +362,7 @@
                   lnrJS: {ShumRewardSystem, ShumCollateralSystem, ShumDebtSystem}
                } = lnrJSConnector;
 
-               // xxl bug 02
+               // xxl bug 02 url
                // const apiUrl = isMainnetNetwork(this.walletNetworkId)
                //   ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
                //   : `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;

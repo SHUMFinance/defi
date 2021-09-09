@@ -78,6 +78,8 @@ async function createSignature (
       verifyingContract: shumAssetSystemAddress,
     };
 
+    
+
     const types = {
       Reward: [
         { name: "periodId", type: "uint256" },
@@ -93,7 +95,9 @@ async function createSignature (
       stakingReward,
       feeReward,
     };
+    console.log(value);
 
+    
     const signatureHex = await signer._signTypedData(domain, types, value);
     return signatureHex;
 };

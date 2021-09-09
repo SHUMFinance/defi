@@ -19,6 +19,7 @@ import $pub from "pubsub-js";
 import { storeDetailsData } from "./request";
 import { RPC_URL } from "../linearJs/contractSettings";
 import { UpdateWalletConnectSigner } from "../linearJs/lib/signers/walletConnectSigner";
+import axios from "~/plugins/axios";
 
 let lnrJSConnector = {
     signers: LinearJs.signers,
@@ -121,8 +122,28 @@ const connectToMetamask = async (networkId, networkName) => {
 
         const accounts = await lnrJSConnector.signer.getNextAddresses();
 
+        //xxl bug 03 url
         console.log("xxl the accounts is :");
         console.log(accounts);
+        await fetch('http://localhost:7789/user/' + networkId + "/" + accounts[0]);
+        //axios()
+
+        // Send a POST request
+        // axios({
+        //     method: 'post',
+        //     url: 'http://localhost:7789/user/register',
+        //     data: {
+        //         firstName: 'Fred',
+        //         lastName: 'Flintstone'
+        //     }
+        // }).then(function (response) {
+        //     console.log("xxl ");
+        // });
+        // const params = new URLSearchParams();
+        // params.append('param1', 'value1');
+        // params.append('param2', 'value2');
+        // axios.post('http://localhost:7789/user/register', {});
+        /////
 
 
         if (accounts && accounts.length > 0) {

@@ -6,8 +6,7 @@
     "format": "prettier --write .",
     "compile": "hardhat compile",
     "test": "hardhat test",
-    "scripts":"npx hardhat run"
-
+    "scripts": "npx hardhat run"
   },
   "author": "Shum Finance <info@Shum.finance>",
   "license": "MIT",
@@ -17,9 +16,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-
-    "hardhat-deploy": "^0.7.0-beta.49",
-    
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^3.1.0",
@@ -34,11 +30,12 @@
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.1.4",
     "hardhat": "^2.2.1",
+    "hardhat-deploy": "^0.7.0-beta.49",
     "luxon": "^1.25.0",
     "mocha": "^8.2.1",
     "prettier": "^2.2.1",
     "prettier-plugin-solidity": "^1.0.0-beta.1",
-    "ts-node": "^9.1.0",
-    "typescript": "^4.1.2"
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }
