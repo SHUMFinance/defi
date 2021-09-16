@@ -396,6 +396,12 @@
                    ? (totalCollateralInUsd / amountDebt[0]) * 100
                    : 0;
 
+               console.log("xxl currentRatioPercent is ");
+               console.log(totalCollateralInUsd);
+               console.log(amountDebt);
+
+               console.log(this.currentRatioPercent);
+
                const firstPeriodStartTime = firstPeriodStartTimeRes.toNumber();
                const lastClaimPeriodId = lastClaimPeriodIdRes.toNumber();
                //xxl bug 02 

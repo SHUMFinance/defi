@@ -655,6 +655,7 @@
             return str.startsWith('s') ? str.replace('s', '') : str;
          },
          async selectedWallet(walletType) {
+
             console.log("xxl index.vue 00 selectedWallet " + walletType);
             const status = await checkNetwork();
 
@@ -672,6 +673,8 @@
                   this.$store.commit("setSetupModal", true);
                }
             }
+
+            
          },
          bayUsd: function () {
             window.open("https://pancakeswap.finance/swap#/swap", "_blank");
