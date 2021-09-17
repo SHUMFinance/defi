@@ -778,8 +778,8 @@
 
                   //获取当前抵押率
                   //xxl TODO
-                  this.inputData.ratio = this.buildData.currentRatio;
-                  //this.inputData.ratio = 500
+                  //this.inputData.ratio = this.buildData.currentRatio;
+                  this.inputData.ratio = 100
 
                   console.log("xxl this.inputData.ratio : " + this.inputData.ratio);
                   console.log(this.inputData.ratio);
@@ -998,7 +998,6 @@
          //stakeAmount改变事件
          changeStakeAmount(stakeAmount) {
             try {
-
 
                console.log("xxl changeStakeAmount ... ");
                this.resetErrorsMsg();

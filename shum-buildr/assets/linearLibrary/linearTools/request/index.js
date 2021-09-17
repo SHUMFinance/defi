@@ -428,10 +428,19 @@ export const storeDetailsData = async () => {
                 amountDebt2USD = amountDebt[0] * sUSD2USDRate;
             }
 
+            //xxl doc this data for the [My Current Pledge Ratio ]
             let currentRatioPercent =
-                totalCollateralInUsd != 0 && amountDebt[0] != 0
-                    ? (totalCollateralInUsd / amountDebt[0]) * 100
-                    : 0;
+                Math.ceil(
+                    totalCollateralInUsd != 0 && amountDebt[0] != 0
+                        ? (totalCollateralInUsd / amountDebt[0]) * 100
+                        : 0
+                )
+            
+            console.log("xxl ...");
+            console.log(totalCollateralInUsd);
+            console.log(amountDebt);
+            console.log("xxl currentRatioPercent : " + currentRatioPercent);
+            
 
             //xxl bug 01
             avaliableLINA = Math.round(avaliableLINA * 100) / 100;
@@ -442,9 +451,6 @@ export const storeDetailsData = async () => {
             const amountLINA = avaliableLINA + stakedLINA + lockLINA;
             console.log("xxl amountLINA avaliableLINA " + avaliableLINA + 
             " stakedLINA " + stakedLINA + " lockLINA " + lockLINA);
-
-
-
 
             const amountLINA2USD = amountLINA * LINA2USDRate;
             const avaliableLINA2USD = avaliableLINA * LINA2USDRate;

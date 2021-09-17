@@ -98,16 +98,24 @@ export const isEthereumNetwork = walletNetworkId =>{
     
 export const isBinanceNetwork = walletNetworkId =>
     BINANCE_NETWORKS.hasOwnProperty(walletNetworkId);
+
 export const isMainnetNetwork = walletNetworkId =>
     MAINNET_NETWORKS.hasOwnProperty(walletNetworkId);
+
 export const isTestnetNetwork = walletNetworkId =>
     TESTNET_NETWORKS.hasOwnProperty(walletNetworkId);
 export const isDevNetwork = walletNetworkId =>
     DEV_NETWORKS.hasOwnProperty(walletNetworkId);
-export const isEthDevNetwork = walletNetworkId =>
-    ETHDEV_NETWORKS.hasOwnProperty(walletNetworkId);
+
+export const isEthDevNetwork = walletNetworkId =>{
+
+    //ETHDEV_NETWORKS.hasOwnProperty(walletNetworkId);
+    return false
+}
+    
 export const isBscDevNetwork = walletNetworkId =>
     BSCDEV_NETWORKS.hasOwnProperty(walletNetworkId);
+
 export const isSupportNetwork = walletNetworkId =>
     SUPPORTED_NETWORKS.hasOwnProperty(walletNetworkId);
 
