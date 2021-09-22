@@ -145,7 +145,17 @@
       this.withdraw = async (srcChainId, destChainId, depositId, depositor, recipient, currency, amount, signature, txParams) => {
         
         console.log("xxl001 withdraw start ");
-
+        console.log(srcChainId);
+        console.log(destChainId);
+        console.log(depositId);
+        console.log(depositor);
+        console.log(recipient);
+        console.log(currency);
+        console.log(amount);
+        console.log(signature);
+        console.log(txParams);
+        console.log("xxl come to withdraw end");
+        
         txParams = txParams || {};
         return await this.contract.withdraw(srcChainId, destChainId, depositId, depositor, recipient, currency, amount, signature, txParams);
       };

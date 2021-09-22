@@ -114,12 +114,13 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
             chainId := chainid()
         }
         currentChainId = chainId;
+
         DOMAIN_SEPARATOR = keccak256(
             abi.encode(
                 keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
                 keccak256(bytes("Shum")),
                 keccak256(bytes("1")),
-                chainId,
+                currentChainId,
                 address(this)
             )
         );
@@ -210,7 +211,8 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
         uint256 amount,
         bytes calldata signature
     ) external {
-        require(destChainId == currentChainId, "ShumErc20Bridge: wrong chain");
+        
+        // require(destChainId == currentChainId, "ShumErc20Bridge: wrong chain");
         require(!withdrawnDeposits[srcChainId][depositId], "ShumErc20Bridge: already withdrawn");
         require(recipient != 0, "ShumErc20Bridge: zero address");
         require(amount > 0, "ShumErc20Bridge: amount must be positive");
@@ -238,6 +240,7 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
                     )
                 )
             );
+            
         address recoveredAddress = digest.recover(signature);
         require(recoveredAddress == relayer, "ShumErc20Bridge: invalid signature");
 

@@ -561,6 +561,10 @@
          this.chainChangeFromSubscribe = this.$pub.subscribe(
            "onWalletChainChange",
            async () => {
+
+              //xxl99 TODO
+              //return;
+              
               if (this.actionTabs == "m0") {
                  await this.getBurnData(this.walletAddress);
               }

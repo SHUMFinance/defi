@@ -13,6 +13,9 @@ export default async function({ store }) {
 
     PubSub.subscribe("onWalletChainChange", (msg, wallet) => {
         // console.log("onWalletChainChange walletlistener");
+        //xxl99 TODO
+        //return;
+
         //存储数据
         storeDetailsData();
     });

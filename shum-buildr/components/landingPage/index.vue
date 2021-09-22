@@ -191,7 +191,6 @@
                                   placeholder="0"
                                   :min="1"
                                   :max="100000000000"
-                                  @on-change="changeStakeAmount"
                                   @on-focus="inputFocus(0)"
                                   @on-blur="inputBlur(0)"
                                   :formatter="formatterInput"
@@ -209,7 +208,6 @@
                            <!-- <div class="avaliable">Avaliable : 1,000</div> -->
                         </div>
                         <div class="itemTypeBtn"
-                             :class="{ active: activeItemBtn == 0 }"
                              @click.stop="clickBuy"
                         >buy shum
                            <img src="@/static/arrow_right.svg"/>
@@ -253,7 +251,6 @@
                                   :min="0"
                                   :max="100000000000"
                                   v-model="inputData.amount"
-                                  @on-change="changeBuildAmount"
                                   @on-focus="inputFocus(1)"
                                   @on-blur="inputBlur(1)"
                                   placeholder="0"
@@ -270,7 +267,6 @@
                         </div>
                         <div
                             class="itemTypeBtn"
-                            :class="{ active: activeItemBtn == 1 }"
                             @click.stop="clickMaxBuildAmount"
                         >
                            Max
@@ -307,7 +303,6 @@
                                   type="text"
                                   :max="100000000000"
                                   v-model="inputData.ratio"
-                                  @on-change="changeRatio"
                                   @on-focus="inputFocus(2)"
                                   @on-blur="inputBlur(2)"
                                   placeholder="0"
@@ -322,7 +317,6 @@
                         </div>
                         <div
                             class="itemTypeBtn"
-                            :class="{ active: activeItemBtn == 2 }"
                             @click.stop="clickTargetRatio"
                         >
                            Target ratio
@@ -500,7 +494,7 @@
                amount: null,
                ratio: 0
             },
-            formatterInput,
+            formatterInput
          };
       },
       watch: {
@@ -637,7 +631,7 @@
          //点击购买
          clickBuy() {
             openBuyLINA();
-            this.activeItemBtn = 0;
+            //this.activeItemBtn = 0;
          },
       }
    };

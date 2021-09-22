@@ -143,6 +143,8 @@ describe("Integration | Exchange", function () {
 
   });
 
+
+  
   it("fee not splitted when split ratio is not set", async () => {
     // Set fee holder to bob
     await stack.shumExchangeSystem.connect(admin).setFoundationFeeHolder(

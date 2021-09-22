@@ -384,6 +384,9 @@
          this.chainChangeTokenFromSubscribe = this.$pub.subscribe(
            'onWalletChainChange',
            async () => {
+
+              console.log("xxl swap onWalletChainChange : " + this.actionTabs);
+
               if (this.actionTabs == 'm0') {
                  await this.initData();
               }
@@ -399,6 +402,7 @@
            }
          );
       },
+      
       destroyed() {
          //清除事件,防止重复
          if (this.chainChangeTokenFromUnfreeze != '') {
@@ -452,7 +456,7 @@
          async initData() {
             try {
 
-
+               console.log("xxl99 initData : " + this.actionTabs);
                console.log("xxl this.walletNetworkId " + this.walletNetworkId);
                //xxl bug 01
                // if(isEthereumNetwork()){
@@ -676,8 +680,8 @@
          async clickSwap() {
             try {
                if (!this.swapDisabled) {
+                  console.log("xxl99 clickSwap ...");
                   this.processing = true;
-
                   this.actionTabs = 'm1'; //进入swap页
                }
             } catch (error) {

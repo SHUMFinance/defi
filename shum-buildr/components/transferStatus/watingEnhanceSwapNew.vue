@@ -19,7 +19,7 @@
             <TabPane name="m0" class="checkPage">
                 <div class="tabContent">
                     <div class="contentTitle">
-                        …We are preparing the contract...
+                        …We are preparing 1 the contract...
                     </div>
 
                     <div class="contentIcon">
@@ -784,6 +784,8 @@ export default {
         this.initStep();
     },
     mounted() {
+
+        console.log("xxl99  watingEnhanceSwapNew : mounted");
         this.checkPrepare();
         this.swapUnfreezeContinue = this.$store.state?.swapUnfreezeContinue;
 
@@ -917,6 +919,9 @@ export default {
 
         async checkContract() {
             try {
+
+                console.log("xxl99 checkContract ...");
+
                 //移动端更换进度设置
                 this.BUILD_PROCESS_SETUP = this.isMobile
                     ? { ...BUILD_PROCESS_SETUP_MOBILE }
@@ -1033,6 +1038,7 @@ export default {
         startFlow() {
             return async () => {
                 try {
+                    console.log("xxl99 come to startFlow ");
                     this.transactionErrMsg = "";
 
                     let swapNumber = n2bn(this.swapNumber);
@@ -1194,10 +1200,14 @@ export default {
         },
 
         async startFreezeContract(swapNumber) {
+
+            console.log("xxl99 come to startFreezeContract deposit");
             this.confirmTransactionStatus = false;
 
             let ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                 SETUP;
+
+            SETUP = "ETH";
             if (isEthereumNetwork(this.walletNetworkId)) {
                 SETUP = "ETH";
             } else if (isBinanceNetwork(this.walletNetworkId)) {
@@ -1217,6 +1227,8 @@ export default {
                 ShumBridge,
                 swapNumber
             );
+
+            console.log("xxl99 this.targetNetworkId is " + this.targetNetworkId);
 
             let transaction = await ShumBridge.deposit(
                 utils.formatBytes32String(this.currency),
@@ -1263,6 +1275,10 @@ export default {
                 this.startWaitingBlocks = false;
 
                 this.confirmTransactionStep += 1;
+
+
+                //xxl99 add to bsc 
+                
             }
         },
 
@@ -1291,6 +1307,10 @@ export default {
         },
 
         async startUnFreezeContract() {
+
+            console.log("xxl99 come to startUnFreezeContract withdraw ");
+
+
             this.confirmTransactionStatus = false;
 
             //不是自动进入流程,且是手机端时
@@ -1311,11 +1331,14 @@ export default {
                 this.$store.commit("setSwapUnfreezeDatas", unfreezeDatas);
             }
 
+            console.log("xxl99 come to 0.5 ");
             //清除自动进入流程
             this.swapUnfreezeContinue &&
                 this.$store.commit("setSwapUnfreezeContinue", false);
 
             let walletStatus;
+
+            console.log("xxl99 come to 1 ");
 
             /**
              * 当前网络是原始网络
@@ -1330,23 +1353,33 @@ export default {
                 this.chainChangedStatus = false;
                 this.confirmTransactionNetworkId = this.walletNetworkId;
 
+                console.log("xxl99 come to 1.1 ");
                 //监听手动切换事件
                 this.chainChangeTokenFromUnfreeze = this.$pub.subscribe(
                     "onWalletChainChange",
                     async (msg, changeType) => {
+
+                        console.log("xxl99 come to 1.2 ");
                         // console.log(changeType, "startUnFreezeContract");
                         this.chainChangedStatus = true;
                         this.confirmTransactionChainChanging = false;
                         this.confirmTransactionNetworkId = this.walletNetworkId;
+                        console.log("xxl99 come to 1.2 end " +  this.chainChangedStatus  + " : " + this.walletNetworkId);
+
                     }
                 );
 
-                // console.log("开始切链");
+                console.log("xxl99 开始切链");
+                // xxl TODO
                 walletStatus = await this.waitChainChange();
-                // console.log("切链完成");
+                console.log("xxl99 切链完成");
             } else {
+
+                console.log("xxl99 walletStatus Over");
                 walletStatus = true;
             }
+
+            console.log("xxl99 come to 2 ");
 
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
@@ -1359,15 +1392,21 @@ export default {
                 };
             }
 
+            console.log("xxl99 come to 3 ");
             if (walletStatus) {
                 let ShumBridge = lnrJSConnector.lnrJS.ShumErc20Bridge,
                     SETUP;
+
+                console.log("xxl99 come to 3.1 ");
+                //xxl change to eth
+                SETUP = "ETH";    
                 if (isEthereumNetwork(this.walletNetworkId)) {
                     SETUP = "ETH";
                 } else if (isBinanceNetwork(this.walletNetworkId)) {
                     SETUP = "BSC";
                 }
 
+                console.log("xxl99 come to 3.5 ");
                 // console.log(`等待获取锁定hash`);
                 this.waitPendingProcess = true;
                 const depositArray = await this.getPendingProcess();
@@ -1375,10 +1414,12 @@ export default {
 
                 const { utils } = lnrJSConnector;
 
+                console.log("xxl99 come to 4 ");
                 const transactionSettings = {
                     gasPrice: this.targetGasPrice,
                     gasLimit: DEFAULT_GAS_LIMIT.unfreeze
                 };
+                console.log(depositArray);
 
                 for (const index in depositArray) {
                     const deposit = depositArray[index];
@@ -1391,13 +1432,10 @@ export default {
                     );
 
                     //xxl 
-                    console.log("xxl await ShumBridge.withdraw start");
-                    console.log("xxl srcChainId " + deposit.srcChainId)
-                    console.log("xxl destChainId " + deposit.destChainId)
-
-                    console.log("xxl await ShumBridge.withdraw end");    
-
-
+                    console.log("xxl99 await ShumBridge.withdraw start");
+                    console.log("xxl99 srcChainId " + deposit.srcChainId)
+                    console.log("xxl99 destChainId " + deposit.destChainId)
+                    console.log("xxl99 await ShumBridge.withdraw end");
 
                     let transaction = await ShumBridge.withdraw(
                         deposit.srcChainId,
@@ -1452,6 +1490,7 @@ export default {
             }
         },
 
+
         //评估解冻手续费
         async getGasEstimateFromUnFreeze(ShumBridge, deposit) {
             try {
@@ -1472,6 +1511,7 @@ export default {
                 //     deposit.signatures[0].signature
                 // );
 
+                console.log("xxl99 getGasEstimateFromUnFreeze ShumBridge.withdraw ");    
                 //如果是bridge里面能提取的lina不足,会报错但无法捕捉异常,导致无限等待
                 let gasEstimate = await ShumBridge.contract.estimateGas.withdraw(
                     deposit.srcChainId,
@@ -1573,13 +1613,19 @@ export default {
         waitChainChange() {
             return new Promise(resolve => {
                 const wait = () => {
+
+                    console.log("xxl99 waitChainChange 0 ");
+                    console.log("xxl99 chainChangedStatus " + this.chainChangedStatus);
                     if (this.chainChangedStatus) {
+
+                        console.log("xxl99 waitChainChange 1");
                         if (this.chainChangeTokenFromUnfreeze) {
                             this.$pub.unsubscribe(
                                 this.chainChangeTokenFromUnfreeze
                             );
                         }
 
+                        console.log("xxl99 waitChainChange 2");
                         this.chainChangeTokenFromUnfreeze = "";
                         this.chainChangedStatus = false;
                         resolve(true);
@@ -1641,6 +1687,7 @@ export default {
             let count = 0;
 
             return new Promise((resolve, reject) => {
+
                 const wait = async () => {
                     //超时退出
                     // if (count > 60) {
@@ -1653,6 +1700,13 @@ export default {
                     this.getPendingProcessLoopId = this.waitPendingProcess
                         ? setTimeout(wait, 3000)
                         : 0;
+
+                    console.log("xxl99 getPendingProcess start ...");
+                        console.log(this.sourceWalletAddress);
+                        console.log(this.targetWalletAddress);
+                        console.log(this.sourceNetworkId);
+                        console.log(this.currency);
+                    console.log("xxl99 getPendingProcess ");
 
                     //获取存取数据
                     let [sourceArray, targetArray] = await Promise.all([
@@ -1670,10 +1724,13 @@ export default {
                         })
                     ]);
 
-                    // console.log(sourceArray, targetArray, ++count);
+                    console.log("xxl99 getPendingProcess 0");
+                    console.log(sourceArray, targetArray);
 
                     //有存数据
                     if (sourceArray.length) {
+
+                        console.log("xxl99 getPendingProcess 1");
                         //有冻结hash
                         if (this.freezeSuccessHash) {
                             const findHash = _.find(sourceArray, [
@@ -1687,6 +1744,7 @@ export default {
                             }
                         }
 
+                        console.log("xxl99 getPendingProcess 2");
                         //取不同存储记录
                         const diffArray = _.xorBy(
                             sourceArray,
@@ -1694,6 +1752,7 @@ export default {
                             "depositId"
                         );
 
+                        console.log("xxl99 getPendingProcess 3");
                         //没有可解锁的记录
                         if (!diffArray.length) {
                             clearTimeout(this.getPendingProcessLoopId);
@@ -1703,6 +1762,7 @@ export default {
                             });
                         }
 
+                        console.log("xxl99 getPendingProcess 4");
                         const depositPromise = diffArray.map(item =>
                             api.getDeposits(
                                 this.sourceNetworkId,
@@ -1713,7 +1773,10 @@ export default {
                         //获取签名数据
                         const depositArray = await Promise.all(depositPromise);
 
+                        console.log("xxl99 getPendingProcess 5");
                         clearTimeout(this.getPendingProcessLoopId);
+
+                        console.log("xxl99 getPendingProcess 6");
                         resolve(depositArray);
                     }
                 };
@@ -2019,6 +2082,8 @@ export default {
         clearTimeout(this.waitChainChangeLoopId);
         clearTimeout(this.waitingBlockConfirmationsLoopId);
         clearTimeout(this.getPendingProcessLoopId);
+
+
     }
 };
 </script>

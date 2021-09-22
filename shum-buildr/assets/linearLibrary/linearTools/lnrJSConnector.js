@@ -318,8 +318,11 @@ export const selectedWallet = async (walletType, waitStore = true) => {
         $nuxt.$Spin.show();
         const store = $nuxt.$store;
 
+        console.log("xxl selectedWallet 1");
         //连接成功
         if (walletStatus && walletStatus.currentWallet) {
+
+            console.log("xxl selectedWallet 2");
             store.commit(
                 "setWalletNetworkName",
                 walletStatus?.networkName.toUpperCase()
@@ -352,6 +355,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                 !registeredMetamaskWalletEvents
             ) {
                 onMetamaskAccountChange(async accounts => {
+
+                    console.log("xxl selectedWallet onMetamaskAccountChange");
                     //当前链的钱包切换时才执行更新
                     if (
                         store.state.walletType == SUPPORTED_WALLETS_MAP.METAMASK
@@ -382,6 +387,9 @@ export const selectedWallet = async (walletType, waitStore = true) => {
 
                 //切换网络刷新页面
                 onMetamaskChainChange(async chainId => {
+
+                    console.log("xxl selectedWallet onMetamaskAccountChange");
+                    console.log("xxl99 onMetamaskChainChange ....")
                     if (
                         store.state.walletType == SUPPORTED_WALLETS_MAP.METAMASK
                     ) {
@@ -403,6 +411,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                 !registeredBinanceWalletEvents
             ) {
                 onBinanceAccountChange(async accounts => {
+
+                    console.log("xxl selectedWallet onBinanceAccountChange");
                     //当前链的钱包切换时才执行更新
                     if (
                         store.state.walletType ==
@@ -436,6 +446,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                         store.state.walletType ==
                         SUPPORTED_WALLETS_MAP.BINANCE_CHAIN
                     ) {
+
+                        console.log("xxl selectedWallet location.reload");
                         location.reload();
                         // $pub.publish("onBinanceChainChange");
                     }
@@ -449,6 +461,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                 onWalletConnectAccountChange(
                     lnrJSConnector.signer.provider.provider,
                     async accounts => {
+
+                        console.log("xxl onWalletConnectAccountChange ");
                         //当前链的钱包切换时才执行更新
                         if (
                             store.state.walletType ==
@@ -481,6 +495,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                 onWalletConnectChainChange(
                     lnrJSConnector.signer.provider.provider,
                     async chainId => {
+                        console.log("xxl onWalletConnectChainChange 99");
+                        console.log("xxl99 onWalletConnectChainChange ....")
                         if (
                             store.state.walletType ==
                             SUPPORTED_WALLETS_MAP.WALLET_CONNECT
@@ -503,6 +519,8 @@ export const selectedWallet = async (walletType, waitStore = true) => {
                 onWalletConnectDisconnect(
                     lnrJSConnector.signer.provider.provider,
                     async (code, reason) => {
+
+                        console.log("xxl onWalletConnectDisconnect 99");
                         if (
                             store.state.walletType ==
                             SUPPORTED_WALLETS_MAP.WALLET_CONNECT

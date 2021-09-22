@@ -434,7 +434,7 @@
                </div>
             </div>
             <div class=" tokenBox">
-               <template v-if="isEthereumNetwork">
+               <template v-if="isRealEthereumNetwork">
                   <img class="tokenIcon" src="@/static/ETH_logo.svg"/>
                   <div class="box">
                      <div class="tokenItems obtrusive">
@@ -627,6 +627,7 @@
       CHAIN_CHANGE_TYPE,
       isBinanceNetwork,
       isEthereumNetwork,
+      isRealEthereumNetwork,
       SUPPORTED_WALLETS_MAP,
       LIQUIDATION_NETWORKS,
    } from '@/assets/linearLibrary/linearTools/network';
@@ -686,6 +687,8 @@
          },
          isEthereumNetwork() {
          },
+         isRealEthereumNetwork() {
+         },
          isBinanceNetwork() {
          },
          walletNetworkId() {
@@ -703,7 +706,9 @@
          isEthereumNetwork() {
             return isEthereumNetwork(this.walletNetworkId);
          },
-
+         isRealEthereumNetwork() {
+            return isRealEthereumNetwork(this.walletNetworkId);
+         },
          isBinanceNetwork() {
             return isBinanceNetwork(this.walletNetworkId);
          },
@@ -812,6 +817,10 @@
       methods: {
          async checkLiquidation() {
             try {
+
+               //xxl TODO
+               return;
+               
                clearInterval(this.liquidationCountDownId);
 
                //如果是bsc main/bsc(私链)则检查liquidation
@@ -996,8 +1005,9 @@
 
             this.checkLiquidation();
 
+            //xxl99 do not swift
             //build,swap
-            if (![1, 5].includes(currentAction) || forceAction) {
+            if (![3, 7].includes(currentAction) || forceAction) {
                this.$store.commit('setCurrentAction', 0);
                this.$router.push('/');
             }

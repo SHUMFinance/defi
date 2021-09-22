@@ -178,6 +178,10 @@
          });
          //订阅链改变事件
          this.$pub.subscribe("onWalletChainChange", (msg, params) => {
+
+            //xxl99 TODO 
+            //return;
+
             this.walletStatusChange();
          });
       },

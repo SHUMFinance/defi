@@ -708,6 +708,7 @@ module.exports = {
                 )
                 .catch(err => console.error(err));
         },
+        
         unfreeze({
             max = maxRequest,
             depositor = undefined,

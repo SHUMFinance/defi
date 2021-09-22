@@ -89,12 +89,22 @@ export const LIQUIDATION_NETWORKS = {
 export const isEthereumNetwork = walletNetworkId =>{
 
     console.log("xxl isEthereumNetwork start ");
-    console.log(ETHEREUM_NETWORKS);
-    console.log(walletNetworkId);
+    //console.log(ETHEREUM_NETWORKS);
+    //console.log(walletNetworkId);
     console.log("xxl isEthereumNetwork end ");
 
-    ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
+    return ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
+    //return false;
 }
+
+
+export const isRealEthereumNetwork = walletNetworkId =>{
+
+    return ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
+    //return false;
+}
+
+
     
 export const isBinanceNetwork = walletNetworkId =>
     BINANCE_NETWORKS.hasOwnProperty(walletNetworkId);

@@ -522,6 +522,9 @@
          this.chainChangeTokenFromSubscribe = this.$pub.subscribe(
            "onWalletChainChange",
            async () => {
+              //xxl99 TODO
+              //return;
+
               //当前和上一次不是相同网络时,交换gas
               this.checkGasDetails();
            }

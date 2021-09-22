@@ -6,6 +6,11 @@
       function ShumCollateralSystem(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
+        console.log("*** xxl ShumCollateralSystem ...");
+        console.log(this.contractSettings.addressList['ShumCollateralSystem']);
+
+
+
         this.contract = new Contract(
           this.contractSettings.addressList['ShumCollateralSystem'],
           abi,

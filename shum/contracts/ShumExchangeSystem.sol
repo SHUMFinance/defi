@@ -10,6 +10,8 @@ import "./interfaces/IShumConfig.sol";
 import "./upgradeable/ShumAdminUpgradeable.sol";
 import "./SafeDecimalMath.sol";
 
+import "hardhat/console.sol";
+
 contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
     using SafeMath for uint;
     using SafeDecimalMath for uint;
@@ -133,13 +135,20 @@ contract ShumExchangeSystem is ShumAdminUpgradeable, ShumAddressCache {
         address destAddr,
         bytes32 destKey
     ) private {
+
+        console.log("1");
         if (exitPositionOnly) {
             require(destKey == LUSD_KEY, "ShumExchangeSystem: can only exit position");
         }
 
+        console.log("2");
+        console.log(address(mAssets));
+        
         // We don't need the return value here. It's just for preventing entering invalid trades
         mAssets.getAddressWithRequire(destKey, "ShumExchangeSystem: dest asset not found");
 
+
+        console.log("3");
         IShumAsset source = IShumAsset(mAssets.getAddressWithRequire(sourceKey, "ShumExchangeSystem: source asset not found"));
 
         // Only lock up the source amount here. Everything else will be performed in settlement.

@@ -595,6 +595,9 @@
          this.chainChangeFromSubscribe = this.$pub.subscribe(
            "onWalletChainChange",
            async () => {
+              //xxl99 TODO
+              //return;
+
               if (this.actionTabs == "m0") {
                  this.sourceNetworkId = this.walletNetworkId;
                  this.inputData = {
@@ -1407,49 +1410,51 @@
           */
          async clickBuild() {
             try {
-               if (!this.buildDisabled) {
-                  if (this.isEthereumNetwork) {
-                     this.actionTabs = "m1"; //进入swap流程
-                  } else if (this.isBinanceNetworkData) {
-                     this.processing = true;
+            if (!this.buildDisabled) {
+               if (this.isEthereumNetwork) {
+                  this.actionTabs = "m1"; //进入swap流程
+               } else if (this.isBinanceNetworkData) {
 
-                     //清空之前数据
-                     this.waitProcessArray = [];
+            console.log("***xxl click build ...");      
+            this.processing = true;
 
-                     if (this.actionData.needApprove.gt("0")) {
-                        this.shouldApprove = true;
-                     }
+            //清空之前数据
+            this.waitProcessArray = [];
 
-                     if (
-                       this.actionData.stake.gte(n2bn("1")) &&
-                       this.actionData.amount.gte(n2bn("0.01"))
-                     ) {
-                        //合并进度
-                        this.waitProcessArray.push(
-                          BUILD_PROCESS_SETUP.STAKING_BUILD
-                        );
-                     } else {
-                        //单步进度
-                        if (this.actionData.stake.gte(n2bn("1"))) {
-                           this.waitProcessArray.push(
-                             BUILD_PROCESS_SETUP.STAKING
-                           );
-                        }
+            if (this.actionData.needApprove.gt("0")) {
+               this.shouldApprove = true;
+            }
 
-                        if (this.actionData.amount.gte(n2bn("0.01"))) {
-                           this.waitProcessArray.push(
-                             BUILD_PROCESS_SETUP.BUILD
-                           );
-                        }
-                     }
+            if (
+               this.actionData.stake.gte(n2bn("1")) &&
+               this.actionData.amount.gte(n2bn("0.01"))
+            ) {
+               //合并进度
+               this.waitProcessArray.push(
+                  BUILD_PROCESS_SETUP.STAKING_BUILD
+               );
+            } else {
+               //单步进度
+               if (this.actionData.stake.gte(n2bn("1"))) {
+                  this.waitProcessArray.push(
+                     BUILD_PROCESS_SETUP.STAKING
+                  );
+               }
 
-                     this.confirmTransactionStep = 0;
-                     this.actionTabs = "m1"; //进入等待页
+               if (this.actionData.amount.gte(n2bn("0.01"))) {
+                  this.waitProcessArray.push(
+                     BUILD_PROCESS_SETUP.BUILD
+                  );
+               }
+            }
 
-                     this.waitProcessFlow = this.startFlow();
+            this.confirmTransactionStep = 0;
+            this.actionTabs = "m1"; //进入等待页
 
-                     //开始逻辑流处理函数
-                     await this.waitProcessFlow();
+            this.waitProcessFlow = this.startFlow();
+
+            //开始逻辑流处理函数
+            await this.waitProcessFlow();
                   }
                }
             } catch (error) {
@@ -1577,6 +1582,10 @@
               buildAmountsUSD: n2bn("0")
            }
          ) {
+
+            console.log("*** xxl startStakingAndBuildContract ..."); 
+
+
             this.confirmTransactionStatus = false;
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
@@ -1600,20 +1609,24 @@
                buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 2));
             }
 
+            console.log("*** xxl ShumCollateralSystem 1") 
             const {
                lnrJS: {ShumCollateralSystem},
                utils
             } = lnrJSConnector;
+            console.log("*** xxl ShumCollateralSystem 2") 
 
             const transactionSettings = {
                gasPrice: this.$store.state?.gasDetails?.price,
                gasLimit: this.gasLimit
             };
 
+            console.log("*** xxl ShumCollateralSystem 3") 
             transactionSettings.gasLimit = await this.getGasEstimateFromStakingAndBuild(
               stakeAmountLINA,
               buildAmountsUSD
             );
+            console.log("*** xxl ShumCollateralSystem 4") 
 
             let transaction = await ShumCollateralSystem.stakeAndBuild(
               utils.formatBytes32String("SHUM"),
@@ -1723,7 +1736,7 @@
             }
          },
 
-         //开始Build合约调用
+         //start call Build contract
          async startBuildContract(buildAmountsUSD) {
             this.confirmTransactionStatus = false;
 
@@ -1810,11 +1823,15 @@
            buildAmountsUSD
          ) {
             try {
+
+
+               console.log("xxl getGasEstimateFromStakingAndBuild 0");
                const {
                   lnrJS: {ShumCollateralSystem},
                   utils
                } = lnrJSConnector;
 
+               console.log("xxl getGasEstimateFromStakingAndBuild 1");
                if (
                  stakeAmountLINA.lte("0") &&
                  buildAmountsUSD.lte("0") //小于等于0
@@ -1822,14 +1839,22 @@
                   throw new Error("invalid input");
                }
 
+               console.log("xxl getGasEstimateFromStakingAndBuild 2");
                let gasEstimate = await ShumCollateralSystem.contract.estimateGas.stakeAndBuild(
                  utils.formatBytes32String("SHUM"),
                  stakeAmountLINA,
                  buildAmountsUSD
                );
 
+               console.log("xxl getGasEstimateFromStakingAndBuild 3");
+
+               
                return bufferGasLimit(gasEstimate);
             } catch (e) {
+
+               console.log("###xxl ....");
+               console.log(e);
+
                console.log(e, "getGasEstimateFromStakingAndBuild");
                return bufferGasLimit(DEFAULT_GAS_LIMIT.staking);
             }
