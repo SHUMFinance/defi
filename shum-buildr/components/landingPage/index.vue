@@ -74,10 +74,7 @@
                Welcome to ShumFinance
             </div>
             <p slot="content">
-               SHUM Finance ("SHUM") is a non-custodial, cross-chain compatible, Delta-one asset protocol.SHUM's
-               long-term DeFi vision is to increase the inclusion and democratization of investment assets (digital and
-               traditional). There is tremendous value in investors being able to easily and quickly invest, save money
-               and secure assets at fair market value.
+               SHUM Finance ("SHUM") is a non-custodial, cross-chain compatible, Delta-one asset protocol.SHUM's long-term DeFi vision is to increase the inclusion and democratization of investment assets (digital and traditional). There is tremendous value in investors being able to easily and quickly invest, save money and secure assets at fair market value.
             </p>
             <div class="btn">
                <div class="buyLINA" @click.stop="openBuyLINA">
@@ -118,7 +115,7 @@
                   </div>
                </div>
             </div>
-            <p class="clicktitle">TITLE</p>
+            <p class="clicktitle"></p>
             <p class="clickcon">the performance characteristics</p>
             <div class="tabq ">
                <Collapse v-model="introduct" accordion>
@@ -167,177 +164,17 @@
                   <p class="graycil"></p>
                   <p class="bluecil"></p>
                   <div class="cirbg"></div>
-                  <div class="bg"></div>
-                  <div class="webitem">
-                     <div class="actionInputItem"
-                          :class="{error: errors.stakeMsg}"
-                          @click="changeFocusItem(0)"
-                     >
-                        <div class="itemLeft">
-                           <div class="itemIcon">
-                              <img src="@/static/logoshum.jpg"/>
-                           </div>
-                           <div class="itemType">
-                              <div class="itemTypeTitle">Stake SHUM</div>
-                           </div>
-                        </div>
-                        <div class="itemRight">
-                           <div class="inputRect">
-                              <InputNumber
-                                  class="input"
-                                  ref="itemInput0"
-                                  type="text"
-                                  v-model="inputData.stake"
-                                  placeholder="0"
-                                  :min="1"
-                                  :max="100000000000"
-                                  @on-focus="inputFocus(0)"
-                                  @on-blur="inputBlur(0)"
-                                  :formatter="formatterInput"
-                              />
-                              <!-- :formatter="
-                                      value =>
-                                          floor(
-                                              toNonExponential(value),
-                                              DECIMAL_PRECISION
-                                          )
-                                  " -->
-                              <!-- :max="formatEtherToNumber(buildData.maxAvaliableLINA)" -->
-                              <!-- <div class="unit">lina</div> -->
-                           </div>
-                           <!-- <div class="avaliable">Avaliable : 1,000</div> -->
-                        </div>
-                        <div class="itemTypeBtn"
-                             @click.stop="clickBuy"
-                        >buy shum
-                           <img src="@/static/arrow_right.svg"/>
-                        </div>
-                        <div class="itemErrMsg" :style="{ opacity: errors.stakeMsg ? '1' : '0'}">
-                           {{ errors.stakeMsg }}
-                        </div>
-                     </div>
-                     <div
-                         class="actionInputItem"
-                         :class="{error: errors.buildAmount }"
-                         @click="changeFocusItem(1)"
-                     >
-                        <div class="itemLeft">
-                           <div class="itemIcon">
-                              <img src="@/static/logoshum.jpg"/>
-                           </div>
-                           <div class="itemType">
-                              <div class="itemTypeTitle">
-                                 Build USD
-                                 <Tooltip
-                                     max-width="305"
-                                     placement="top"
-                                     class="tip globalInfoStyle"
-                                     content="Amount of sUSD built may vary due to block times and price fluctuations in pledge tokens."
-                                     offset="0 4"
-                                 >
-                                    <img
-                                        src="@/static/info_white.svg"
-                                    />
-                                 </Tooltip>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="itemRight">
-                           <div class="inputRect">
-                              <InputNumber
-                                  class="input"
-                                  ref="itemInput1"
-                                  type="text"
-                                  :min="0"
-                                  :max="100000000000"
-                                  v-model="inputData.amount"
-                                  @on-focus="inputFocus(1)"
-                                  @on-blur="inputBlur(1)"
-                                  placeholder="0"
-                                  :formatter="formatterInput"
-                              />
-
-                              <!-- :formatter=" value => floor(
-                                  toNonExponential(value), DECIMAL_PRECISION )
-                              " -->
-                              <!-- :max="formatEtherToNumber(buildData.maxAvaliablesUSD)" -->
-                              <!-- <div class="unit">sUSD</div> -->
-                           </div>
-                           <!-- <div class="avaliable">Avaliable : 1,000</div> -->
-                        </div>
-                        <div
-                            class="itemTypeBtn"
-                            @click.stop="clickMaxBuildAmount"
-                        >
-                           Max
-                        </div>
-                        <div
-                            class="itemErrMsg"
-                            :style="{
-                                    opacity: errors.amountMsg ? '1' : '0'
-                                }"
-                        >
-                           {{ errors.amountMsg }}
-                        </div>
-                     </div>
-                     <div
-                         class="actionInputItem"
-                         :class="{
-                                error: errors.ratioMsg
-                            }"
-                         @click="changeFocusItem(2)"
-                     >
-                        <div class="itemLeft">
-                           <div class="itemIcon">
-                              <img src="@/static/logoshum.jpg"/>
-                           </div>
-                           <div class="itemType">
-                              <div class="itemTypeTitle">P Ratio</div>
-                           </div>
-                        </div>
-                        <div class="itemRight">
-                           <div class="inputRect">
-                              <InputNumber
-                                  class="input"
-                                  ref="itemInput2"
-                                  type="text"
-                                  :max="100000000000"
-                                  v-model="inputData.ratio"
-                                  @on-focus="inputFocus(2)"
-                                  @on-blur="inputBlur(2)"
-                                  placeholder="0"
-                                  :formatter="
-                                            value => formatterInput(value, 0)
-                                        "
-                              />
-                              <!-- :max="buildData.maxPRatio" -->
-                              <!-- <div class="unit">%</div> -->
-                           </div>
-                           <!-- <div class="avaliable">Current : 99.73</div> -->
-                        </div>
-                        <div
-                            class="itemTypeBtn"
-                            @click.stop="clickTargetRatio"
-                        >
-                           Target ratio
-                        </div>
-                        <div
-                            class="itemErrMsg"
-                            :style="{
-                                    opacity: errors.ratioMsg ? '1' : '0'
-                                }"
-                        >
-                           {{ errors.ratioMsg }}
-                        </div>
-                     </div>
+                  <div class="bg">
+                     <img  src="@/static/welpage/wel01.png"/>
                   </div>
                </div>
             </div>
             <div class="weltwo">
                <div class="tou" style="margin-left:0!important;float:left;">
                   <div class="cirbg"></div>
-                  <div class="bg"></div>
-
+                  <div class="bg">
+                     <img  src="@/static/welpage/wel02.png"/>
+                  </div>
                </div>
                <div class="text">
                   <p>Cross Chain Transfer. Gas Saving. Composability</p>
@@ -348,14 +185,16 @@
             <div class="welthree" style="margin-bottom:320px!important;">
                <div class="text">
                   <p>Stake.Build.Earn</p>
-                  <span>A decentralized application for staking and building LUSD, accepting a mixture of LINA tokens and other major cryptocurrencies.</span>
+                  <span>The decentralized application reward system allow you to obtain reward by staking SHUM and building <span class="iconfont icon-s" style="font-size:14px;color: #26272E;display:inline"></span>USD</span>
                   <button>LAUNCH BUILDR</button>
                </div>
                <div class="tou">
                   <p class="graycil"></p>
                   <p class="bluecil"></p>
                   <div class="cirbg"></div>
-                  <div class="bg"></div>
+                  <div class="bg">
+                     <img  src="@/static/welpage/wel03.png"/>
+                  </div>
                </div>
             </div>
             <!-- 尾部-->
@@ -1009,6 +848,95 @@
                margin-bottom: 313px;
             }
 
+            .welone {
+               display: flex;
+               flex-direction: row;
+               justify-content: space-around;
+               margin-bottom: 425px;
+               margin-left:300px;
+
+               .text {
+                  p {
+                     width: 191px;
+                     height: 24px;
+                     font-family: Arial;
+                     font-style: normal;
+                     font-weight: bold;
+                     font-size: 24px;
+                     line-height: 24px;
+                     color: #111B47;
+                     margin: 60px 0 0 0;
+                  }
+
+                  span {
+                     display: block;
+                     margin: 24px 0;
+                     width: 408px;
+                     height: 72px;
+                     font-family: Arial Hebrew;
+                     font-style: normal;
+                     font-weight: normal;
+                     font-size: 14px;
+                     line-height: 24px;
+                     color: #26272E;
+                  }
+
+                  button {
+                     width: 256px;
+                     height: 48px;
+                     background: #FFFFFF;
+                     border: 1px solid #4B72F0;
+                     border-radius: 8px;
+                     color: #4B72F0;
+                  }
+               }
+
+               .tou {
+                  margin-left: 158px;
+                  position: relative;
+                  .cirbg{
+                     width:819px;
+                     height:819px;
+                     border-radius: 50%;
+                     background: #E1EEFB;
+                     margin-right:-30px;
+                     margin-top:-250px;
+                  }
+                  .bg {
+                     img{
+                        float:right;
+                        z-index:100;
+                        width: 719px;
+                        height: 391px;
+                        /*background: #4B72F0;*/
+                        border-radius: 24px;
+                        position: absolute;
+                        right: 300px;
+                        top: 0;
+                     }
+
+                  }
+                  .bluecil{
+                     width:60px;
+                     height:60px;
+                     border-radius:50%;
+                     background: #4B72F0;
+                     position:absolute;
+                     top:600px;
+                     left:100px;
+                  }
+                  .graycil{
+                     width:60px;
+                     height:60px;
+                     border-radius:50%;
+                     background: #D7E2EC;
+                     position:absolute;
+                     bottom:600px;
+                     left:100px;
+                  }
+               }
+            }
+
             .weltwo {
                display: flex;
                flex-direction: row;
@@ -1060,216 +988,25 @@
                      height:819px;
                      border-radius: 50%;
                      background: #E1EEFB;
-                     margin-left:-400px;
+                     margin-left:-700px;
                      margin-top:-250px;
                   }
                   .bg {
-                     float:left;
-                     width: 560px;
-                     height: 320px;
-                     background: #4B72F0;
-                     border-radius: 24px;
-                     position: absolute;
-                     right: -60px;
-                     top: 0;
-                  }
-
-                  .webitem {
-                     box-sizing: border-box;
-                     border-radius: 8px;
-                     float: left;
-                     position: absolute;
-                     left: -50px;
-                     top: 10px;
-                     z-index: 1000;
-                     margin-top: 30px;
-                     display: flex;
-                     justify-content: space-between;
-
-                     .actionInputItem {
-                        background: #FFFFFF;
-                        border-radius: 8px;
-                        border: solid 1px #deddde;
-                        border-bottom: none;
-                        display: inline-block;
-                        width: 180px;
-                        height: 240px;
-                        transition: $animete-time linear;
-                        position: relative;
-                        margin-right: 24px;
-
-                        &:hover,
-                        &.active {
-                           border-color: white;
-                           box-shadow: 0px 2px 12px #deddde;
-                        }
-
-                        .itemLeft {
-                           display: flex;
-                           align-items: center;
-                           flex-direction: column;
-
-                           .itemIcon {
-                              width: 40px;
-                              height: 40px;
-                              margin: 40px auto 30px;
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
-                              border-radius: 50%;
-                              background: #ffffff;
-
-                              img {
-                                 width: 100%;
-                                 height: 100%;
-                              }
-                           }
-
-                           .itemType {
-                              .itemTypeTitle {
-                                 text-align: center;
-                                 font-family: Gilroy-bold;
-                                 font-size: 16px;
-                                 font-weight: bold;
-                                 font-stretch: normal;
-                                 font-style: normal;
-                                 line-height: 1.5;
-                                 letter-spacing: normal;
-                                 color: #5a575c;
-
-                                 .tip {
-                                    margin-left: 8px;
-
-                                    img {
-                                       margin-top: -3px;
-                                    }
-                                 }
-                              }
-
-                           }
-                        }
-
-                        .itemRight {
-                           flex: 1;
-                           display: flex;
-
-                           .inputRect {
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              // margin-bottom: 8px;
-                              .input {
-                                 width: 100%;
-                                 margin-top: 35px;
-                                 border: none;
-                                 box-shadow: none;
-                                 text-align: center;
-
-                                 .ivu-input-number-handler-wrap {
-                                    display: none;
-                                 }
-
-                                 .ivu-input-number-input {
-                                    text-align: center;
-                                    font-family: Gilroy-bold;
-                                    font-size: 32px;
-                                    font-weight: bold;
-                                    font-stretch: normal;
-                                    font-style: normal;
-                                    line-height: 1.25;
-                                    letter-spacing: normal;
-                                    color: #5a575c;
-
-                                    &::placeholder {
-                                       color: #99999a;
-                                    }
-                                 }
-                              }
-
-                              .unit {
-                                 color: #5a575c;
-                                 font-family: Gilroy-Regular;
-                                 font-size: 16px;
-                                 font-weight: 400;
-                                 line-height: 24px;
-                                 text-transform: uppercase;
-                              }
-                           }
-
-                           .avaliable {
-                              color: #c6c4c7;
-                              font-family: Gilroy;
-                              font-size: 12px;
-                              font-weight: 500;
-                              line-height: 16px;
-                              text-align: right;
-                           }
-                        }
-
-                        .itemTypeBtn {
-                           transition: $animete-time linear;
-                           cursor: pointer;
-                           width: 100%;
-                           position: absolute;
-                           bottom: 0;
-                           border-radius: 5px;
-                           opacity: 0.2;
-                           text-transform: uppercase;
-                           font-family: Gilroy-bold;
-                           font-size: 16px;
-                           font-weight: bold;
-                           font-stretch: normal;
-                           font-style: normal;
-                           line-height: 4.03;
-                           letter-spacing: 1.5px;
-                           text-align: center;
-                           background-color: #1a38f8;
-                           color: #ffffff;
-
-                           img {
-                              margin-left: 6px;
-                              color: #ffffff;
-                           }
-
-                           &:hover {
-                              &:not(.default) {
-                                 opacity: 1;
-                              }
-                           }
-
-                           &.active {
-                              opacity: 1;
-                           }
-
-                           &.default {
-                              cursor: default;
-                           }
-                        }
-
-                        .itemErrMsg {
-                           transition: opacity $animete-time linear;
-                           position: absolute;
-                           left: 0;
-                           bottom: -20px;
-                           height: 16px;
-                           color: #df434c;
-                           font-family: Gilroy;
-                           font-size: 10px;
-                           font-weight: 700;
-                           line-height: 16px;
-                           text-transform: uppercase;
-                           letter-spacing: 1.25px;
-                        }
-
-                        &.error {
-                           border-color: #df434c;
-                        }
+                     img{
+                        float:left;
+                        width: 631px;
+                        height: 398px;
+                        /*background: #4B72F0;*/
+                        border-radius: 24px;
+                        position: absolute;
+                        right: -200px;
+                        top: 0;
                      }
                   }
                }
             }
 
-            .welone, .welthree {
+            .welthree {
                display: flex;
                flex-direction: row;
                justify-content: space-around;
@@ -1324,15 +1061,18 @@
                      margin-top:-250px;
                  }
                   .bg {
-                     float:right;
-                     z-index:100;
-                     width: 560px;
-                     height: 320px;
-                     background: #4B72F0;
-                     border-radius: 24px;
-                     position: absolute;
-                     left: -50px;
-                     top: 0;
+                     img{
+                        float:right;
+                        z-index:100;
+                        width: 453px;
+                        height: 429px;
+                        /*background: #4B72F0;*/
+                        border-radius: 24px;
+                        position: absolute;
+                        left: -90px;
+                        top: 0;
+                     }
+
                   }
                   .bluecil{
                      width:60px;
@@ -1340,8 +1080,8 @@
                      border-radius:50%;
                      background: #4B72F0;
                      position:absolute;
-                     top:600px;
-                     left:100px;
+                     top:530px;
+                     left:400px;
                   }
                   .graycil{
                      width:60px;
@@ -1351,199 +1091,6 @@
                      position:absolute;
                      bottom:600px;
                      left:100px;
-                  }
-
-                  .webitem {
-                     box-sizing: border-box;
-                     border-radius: 8px;
-                     float: left;
-                     position: absolute;
-                     left: -100px;
-                     top: 10px;
-                     z-index: 1000;
-                     margin-top: 30px;
-                     display: flex;
-                     justify-content: space-between;
-
-                     .actionInputItem {
-                        background: #FFFFFF;
-                        border-radius: 8px;
-                        border: solid 1px #deddde;
-                        border-bottom: none;
-                        display: inline-block;
-                        width: 180px;
-                        height: 240px;
-                        transition: $animete-time linear;
-                        position: relative;
-                        margin-right: 24px;
-
-                        &:hover,
-                        &.active {
-                           border-color: white;
-                           box-shadow: 0px 2px 12px #deddde;
-                        }
-
-                        .itemLeft {
-                           display: flex;
-                           align-items: center;
-                           flex-direction: column;
-
-                           .itemIcon {
-                              width: 40px;
-                              height: 40px;
-                              margin: 40px auto 30px;
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
-                              border-radius: 50%;
-                              background: #ffffff;
-
-                              img {
-                                 width: 100%;
-                                 height: 100%;
-                              }
-                           }
-
-                           .itemType {
-                              .itemTypeTitle {
-                                 text-align: center;
-                                 font-family: Gilroy-bold;
-                                 font-size: 16px;
-                                 font-weight: bold;
-                                 font-stretch: normal;
-                                 font-style: normal;
-                                 line-height: 1.5;
-                                 letter-spacing: normal;
-                                 color: #5a575c;
-
-                                 .tip {
-                                    margin-left: 8px;
-
-                                    img {
-                                       margin-top: -3px;
-                                    }
-                                 }
-                              }
-
-                           }
-                        }
-
-                        .itemRight {
-                           flex: 1;
-                           display: flex;
-
-                           .inputRect {
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              // margin-bottom: 8px;
-                              .input {
-                                 width: 100%;
-                                 margin-top: 35px;
-                                 border: none;
-                                 box-shadow: none;
-                                 text-align: center;
-
-                                 .ivu-input-number-handler-wrap {
-                                    display: none;
-                                 }
-
-                                 .ivu-input-number-input {
-                                    text-align: center;
-                                    font-family: Gilroy-bold;
-                                    font-size: 32px;
-                                    font-weight: bold;
-                                    font-stretch: normal;
-                                    font-style: normal;
-                                    line-height: 1.25;
-                                    letter-spacing: normal;
-                                    color: #5a575c;
-
-                                    &::placeholder {
-                                       color: #99999a;
-                                    }
-                                 }
-                              }
-
-                              .unit {
-                                 color: #5a575c;
-                                 font-family: Gilroy-Regular;
-                                 font-size: 16px;
-                                 font-weight: 400;
-                                 line-height: 24px;
-                                 text-transform: uppercase;
-                              }
-                           }
-
-                           .avaliable {
-                              color: #c6c4c7;
-                              font-family: Gilroy;
-                              font-size: 12px;
-                              font-weight: 500;
-                              line-height: 16px;
-                              text-align: right;
-                           }
-                        }
-
-                        .itemTypeBtn {
-                           transition: $animete-time linear;
-                           cursor: pointer;
-                           width: 100%;
-                           position: absolute;
-                           bottom: 0;
-                           border-radius: 5px;
-                           opacity: 0.2;
-                           text-transform: uppercase;
-                           font-family: Gilroy-bold;
-                           font-size: 16px;
-                           font-weight: bold;
-                           font-stretch: normal;
-                           font-style: normal;
-                           line-height: 4.03;
-                           letter-spacing: 1.5px;
-                           text-align: center;
-                           background-color: #1a38f8;
-                           color: #ffffff;
-
-                           img {
-                              margin-left: 6px;
-                              color: #ffffff;
-                           }
-
-                           &:hover {
-                              &:not(.default) {
-                                 opacity: 1;
-                              }
-                           }
-
-                           &.active {
-                              opacity: 1;
-                           }
-
-                           &.default {
-                              cursor: default;
-                           }
-                        }
-
-                        .itemErrMsg {
-                           transition: opacity $animete-time linear;
-                           position: absolute;
-                           left: 0;
-                           bottom: -20px;
-                           height: 16px;
-                           color: #df434c;
-                           font-family: Gilroy;
-                           font-size: 10px;
-                           font-weight: 700;
-                           line-height: 16px;
-                           text-transform: uppercase;
-                           letter-spacing: 1.25px;
-                        }
-
-                        &.error {
-                           border-color: #df434c;
-                        }
-                     }
                   }
                }
             }

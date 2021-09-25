@@ -151,7 +151,8 @@
       isBinanceNetwork,
       isEthDevNetwork,
       isEthereumNetwork,
-      isMainnetNetwork
+      isMainnetNetwork,
+      CENTER_BASE
    } from "@/assets/linearLibrary/linearTools/network";
    import {BigNumber, utils} from "ethers";
    import {BUILD_PROCESS_SETUP} from "@/assets/linearLibrary/linearTools/constants/process";
@@ -369,7 +370,7 @@
                const apiUrl = isMainnetNetwork(this.walletNetworkId)
                     ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
                     //: `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
-                    : `http://localhost:7789/rewards/${walletAddress}`;  
+                    : CENTER_BASE + `rewards/${walletAddress}`;  
 
                const [
                   firstPeriodStartTimeRes,

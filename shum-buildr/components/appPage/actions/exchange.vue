@@ -192,6 +192,68 @@
          </div>
       </div>
       <div class="left-side">
+         <div class="walletAndAddressBox">
+            <div class="info">
+               <img
+                  class="network"
+                  v-if="isEthereumNetwork"
+                  src="@/static/ETH.svg"
+               />
+               <img class="network" v-else src="@/static/binance.svg"/>
+
+               <div class="wallet">
+                  {{ walletNetworkName }}
+               </div>
+               <div class="address">
+                  {{ abbreviateAddress }}
+               </div>
+               <Tooltip
+                  class="globalInfoStyle"
+                  :content="tooltipContent"
+                  offset="0 6"
+                  placement="bottom"
+                  @on-popper-hide="resetTooltipContent"
+               >
+                  <svg
+                     class="copyBtn"
+                     :data-clipboard-text="walletAddress"
+                     data-clipboard-action="copy"
+                     @click="copyAddress()"
+                     width="24px"
+                     height="24px"
+                     viewBox="0 0 24 24"
+                     version="1.1"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                     xmlns="http://www.w3.org/2000/svg"
+                  >
+                     <desc>Created with Lunacy</desc>
+                     <g id="Icon/Copy">
+                        <path
+                           d="M12.9947 2.33562C12.91 1.03154 11.8255 0 10.5 0L2.5 0L2.33562 0.00531768C1.03154 0.0899613 0 1.17452 0 2.5L0 10.5L0.00531768
+                                 10.6644C0.0899613 11.9685 1.17452 13 2.5 13L4.44938 13L4.44938 12L2.5 12L2.35554 11.9931C1.59489 11.9204 1 11.2797 1 10.5L1 2.5L1.00687
+                                 2.35554C1.07955 1.59489 1.7203 1 2.5 1L10.5 1L10.6445 1.00687C11.4051 1.07955 12 1.7203 12 2.5L12 4.69901L13 4.69901L13 2.5L12.9947
+                                 2.33562ZM16.5 6L8.5 6C7.11929 6 6 7.11929 6 8.5L6 16.5C6 17.8807 7.11929 19 8.5 19L16.5 19C17.8807 19 19 17.8807 19 16.5L19 8.5C19 7.11929
+                                 17.8807 6 16.5 6ZM8.5 7L16.5 7C17.3284 7 18 7.67157 18 8.5L18 16.5C18 17.3284 17.3284 18 16.5 18L8.5 18C7.67157 18 7 17.3284 7 16.5L7 8.5C7
+                                 7.67157 7.67157 7 8.5 7Z"
+                           transform="translate(2.5 2.5)"
+                           id="Combined-Shape"
+                           fill="#5a575c"
+                           fill-rule="evenodd"
+                           stroke="none"
+                        />
+                     </g>
+                  </svg>
+               </Tooltip>
+
+               <div class="disconnect" @click.stop="disconnect">
+                  Disconnect
+               </div>
+            </div>
+
+            <div class="mMenu" @click="mShowMenuFun">
+               <img src="@/static/icon-menu.svg"/>
+            </div>
+         </div>
          <div class="trade-asset box">
             <div class="box-continer">
                <div class="title">Wallet Balance</div>
@@ -212,16 +274,14 @@
                          shape="round"
                          @click="orderType = true"
                      >
-                        BUY <img v-if="orderType" src="@/static/Sfont1.png"/>
-                        <img v-if="!orderType" src="@/static/Sfont3.png"/>ADA
+                        BUY <span class="iconfont icon-s"></span> ADA
                      </z-button>
                      <z-button
                          :class="{ selected: !orderType }"
                          shape="round"
                          @click="orderType = false"
                      >
-                        SELL <img v-if="!orderType" src="@/static/Sfont1.png"/>
-                        <img v-if="orderType" src="@/static/Sfont3.png"/>ADA
+                        SELL <span class="iconfont icon-s"></span> ADA
                      </z-button>
                   </div>
                </div>
@@ -325,9 +385,16 @@
                </template>
                <z-button
                    size="large"
-                   @click="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)"
+                   @click="myTest()"
+                  :class="{ 'confirm-btn': true, 'buy': orderType }"
                >
-                  CONNECT WALLET
+                  <span v-if="orderType">
+                     BUY
+                  </span>
+                  <span v-else>
+                     SELL
+                  </span>
+                  <span class="iconfont icon-s"></span> ADA
                </z-button>
             </div>
          </div>
@@ -337,15 +404,36 @@
 
 <script>
    import echarts from "echarts";
-   import {selectedWallet} from "@/assets/linearLibrary/linearTools/lnrJSConnector";
    import {
       addEthereumChain,
       checkNetwork,
       SUPPORTED_NETWORKS_MAP,
       SUPPORTED_WALLETS_MAP,
+      getNetworkSpeeds,
+      formatGasPrice,
+      unFormatGasPrice,
+      isEthereumNetwork,
+      bufferGasLimit,
+      DEFAULT_GAS_LIMIT,
    } from "@/assets/linearLibrary/linearTools/network";
-
+   import {abbreviateAddress} from '@/assets/linearLibrary/linearTools/format';
+   import Clipboard from 'clipboard';
+   // import lnrJSConnector, {
+   //    selectedWallet,
+   // } from '@/assets/linearLibrary/linearTools/lnrJSConnector';
    import currencies from "@/common/currency";
+
+   //xxl10
+   import lnrJSConnector, {
+      selectedWallet,
+   } from "@/assets/linearLibrary/linearTools/lnrJSConnector";
+   import {
+      BUILD_PROCESS_SETUP,
+      DECIMAL_PRECISION
+   } from "@/assets/linearLibrary/linearTools/constants/process";
+
+   import {bn2n, bnSub, bnSub2N, n2bn} from '@/common/bnCalc';
+   import gasEditor from "@/components/gasEditor";
 
    const marketMock = {
       data: {
@@ -590,7 +678,7 @@
    };
    export default {
       name: "Exchange",
-      components: {ZButton, ZInput},
+      components: {ZButton, ZInput,gasEditor},
       data: function data() {
          return {
             marketList: [],
@@ -604,8 +692,14 @@
                {label: "Currencies", value: 3},
                {label: "Indices", value: 4},
             ],
-            currencies
+            currencies,
+
+            tooltipContent: 'Copy to clipboard',
          };
+      },
+      watch: {
+         walletNetworkId() {
+         }
       },
       computed: {
          list: function () {
@@ -615,6 +709,9 @@
                }
                return v.value === this.listValue;
             })
+         },
+         walletNetworkId() {
+            return this.$store.state?.walletNetworkId;
          },
          options: function () {
             return this.listOptions.map(option => {
@@ -630,7 +727,19 @@
                   }
                }
             })
-         }
+         },
+         isEthereumNetwork() {
+            return isEthereumNetwork(this.walletNetworkId);
+         },
+         walletNetworkName() {
+            return this.$store.state?.walletNetworkName;
+         },
+         walletAddress() {
+            return this.$store.state?.wallet?.address;
+         },
+         abbreviateAddress() {
+            return abbreviateAddress(this.walletAddress);
+         },
       },
       mounted: function () {
          console.log('currencies', currencies)
@@ -651,9 +760,46 @@
          });
       },
       methods: {
+         copyAddress() {
+            var that = this;
+            var clipboarda = new Clipboard('.copyBtn');
+            clipboarda.on('success', function (e) {
+               that.tooltipContent = 'Copied';
+               e.clearSelection();
+            });
+            clipboarda.on('error', function (e) {
+               that.tooltipContent = 'Error';
+            });
+         },
+
+         resetTooltipContent() {
+            var that = this;
+            setTimeout(function () {
+               that.tooltipContent = 'Copy to clipboard';
+            }, 300);
+         },
+
+         async disconnect() {
+            // this.$store.commit("setWallet", "");
+            this.$store.commit('setAutoConnect', false);
+            let registeredWalletConnectEvents =
+              $nuxt.$store.state?.registeredWalletConnectEvents;
+            if (registeredWalletConnectEvents) {
+               await lnrJSConnector.signer.provider.provider.disconnect();
+               this.$store.commit('setRegisteredWalletConnectEvents', false);
+            }
+            location.reload();
+         },
+
+         mShowMenuFun() {
+            this.$store.commit('setmMenuState', true);
+         },
+
+
          replaceS: function(str) {
             return str.startsWith('s') ? str.replace('s', '') : str;
          },
+
          async selectedWallet(walletType) {
 
             console.log("xxl index.vue 00 selectedWallet " + walletType);
@@ -676,6 +822,150 @@
 
             
          },
+
+
+         async myTest(){
+
+            try {
+                  console.log("xxl myTest ");
+                  this.waitProcessFlow = this.startFlow();
+                  //开始逻辑流处理函数
+                  await this.waitProcessFlow();
+            }catch (error) {
+                  console.log(error);
+            } finally {
+                  console.log("xxl finally");
+            }
+
+         },
+
+
+         startFlow() {
+            return async () => {
+               try {
+                  this.transactionErrMsg = "";
+
+                  await this.startApproveContract(
+                     n2bn(Number.MAX_SAFE_INTEGER)
+                  );
+                  
+                  // if (
+                  //   this.waitProcessArray[this.confirmTransactionStep] ==
+                  //   BUILD_PROCESS_SETUP.STAKING_BUILD
+                  // ) {
+                  //    await this.startStakingAndBuildContract({
+                  //       stakeAmountLINA: this.actionData.stake,
+                  //       buildAmountsUSD: this.actionData.amount
+                  //    });
+                  // } else if (
+                  //   this.waitProcessArray[this.confirmTransactionStep] ==
+                  //   BUILD_PROCESS_SETUP.STAKING
+                  // ) {
+                  //    await this.startStakingContract(this.actionData.stake);
+                  // } else if (
+                  //   this.waitProcessArray[this.confirmTransactionStep] ==
+                  //   BUILD_PROCESS_SETUP.BUILD
+                  // ) {
+                  //    await this.startBuildContract(this.actionData.amount);
+                  // }
+
+
+               } catch (error) {
+                  console.log("xxl startFlow");
+                  console.log(error);
+               }
+            };
+         },
+
+
+         //开始Approve合约调用
+         async startApproveContract(approveAmountSHUM) {
+            this.confirmTransactionStatus = false;
+
+            const {
+               lnrJS: {ShumCollateralSystem, ShumFinance},
+               utils
+            } = lnrJSConnector;
+
+            //取合约地址
+            const ShumCollateralSystemAddress =
+              ShumCollateralSystem.contract.address;
+
+            const transactionSettings = {
+               gasPrice: this.$store.state?.gasDetails?.price,
+               gasLimit: this.gasLimit
+            };
+
+            if(transactionSettings.gasPrice == 0){
+
+               console.log(getNetworkSpeeds(this.walletNetworkId));
+               transactionSettings.gasPrice = getNetworkSpeeds(this.walletNetworkId).price;
+
+            }
+
+            this.confirmTransactionNetworkId = this.walletNetworkId;
+            console.log("xxl10 startApproveContract :" + this.walletNetworkId);
+            console.log("xxl10 gasPrice :" + transactionSettings.gasPrice + " gasPrice : " + transactionSettings.gasLimit);
+           
+
+            transactionSettings.gasLimit = await this.getGasEstimateFromApprove(
+              ShumCollateralSystemAddress,
+              approveAmountSHUM
+            );
+
+            console.log("xxl10 gasPrice :" + transactionSettings.gasPrice + " gasPrice : " + transactionSettings.gasLimit);
+
+            let transaction = await ShumFinance.approve(
+              ShumCollateralSystemAddress,
+              approveAmountSHUM,
+              transactionSettings
+            );
+
+            if (transaction) {
+               this.confirmTransactionStatus = true;
+               this.confirmTransactionHash = transaction.hash;
+
+               let status = await utils.waitForTransaction(transaction.hash);
+
+               if (!status) {
+                  throw {
+                     code: 6100001,
+                     message:
+                       "Something went wrong while gaining approval from the contract, please try again."
+                  };
+               }
+   
+            }
+         },
+
+         //评估Approve的gas
+         async getGasEstimateFromApprove(contractAddress, approveAmountSHUM) {
+            try {
+               const {
+                  utils,
+                  lnrJS: {ShumFinance}
+               } = lnrJSConnector;
+
+               if (
+                 approveAmountSHUM.isZero() ||
+                 approveAmountSHUM.lt("0") //小于等于0
+               ) {
+                  throw new Error("invalid approveAmountSHUM");
+               }
+
+               let gasEstimate = await ShumFinance.contract.estimateGas.approve(
+                 contractAddress,
+                 approveAmountSHUM
+               );
+
+               return bufferGasLimit(gasEstimate);
+            } catch (e) {
+               return bufferGasLimit(DEFAULT_GAS_LIMIT.approve);
+            }
+         },
+
+
+
          bayUsd: function () {
             window.open("https://pancakeswap.finance/swap#/swap", "_blank");
          },
@@ -688,8 +978,8 @@
          lineChart() {
             // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
             const data = splitData([
-               ["8am", 2320.26, 2320.26, 2287.3, 2362.94],
-               ["10am", 2300, 2291.3, 2288.26, 2308.38],
+               ["9am", 2320.26, 2320.26, 2287.3, 2362.94],
+               ["11am", 2300, 2291.3, 2288.26, 2308.38],
                ["2pm", 2295.35, 2346.5, 2295.35, 2346.92],
                ["6pm", 2347.22, 2358.98, 2337.35, 2363.8],
             ]);
@@ -779,7 +1069,7 @@
    #exchange {
       position: absolute;
       top: 0;
-      left: -100px;
+      left: -132px;
       display: flex;
       height: 753px;
       font-family: Arial;
@@ -1070,10 +1360,106 @@
       }
 
       .left-side {
+         position: relative;
          display: flex;
          flex-direction: column;
          width: 320px;
          height: 100%;
+
+         .walletAndAddressBox {
+            position: absolute;
+            z-index: 2;
+            top: -120px;
+            left: -54px;
+            width: 374px;
+            height: 120px;
+            // background-color: springgreen;
+            display: flex;
+            // display: none;
+            justify-content: space-between;
+            align-items: center;
+
+            .info {
+               width: 100%;
+               padding: 7px 16px;
+               display: flex;
+               justify-content: space-evenly;
+               align-items: center;
+               border-radius: 20px;
+               background: #f6f5f6;
+
+               .network {
+                  margin-right: 8px;
+                  width: 16px;
+                  height: 16px;
+               }
+
+               .wallet {
+                  margin-right: 8px;
+                  font-family: Gilroy-Bold;
+                  font-size: 14px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #5a575c;
+               }
+
+               .address {
+                  flex: 1;
+                  font-family: Gilroy-Regular;
+                  font-size: 14px;
+                  margin-right: 4px;
+                  text-align: center;
+                  // white-space: nowrap;
+                  // overflow: hidden;
+                  // text-overflow: ellipsis;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: 1.29;
+                  letter-spacing: normal;
+                  color: #99999a;
+               }
+
+               .copyBtn {
+                  cursor: pointer;
+                  width: 16px;
+                  height: 16px;
+                  margin-top: 4px;
+                  margin-right: 12px;
+
+                  &:hover {
+                     #Combined-Shape {
+                        fill: #1a38f8;
+                        stroke: #1a38f8;
+                     }
+                  }
+               }
+
+               .disconnect {
+                  font-family: Gilroy-Bold;
+                  font-size: 10px;
+                  font-weight: bold;
+                  font-stretch: normal;
+                  font-style: normal;
+                  letter-spacing: 1.25px;
+                  text-align: center;
+                  color: #99999a;
+                  text-transform: uppercase;
+                  cursor: pointer;
+                  transition: $animete-time linear;
+
+                  &:hover {
+                     color: #1a38f8;
+                  }
+               }
+            }
+            .mMenu {
+               display: none;
+            }
+         }
 
          .box {
             padding: 16px 24px 16px 25px;
@@ -1138,6 +1524,15 @@
                   &:nth-of-type(n + 2) {
                      margin-left: 10px;
                   }
+               }
+            }
+
+            .confirm-btn {
+               background-color: #df434c;
+               border-color: #df434c;
+               &.buy {
+                  background-color: #4b72f0;
+                  border-color: #4b72f0;
                }
             }
 

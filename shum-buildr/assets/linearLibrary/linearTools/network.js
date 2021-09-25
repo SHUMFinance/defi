@@ -7,6 +7,10 @@ import {
 import { URLS } from "./constants/urls";
 import api from "@/api";
 
+// server
+// export const CENTER_BASE = "http://47.242.107.228:7789/";
+export const CENTER_BASE = "http://localhost:7789/";
+
 /**
  * ethererm网络
  */
@@ -93,8 +97,8 @@ export const isEthereumNetwork = walletNetworkId =>{
     //console.log(walletNetworkId);
     console.log("xxl isEthereumNetwork end ");
 
-    return ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
-    //return false;
+    //return ETHEREUM_NETWORKS.hasOwnProperty(walletNetworkId);
+    return false;
 }
 
 
@@ -454,3 +458,4 @@ export const checkNetwork = async (networkId = null) => {
     }
     return isSupportNetwork(networkId);
 };
+

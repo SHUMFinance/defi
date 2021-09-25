@@ -374,6 +374,8 @@ export default {
 
         //设置gas
         setGasDetails(price, type) {
+            console.log("xxl10  setGasDetails : " + price);
+
             this.$store.commit("setGasDetails", {
                 price: formatGasPrice(price),
                 type,

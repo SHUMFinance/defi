@@ -12,7 +12,8 @@ import {
     onWalletConnectDisconnect,
     CHAIN_CHANGE_TYPE,
     INFURA_JSON_RPC_URLS,
-    SUPPORTED_NETWORKS
+    SUPPORTED_NETWORKS,
+    CENTER_BASE
 } from "./network";
 import { LinearJs } from "../linearJs";
 import $pub from "pubsub-js";
@@ -125,26 +126,7 @@ const connectToMetamask = async (networkId, networkName) => {
         //xxl bug 03 url
         console.log("xxl the accounts is :");
         console.log(accounts);
-        await fetch('http://localhost:7789/user/' + networkId + "/" + accounts[0]);
-        //axios()
-
-        // Send a POST request
-        // axios({
-        //     method: 'post',
-        //     url: 'http://localhost:7789/user/register',
-        //     data: {
-        //         firstName: 'Fred',
-        //         lastName: 'Flintstone'
-        //     }
-        // }).then(function (response) {
-        //     console.log("xxl ");
-        // });
-        // const params = new URLSearchParams();
-        // params.append('param1', 'value1');
-        // params.append('param2', 'value2');
-        // axios.post('http://localhost:7789/user/register', {});
-        /////
-
+        await fetch(CENTER_BASE + 'user/' + networkId + "/" + accounts[0]);
 
         if (accounts && accounts.length > 0) {
             return {

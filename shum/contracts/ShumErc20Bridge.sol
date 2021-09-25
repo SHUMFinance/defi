@@ -212,7 +212,7 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
         bytes calldata signature
     ) external {
         
-        // require(destChainId == currentChainId, "ShumErc20Bridge: wrong chain");
+        require(destChainId == currentChainId, "ShumErc20Bridge: wrong chain");
         require(!withdrawnDeposits[srcChainId][depositId], "ShumErc20Bridge: already withdrawn");
         require(recipient != 0, "ShumErc20Bridge: zero address");
         require(amount > 0, "ShumErc20Bridge: amount must be positive");
@@ -249,7 +249,7 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
         address decodedRecipient = address(uint160(uint256(recipient)));
 
         if (tokenInfo.lockType == TOKEN_LOCK_TYPE_TRANSFER) {
-            safeTransfer(tokenInfo.tokenAddress, decodedRecipient, amount);
+           safeTransfer(tokenInfo.tokenAddress, decodedRecipient, amount);
         } else if (tokenInfo.lockType == TOKEN_LOCK_TYPE_MINT_BURN) {
             IMintBurnToken(tokenInfo.tokenAddress).mint(decodedRecipient, amount);
         } else {

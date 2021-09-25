@@ -129,6 +129,8 @@
       bn2n
    } from "@/common/bnCalc";
 
+   import api from "@/api";
+
    export default {
       name: "homePage",
       data() {
@@ -185,8 +187,36 @@
             this.walletStatusChange();
          });
       },
-      mounted() {
+      async mounted() {
          console.log("xxl checkLiquidation : ");
+
+         // console.log("xxl99 come to setCrossResult");
+         // await api.setCrossResult(
+         //    "0x979949d98e729d26cb1adc95baa86314a7eb1c6c45b469cf79f03d4f8efcb1e7",
+         //    "abc"
+         // );
+
+         //
+         // let [sourceArray, targetArray] = await Promise.all([
+         //    api.dealFreeZe(
+         //          "0x46a26b330c0988a58aff56e2a106f8256ca89872",
+         //          "0x46a26b330c0988a58aff56e2a106f8256ca89872",
+         //          97,
+         //          "SHUM",
+         //          0
+         //    ),
+         //    api.dealFreeZe(
+         //          "0x46a26b330c0988a58aff56e2a106f8256ca89872",
+         //          "0x46a26b330c0988a58aff56e2a106f8256ca89872",
+         //          97,
+         //          "SHUM",
+         //          1
+         //    )
+         // ]);
+
+         // console.log(sourceArray);
+         // console.log(targetArray);
+
          this.checkLiquidation();
       },
       methods: {

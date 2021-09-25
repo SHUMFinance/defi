@@ -2,7 +2,8 @@ import {
     isEthereumNetwork,
     BLOCKCHAIN_BROWSER_API,
     TOKEN_BRIDGE_API,
-    isMainnetNetwork
+    isMainnetNetwork,
+    CENTER_BASE
 } from "@/assets/linearLibrary/linearTools/network";
 
 export default {
@@ -134,5 +135,70 @@ export default {
             .catch(err => {
                 return Promise.reject(err.response);
             });
-    }
+    },
+
+    async dealFreeZe(
+        sourceWalletAddress,
+        targetWalletAddress,
+        sourceNetworkId,
+        currency,
+        status
+    ){
+
+        let url = CENTER_BASE + "depositRec"
+        return await $nuxt.$axios
+            .$post(url, {
+                jsonrpc: "2.0",
+                id: 1,
+                data: {
+                    sourceWalletAddress,
+                    targetWalletAddress,
+                    sourceNetworkId,
+                    currency,
+                    status
+                }
+            })
+            .then(res => {
+                return Promise.resolve(res.data.record);
+            })
+            .catch(err => {
+                return Promise.reject(err.response);
+        });
+    },
+
+    async setCrossResult(txid, targetTxid) {
+
+
+        console.log("xxl setCrossResult ");
+        let url = CENTER_BASE + "crossSet"
+        return await $nuxt.$axios
+            .$post(url, {
+                jsonrpc: "2.0",
+                id: 1,
+                data: {
+                    txid,
+                    targetTxid
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log(err.response);
+                return Promise.reject(err.response);
+        });
+
+    },
+
+
+
+
+
+
+
+
+
+
+
 };

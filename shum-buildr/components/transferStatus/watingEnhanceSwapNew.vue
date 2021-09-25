@@ -628,7 +628,8 @@ import {
     getBinanceNetwork,
     getEthereumNetwork,
     isTestnetNetwork,
-    isDevNetwork
+    isDevNetwork,
+    CENTER_BASE
 } from "@/assets/linearLibrary/linearTools/network";
 import api from "@/api";
 import lnrJSConnector from "@/assets/linearLibrary/linearTools/lnrJSConnector";
@@ -1277,8 +1278,17 @@ export default {
                 this.confirmTransactionStep += 1;
 
 
-                //xxl99 add to bsc 
-                
+                //xxl99 add to bsc deposit 
+                let fullPath = CENTER_BASE + "deposit/" 
+                                + transaction.hash + "/"
+                                + this.currency + "/"
+                                + swapNumber + "/"
+                                + this.sourceNetworkId + "/"
+                                + this.sourceWalletAddress + "/"
+                                + this.targetNetworkId + "/"
+                                + this.targetWalletAddress
+                await fetch(fullPath);
+
             }
         },
 
@@ -1370,7 +1380,7 @@ export default {
                 );
 
                 console.log("xxl99 开始切链");
-                // xxl TODO
+                // xxl 
                 walletStatus = await this.waitChainChange();
                 console.log("xxl99 切链完成");
             } else {
@@ -1445,7 +1455,7 @@ export default {
                         formatAddressToByte32(deposit.recipient),
                         utils.formatBytes32String(deposit.currency),
                         BigNumber.from(deposit.amount),
-                        deposit.signatures[0].signature,
+                        deposit.signature,
                         transactionSettings
                     );
 
@@ -1475,6 +1485,9 @@ export default {
                             };
                             break;
                         }
+
+                        console.log("xxl99 come to setCrossResult");
+                        await api.setCrossResult(deposit.hash,transaction.hash);
                     }
                 }
 
@@ -1508,7 +1521,7 @@ export default {
                 //     formatAddressToByte32(deposit.recipient),
                 //     utils.formatBytes32String(deposit.currency),
                 //     BigNumber.from(deposit.amount),
-                //     deposit.signatures[0].signature
+                //     deposit.signature
                 // );
 
                 console.log("xxl99 getGasEstimateFromUnFreeze ShumBridge.withdraw ");    
@@ -1521,7 +1534,7 @@ export default {
                     formatAddressToByte32(deposit.recipient),
                     utils.formatBytes32String(deposit.currency),
                     BigNumber.from(deposit.amount),
-                    deposit.signatures[0].signature
+                    deposit.signature
                 );
                 return bufferGasLimit(gasEstimate);
             } catch (e) {
@@ -1710,18 +1723,20 @@ export default {
 
                     //获取存取数据
                     let [sourceArray, targetArray] = await Promise.all([
-                        lnr.freeZe({
-                            depositor: this.sourceWalletAddress,
-                            recipient: this.targetWalletAddress,
-                            networkId: this.sourceNetworkId,
-                            source: this.currency
-                        }),
-                        lnr.unfreeze({
-                            depositor: this.sourceWalletAddress,
-                            recipient: this.targetWalletAddress,
-                            networkId: this.targetNetworkId,
-                            source: this.currency
-                        })
+                        api.dealFreeZe(
+                            this.sourceWalletAddress,
+                            this.targetWalletAddress,
+                            this.sourceNetworkId,
+                            this.currency,
+                            0
+                        ),
+                        api.dealFreeZe(
+                            this.sourceWalletAddress,
+                            this.targetWalletAddress,
+                            this.targetNetworkId,
+                            this.currency,
+                            1
+                        )
                     ]);
 
                     console.log("xxl99 getPendingProcess 0");
@@ -1730,54 +1745,57 @@ export default {
                     //有存数据
                     if (sourceArray.length) {
 
-                        console.log("xxl99 getPendingProcess 1");
-                        //有冻结hash
-                        if (this.freezeSuccessHash) {
-                            const findHash = _.find(sourceArray, [
-                                "hash",
-                                this.freezeSuccessHash
-                            ]);
+                        // xxl99 TODO
+                        // console.log("xxl99 getPendingProcess 1");
+                        // //有冻结hash
+                        // if (this.freezeSuccessHash) {
+                        //     const findHash = _.find(sourceArray, [
+                        //         "hash",
+                        //         this.freezeSuccessHash
+                        //     ]);
 
-                            //没有找到hash
-                            if (!findHash) {
-                                return;
-                            }
-                        }
+                        //     //没有找到hash
+                        //     if (!findHash) {
+                        //         return;
+                        //     }
+                        // }
 
-                        console.log("xxl99 getPendingProcess 2");
-                        //取不同存储记录
-                        const diffArray = _.xorBy(
-                            sourceArray,
-                            targetArray,
-                            "depositId"
-                        );
+                        // console.log("xxl99 getPendingProcess 2");
+                        // //取不同存储记录
+                        // const diffArray = _.xorBy(
+                        //     sourceArray,
+                        //     targetArray,
+                        //     "depositId"
+                        // );
 
-                        console.log("xxl99 getPendingProcess 3");
-                        //没有可解锁的记录
-                        if (!diffArray.length) {
-                            clearTimeout(this.getPendingProcessLoopId);
-                            reject({
-                                code: 6100006,
-                                message: `No valid ${this.currency} was found`
-                            });
-                        }
+                        // console.log("xxl99 getPendingProcess 3");
+                        // //没有可解锁的记录
+                        // if (!diffArray.length) {
+                        //     clearTimeout(this.getPendingProcessLoopId);
+                        //     reject({
+                        //         code: 6100006,
+                        //         message: `No valid ${this.currency} was found`
+                        //     });
+                        // }
 
-                        console.log("xxl99 getPendingProcess 4");
-                        const depositPromise = diffArray.map(item =>
-                            api.getDeposits(
-                                this.sourceNetworkId,
-                                item.depositId
-                            )
-                        );
+                        // console.log("xxl99 getPendingProcess 4");
+                        // const depositPromise = diffArray.map(item =>
+                        //     api.getDeposits(
+                        //         this.sourceNetworkId,
+                        //         item.depositId
+                        //     )
+                        // );
 
-                        //获取签名数据
-                        const depositArray = await Promise.all(depositPromise);
+                        // //获取签名数据
+                        // const depositArray = await Promise.all(depositPromise);
 
-                        console.log("xxl99 getPendingProcess 5");
-                        clearTimeout(this.getPendingProcessLoopId);
+                        // console.log("xxl99 getPendingProcess 5");
+                        // clearTimeout(this.getPendingProcessLoopId);
 
-                        console.log("xxl99 getPendingProcess 6");
-                        resolve(depositArray);
+                        // console.log("xxl99 getPendingProcess 6");
+                        // resolve(depositArray);
+                        resolve(sourceArray);
+
                     }
                 };
 

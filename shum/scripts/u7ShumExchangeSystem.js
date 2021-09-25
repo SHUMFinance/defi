@@ -119,20 +119,20 @@ const main = async () => {
         // console.log(rep.events);
 
         console.log("xxl settle ...");   
+        let lastId = await shumExchangeSystem.lastPendingExchangeEntryId();
+        console.log(lastId);
+
         tx = await shumExchangeSystem.connect(admin).settle(
-          2, // pendingExchangeEntryId
+          0, // pendingExchangeEntryId
           {gasLimit: args.gasLimit}
         );
+
+
+        console.log("tx wait :");
         let bal = await tx.wait();
         console.log(bal);
 
         // await sleep(2000);
-
-
-        let lastId = await shumExchangeSystem.lastPendingExchangeEntryId();
-        console.log(lastId);
-
-
         let susdBal = await susdToken.balanceOf(alice.address)
         console.log(susdBal);
 
@@ -141,7 +141,6 @@ const main = async () => {
 
         sbtcBala = await sbtcToken.balanceOf(alice.address)
         console.log(sbtcBala);
-
 
           // // All fees (0.025 * 0.01 * 20000 = 5) go to pool
           // expect(

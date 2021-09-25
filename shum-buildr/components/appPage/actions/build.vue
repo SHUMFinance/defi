@@ -457,7 +457,7 @@
 
    import watingEnhanceSwapNew from "@/components/transferStatus/watingEnhanceSwapNew";
    import gasEditorSwap from "@/components/gasEditorSwap";
-
+   
    export default {
       name: "build",
       data() {
@@ -1463,6 +1463,7 @@
             } finally {
                this.processing = false;
             }
+            
          },
 
          //开始逻辑流(闭包,可复用)
@@ -1471,7 +1472,9 @@
                try {
                   this.transactionErrMsg = "";
 
+                  console.log("xxl10 0");
                   if (this.shouldApprove) {
+                     console.log("xxl10 1");
                      await this.startApproveContract(
                        n2bn(Number.MAX_SAFE_INTEGER)
                      );
@@ -1496,6 +1499,8 @@
                   ) {
                      await this.startBuildContract(this.actionData.amount);
                   }
+
+
                } catch (error) {
                   //自定义错误
                   if (
@@ -1517,6 +1522,8 @@
 
          //开始Approve合约调用
          async startApproveContract(approveAmountLINA) {
+
+            console.log("xxl10 2");
             this.confirmTransactionStatus = false;
 
             const {
@@ -1533,12 +1540,15 @@
                gasLimit: this.gasLimit
             };
 
+            
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             transactionSettings.gasLimit = await this.getGasEstimateFromApprove(
               ShumCollateralSystemAddress,
               approveAmountLINA
             );
+
+            console.log("xxl10 build : " + transactionSettings.gasPrice + " : " + transactionSettings.gasLimit);
 
             let transaction = await ShumFinance.approve(
               ShumCollateralSystemAddress,

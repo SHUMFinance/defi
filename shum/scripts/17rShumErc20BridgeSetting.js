@@ -72,9 +72,9 @@ const main = async () => {
 
     try{    
 
-        // console.log("xxl 1111 ...");
-        // console.log(shumFinance.address);
-        // console.log(TOKEN_LOCK_TYPE_TRANSFER);
+        console.log("xxl 1111 ...");
+        console.log(shumFinance.address);
+        console.log(TOKEN_LOCK_TYPE_TRANSFER);
 
         // let re = await shumErc20Bridge.connect(admin).addToken(
         //     ethers.utils.formatBytes32String("SHUM"), // tokenKey
@@ -95,25 +95,19 @@ const main = async () => {
         //     targetChainID,                            // destChainId
         //     hexlify(zeroPad(alice.address, 32))       // recipient
         // )
-
         // await sleep(5000);
-        let testAddress="0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
+
+        let testAddress = "0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
         console.log("xxl 003 : " + shumErc20Bridge.address);
-        // let tx = await shumErc20Bridge.connect(alice).withdraw(
-        //     ethers.utils.formatBytes32String("SHUM"), // token
-        //     expandTo18Decimals(1_000),                // amount
-        //     targetChainID,                            // destChainId
-        //     hexlify(zeroPad(alice.address, 32))       // recipient
-        // )
         let tx = await shumErc20Bridge.connect(admin).withdraw(
             BigNumber.from(97),
             BigNumber.from(42),
-            BigNumber.from(3),
+            BigNumber.from(5),
             hexlify(zeroPad(testAddress, 32)), // depositor
             hexlify(zeroPad(testAddress, 32)), // recipient
             formatBytes32String("SHUM"), // currency
             BigNumber.from("10000000000000000"), // amount
-            "0x6f3cc9a1911d5a8a3fc39ec0a4534cf054b768ea65da1f94f4d9b47ca55f24a555ea7da6421540e0b7d4f85e3c17ef6f428c1edf07701326243a2ba3d535e9d31c",
+            "0xadec3fb7b07e8291c597b9de852b1a742f0be058b0c64126b846a86835a38966004900270b3e01fb829dd45101959689baf9890fd759b6782a87cb51dd4711e61c",
             { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
         );
 

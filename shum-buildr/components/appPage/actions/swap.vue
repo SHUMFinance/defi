@@ -271,7 +271,7 @@
       getOtherNetworks,
       isBinanceNetwork,
       isEthereumNetwork,
-      SUPPORTED_WALLETS_MAP,
+      SUPPORTED_WALLETS_MAP
    } from '@/assets/linearLibrary/linearTools/network';
    import lnrJSConnector from '@/assets/linearLibrary/linearTools/lnrJSConnector';
    import {bn2n, bnSub, bnSub2N, n2bn} from '@/common/bnCalc';
@@ -738,6 +738,7 @@
 
 <style lang="scss">
    #swap {
+
       .actionTabs {
          .ivu-tabs-bar {
             display: none;
@@ -1077,6 +1078,7 @@
 
    @media only screen and (max-width: $max-phone-width) {
       #swap {
+         
          height: 100%;
 
          .actionTabs {
