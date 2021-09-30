@@ -86,47 +86,55 @@ const main = async () => {
             SBTCTokenAddress
         );
 
-        // // Set settlement delay
-        // await shumConfig.connect(admin).setUint(
-        //   ethers.utils.formatBytes32String("TradeSettlementDelay"), // key
-        //   1
-        // );
+        // Set settlement delay
+        await shumConfig.connect(admin).setUint(
+          ethers.utils.formatBytes32String("TradeSettlementDelay"), // key
+          1
+        );
 
         // Set revert delay
         await shumConfig.connect(admin).setUint(
           ethers.utils.formatBytes32String("TradeRevertDelay"), // key
           1000000,
         );
-      
+
         // // Set fee split ratio to 30%
         // await shumConfig.connect(admin).setUint(
         //   ethers.utils.formatBytes32String("FoundationFeeSplit"), // key
         //   expandTo18Decimals(0.3) // value
         // );
 
+        ///-----------------before balance----------------
+        let beforeSusdBal = await susdToken.balanceOf(alice.address)
+        console.log(beforeSusdBal);
 
-        // let tx = await shumExchangeSystem.connect(alice).exchange(
+        let beforeCBal = await susdToken.balanceOf(ShumExchangeSystemAddress)
+        console.log(beforeCBal);
 
-        //   ethers.utils.formatBytes32String("sUSD"),   // sourceKey
-        //   expandTo18Decimals(500),                    // sourceAmount
-        //   alice.address,                              // destAddr
-        //   ethers.utils.formatBytes32String("sBTC"),   // destKey
-        //   {gasLimit: args.gasLimit}
+        let beforeSbtcBal = await sbtcToken.balanceOf(alice.address)
+        console.log(beforeSbtcBal);
 
-        // );
+        let tx = await shumExchangeSystem.connect(alice).exchange(
 
-        // let rep = await tx.wait();
-        // console.log(rep.events);
+          ethers.utils.formatBytes32String("sUSD"),   // sourceKey
+          expandTo18Decimals(50),                    // sourceAmount
+          alice.address,                              // destAddr
+          ethers.utils.formatBytes32String("sBTC"),   // destKey
+          {gasLimit: args.gasLimit}
 
-        console.log("xxl settle ...");   
+        );
+
+        let rep = await tx.wait();
+        console.log(rep.events);
+
+        console.log("xxl settle ...");
         let lastId = await shumExchangeSystem.lastPendingExchangeEntryId();
         console.log(lastId);
 
         tx = await shumExchangeSystem.connect(admin).settle(
-          0, // pendingExchangeEntryId
+          lastId, // pendingExchangeEntryId
           {gasLimit: args.gasLimit}
         );
-
 
         console.log("tx wait :");
         let bal = await tx.wait();
@@ -136,7 +144,7 @@ const main = async () => {
         let susdBal = await susdToken.balanceOf(alice.address)
         console.log(susdBal);
 
-        susdBal = await susdToken.balanceOf("0xff7FCa5A64D5d7cFcDa37692088CC0E9562066A2")
+        susdBal = await susdToken.balanceOf(ShumExchangeSystemAddress)
         console.log(susdBal);
 
         sbtcBala = await sbtcToken.balanceOf(alice.address)
@@ -146,13 +154,6 @@ const main = async () => {
           // expect(
           //   await stack.susdToken.balanceOf(stack.shumRewardSystem.address)
           // ).to.equal(expandTo18Decimals(5));
-
-
-
-
-
-
-
 
           // // Proceedings after fees: 500 / 20000 * (1 - 0.01) = 0.02475 BTC
           // expect(await stack.susdToken.balanceOf(alice.address)).to.equal(

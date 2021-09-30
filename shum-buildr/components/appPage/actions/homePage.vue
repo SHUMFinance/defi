@@ -189,7 +189,7 @@
       },
       async mounted() {
          console.log("xxl checkLiquidation : ");
-
+      
          // console.log("xxl99 come to setCrossResult");
          // await api.setCrossResult(
          //    "0x979949d98e729d26cb1adc95baa86314a7eb1c6c45b469cf79f03d4f8efcb1e7",

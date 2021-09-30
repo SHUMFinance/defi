@@ -8,8 +8,8 @@ import { URLS } from "./constants/urls";
 import api from "@/api";
 
 // server
-// export const CENTER_BASE = "http://47.242.107.228:7789/";
-export const CENTER_BASE = "http://localhost:7789/";
+export const CENTER_BASE = "http://47.242.107.228:7789/";
+//export const CENTER_BASE = "http://localhost:7789/";
 
 /**
  * ethererm网络

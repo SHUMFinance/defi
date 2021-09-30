@@ -43,7 +43,8 @@ export const state = () => ({
     swapUnfreezeContinue: false, //用于判断用户是否点击了继续swap
     isTransaction: false, // 是否在交易页面
     autoConnect: false, //自动连接钱包
-    setupModal: false //nework setup 窗口
+    setupModal: false, //nework setup 窗口
+    shouldApprove:true
 });
 
 export const mutations = {
@@ -165,6 +166,10 @@ export const mutations = {
 
     setSetupModal(state, status) {
         state.setupModal = status;
+    },
+
+    setSetupShouldApprove(state, shouldApprove) {
+        state.shouldApprove = shouldApprove;
     }
 };
 

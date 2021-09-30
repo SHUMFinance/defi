@@ -587,6 +587,8 @@
          }
       },
       created() {
+
+         
          this.getBuildData(this.walletAddress);
 
          this.sourceNetworkId = this.walletNetworkId;

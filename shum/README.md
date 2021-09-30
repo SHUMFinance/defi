@@ -1,7 +1,5 @@
 # shum Finance
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/shum-finance/shum) ![GitHub top language](https://img.shields.io/github/languages/top/shum-finance/shum) [![Test with Hardhat](https://github.com/shum-finance/shum/actions/workflows/hardhat-test.yml/badge.svg)](https://github.com/shum-finance/shum/actions/workflows/hardhat-test.yml)
-
 Smart contracts implemented in Solidity for shum Finance.
 
 ## Introduction
@@ -32,10 +30,6 @@ Run test cases with [Hardhat](https://hardhat.org/):
 ```sh
 $ yarn test
 ```
-
-## Community
-
-[![Discord](https://img.shields.io/discord/738363983031173151?label=discord&logo=discord&style=plastic)](https://discordapp.com/channels/738363983031173151/) [![Twitter Follow](https://img.shields.io/twitter/follow/ShumFinance?label=ShumFinance&style=social)](https://twitter.com/ShumFinance) [![Chat on Telegram](https://img.shields.io/badge/Telegram-brightgreen.svg?logo=telegram&color=%234b4e52)](https://t.me/joinchat/Tb3iAhuMZsyfspxhEWQLvw)
 
 ## License
 

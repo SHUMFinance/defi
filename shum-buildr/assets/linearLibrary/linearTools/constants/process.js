@@ -18,4 +18,10 @@ export const BUILD_PROCESS_SETUP_MOBILE = {
     UNFREEZE: "Getting [REPLACE_CURRENCY] on "
 };
 
+export const EXCHANGE_PROCESS_SETUP = {
+    APPROVE: "Approve Address",
+    PROCESS: "Exchange [REPLACE_CURRENCY] on "
+};
+
+
 export const DECIMAL_PRECISION = 2; //小数保留位数

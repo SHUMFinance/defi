@@ -1,5 +1,6 @@
 import Vue from "vue";
 import {
+    Button,
     locale,
     Row,
     Col,
@@ -40,6 +41,7 @@ import thumbnail from "@/components/thumbnail";
 locale(lang);
 
 //按需加载
+Vue.component("Button", Button);
 Vue.component("Row", Row);
 Vue.component("Col", Col);
 Vue.component("i-switch", Switch);

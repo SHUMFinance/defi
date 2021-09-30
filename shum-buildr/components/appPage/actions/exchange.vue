@@ -14,7 +14,7 @@
                   </Option
                   >
                </Select>
-               <Input placeholder="SEARCH" prefix="md-search"/>
+               <Input v-model.trim="currencyName" placeholder="SEARCH" prefix="md-search"/>
             </div>
             <div class="customTable">
                <div class="tabelHeader">
@@ -39,11 +39,12 @@
                          :key="i"
                          @mouseover="item.active = true"
                          @mouseout="item.active = false"
+                         @click="changeCurrency(item.name)"
                      >
                         <div class="td pair">
-                           <img v-if="item.active" :src="currencies[item.name].icon"/>
-                           <img v-else :src="currencies[item.name].icon_inactive"/>
-                           <span class="iconfont icon-s">{{replaceS(item.name)}}</span>
+                           <img v-if="item.active" :src="currencies[item.id].icon"/>
+                           <img v-else :src="currencies[item.id].icon_inactive"/>
+                           <span class="iconfont icon-s">{{item.name}}</span>
                            <span class="iconfont icon-s" style="color: #ACB1C7;margin-left: 4px">USD</span>
                         </div>
                         <div class="td price">${{ item.price }}</div>
@@ -74,9 +75,11 @@
             <div class="market-pair">
                <div class="title">MARKET PAIR</div>
                <div class="name">
-                  <img src="@/static/appPage/round.png" alt=""/>
+                  <!-- <img src="@/static/appPage/round.png" alt=""/> -->
+                  <img :src="currencies[acitveCurrency.id].icon"/>
                   <span style="font-size: 24px; color: #ACB1C7">
-                     <span class="iconfont icon-s" style="font-size: 18px;"></span>USD
+                     <span class="iconfont icon-s" style="font-size: 18px;"/>{{acitveCurrency.name}}
+                     <span class="iconfont icon-s" style="font-size: 18px;"/>USD
                   </span>
                   <img src="@/static/appPage/star.png" alt=""/>
                </div>
@@ -274,48 +277,45 @@
                          shape="round"
                          @click="orderType = true"
                      >
-                        BUY <span class="iconfont icon-s"></span> ADA
+                        BUY <span class="iconfont icon-s"></span> {{acitveCurrency.name}}
                      </z-button>
                      <z-button
                          :class="{ selected: !orderType }"
                          shape="round"
                          @click="orderType = false"
                      >
-                        SELL <span class="iconfont icon-s"></span> ADA
+                        SELL <span class="iconfont icon-s"></span> {{acitveCurrency.name}}
                      </z-button>
                   </div>
                </div>
                <template v-if="orderType">
                   <div class="floor buy-or-sell">
                      <div class="floor-continer floor-title">Minimum Received</div>
-                     <z-input
-                         value="0"
-                         placeholder="placeholder"
-                     >
+                     <Input v-model="USDTBalance" :max="userUSDTBalance">
                         <template v-slot:suffix>
                            <span style="font-size: 14px;">
                                  <span class="iconfont icon-s" style="font-size: 10px;"></span>USD
                               </span>
                         </template>
-                     </z-input>
+                     </Input>
                      <div class="tag-box">
-                        <span class="tag">25%</span>
-                        <span class="tag">50%</span>
-                        <span class="tag">75%</span>
-                        <span class="tag">MAX</span>
+                        <span class="tag" @click="slecetPrice(.25)">25%</span>
+                        <span class="tag" @click="slecetPrice(.50)">50%</span>
+                        <span class="tag" @click="slecetPrice(.75)">75%</span>
+                        <span class="tag" @click="slecetPrice(1)">MAX</span>
                      </div>
                   </div>
                   <div class="floor">
                      <div class="floor-continer floor-title">Market Price</div>
-                     <z-input value="1.7325" placeholder="placeholder">
+                     <Input :value="acitveCurrency.price">
                         <template v-slot:suffix>
                            <img src="@/static/appPage/refresh.png" alt=""/>
                         </template>
-                     </z-input>
+                     </Input>
                   </div>
                   <div class="floor">
-                     <div class="floor-continer floor-title">Market Price</div>
-                     <z-input value="0 sADA" placeholder="placeholder"></z-input>
+                     <div class="floor-continer floor-title">Receive</div>
+                     <Input :value="`${acitveCurrency.price ? (USDTBalance / acitveCurrency.name) : 0}${acitveCurrency.name}`"></Input>
                   </div>
                   <div class="floor fee">
                      <div class="floor-continer">
@@ -329,7 +329,7 @@
                         </div>
                         <div class="fee-item">
                            <span>Minimum Received</span>
-                           <span>0 <img  src="@/static/Sfont3.png"/>ADA</span>
+                           <span>0 <span class="iconfont icon-s" style="font-size: 10px;"></span>{{acitveCurrency.name}}</span>
                         </div>
                      </div>
                   </div>
@@ -337,34 +337,31 @@
                <template v-else>
                   <div class="floor buy-or-sell">
                      <div class="floor-continer floor-title">Minimum Received</div>
-                     <z-input
-                         value="0"
-                         placeholder="placeholder"
-                     >
+                     <Input v-model="USDTBalance" :max="userUSDTBalance">
                         <template v-slot:suffix>
                            <span style="font-size: 14px;">
                                  <span class="iconfont icon-s" style="font-size: 10px;"></span>USD
                               </span>
                         </template>
-                     </z-input>
+                     </Input>
                      <div class="tag-box">
-                        <span class="tag">25%</span>
-                        <span class="tag">50%</span>
-                        <span class="tag">75%</span>
-                        <span class="tag">MAX</span>
+                        <span class="tag" @click="slecetPrice(.25)">25%</span>
+                        <span class="tag" @click="slecetPrice(.50)">50%</span>
+                        <span class="tag" @click="slecetPrice(.75)">75%</span>
+                        <span class="tag" @click="slecetPrice(1)">MAX</span>
                      </div>
                   </div>
                   <div class="floor">
                      <div class="floor-continer floor-title">Market Price</div>
-                     <z-input value="1.7325" placeholder="placeholder">
+                     <Input :value="acitveCurrency.price">
                         <template v-slot:suffix>
                            <img src="@/static/appPage/refresh.png" alt=""/>
                         </template>
-                     </z-input>
+                     </Input>
                   </div>
                   <div class="floor">
-                     <div class="floor-continer floor-title">Market Price</div>
-                     <z-input value="0 sADA" placeholder="placeholder"></z-input>
+                     <div class="floor-continer floor-title">Receive</div>
+                     <Input :value="`${acitveCurrency.price ? (USDTBalance / acitveCurrency.name) : 0}${acitveCurrency.name}`"></Input>
                   </div>
                   <div class="floor fee">
                      <div class="floor-continer">
@@ -378,14 +375,14 @@
                         </div>
                         <div class="fee-item">
                            <span>Minimum Received</span>
-                           <span>0 <img  src="@/static/Sfont3.png"/>USD</span>
+                           <span>0 <span class="iconfont icon-s" style="font-size: 10px;"></span>USD</span>
                         </div>
                      </div>
                   </div>
                </template>
                <z-button
                    size="large"
-                   @click="myTest()"
+                   @click="exchangeTokens()"
                   :class="{ 'confirm-btn': true, 'buy': orderType }"
                >
                   <span v-if="orderType">
@@ -394,7 +391,7 @@
                   <span v-else>
                      SELL
                   </span>
-                  <span class="iconfont icon-s"></span> ADA
+                  <span class="iconfont icon-s"></span> {{acitveCurrency.name}}
                </z-button>
             </div>
          </div>
@@ -422,18 +419,19 @@
    //    selectedWallet,
    // } from '@/assets/linearLibrary/linearTools/lnrJSConnector';
    import currencies from "@/common/currency";
+   import _ from "lodash";
 
    //xxl10
    import lnrJSConnector, {
       selectedWallet,
    } from "@/assets/linearLibrary/linearTools/lnrJSConnector";
    import {
-      BUILD_PROCESS_SETUP,
-      DECIMAL_PRECISION
+      EXCHANGE_PROCESS_SETUP
    } from "@/assets/linearLibrary/linearTools/constants/process";
 
    import {bn2n, bnSub, bnSub2N, n2bn} from '@/common/bnCalc';
    import gasEditor from "@/components/gasEditor";
+   import api from "@/api";
 
    const marketMock = {
       data: {
@@ -588,97 +586,9 @@
       },
    };
 
-   const ZInput = {
-      props: {
-         placeholder: String,
-         prefix: String,
-         suffix: String,
-         size: String,
-      },
-      data: function () {
-         return {
-            isFocused: false,
-         };
-      },
-      methods: {
-         handleInputFocus: function handleInputFocus(e) {
-            this.isFocused = true;
-            // [todo]
-            // this.$el.focus()
-            // this.onFocus && this.onFocus(e);
-         },
-         handleInputBlur: function handleInputBlur(e) {
-            this.isFocused = false;
-            // this.$el.blur()
-            // this.onBlur && this.onBlur(e);
-         },
-         renderInput: function (h) {
-            return h("input", {
-               class: {
-                  "z-input": true,
-                  "z-input-sm": this.size === "small",
-                  "z-input-lg": this.size === "large",
-               },
-               on: {
-                  focus: this.handleInputFocus,
-                  blur: this.handleInputBlur,
-               },
-               domProps: {
-                  placeholder: this.placeholder,
-               },
-            });
-         },
-         getComponent(prop) {
-            const com = this.$slots[prop] || this[prop] || undefined;
-            return com;
-         },
-      },
-      render: function (h) {
-         let prefix = this.getComponent("prefix");
-         prefix = prefix
-           ? h(
-             "span",
-             {
-                class: {
-                   "z-input-prefix": true,
-                },
-             },
-             [prefix]
-           )
-           : null;
-         let suffix = this.getComponent("suffix");
-         suffix = suffix
-           ? h(
-             "span",
-             {
-                class: {
-                   "z-input-suffix": true,
-                },
-             },
-             [suffix]
-           )
-           : null;
-         if (prefix || suffix) {
-            return h(
-              "span",
-              {
-                 class: {
-                    "z-input-affix-wrapper": true,
-                    "z-input-affix-wrapper-focused": this.isFocused,
-                    "z-input-affix-wrapper-sm": this.size === "small",
-                    "z-input-affix-wrapper-lg": this.size === "large",
-                 },
-              },
-              [prefix, this.renderInput(h), suffix]
-            );
-         } else {
-            return this.renderInput(h);
-         }
-      },
-   };
    export default {
       name: "Exchange",
-      components: {ZButton, ZInput,gasEditor},
+      components: {ZButton,gasEditor},
       data: function data() {
          return {
             marketList: [],
@@ -695,10 +605,25 @@
             currencies,
 
             tooltipContent: 'Copy to clipboard',
+            acitveCurrency: {
+               id: 'sADA',
+               name: 'ADA'
+            },
+            currencyName: undefined,
+            sUSD:undefined,
+
+            USDTBalance: 0,
+            shouldApprove:true,
+            exchangeStep:1,
+            userUSDTBalance: 0,
+            currentToken:"sBTC"
+
          };
       },
       watch: {
          walletNetworkId() {
+         },
+         walletAddress() {
          }
       },
       computed: {
@@ -708,7 +633,7 @@
                   return true
                }
                return v.value === this.listValue;
-            })
+            }).filter(v => this.currencyName ? v.name.includes(this.currencyName) : true)
          },
          walletNetworkId() {
             return this.$store.state?.walletNetworkId;
@@ -741,14 +666,16 @@
             return abbreviateAddress(this.walletAddress);
          },
       },
-      mounted: function () {
+
+      mounted: async function () {
          console.log('currencies', currencies)
          this.lineChart();
          this.marketList = marketMock.data.pricesLasts.map((v) => {
             const {id, currentPrice, lastPrice, value} = v;
             return {
+               id,
                value,
-               name: id,
+               name: this.replaceS(id),
                price: (Number(currentPrice) / Math.pow(10, 17)).toFixed(4),
                change: (
                  ((Number(currentPrice) - Number(lastPrice)) / Number(lastPrice)) *
@@ -758,8 +685,43 @@
                like: Math.random() > 0.5,
             };
          });
+
+         this.changeCurrency(this.acitveCurrency.name);
+
+
+         //xxl add exchange 
+         const {
+            lnrJS: {ShumExchangeSystem, sUSD},
+            utils
+         } = lnrJSConnector;
+         this.sUSD = sUSD;
+         this.ShumExchangeSystem = ShumExchangeSystem;
+         this.shouldApprove = !(await api.isExchangeApproved(this.walletAddress));
+
+         console.log("xxl shouldApprove is : " + this.shouldApprove);
+
+         if(this.shouldApprove){
+            this.exchangeStep = 2
+         }else{
+            this.exchangeStep = 1
+         }
+
+
       },
       methods: {
+         slecetPrice: function(n) {
+            this.USDTBalance = (this.USDTBalance * n).toFixed(4)
+         },
+         changeCurrency: async function (name) {
+            const c = this.list.find(v => v.name == name);
+            const res = await api.getTickerPrice(`${name}USDT`);
+            console.log('id-----------------------------------', res)
+            this.acitveCurrency = {
+               ...c,
+               price: res.price
+            };
+         },
+
          copyAddress() {
             var that = this;
             var clipboarda = new Clipboard('.copyBtn');
@@ -818,17 +780,15 @@
                } catch (error) {
                   this.$store.commit("setSetupModal", true);
                }
-            }
-
-            
+            }            
          },
 
-
-         async myTest(){
+         //xxl12 1 需要从界面传入币种
+         async exchangeTokens(){
 
             try {
-                  console.log("xxl myTest ");
-                  this.waitProcessFlow = this.startFlow();
+                  //sourceAmount xxl12 1 需要充界面传入
+                  this.waitProcessFlow = this.startFlow("sBTC");
                   //开始逻辑流处理函数
                   await this.waitProcessFlow();
             }catch (error) {
@@ -839,36 +799,81 @@
 
          },
 
-
-         startFlow() {
+         //xxl11
+         startFlow(currentToken) {
             return async () => {
                try {
                   this.transactionErrMsg = "";
 
-                  await this.startApproveContract(
-                     n2bn(Number.MAX_SAFE_INTEGER)
-                  );
-                  
-                  // if (
-                  //   this.waitProcessArray[this.confirmTransactionStep] ==
-                  //   BUILD_PROCESS_SETUP.STAKING_BUILD
-                  // ) {
-                  //    await this.startStakingAndBuildContract({
-                  //       stakeAmountLINA: this.actionData.stake,
-                  //       buildAmountsUSD: this.actionData.amount
-                  //    });
-                  // } else if (
-                  //   this.waitProcessArray[this.confirmTransactionStep] ==
-                  //   BUILD_PROCESS_SETUP.STAKING
-                  // ) {
-                  //    await this.startStakingContract(this.actionData.stake);
-                  // } else if (
-                  //   this.waitProcessArray[this.confirmTransactionStep] ==
-                  //   BUILD_PROCESS_SETUP.BUILD
-                  // ) {
-                  //    await this.startBuildContract(this.actionData.amount);
-                  // }
+                  let doStep = 1;
 
+                  if (this.shouldApprove) {
+                     await this.startApproveContract(
+                        n2bn(Number.MAX_SAFE_INTEGER)
+                     );
+                     doStep = 2;
+                  }
+
+                  console.log("after approve : ");
+                  const {
+                     lnrJS: {ShumExchangeSystem},
+                     utils
+                  } = lnrJSConnector;
+                    
+                  //TODO need to change ...
+                  let sourceAmount = n2bn(1) // sourceAmount xxl12 1 需要充界面传入
+                  let transaction = await ShumExchangeSystem.exchange(
+
+                     utils.formatBytes32String("sUSD"),   // sourceKey
+                     sourceAmount,                        
+                     this.walletAddress,                  // destAddr
+                     utils.formatBytes32String(currentToken), 
+                     {}
+                  );
+                  console.log("xxl exhange end ");
+         
+                  if (transaction) {
+                     this.confirmTransactionStatus = true;
+                     this.confirmTransactionHash = transaction.hash;
+
+
+                    //替换货币名称
+                    let setupProcess = _.replace(
+                        EXCHANGE_PROCESS_SETUP.PROCESS,
+                        "[REPLACE_CURRENCY]",
+                        currentToken                     
+                    );
+
+                     // 发起右下角通知
+                     this.$pub.publish("notificationQueue", {
+                           hash: this.confirmTransactionHash,
+                           type: setupProcess,
+                           networkId: this.walletNetworkId,
+                           value: `Do exchange ${doStep} / ${
+                           this.exchangeStep
+                        }`
+                     });
+
+                     let status = await utils.waitForTransaction(transaction.hash);
+
+                     if (!status) {
+                        throw {
+                              code: 6100001,
+                              message:
+                                 "Something went wrong while gaining approval from the contract, please try again."
+                        };
+                     }
+                     
+                     await api.setExchangeRecord(
+                        this.walletNetworkId,
+                        transaction.hash,
+                        "sUSD",                               // sourceKey
+                        bn2n(sourceAmount),                        
+                        this.walletAddress,                  // destAddr
+                        currentToken, 
+                     )
+
+                  }
 
                } catch (error) {
                   console.log("xxl startFlow");
@@ -880,16 +885,23 @@
 
          //开始Approve合约调用
          async startApproveContract(approveAmountSHUM) {
+
+            this.shouldApprove = false;
             this.confirmTransactionStatus = false;
 
+console.log(11);
             const {
-               lnrJS: {ShumCollateralSystem, ShumFinance},
+               lnrJS: {ShumExchangeSystem, sUSD},
                utils
             } = lnrJSConnector;
+            
+console.log("xxl ShumExchangeSystem start ...");
+console.log(ShumExchangeSystem);
+console.log("xxl ShumExchangeSystem end");
 
             //取合约地址
-            const ShumCollateralSystemAddress =
-              ShumCollateralSystem.contract.address;
+            const ShumExchangeSystemAddress =
+              ShumExchangeSystem.contract.address;
 
             const transactionSettings = {
                gasPrice: this.$store.state?.gasDetails?.price,
@@ -897,33 +909,42 @@
             };
 
             if(transactionSettings.gasPrice == 0){
-
                console.log(getNetworkSpeeds(this.walletNetworkId));
                transactionSettings.gasPrice = getNetworkSpeeds(this.walletNetworkId).price;
-
             }
+
+console.log(22);
 
             this.confirmTransactionNetworkId = this.walletNetworkId;
             console.log("xxl10 startApproveContract :" + this.walletNetworkId);
             console.log("xxl10 gasPrice :" + transactionSettings.gasPrice + " gasPrice : " + transactionSettings.gasLimit);
            
-
             transactionSettings.gasLimit = await this.getGasEstimateFromApprove(
-              ShumCollateralSystemAddress,
+              ShumExchangeSystemAddress,
               approveAmountSHUM
             );
-
             console.log("xxl10 gasPrice :" + transactionSettings.gasPrice + " gasPrice : " + transactionSettings.gasLimit);
 
-            let transaction = await ShumFinance.approve(
-              ShumCollateralSystemAddress,
+            let transaction = await sUSD.approve(
+              ShumExchangeSystemAddress,
               approveAmountSHUM,
               transactionSettings
             );
+console.log(33);
 
             if (transaction) {
                this.confirmTransactionStatus = true;
                this.confirmTransactionHash = transaction.hash;
+
+               // 发起右下角通知
+               this.$pub.publish("notificationQueue", {
+                  hash: this.confirmTransactionHash,
+                  type: EXCHANGE_PROCESS_SETUP.APPROVE,
+                  networkId: this.walletNetworkId,
+                  value: `Approve exchange 1 / ${
+                        this.exchangeStep
+                  }`
+               });
 
                let status = await utils.waitForTransaction(transaction.hash);
 
@@ -934,7 +955,10 @@
                        "Something went wrong while gaining approval from the contract, please try again."
                   };
                }
-   
+               console.log("tx is : " + transaction.hash);
+               await api.setExchangeApprove(transaction.hash,this.walletAddress);
+               this.shouldApprove = false;
+               
             }
          },
 
@@ -964,7 +988,31 @@
             }
          },
 
+         //xxl11
+         async getUSDTBalance(){
+            
+            console.log("xxl11 wallet : " + this.walletAddress);       
+            let usdtBalance = await  this.sUSD.balanceOf(this.walletAddress)
+            console.log("xxl11 usdtBalance : " + bn2n(usdtBalance));
+            this.userUSDTBalance = this.USDTBalance =  bn2n(usdtBalance);
+            
+            return usdtBalance;
 
+         },
+
+         async getBTCBalance(){
+              
+            const {
+               lnrJS: {sBTC}
+            } = lnrJSConnector;
+
+            let usdtBalance = await  sBTC.balanceOf(this.walletAddress)
+            console.log("xxl11 sBTC : " + usdtBalance);
+            
+            return usdtBalance;
+
+         },
+         /////
 
          bayUsd: function () {
             window.open("https://pancakeswap.finance/swap#/swap", "_blank");
@@ -1113,25 +1161,6 @@
                }
             }
 
-            // > .z-input-affix-wrapper {
-            // 	margin-bottom: 24px;
-            // 	padding: 11px 15px;
-            // 	width: 320px;
-            // 	font-size: 14px;
-            // 	.z-input-prefix {
-            // 		margin-right: 11px;
-            // 		line-height: 16px;
-            // 	}
-            // 	.z-input {
-            // 		line-height: 16px;
-            // 	}
-            // 	>input::placeholder {
-            // 		font-family: Apple LiGothic;
-            // 		// line-height: 14px;
-            // 		letter-spacing: 0.245em;
-            // 		text-align: left;
-            // 	}
-            // }
             .customTable {
                .td,
                .th {
@@ -1481,7 +1510,27 @@
             margin-top: 24px;
             height: 553px;
 
+            .ivu-input-wrapper {
+               .ivu-input-suffix {
+                  display: flex;
+                  align-items: center;
+               }
+               .ivu-input {
+                  padding: 5px 8px 4px 16px;
+                  height: 36px;
+                  border-radius: 8px;
+               }
+            }
+
             .buy-or-sell {
+               .ivu-input-wrapper {
+                  .ivu-input-suffix {
+                     width: 52px;
+                  }
+                  .ivu-input {
+                     padding-right: 52px;
+                  }
+               }
                .z-btn {
                   width: 114px;
                   color: #8b8b8c;
@@ -1619,6 +1668,8 @@
          border-color: #7eb5ff;
       }
    }
+
+
 
    .z-input,
    .z-input-affix-wrapper {

@@ -182,7 +182,7 @@
    import transfer from "@/components/appPage/actions/transfer";
    import swap from "@/components/appPage/actions/swap";
    import dashboard from "@/components/appPage/actions/dashboard";
-   import exchange from "@/components/appPage/actions/exchange";
+   import exchange from "@/components/appPage/exchange";
 
    import referralModal from "@/components/appPage/walletDetails/actions/referralModal";
    import transactionModal from "@/components/appPage/walletDetails/actions/transactionModal";

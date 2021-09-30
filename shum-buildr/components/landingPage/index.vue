@@ -77,7 +77,7 @@
                SHUM Finance ("SHUM") is a non-custodial, cross-chain compatible, Delta-one asset protocol.SHUM's long-term DeFi vision is to increase the inclusion and democratization of investment assets (digital and traditional). There is tremendous value in investors being able to easily and quickly invest, save money and secure assets at fair market value.
             </p>
             <div class="btn">
-               <div class="buyLINA" @click.stop="openBuyLINA">
+               <div class="buyLINA" @click.stop="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)">
                   ENTER SHUMFINANCE
                   <!--                  <Icon type="ios-arrow-round-forward"/>-->
                </div>
@@ -158,7 +158,7 @@
                <div class="text">
                   <p>Stake.Build.Earn</p>
                   <span>A decentralized application allow user to staking and building sUSD by using a mixture of SHUM token and other major cryptocurrencies.</span>
-                  <button>LAUNCH BUILDR</button>
+                  <button class="wallet-btn" @click.stop="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)">LAUNCH BUILDR</button>
                </div>
                <div class="tou">
                   <p class="graycil"></p>
@@ -179,14 +179,14 @@
                <div class="text">
                   <p>Cross Chain Transfer. Gas Saving. Composability</p>
                   <span>We using custom SWAP to allow composability of SHUM tokens across chain and to help save gas fees.</span>
-                  <button>LAUNCH SWAP</button>
+                  <button class="wallet-btn" @click.stop="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)">LAUNCH SWAP</button>
                </div>
             </div>
             <div class="welthree" style="margin-bottom:320px!important;">
                <div class="text">
                   <p>Stake.Build.Earn</p>
                   <span>The decentralized application reward system allow you to obtain reward by staking SHUM and building <span class="iconfont icon-s" style="font-size:14px;color: #26272E;display:inline"></span>USD</span>
-                  <button>LAUNCH BUILDR</button>
+                  <button class="wallet-btn" @click.stop="selectedWallet(SUPPORTED_WALLETS_MAP.METAMASK)">LAUNCH BUILDR</button>
                </div>
                <div class="tou">
                   <p class="graycil"></p>
@@ -211,7 +211,9 @@
                   </div>
                   <div class="fot_cen">
                      <p>LEARN MORE</p>
-                     <span>White paper</span>
+                     <span  class="link">
+                        <a href="https://download.shumfinance.com/SHUMFinanceWhitepaper-v1.1.pdf" target="blank">White paper</a>
+                     </span>
                   </div>
                   <div class="fot_right">
                      <p>CONNECT WITH SHUM</p>
@@ -483,6 +485,9 @@
 
       .mobileShow {
          display: none;
+      }
+      .wallet-btn {
+         cursor: pointer;
       }
 
       .headerBox {
@@ -1174,6 +1179,14 @@
                         font-size: 18px;
                         line-height: 24px;
                         color: #111B47;
+                     }
+
+                     .link a {
+                        color: inherit;
+                        &:hover {
+                           color: #d9d9d9!important;
+                           text-decoration: underline;
+                        }
                      }
                   }
                }

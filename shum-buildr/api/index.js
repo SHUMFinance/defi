@@ -191,14 +191,136 @@ export default {
 
     },
 
+    /**
+     * 获取当前价格
+     * @param {string | strubg[]} txid 
+     * @returns 
+     */
+    getTickerPrice(txid) {
+        return $nuxt.$axios
+            .$get('/api/v3/ticker/price', {
+                params: {
+                    symbol: txid
+                },
+                Headers:{
+                    'Access-Control-Allow-Origin':'*'
+                }
+            }).then(res => {
+                console.log("xxl getTickerPrice res");
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log("xxl getTickerPrice err");
+                console.log(err);
+                return Promise.reject(err.response);
+            });
+    },
+
+    /**
+     * 24hr 价格变动情况
+     * @param {string} txid 
+     * @returns 
+     */
+     get24hr(txid) {
+        return $nuxt.$axios
+            .$get('/api/v3/ticker/24hr', {
+                params: {
+                    symbol: txid
+                },
+                Headers:{
+                    'Access-Control-Allow-Origin':'*'
+                }
+            }).then(res => {
+                console.log("xxl getTickerPrice res");
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log("xxl getTickerPrice err");
+                console.log(err);
+                return Promise.reject(err.response);
+            });
+    },
 
 
+    isExchangeApproved(address){
+
+        console.log("xxl setCrossResult ");
+        let url = CENTER_BASE + "isExchangeApprove/" + address
+
+        return $nuxt.$axios
+        .$get(url, {}).then(res => {
+            console.log("xxl isExchangeApprove res");
+            console.log(res);
+            return Promise.resolve(res.data);
+        })
+        .catch(err => {
+            console.log("xxl isExchangeApprove err");
+            console.log(err);
+            return Promise.reject(err.response);
+        });
+    },
 
 
+    setExchangeApprove(txid,address){
 
+        console.log("xxl setExchangeApprove ");
+        let url = CENTER_BASE + "setExchangeApprove"
+        return $nuxt.$axios
+            .$post(url, {
+                jsonrpc: "2.0",
+                id: 1,
+                data: {
+                    txid,
+                    address
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log(err.response);
+                return Promise.reject(err.response);
+        });
 
+    },
 
+    setExchangeRecord(
+        chainID,
+        txid,
+        sourceKey,                 // sourceKey
+        sourceAmount,                        
+        destAddr,                  // destAddr
+        destKey
+        ){
 
+        console.log("xxl setExchangeRecord ");
+        let url = CENTER_BASE + "setExchangeRecord"
+        return $nuxt.$axios
+            .$post(url, {
+                jsonrpc: "2.0",
+                id: 1,
+                data: {
+                    chainID,
+                    txid,
+                    sourceKey,
+                    sourceAmount,
+                    destAddr,
+                    destKey
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log(err.response);
+                return Promise.reject(err.response);
+        });
+
+    }
 
 
 };

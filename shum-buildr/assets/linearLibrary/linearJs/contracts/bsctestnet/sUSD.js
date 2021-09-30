@@ -4,6 +4,9 @@
       import abi from '../../lib/abis/bscdev/sUSD';
   
       function sUSD(contractSettings) {
+
+        console.log("xxl come to : sUSD ....");
+        
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(

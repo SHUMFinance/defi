@@ -91,19 +91,20 @@ module.exports = {
 	 ** See https://axios.nuxtjs.org/options
 	 */
 	axios: {
-		prefix: '/buildr_api', //url前缀
-		proxy: true, //开启跨域代理
+		proxy: true, //开启跨域代理,
+		proxyHeaders: false,
+    	credentials: false
 	},
 	/**
 	 * url 代理
 	 */
 	proxy: {
 		//匹配名称
-		'/buildr_api/': {
-			target: process.env.BACKEND_API, //代理地址
+		'/api': {
+			target: "https://api.binance.com/", //代理地址
 			pathRewrite: {
 				'^/buildr_api/': '/', //将前缀替换成 /
-				changeOrigin: true, //标识跨域
+				changeOrigin: false, //标识跨域
 				secure: false, //https使用
 			},
 			proxyTimeout: 600000, //响应超时 毫秒
