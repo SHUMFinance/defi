@@ -1,7 +1,7 @@
 {
-    "SafeDecimalMath": "0x7053533033627f6C548CE50B938cf2F192D2ba38",
-    "ShumFinance": "0x8007196Fc818aCa96e6f9c56C97141BC57eF18a2",
-    "ShumAssetSystem": "0x557984daC6DDEAd6e68f65C6754C12b5C9eaFdA4",
-    "ShumBuildBurnSystem": "0x215dA30c1442b6dC3467f49818696da55a26c5AF",
-    "ShumConfig": "0x9b6F2d4e30412700F09B4bae5df499248c5b70d7"
+    "SafeDecimalMath": "0x2f5Cf548003768968eEf869E8CaF3cDa70797A22",
+    "ShumFinance": "0x86dde9969ba1F7B6FeCffc6AAf458423d634c9ce",
+    "ShumAssetSystem": "0xD041f4d448A03D5A9a4e2A2822b3d3DecFddC4ED",
+    "ShumBuildBurnSystem": "0x7DcDB3838f104fAe8CAc76422B029403F3844D88",
+    "ShumConfig": "0x1cbd3091801E835499e38Af0314c033dd91da428"
 }

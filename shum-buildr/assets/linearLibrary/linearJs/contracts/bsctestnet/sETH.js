@@ -39,6 +39,9 @@
       };
     
       this.balanceOf = async (account, txParams) => {
+
+        console.log("xxl 100 bsc seth come to balance of ...");
+
         txParams = txParams || {};
         return await this.contract.balanceOf(account, txParams);
       };

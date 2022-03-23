@@ -14,11 +14,11 @@ const currencies = {
         fullName: "Liquid Ether",
         type: "crypto"
     },
-    sBCH: {
-       name: "sBCH",
-       fullName: "sBCH",
-       type: "crypto"
-    },
+    // sBCH: {
+    //    name: "sBCH",
+    //    fullName: "sBCH",
+    //    type: "crypto"
+    // },
     //lEOS: {
     //    name: "sEOS",
     //    fullName: "sEOS",
@@ -39,11 +39,11 @@ const currencies = {
         fullName: "sTRX",
         type: "crypto"
     },
-    sBSV: {
-       name: "sBSV",
-       fullName: "sBSV",
-       type: "crypto"
-    },
+    // sBSV: {
+    //    name: "sBSV",
+    //    fullName: "sBSV",
+    //    type: "crypto"
+    // },
     sLINK: {
         name: "sLINK",
         fullName: "sLINK",
@@ -54,46 +54,46 @@ const currencies = {
     //    fullName: "sZEC",
     //    type: "crypto"
     //},
-    sNEO: {
-       name: "sNEO",
-       fullName: "sNEO",
-       type: "crypto"
-    },
-    // sBNB: {
-    //     name: "sBNB",
-    //     fullName: "sBNB",
-    //     type: "crypto"
+    // sNEO: {
+    //    name: "sNEO",
+    //    fullName: "sNEO",
+    //    type: "crypto"
     // },
-    sDASH: {
-       name: "sDASH",
-       fullName: "sDASH",
-       type: "crypto"
+    sBNB: {
+        name: "sBNB",
+        fullName: "sBNB",
+        type: "crypto"
     },
+    // sDASH: {
+    //    name: "sDASH",
+    //    fullName: "sDASH",
+    //    type: "crypto"
+    // },
     //lJUST: {
     //    name: "sJUST",
     //    fullName: "sJUST",
     //    type: "crypto"
     //},
-    // sDOT: {
-    //     name: "sDOT",
-    //     fullName: "sDOT",
-    //     type: "crypto"
-    // },
-    // sYFI: {
-    //     name: "sYFI",
-    //     fullName: "Yearn.finance",
-    //     type: "crypto"
-    // },
+    sDOT: {
+        name: "sDOT",
+        fullName: "sDOT",
+        type: "crypto"
+    },
+    sYFI: {
+        name: "sYFI",
+        fullName: "Yearn.finance",
+        type: "crypto"
+    },
     sADA: {
         name: "sADA",
         fullName: "Cardano",
         type: "crypto"
     },
-    // sXLM: {
-    //     name: "sXLM",
-    //     fullName: "Stellar",
-    //     type: "crypto"
-    // },
+    sXLM: {
+        name: "sXLM",
+        fullName: "Stellar",
+        type: "crypto"
+    },
     // lXCF: {
     //    name: "sXCF",
     //    fullName: "sXCF",
@@ -114,31 +114,31 @@ const currencies = {
     //    fullName: "sSOY",
     //    type: "commodity"
     // },
-    sOIL: {
-       name: "sOIL",
-       fullName: "sOIL",
-       type: "commodity"
-    },
+    // sOIL: {
+    //    name: "sOIL",
+    //    fullName: "sOIL",
+    //    type: "commodity"
+    // },
     // lNIKK: {
     //    name: "sNIKK",
     //    fullName: "sNIKK",
     //    type: "index"
     // },
-    sFTSE: {
-       name: "sFTSE",
-       fullName: "sFTSE",
-       type: "index"
-    },
-    sCAC: {
-       name: "sCAC",
-       fullName: "sCAC",
-       type: "index"
-    },
-    sDAX: {
-       name: "sDAX",
-       fullName: "sDAX",
-       type: "index"
-    },
+    // sFTSE: {
+    //    name: "sFTSE",
+    //    fullName: "sFTSE",
+    //    type: "index"
+    // },
+    // sCAC: {
+    //    name: "sCAC",
+    //    fullName: "sCAC",
+    //    type: "index"
+    // },
+    // sDAX: {
+    //    name: "sDAX",
+    //    fullName: "sDAX",
+    //    type: "index"
+    // },
     
     // sHB10: {
     //     name: "sHB-10",
@@ -160,36 +160,36 @@ const currencies = {
     //     fullName: "Xangle Cap index",
     //     type: "index"
     // },
-    // sUNI: {
-    //     name: "sUNI",
-    //     fullName: "Uniswap",
-    //     type: "crypto"
-    // },
-    sXCU: {
-        name: "sXCU",
-        fullName: "sXCU",
-        type: "commodity"
-    },
-    sCHF: {
-        name: "sCHF",
-        fullName: "sCHF",
-        type: "currencies"
-    },
-    sJPY: {
-        name: "sJPY",
-        fullName: "sJPY",
-        type: "currencies"
-    },
-    // sEUR: {
-    //     name: "sEUR",
-    //     fullName: "sEUR",
-    //     type: "currencies"
-    // },
-    sDOGE: {
-        name: "sDOGE",
-        fullName: "Doge Coin",
+    sUNI: {
+        name: "sUNI",
+        fullName: "Uniswap",
         type: "crypto"
     },
+    // sXCU: {
+    //     name: "sXCU",
+    //     fullName: "sXCU",
+    //     type: "commodity"
+    // },
+    // sCHF: {
+    //     name: "sCHF",
+    //     fullName: "sCHF",
+    //     type: "currencies"
+    // },
+    // sJPY: {
+    //     name: "sJPY",
+    //     fullName: "sJPY",
+    //     type: "currencies"
+    // },
+    sEUR: {
+        name: "sEUR",
+        fullName: "sEUR",
+        type: "currencies"
+    },
+    // sDOGE: {
+    //     name: "sDOGE",
+    //     fullName: "Doge Coin",
+    //     type: "crypto"
+    // },
     sVET: {
         name: "sVET",
         fullName: "Vechain",

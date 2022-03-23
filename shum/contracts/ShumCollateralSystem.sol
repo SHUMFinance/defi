@@ -432,8 +432,6 @@ contract ShumCollateralSystem is ShumAdminUpgradeable, PausableUpgradeable, Shum
         require(_amount > 0, "ShumCollateralSystem: zero amount");
 
         uint256 maxRedeemableShumAmount = maxRedeemableShum(user);
-        require(_amount <= maxRedeemableShumAmount, "ShumCollateralSystem: insufficient collateral");
-
         userCollateralData[user][Currency_SHUM].collateral = userCollateralData[user][Currency_SHUM].collateral.sub(_amount);
 
         TokenInfo storage tokeninfo = tokenInfos[Currency_SHUM];

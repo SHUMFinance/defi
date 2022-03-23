@@ -398,7 +398,8 @@
       findParents,
       removeClass,
       addClass,
-      formatterInput
+      formatterInput,
+      toNonExponential
    } from "@/common/utils";
 
    import {
@@ -426,7 +427,8 @@
       bnDiv2N,
       MAX_DECIMAL_LENGTH,
       n2bn,
-      bn2n
+      bn2n,
+      BIGNUMBER_BASENUMBER
    } from "@/common/bnCalc";
 
    import {
@@ -441,6 +443,7 @@
       DECIMAL_PRECISION
    } from "@/assets/linearLibrary/linearTools/constants/process";
 
+   import api from "@/api";
 
    export default {
       name: "burn",
@@ -722,7 +725,6 @@
                      this.actionTabs = "m1"; //进入等待页
 
                      this.waitProcessFlow = this.startFlow();
-
                      //开始逻辑流处理函数
                      await this.waitProcessFlow();
                   }
@@ -742,7 +744,6 @@
             return async () => {
                try {
                   this.transactionErrMsg = "";
-
                   if (
                     this.waitProcessArray[this.confirmTransactionStep] ==
                     BUILD_PROCESS_SETUP.BURN_UNSTAKING
@@ -790,13 +791,13 @@
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             //burn多一点点,防止unstake出错
-            let tempBurnAmount = n2bn(_.ceil(bn2n(burnAmount), 2));
+            let tempBurnAmount = n2bn(_.ceil(bn2n(burnAmount), 3));
             if (tempBurnAmount.lte(this.burnData.sUSDBN)) {
                burnAmount = tempBurnAmount;
             }
 
             //unstake少一点,防止出错
-            unstakeAmount = n2bn(_.floor(bn2n(unstakeAmount), 2));
+            unstakeAmount = n2bn(_.floor(bn2n(unstakeAmount), 3));
 
             const {
                lnrJS: {ShumCollateralSystem},
@@ -842,8 +843,25 @@
                   };
                }
 
+
                //成功后累加当前进度
+               console.log("xxl ##01 burn start");
+               //txType 0:build 1:burn 2:exchage 
+               //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+               let txValue = bn2n(burnAmount) + "USDT" + "->" + bn2n(unstakeAmount) + "SHUM"
+               console.log([transaction.hash,transaction.from,"-",txValue,1,this.walletNetworkId]);
+               console.log("xxl ##01 burn end");
+
                this.confirmTransactionStep += 1;
+
+               await api.setTransactionRecord(
+                  transaction.hash,
+                  transaction.from,
+                  "-",                             
+                  txValue,                        
+                  "1",                  
+                  this.walletNetworkId            
+               )
             }
          },
 
@@ -893,7 +911,6 @@
                   };
                }
 
-               //成功后累加当前进度
                this.confirmTransactionStep += 1;
             }
          },
@@ -949,7 +966,6 @@
                   };
                }
 
-               //成功后累加当前进度
                this.confirmTransactionStep += 1;
             }
          },
@@ -1237,7 +1253,6 @@
          clickBurnMax() {
             try {
                this.activeItemBtn = 1;
-
                if (this.isBinanceNetwork) {
                   this.resetErrorsMsg();
                   this.resetInputData();
@@ -1369,6 +1384,10 @@
                        this.burnData.targetRatio.toString()
                      );
                   }
+                  
+                  this.inputData.unStake = this.inputData.amount / 5;
+                  this.actionDatas.unStake = this.actionDatas.amount.div(5);
+                  
                   //xxl bug 00
                   this.inputData.ratio = 100;
                }
@@ -1380,7 +1399,6 @@
          clickTargetRatio() {
             try {
                this.activeItemBtn = 2;
-
                if (this.isBinanceNetwork) {
                   this.resetErrorsMsg();
                   this.resetInputData();
@@ -1716,10 +1734,27 @@
             }
          },
 
+         myDiv(a,b){
+            return BigNumber.from(
+               toNonExponential(
+                  floor(
+                     floor(
+                        Number(a.toString())/ Number(b.toString()),
+                        MAX_DECIMAL_LENGTH
+                     ) * BIGNUMBER_BASENUMBER
+                  ).toString()
+
+               )
+
+            )
+         },
          //输入要销毁sUSD数量
          changeAmount(burnAmount) {
+
+            console.log("xxl burn Amount is : " + burnAmount);
             try {
-               if (this.isBinanceNetwork) {
+               //if (this.isBinanceNetwork) {
+                  console.log("xxl changeAmount 2");
                   this.resetErrorsMsg();
                   // this.resetInputData();
 
@@ -1766,6 +1801,9 @@
                     ),
                     n2bn("100")
                   );
+                  console.log("ratioAfterBurnInputAmount start " );
+                  console.log(ratioAfterBurnInputAmount);
+                  console.log("ratioAfterBurnInputAmount end " );
 
                   ////用输入的sUSD销毁后超额的抵押率算，不超过目标抵押率，则不能解锁LINA
                   if (
@@ -1817,21 +1855,35 @@
                   //     n2bn("100")
                   // );
 
+                  console.log("xxl burn come to logic");
                   this.inputData.unStake = formatEtherToNumber(
                     allCanUnstakedLINAAfterBurn
                   );
+                  console.log("xxl****  this inputData unStake : " + this.inputData.unStake);
+
                   this.actionDatas.unStake = allCanUnstakedLINAAfterBurn;
+                  console.log("xxl****  this actionDatas unStake : " + this.actionDatas.unStake);
 
                   this.inputData.amount = burnAmount;
                   this.actionDatas.amount = n2bn(burnAmount.toString());
+                  console.log("xxl****  this actionDatas unStake amount : " + this.actionDatas.amount);
+
+                  //fix to the 5 
+                  this.inputData.unStake = burnAmount / 5;
+                  this.actionDatas.unStake = this.actionDatas.amount.div(5);
+                  console.log("xxl****  ##this actionDatas unStake : " + this.actionDatas.unStake);
 
                   //this.inputData.ratio = formatEtherToNumber(pratioAfterBurnAndStake);
                   //this.actionDatas.ratio = pratioAfterBurnAndStake;
                   this.inputData.ratio = this.burnData.targetRatio;
+                  console.log("xxl****  this inputData ratio : " + this.inputData.ratio);
+
                   this.actionDatas.ratio = n2bn(
                     this.burnData.targetRatio.toString()
                   );
-               }
+                  console.log("xxl****  this targetRatio ratio : " + this.actionDatas.ratio);
+
+               //}
             } catch (error) {
                this.errors.amountMsg = "Invalid number";
             }

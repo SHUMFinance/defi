@@ -24,6 +24,12 @@ export const fetchTransactionHistory = async (
     networkId = undefined
 ) => {
     try {
+
+        console.log("... fetchTransactionHistory 1");
+        console.log([
+            walletAddress,
+            networkId
+        ]);
         const [
             Build,
             burned,
@@ -49,6 +55,19 @@ export const fetchTransactionHistory = async (
             linearData.lnr.unfreeze({ recipient: walletAddress, networkId })
         ]);
 
+        console.log([
+            Build,
+            burned,
+            feesClaimed,
+            collaterals,
+            redeemCollaterals,
+            transfers,
+            referrals,
+            freeZes,
+            unfreezes
+        ]);
+
+        console.log("... fetchTransactionHistory 2");
         let tempDataArr = [
             Build,
             burned,
@@ -61,6 +80,7 @@ export const fetchTransactionHistory = async (
             unfreezes
         ];
 
+        console.log("... fetchTransactionHistory 3");
         //如果是bsc main/bsc(私链)则检查liquidation
         if (LIQUIDATION_NETWORKS[networkId] !== undefined) {
             let [
@@ -75,6 +95,7 @@ export const fetchTransactionHistory = async (
             tempDataArr.push(liquidatedLocked);
         }
 
+        console.log("... fetchTransactionHistory 4");
         let chain; //链
         if (isEthereumNetwork(networkId)) {
             chain = "ethereum";
@@ -82,6 +103,7 @@ export const fetchTransactionHistory = async (
             chain = "binance";
         }
 
+        console.log("... fetchTransactionHistory 5");
         const mergedArray = flatten(
             tempDataArr.map((eventType, i) => {
                 return eventType.map(event => {
@@ -113,6 +135,7 @@ export const fetchTransactionHistory = async (
             })
         );
 
+        console.log("... fetchTransactionHistory 6");
         //所有类型的交易记录按时间戳降序排序
         const orderData = mergedArray.sort(function(record1, record2) {
             return record2.timestamp - record1.timestamp;

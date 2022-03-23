@@ -76,17 +76,17 @@ const main = async () => {
         console.log(shumFinance.address);
         console.log(TOKEN_LOCK_TYPE_TRANSFER);
 
-        // let re = await shumErc20Bridge.connect(admin).addToken(
-        //     ethers.utils.formatBytes32String("SHUM"), // tokenKey
-        //     shumFinance.address,                      // tokenAddress
-        //     TOKEN_LOCK_TYPE_TRANSFER                  // lockType
-        // );
+        let re = await shumErc20Bridge.connect(admin).addToken(
+            ethers.utils.formatBytes32String("SHUM"), // tokenKey
+            shumFinance.address,                      // tokenAddress
+            TOKEN_LOCK_TYPE_TRANSFER                  // lockType
+        );
 
         // console.log(re);    
-        // await shumErc20Bridge.connect(admin).addChainSupportForToken(
-        //     ethers.utils.formatBytes32String("SHUM"), // tokenKey
-        //     targetChainID                             // chainId
-        // );
+        await shumErc20Bridge.connect(admin).addChainSupportForToken(
+            ethers.utils.formatBytes32String("SHUM"), // tokenKey
+            targetChainID                             // chainId
+        );
         
         // console.log("xxl 002 : " + shumErc20Bridge.address);
         // let tx = await shumErc20Bridge.connect(alice).deposit(
@@ -97,22 +97,22 @@ const main = async () => {
         // )
         // await sleep(5000);
 
-        let testAddress = "0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
-        console.log("xxl 003 : " + shumErc20Bridge.address);
-        let tx = await shumErc20Bridge.connect(admin).withdraw(
-            BigNumber.from(97),
-            BigNumber.from(42),
-            BigNumber.from(5),
-            hexlify(zeroPad(testAddress, 32)), // depositor
-            hexlify(zeroPad(testAddress, 32)), // recipient
-            formatBytes32String("SHUM"), // currency
-            BigNumber.from("10000000000000000"), // amount
-            "0xadec3fb7b07e8291c597b9de852b1a742f0be058b0c64126b846a86835a38966004900270b3e01fb829dd45101959689baf9890fd759b6782a87cb51dd4711e61c",
-            { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
-        );
+        // let testAddress = "0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
+        // console.log("xxl 003 : " + shumErc20Bridge.address);
+        // let tx = await shumErc20Bridge.connect(admin).withdraw(
+        //     BigNumber.from(97),
+        //     BigNumber.from(42),
+        //     BigNumber.from(5),
+        //     hexlify(zeroPad(testAddress, 32)), // depositor
+        //     hexlify(zeroPad(testAddress, 32)), // recipient
+        //     formatBytes32String("SHUM"), // currency
+        //     BigNumber.from("10000000000000000"), // amount
+        //     "0xadec3fb7b07e8291c597b9de852b1a742f0be058b0c64126b846a86835a38966004900270b3e01fb829dd45101959689baf9890fd759b6782a87cb51dd4711e61c",
+        //     { gasPrice: args.gasPrice, gasLimit: args.gasLimit}
+        // );
 
-        let re1 = await tx.wait();
-        console.log(re1);
+        // let re1 = await tx.wait();
+        // console.log(re1);
 
 
     }catch(e){

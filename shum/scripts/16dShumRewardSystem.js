@@ -21,11 +21,12 @@ const main = async () => {
 
     const ShumRewardSystem = await ethers.getContractFactory('ShumRewardSystem',deployer)
 
-    let SUSDAddress = await readConfig("13config","sUSD");
-    let ShumCollateralSystemAddress = await readConfig("13config","ShumCollateralSystem");
-    let ShumRewardLockerAddress = await readConfig("13config","ShumRewardLocker");
+    let sUSDAddress = await readConfig("12config","sUSD");
+    let shumFinance = await readConfig("12config","ShumFinance");
+    let ShumCollateralSystemAddress = await readConfig("12config","ShumCollateralSystem");
+    let ShumRewardLockerAddress = await readConfig("12config","ShumRewardLocker");
 
-
+  
     /**
     * A contract for distributing rewards calculated and signed off-chain.
     */
@@ -34,7 +35,8 @@ const main = async () => {
         [
             (await ethers.provider.getBlock("latest")).timestamp, // _firstPeriodStartTime
             admin.address,                                        // _rewardSigner
-            SUSDAddress,                                          // _susdAddress
+            sUSDAddress,                                          // _susdAddress
+            shumFinance,                                          // _shumFinance
             ShumCollateralSystemAddress,                          // _collateralSystemAddress
             ShumRewardLockerAddress,                              // _rewardLockerAddress
             admin.address,                                        // _admin
@@ -43,11 +45,11 @@ const main = async () => {
             initializer: "__ShumRewardSystem_init",
         }
     );
-    console.log("✓ 14 ShumRewardSystem contract deployed ")
+    console.log("✓ 13 ShumRewardSystem contract deployed ")
     console.log(shumRewardSystem.address);
     console.log("");  
 
-    await writeConfig("13config","14config","ShumRewardSystem",shumRewardSystem.address);
+    await writeConfig("12config","13config","ShumRewardSystem",shumRewardSystem.address);
     await sleep(2000);
 
 }

@@ -7,9 +7,13 @@ import {
 import { URLS } from "./constants/urls";
 import api from "@/api";
 
+// xxl ##00
 // server
-export const CENTER_BASE = "http://47.242.107.228:7789/";
-//export const CENTER_BASE = "http://localhost:7789/";
+export const CENTER_BASE = process.env.CENTER_BASE;
+console.log("xxl ::: CENTER_BASE");
+
+//export const CENTER_BASE = "http://127.0.0.1:7789/";
+//export const CENTER_BASE = "http://47.242.107.228:7789/";
 
 /**
  * ethererm网络
@@ -84,6 +88,7 @@ const DEV_RELATIVE_NETWORKS = {
 
 //有liquidation的网络
 export const LIQUIDATION_NETWORKS = {
+    42:"ETHDEV",
     56: "BSCMAINNET",
     //xxl 00 add config
     //10056: "BSCDEV"
@@ -223,7 +228,7 @@ export const DEFAULT_GAS_LIMIT = {
     approve: 300000,
     staking: 300000,
     build: 500000,
-    burn: 500000,
+    burn: 800000,
     unstake: 500000,
     claim: 140000,
     exchange: 22000,

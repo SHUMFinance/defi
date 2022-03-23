@@ -243,6 +243,11 @@ export default {
             });
     },
 
+    getHK24hr(txid) {
+        return $nuxt.$axios
+            .$get(`http://47.242.107.228:7789/24hr/${txid}`)
+    },
+
 
     isExchangeApproved(address){
 
@@ -298,6 +303,7 @@ export default {
 
         console.log("xxl setExchangeRecord ");
         let url = CENTER_BASE + "setExchangeRecord"
+
         return $nuxt.$axios
             .$post(url, {
                 jsonrpc: "2.0",
@@ -320,6 +326,92 @@ export default {
                 return Promise.reject(err.response);
         });
 
+    },
+
+    //xxl ##01 setTransactionRecord 
+    setTransactionRecord(
+        txid,
+        from,
+        to,                
+        value,                        
+        chainType,         
+        chain
+        ){
+
+        //console.log("xxl setTransactionRecord ");
+        //
+
+        console.log("xxl setTransactionRecord : " + CENTER_BASE);
+        let url = CENTER_BASE + "setTransactionRecord"
+        return $nuxt.$axios
+            .$post(url, {
+                jsonrpc: "2.0",
+                id: 1,
+                data: {
+                    txid,
+                    from,
+                    to,                
+                    value,                        
+                    chainType,         
+                    chain
+                }
+            })
+            .then(res => {
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                console.log(err.response);
+                return Promise.reject(err.response);
+        });
+
+    },
+
+    //xxl ##01 getTransaction 
+    getTransaction(address) {
+
+        let url = CENTER_BASE + "getTransaction/" + address
+        return $nuxt.$axios.$get(url)
+    },
+
+    getklines(symbol, startTime, endTime, interval = '1h') {
+
+        let url = CENTER_BASE + "api/v3/klines"
+        return $nuxt.$axios
+            .$get(url, {
+                params: {
+                    symbol,
+                    interval,
+                    startTime,
+                    endTime
+                },
+                Headers:{
+                    'Access-Control-Allow-Origin':'*'
+                }
+            }).then(res => {
+                // [
+                //     1499040000000,      // 开盘时间
+                //     "0.01634790",       // 开盘价
+                //     "0.80000000",       // 最高价
+                //     "0.01575800",       // 最低价
+                //     "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
+                //     "148976.11427815",  // 成交量
+                //     1499644799999,      // 收盘时间
+                //     "2434.19055334",    // 成交额
+                //     308,                // 成交笔数
+                //     "1756.87402397",    // 主动买入成交量
+                //     "28.46694368",      // 主动买入成交额
+                //     "17928899.62484339" // 请忽略该参数
+                // ]
+                console.log("xxl 0001");
+                console.log(res);
+                console.log("xxl 0002");
+
+                return Promise.resolve(res.data);
+            })
+            .catch(err => {
+                return Promise.reject(err.response);
+            });
     }
 
 

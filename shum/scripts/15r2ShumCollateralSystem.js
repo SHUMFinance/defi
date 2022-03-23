@@ -19,8 +19,8 @@ const main = async () => {
     console.log("admin address is :" + admin.address);
 
 
-    let ShumCollateralSystemAddress = await readConfig("13config","ShumCollateralSystem");
-    let ShumFinanceAddress = await readConfig("13config","ShumFinance");
+    let ShumCollateralSystemAddress = await readConfig("12config","ShumCollateralSystem");
+    let ShumFinanceAddress = await readConfig("12config","ShumFinance");
     
     const ShumCollateralSystem = await ethers.getContractFactory('ShumCollateralSystem',deployer)
     let shumCollateralSystem = await ShumCollateralSystem.connect(admin).attach(

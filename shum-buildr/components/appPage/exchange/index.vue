@@ -41,23 +41,32 @@ import {
 } from "@/common/bnCalc";
 import api from "@/api";
 
+import currencies from "@/common/currency";
+
 const marketMock = {
   data: {
     pricesLasts: [
       // {
-      //   currentPrice: "2801397150000000000",
-      //   id: "ADA",
-      //   name: "sADA",
-      //   lastPrice: "2812025310000000000",
-      //   value: 1,
+      //   currentPrice: "57113377456570000000000",
+      //   id: "USD",
+      //   name: "sUSD",
+      //   lastPrice: "16421342587570000000000",
+      //   type: "crypto",
       // },
-      // {
-      //   currentPrice: "463075423110000000000",
-      //   id: "BCH",
-      //   name: "sBCH",
-      //   lastPrice: "473963879190000000000",
-      //   value: 1,
-      // },
+      {
+        currentPrice: "2801397150000000000",
+        id: "ADA",
+        name: "sADA",
+        lastPrice: "2812025310000000000",
+        type: "crypto",
+      },
+      {
+        currentPrice: "463075423110000000000",
+        id: "XLM",
+        name: "sXLM",
+        lastPrice: "473963879190000000000",
+        type: "crypto"
+      },
       // {
       //   currentPrice: "47435231433850000000000",
       //   id: "ETH",
@@ -65,27 +74,27 @@ const marketMock = {
       //   lastPrice: "47891750000000000000000",
       //   value: 4,
       // },
-      // {
-      //   currentPrice: "23107583740000000000",
-      //   id: "BSV",
-      //   name: "sBSV",
-      //   lastPrice: "24344089970000000000",
-      //   value: 2,
-      // },
+      {
+        currentPrice: "23107583740000000000",
+        id: "UNI",
+        name: "sUNI",
+        lastPrice: "24344089970000000000",
+        type: "crypto"
+      },
       {
         currentPrice: "4542617121000000000",
         id: "BTC",
         name: "sBTC",
         lastPrice: "4363827774000000000",
-        value: 1,
+        type: "crypto",
       },
-      // {
-      //   currentPrice: "28211140110000000000",
-      //   id: "CAC",
-      //   name: "sCAC",
-      //   lastPrice: "24833428640000000000",
-      //   value: 2,
-      // },
+      {
+        currentPrice: "28211140110000000000",
+        id: "EUR",
+        name: "sEUR",
+        lastPrice: "24833428640000000000",
+        type: "currencies"
+      },
       // {
       //   currentPrice: "3337217203700000000000",
       //   id: "CHF",
@@ -114,13 +123,13 @@ const marketMock = {
       //   lastPrice: "24883629290000000000",
       //   value: 3,
       // },
-      // {
-      //   currentPrice: "87657120000000000",
-      //   id: "ETH",
-      //   name: "sETH",
-      //   lastPrice: "87224840000000000",
-      //   value: 2,
-      // },
+      {
+        currentPrice: "87657120000000000",
+        id: "ETH",
+        name: "sETH",
+        lastPrice: "87224840000000000",
+        type: "crypto"
+      },
       // {
       //   currentPrice: "28126027610000000000",
       //   id: "FTSE",
@@ -128,20 +137,34 @@ const marketMock = {
       //   lastPrice: "26087196230000000000",
       //   value: 2,
       // },
-      // {
-      //   currentPrice: "1000000000000000000",
-      //   id: "JPY",
-      //   name: "sJPY",
-      //   lastPrice: "1000000000000000000",
-      //   value: 1,
-      // },
-      // {
-      //   currentPrice: "120100000000000000",
-      //   id: "LINK",
-      //   name: "sLINK",
-      //   lastPrice: "119591770000000000",
-      //   value: 1,
-      // },
+      {
+        currentPrice: "28126027610000000000",
+        id: "YFI",
+        name: "sYFI",
+        lastPrice: "26087196230000000000",
+        type: "crypto"
+      },
+      {
+        currentPrice: "2000100000000000000",
+        id: "DOT",
+        name: "sDOT",
+        lastPrice: "2000000000000000000",
+        type: "crypto"
+      },
+      {
+        currentPrice: "1000000000000000000",
+        id: "BNB",
+        name: "sBNB",
+        lastPrice: "1000000000000000000",
+        type: "crypto"
+      },
+      {
+        currentPrice: "120100000000000000",
+        id: "LINK",
+        name: "sLINK",
+        lastPrice: "119591770000000000",
+        type: "crypto"
+      },
       // {
       //   currentPrice: "24067241500000000000",
       //   id: "NEO",
@@ -156,20 +179,20 @@ const marketMock = {
       //   lastPrice: "1817380000000000000000",
       //   value: 3,
       // },
-      // {
-      //   currentPrice: "1362900202233000000000",
-      //   id: "TRX",
-      //   name: "sTRX",
-      //   lastPrice: "1321099195405000000000",
-      //   value: 3,
-      // },
-      // {
-      //   currentPrice: "875510926927000000000",
-      //   id: "VET",
-      //   name: "sVET",
-      //   lastPrice: "869580036982000000000",
-      //   value: 2,
-      // },
+      {
+        currentPrice: "1362900202233000000000",
+        id: "TRX",
+        name: "sTRX",
+        lastPrice: "1321099195405000000000",
+        type: "crypto"
+      },
+      {
+        currentPrice: "875510926927000000000",
+        id: "VET",
+        name: "sVET",
+        lastPrice: "869580036982000000000",
+        type: "crypto",
+      },
       // {
       //   currentPrice: "37113577556570000000000",
       //   id: "XCU",
@@ -180,6 +203,7 @@ const marketMock = {
     ],
   },
 };
+
 
 export default {
   name: "Exchange",
@@ -211,38 +235,39 @@ export default {
         this.loading = true;
         this.currency = undefined;
 
-        // [todo: 获取当前币种实际24hr 数据]
-        // api.get24hr(`${id}USDT`).then()
-        setTimeout(() => {
-          const res = {
-            symbol: `${id}USDT`,
-            priceChange: "-94.99999800",
-            priceChangePercent: "-95.960",
-            weightedAvgPrice: "0.29628482",
-            prevClosePrice: "0.10002000",
-            lastPrice: "41717.83000200",
-            lastQty: "200.00000000",
-            bidPrice: "4.00000000",
-            askPrice: "4.00000200",
-            openPrice: "99.00000000",
-            highPrice: "100.00000000",
-            lowPrice: "0.10000000",
-            volume: "8913.30000000",
-            quoteVolume: "15.30000000",
-            openTime: 1499783499040,
-            closeTime: 1499869899040,
-            firstId: 28385, // 首笔成交id
-            lastId: 28460, // 末笔成交id
-            count: 76, // 成交笔数
-          };
+        api.getHK24hr(id).then(res => {
 
           const currency = this.currencyList.find(v => v.id === id);
-          currency.price = formatNumber(res.lastPrice, 4);
-          currency.change = formatNumber(res.priceChange, 4);
+          currency.price = formatNumber(res.data.lastPrice, 4);
+          currency.change = formatNumber(res.data.priceChangePercent, 4);
 
-          this.currency = res;
+          this.currency = res.data;
           this.loading = false;
-        }, 2 * 1000);
+        }).catch(error => {
+          this.$Message.error(error.message);
+          this.loading = false;
+        })
+        //   const res = {
+        //     symbol: `${id}USDT`,
+        //     priceChange: "-94.99999800",
+        //     priceChangePercent: "-95.960",
+        //     weightedAvgPrice: "0.29628482",
+        //     prevClosePrice: "0.10002000",
+        //     lastPrice: "41717.83000200",
+        //     lastQty: "200.00000000",
+        //     bidPrice: "4.00000000",
+        //     askPrice: "4.00000200",
+        //     openPrice: "99.00000000",
+        //     highPrice: "100.00000000",
+        //     lowPrice: "0.10000000",
+        //     volume: "8913.30000000",
+        //     quoteVolume: "15.30000000",
+        //     openTime: 1499783499040,
+        //     closeTime: 1499869899040,
+        //     firstId: 28385, // 首笔成交id
+        //     lastId: 28460, // 末笔成交id
+        //     count: 76, // 成交笔数
+        //   };
 
       },
       immediate: true,
@@ -251,8 +276,6 @@ export default {
   mounted() {
     this.getCurrencyList();
     this.currencyId = this.currencyList[0].id;
-    console.log("this.currencyList", this.currencyList);
-
     this.getTradeOrderList();
   },
   methods: {
@@ -272,7 +295,7 @@ export default {
     },
     getCurrencyList() {
       // [todo: 从服务器获取]
-      this.currencyList = marketMock.data.pricesLasts.map(this.formatItem);
+     this.currencyList = marketMock.data.pricesLasts.map(this.formatItem);
     },
 
     getTradeOrderList() {

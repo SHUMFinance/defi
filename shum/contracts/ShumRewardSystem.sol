@@ -32,6 +32,7 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
     mapping(address => uint256) public userLastClaimPeriodIds;
 
     IERC20Upgradeable public lusd;
+    IERC20Upgradeable public shum;
     IShumCollateralSystem public collateralSystem;
     IShumRewardLocker public rewardLocker;
 
@@ -64,6 +65,7 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
         uint256 _firstPeriodStartTime,
         address _rewardSigner,
         address _lusdAddress,
+        address _shumAddress,
         address _collateralSystemAddress,
         address _rewardLockerAddress,
         address _admin
@@ -75,9 +77,7 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
          * chain possible.
          */
         // require(block.timestamp < _firstPeriodStartTime + PERIOD_LENGTH, "ShumRewardSystem: first period already ended");
-
         firstPeriodStartTime = _firstPeriodStartTime;
-
         _setRewardSigner(_rewardSigner);
 
         require(
@@ -85,6 +85,7 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
             "ShumRewardSystem: zero address"
         );
         lusd = IERC20Upgradeable(_lusdAddress);
+        shum = IERC20Upgradeable(_shumAddress);
         collateralSystem = IShumCollateralSystem(_collateralSystemAddress);
         rewardLocker = IShumRewardLocker(_rewardLockerAddress);
 
@@ -162,21 +163,10 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
         require(periodId > 0, "ShumRewardSystem: period ID must be positive");
         require(stakingReward > 0 || feeReward > 0, "ShumRewardSystem: nothing to claim");
 
-        // Check if the target period is in the claiming window
-        uint256 currentPeriodId = getCurrentPeriodId();
-        require(periodId < currentPeriodId, "ShumRewardSystem: period not ended");
-        require(
-            currentPeriodId <= CLAIM_WINDOW_PERIOD_COUNT || periodId >= currentPeriodId - CLAIM_WINDOW_PERIOD_COUNT,
-            "ShumRewardSystem: reward expired"
-        );
-
         // Re-entrance prevention
-        require(userLastClaimPeriodIds[recipient] < periodId, "ShumRewardSystem: reward already claimed");
         userLastClaimPeriodIds[recipient] = periodId;
 
         // Users can only claim rewards if target ratio is satisfied
-        require(collateralSystem.IsSatisfyTargetRatio(recipient), "ShumRewardSystem: below target ratio");
-
         // Verify EIP-712 signature
         bytes32 digest =
             keccak256(
@@ -190,7 +180,7 @@ contract ShumRewardSystem is ShumAdminUpgradeable {
         require(recoveredAddress == rewardSigner, "ShumRewardSystem: invalid signature");
 
         if (stakingReward > 0) {
-            rewardLocker.addReward(recipient, stakingReward, getPeriodEndTime(periodId) + STAKING_REWARD_LOCK_PERIOD);
+            shum.transfer(recipient,stakingReward);
         }
 
         if (feeReward > 0) {

@@ -29,7 +29,7 @@
       <div class="floor-continer floor-title">
         Balance
         <span class="right">
-              {{ buyOrSell ? USDTBalance : BTCBalance }}
+              {{ buyOrSell ? USDTBalance : curBalance }}
               <span class="iconfont icon-s" style="font-size: 10px"></span>
               {{ buyOrSell ? "USD" : currencyId }}
             </span>
@@ -158,10 +158,11 @@ export default {
       changeValue: 0,
 
       USDTBalance: 0, // 用户当前余额
-      BTCBalance: 0, // 用户BTC当前余额
+      // BTCBalance: 0, // 用户BTC当前余额
       sUSD: undefined,
       shouldApprove: true,
       exchangeStep: 1,
+      curBalance:0,
     };
   },
   computed: {
@@ -200,19 +201,54 @@ export default {
         // [todo: 更具后台获取当前币种余额]
 
         //xxl 默认值是最大的余额
-        this.changeValue = bn2n(await this.getUSDTBalance());
+        this.changeValue = 0;
 
         // id 当前币种id (ADA)
         console.log("xxl13 currencyId ... ");
         this.USDTBalance = bn2n(await this.getUSDTBalance());
         console.log("xxl13 this.USDTBalance : " + this.USDTBalance);
 
-        this.BTCBalance =  bn2n(await this.getBTCBalance());
-        console.log("xxl13 this.BTCBalance : " + this.BTCBalance);
+        // this.BTCBalance =  bn2n(await this.getBTCBalance());
+        // console.log("xxl13 this.BTCBalance : " + this.BTCBalance);
+
+        //xxl 001
+        if(id == "BTC"){
+          this.curBalance = bn2n(await this.getBTCBalance());
+        }else if(id == "ETH"){
+          console.log("xxl 100 come to ETH ");
+          this.curBalance = bn2n(await this.getETHBalance());
+        }else if(id == "LINK"){
+          this.curBalance = bn2n(await this.getLINKBalance());
+        }else if(id == "ADA"){
+          this.curBalance = bn2n(await this.getADABalance());
+        }else if(id == "XLM"){
+          this.curBalance = bn2n(await this.getXLMBalance());
+        }else if(id == "UNI"){
+          this.curBalance = bn2n(await this.getUNIBalance());
+        }else if(id == "BNB"){
+          this.curBalance = bn2n(await this.getBNBBalance());
+        }else if(id == "EUR"){
+          this.curBalance = bn2n(await this.getEURBalance());
+        }else if(id == "YFI"){
+          this.curBalance = bn2n(await this.getYFIBalance());
+        }else if(id == "DOT"){
+          this.curBalance = bn2n(await this.getDOTBalance());
+        }else if(id == "TRX"){
+          this.curBalance = bn2n(await this.getTRXBalance());
+        }else if(id == "VET"){
+          this.curBalance = bn2n(await this.getVETBalance());
+        }else{
+          this.curBalance = "0.1";
+        }
+        
 
       },
       immediate: true
     },
+
+    buyOrSell: function() {
+      this.changeValue = 0;
+    }
 
   },
   async mounted() {
@@ -239,7 +275,7 @@ export default {
   },
   methods: {
     slecetPrice: function (n) {
-      this.changeValue = (this.buyOrSell ? this.USDTBalance : this.BTCBalance) * n;
+      this.changeValue = (this.buyOrSell ? this.USDTBalance : this.curBalance) * n;
     },
     formatNumber: function (attr) {
       if (!this.currency) {
@@ -328,7 +364,7 @@ export default {
             utils.formatBytes32String(destKey),                 // destKey      xxl12 3 需要充界面传入
             {}
           );
-          console.log("xxl exhange end ");
+          console.log("xxl exhange end 111");
 
           if (transaction) {
             this.confirmTransactionStatus = true;
@@ -360,7 +396,15 @@ export default {
               };
             }
 
-            console.log("xxl abc ...");
+            console.log([
+              this.walletNetworkId,
+              transaction.hash,
+              sourceKey,                             // sourceKey
+              this.changeValue,                        
+              this.walletAddress,                  
+              destKey                               // destAddr
+            ]);
+
             await api.setExchangeRecord(
               this.walletNetworkId,
               transaction.hash,
@@ -370,7 +414,29 @@ export default {
               destKey                               // destAddr
             )
 
-            console.log("xxl efg ...");
+            //txType 0:build 1:burn 2:exchage 
+            //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+            //console.log(transaction);
+            let destValue = 0;
+            if (this.buyOrSell) {
+              destValue = formatNumber(this.changeValue / this.currency.lastPrice, 4);
+            } else {
+              destValue = formatNumber(this.changeValue * this.currency.lastPrice, 4);
+            }
+
+            let txValue = this.changeValue + " " + sourceKey + "->" + destValue + " " + destKey
+            console.log("xxl ##01 ExchangeRecord tx data start");
+            console.log(transaction);
+            console.log([transaction.hash,transaction.from,"-",txValue,2,this.walletNetworkId]);
+            console.log("xxl ##01 ExchangeRecord tx data end");
+            await api.setTransactionRecord(
+              transaction.hash,
+              transaction.from,
+              "-",                             // sourceKey
+              txValue,                        
+              "2",                  
+              this.walletNetworkId             // destAddr
+            )
 
           }
 
@@ -494,13 +560,12 @@ export default {
       }
     },
 
-    //xxl11
+    //xxl
     async getUSDTBalance() {
       console.log("xxl13 wallet : " + this.walletAddress);
       let usdtBalance = await this.sUSD.balanceOf(this.walletAddress);
       
       console.log("xxl13 usdtBalance 0: " + usdtBalance);
-      console.log("xxl13 usdtBalance 1: " + bn2n(usdtBalance));
       return usdtBalance;
     },
 
@@ -510,10 +575,124 @@ export default {
       } = lnrJSConnector;
 
       let usdtBalance = await sBTC.balanceOf(this.walletAddress);
-      console.log("xxl11 sBTC : " + usdtBalance);
+      console.log("xxl13 sBTC : " + usdtBalance);
 
       return usdtBalance;
     },
+
+    async getETHBalance() {
+      const {
+        lnrJS: { sETH },
+      } = lnrJSConnector;
+
+      let balance = await sETH.balanceOf(this.walletAddress);
+      console.log("xxl 100 sETH : " + balance);
+      return balance;
+    },
+
+    async getLINKBalance() {
+      const {
+        lnrJS: { sLINK },
+      } = lnrJSConnector;
+
+      let balance = await sLINK.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getADABalance() {
+      const {
+        lnrJS: { sADA },
+      } = lnrJSConnector;
+
+      let balance = await sADA.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getBNBBalance() {
+      const {
+        lnrJS: { sBNB },
+      } = lnrJSConnector;
+
+      let balance = await sBNB.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getXLMBalance() {
+      const {
+        lnrJS: { sXLM },
+      } = lnrJSConnector;
+
+      let balance = await sXLM.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getUNIBalance() {
+      const {
+        lnrJS: { sUNI },
+      } = lnrJSConnector;
+
+      let balance = await sUNI.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getEURBalance() {
+      const {
+        lnrJS: { sEUR },
+      } = lnrJSConnector;
+
+      let balance = await sEUR.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getYFIBalance() {
+      const {
+        lnrJS: { sYFI },
+      } = lnrJSConnector;
+
+      let balance = await sYFI.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getDOTBalance() {
+      const {
+        lnrJS: { sDOT },
+      } = lnrJSConnector;
+
+      let balance = await sDOT.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getTRXBalance() {
+      const {
+        lnrJS: { sTRX },
+      } = lnrJSConnector;
+
+      let balance = await sTRX.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+    async getVETBalance() {
+      const {
+        lnrJS: { sVET },
+      } = lnrJSConnector;
+
+      let balance = await sVET.balanceOf(this.walletAddress);
+      console.log("xxl13 sLINK : " + balance);
+      return balance;
+    },
+
+
+
+
   },
 };
 </script>

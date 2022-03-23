@@ -69,13 +69,6 @@ contract ShumOracleRouter is ShumAdminUpgradeable, IShumPrices {
         (uint256 sourcePrice, uint256 sourceTime) = _getPriceData(sourceKey);
         (uint256 destPrice, uint256 destTime) = _getPriceData(destKey);
 
-        // xxl TODO test price 
-        // require(
-        //     !_isUpdateTimeStaled(sourceTime, getStalePeriodForCurrency(sourceKey)) &&
-        //         !_isUpdateTimeStaled(destTime, getStalePeriodForCurrency(destKey)),
-        //     "ShumOracleRouter: staled price data"
-        // );
-
         return sourceAmount.multiplyDecimalRound(sourcePrice).divideDecimalRound(destPrice);
     }
 

@@ -109,7 +109,7 @@
                      </div>
                   </div>
                </div>
-               <div class="databtn" @click="toExchange">GO TO EXCHANGE</div>
+               <!-- <div class="databtn" @click="toExchange">GO TO EXCHANGE</div> -->
             </div>
             <div class="echartimg">
                <div id="myChart" style="width:900px;height:202px;"></div>

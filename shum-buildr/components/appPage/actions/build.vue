@@ -457,6 +457,9 @@
 
    import watingEnhanceSwapNew from "@/components/transferStatus/watingEnhanceSwapNew";
    import gasEditorSwap from "@/components/gasEditorSwap";
+
+   //xxl api
+   import api from "@/api";
    
    export default {
       name: "build",
@@ -564,6 +567,7 @@
 
          walletAddress() {
             return this.$store.state?.wallet?.address;
+            //return "0xA1F8b18c63C1De16477EeCF9AC86061B58489EC7";
          },
 
          isEthereumNetwork() {
@@ -807,28 +811,40 @@
                this.activeItemBtn = 1;
 
                if (this.isEthDevNetwork) {
+                  console.log("xxl *** click isEthDevNetwork");
+
                   this.inputData.stake = this.buildData.LINA;
                } else {
-
+                  console.log("xxl *** click activeItemBtn");
 
                   let allCanBuildsUSDAfterStakeAll = n2bn("0");
 
                   //抵押所有shum后能生成多少sUSD
+                  // allCanBuildsUSDAfterStakeAll = bnDiv(
+                  //   bnMul(
+                  //     bnAdd(
+                  //       bnAdd(
+                  //         this.buildData.LINABN,
+                  //         this.buildData.stakedBN
+                  //       ),
+                  //       this.buildData.lockBN
+                  //     ),
+                  //     this.buildData.LINA2USDBN
+                  //   ),
+                  //   n2bn((this.buildData.targetRatio / 100).toString())
+                  // );
                   allCanBuildsUSDAfterStakeAll = bnDiv(
                     bnMul(
-                      bnAdd(
                         bnAdd(
                           this.buildData.LINABN,
                           this.buildData.stakedBN
                         ),
-                        this.buildData.lockBN
-                      ),
                       this.buildData.LINA2USDBN
                     ),
                     n2bn((this.buildData.targetRatio / 100).toString())
                   );
-
-                  console.log("xxl allCanBuildsUSDAfterStakeAll : " + allCanBuildsUSDAfterStakeAll);
+                  console.log("xxl *** allCanBuildsUSDAfterStakeAll : " + allCanBuildsUSDAfterStakeAll);
+                  console.log("xxl *** buildData debtBN : " + this.buildData.debtBN );
 
 
                   //可以生成的sUSD小于等于债务
@@ -851,7 +867,7 @@
                   this.inputData.stake = formatEtherToNumber(
                     this.buildData.LINABN
                   );
-                  console.log("xxl this.inputData.stake ", this.inputData.stake);
+                  console.log("xxl *** this.inputData.stake ", this.inputData.stake);
 
                   //xxl 00
                   // this.inputData.amount = formatEtherToNumber(
@@ -876,10 +892,35 @@
                     allCanBuildsUSDAfterStakeAll,
                     this.buildData.debtBN
                   );
+
+                  this.actionData.amount = bnSub(
+                    allCanBuildsUSDAfterStakeAll,
+                    this.buildData.debtBN
+                  );
+
                   this.actionData.ratio = n2bn("100");
 
-                  this.adjustMinStake();
+                  // this.adjustMinStake();
                }
+
+               //xxl ##04 click Max Build Amount
+               console.log("xxl *** click Max Build Amount start");
+               this.inputData.stake = this.inputData.amount / 5;
+               // this.inputData.stake = this.inputData.stake.toFixed(10);
+
+               //this.actionData.stake = this.actionData.amount.div(5);
+               this.actionData.amount = n2bn(this.inputData.amount);
+               this.actionData.stake = this.actionData.amount.div(5);
+               //this.actionData.stake = n2bn(this.inputData.stake);
+               
+
+               console.log("xxl *** this.inputData.amount " + this.inputData.amount);
+               console.log("xxl *** this.inputData.stake " + this.inputData.stake);
+
+               console.log("xxl *** this.actionData.amount " + this.actionData.amount.toString());
+               console.log("xxl *** this.actionData.stake " + this.actionData.stake.toString());
+               console.log("xxl *** click Max Build Amount start");
+
 
             } catch (error) {
                console.log(error, "clickMaxBuildAmount error");
@@ -1080,7 +1121,6 @@
                   this.inputData.stake = stakeAmount;
                   this.actionData.stake = n2bn(stakeAmount.toString());
 
-
                   console.log("this.actionData.stake :" + this.actionData.stake);
 
                   // xxl bug 00
@@ -1249,8 +1289,11 @@
                   this.inputData.amount = buildAmount;
                   this.actionData.amount = n2bn(buildAmount.toString());
 
-                  this.adjustMinStake();
+                  // this.adjustMinStake();
                }
+               this.inputData.stake = this.inputData.amount / 5;
+               this.actionData.stake = this.actionData.amount.div(5);
+               
             } catch (error) {
                console.log(error, "build change error");
                this.errors.amountMsg = "Invalid number";
@@ -1602,7 +1645,7 @@
             this.confirmTransactionNetworkId = this.walletNetworkId;
 
             //多抵押一点,防止build失败
-            let tempStakeAmount = n2bn(_.ceil(bn2n(stakeAmountLINA), 2));
+            let tempStakeAmount = n2bn(_.ceil(bn2n(stakeAmountLINA), 3));
 
             //小于等于最大数
             if (tempStakeAmount.lte(this.buildData.LINABN)) {
@@ -1618,7 +1661,7 @@
             }
 
             if (buildAmountsUSD.gt(n2bn("0.01"))) {
-               buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 2));
+               buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 3));
             }
 
             console.log("*** xxl ShumCollateralSystem 1") 
@@ -1674,7 +1717,26 @@
                   };
                }
 
+               console.log("xxl ##01 build tx data start :");
+               
+               //txType 0:build 1:burn 2:exchage 
+               //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+               //console.log(transaction);
+               let txValue = bn2n(stakeAmountLINA) + "SHUM " + "->" + bn2n(buildAmountsUSD) + "USDT"
+               console.log([transaction.hash,transaction.from,"-",txValue,0,this.walletNetworkId]);
+               console.log("xxl ##01 build tx data end");
+
                this.confirmTransactionStep += 1;
+
+               await api.setTransactionRecord(
+                  transaction.hash,
+                  transaction.from,
+                  "-",                             
+                  txValue,                        
+                  "0",                  
+                  this.walletNetworkId             
+               )
+
             }
          },
 
@@ -1750,6 +1812,8 @@
 
          //start call Build contract
          async startBuildContract(buildAmountsUSD) {
+            console.log("xxl ??00 build tx");
+
             this.confirmTransactionStatus = false;
 
             buildAmountsUSD = n2bn(_.floor(bn2n(buildAmountsUSD), 2));
@@ -1798,6 +1862,12 @@
                        "Something went wrong while building your sUSD, please try again."
                   };
                }
+
+               //txType 0:build 1:burn 2:exchage 
+               //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+               console.log("xxl ??01 build tx");
+               console.log(transaction);
+               console.log[transaction.hash,"from","to","value",0,this.walletNetworkId];
 
                this.confirmTransactionStep += 1;
             }

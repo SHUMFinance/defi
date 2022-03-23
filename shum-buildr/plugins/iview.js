@@ -28,7 +28,8 @@ import {
     Table,
     Select,
     Notice,
-    Option
+    Option,
+    Message
 } from "view-design";
 import "view-design/dist/styles/iview.css";
 import lang from "view-design/dist/locale/en-US";
@@ -80,3 +81,5 @@ Vue.component("thumbnail", thumbnail);
 Vue.prototype.$Notice = Notice;
 
 Vue.prototype.$Spin = Spin;
+
+Vue.prototype.$Message = Message;

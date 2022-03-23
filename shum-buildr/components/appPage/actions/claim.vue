@@ -27,7 +27,7 @@
                            <span>SHUM</span>
                         </div>
                      </div>
-                     <div class="box">
+                     <div class="box" style="display: none;">
                         <div class="titleMobile">Exchange Rewards</div>
                         <img
                             v-if="feesAreClaimable"
@@ -83,16 +83,25 @@
                   </div>
                </div>
 
+               <!-- xxl ##02 claim -->
                <div class="claimBtn"
-                    v-if="!isEthereumNetwork"
-                    :class="{ disabled: claimDisabled || isEthereumNetwork}"
+                    v-if="stakingRewards == 0"
+                    :class="{ disabled: claimDisabled }"
                     @click="clickClaim"
                > CLAIM NOW
                </div>
 
-               <div v-else class="claimBtn switchToBSC">
-                  Please switch to BSC network to claim your rewards
+               <div v-else class="claimBtn" @click="clickClaim"> 
+                  CLAIM NOW
                </div>
+
+               <!-- <div v-else class="claimBtn switchToBSC">
+                  Please switch to BSC network to claim your rewards
+               </div> -->
+
+               <!-- <div class="claimBtn" @click="clickClaim"> 
+                  CLAIM NOW
+               </div> -->
 
                <Spin fix v-if="processing"></Spin>
             </div>
@@ -154,6 +163,13 @@
       isMainnetNetwork,
       CENTER_BASE
    } from "@/assets/linearLibrary/linearTools/network";
+
+
+   import {
+      bn2n
+   } from "@/common/bnCalc";
+   //xxl api
+   import api from "@/api";
    import {BigNumber, utils} from "ethers";
    import {BUILD_PROCESS_SETUP} from "@/assets/linearLibrary/linearTools/constants/process";
 
@@ -253,77 +269,115 @@
 
          //点击 claim
          async clickClaim() {
-            if (!this.claimDisabled) {
-               this.processing = true;
+            //if (!this.claimDisabled) {
+            this.processing = true;
 
-               if (this.isEthereumNetwork) return;
+            // xxl ##02 claim
+            // if (this.isEthereumNetwork) return;
 
-               this.waitProcessArray = [];
-               this.confirmTransactionStep = 0;
+            console.log("xxl ****01");
+            this.waitProcessArray = [];
+            this.confirmTransactionStep = 0;
 
-               this.waitProcessArray.push(BUILD_PROCESS_SETUP.CLAIM);
+            this.waitProcessArray.push(BUILD_PROCESS_SETUP.CLAIM);
 
-               const transactionSettings = {
-                  gasPrice: this.$store.state?.gasDetails?.price,
-                  gasLimit: DEFAULT_GAS_LIMIT.claim
-               };
+            const transactionSettings = {
+               gasPrice: this.$store.state?.gasDetails?.price,
+               gasLimit: DEFAULT_GAS_LIMIT.claim
+            };
 
-               //获取gas评估
-               transactionSettings.gasLimit = await this.getGasEstimate();
+            // console.log("xxl ****02");
+            //获取gas评估
+            //transactionSettings.gasLimit = await this.getGasEstimate();
+            transactionSettings.gasLimit = "0x7a1200"
+            transactionSettings.gasPrice = "0x02540be400";
+            console.log("xxl ****02.5");
 
-               try {
-                  this.actionTabs = "m1"; //进入等待页
+            try {
+               this.actionTabs = "m1"; //进入等待页
 
-                  let {
-                     lnrJS: {ShumRewardSystem}
-                  } = lnrJSConnector;
+               let {
+                  lnrJS: {ShumRewardSystem}
+               } = lnrJSConnector;
 
-                  const rewardEntry = this.pendingRewardEntries[0];
-                  // const signature = utils.splitSignature(
-                  //     rewardEntry.signatures[0].signature
-                  // );
+               const rewardEntry = this.pendingRewardEntries[0];
+               // const signature = utils.splitSignature(
+               //     rewardEntry.signatures[0].signature
+               // );
+               
+               console.log("xxl ****03");
+               let transaction = await ShumRewardSystem.claimReward(
+                  rewardEntry.periodId, // periodId
+                  BigNumber.from(rewardEntry.stakingReward), // stakingReward
+                  BigNumber.from(rewardEntry.feeReward), // feeReward
+                  rewardEntry.signatures[0].signature,
+                  transactionSettings
+               );
 
-                  let transaction = await ShumRewardSystem.claimReward(
-                    rewardEntry.periodId, // periodId
-                    BigNumber.from(rewardEntry.stakingReward), // stakingReward
-                    BigNumber.from(rewardEntry.feeReward), // feeReward
-                    rewardEntry.signatures[0].signature,
-                    transactionSettings
+               console.log("xxl ****04");
+               if (transaction) {
+                  this.confirmTransactionHash = transaction.hash;
+
+                  console.log("xxl ****05");
+                  // 发起右下角通知
+                  this.$pub.publish("notificationQueue", {
+                     hash: this.confirmTransactionHash,
+                     type: BUILD_PROCESS_SETUP.CLAIM,
+                     networkId: this.walletNetworkId,
+                     value: `Claiming ${this.confirmTransactionStep +
+                     1} / ${this.waitProcessArray.length}`
+                  });
+
+                     console.log("xxl ****06");
+                  //等待结果返回
+                  let status = await lnrJSConnector.utils.waitForTransaction(
+                     transaction.hash
                   );
 
-                  if (transaction) {
-                     this.confirmTransactionHash = transaction.hash;
+                  //判断成功还是错误子页
+                  this.actionTabs = status ? "m2" : "m3";
 
-                     // 发起右下角通知
-                     this.$pub.publish("notificationQueue", {
-                        hash: this.confirmTransactionHash,
-                        type: BUILD_PROCESS_SETUP.CLAIM,
-                        networkId: this.walletNetworkId,
-                        value: `Claiming ${this.confirmTransactionStep +
-                        1} / ${this.waitProcessArray.length}`
-                     });
+                  //成功则更新数据
+                  status &&
+                  _.delay(async () => await storeDetailsData(), 5000);
 
-                     //等待结果返回
-                     let status = await lnrJSConnector.utils.waitForTransaction(
-                       transaction.hash
-                     );
+                  this.confirmTransactionStep += 1;
 
-                     //判断成功还是错误子页
-                     this.actionTabs = status ? "m2" : "m3";
 
-                     //成功则更新数据
-                     status &&
-                     _.delay(async () => await storeDetailsData(), 5000);
 
-                     this.confirmTransactionStep += 1;
-                  }
-               } catch (e) {
-                  console.log(e);
-                  this.actionTabs = "m3"; //进入错误页
-               } finally {
-                  this.processing = false;
+                  //xxl ##
+                  console.log("xxl ##01 claim tx data start :");
+                  
+                  //txType 0:build 1:burn 2:exchage 
+                  //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+                  //console.log(transaction);
+                  //let txValue = bn2n(rewardEntry.stakingReward) + "SHUM";
+                  let txValue = this.stakingRewards + "SHUM";
+                  console.log([transaction.hash,transaction.from,"-",txValue,3,this.walletNetworkId]);
+
+                  this.confirmTransactionStep += 1;
+
+                  await api.setTransactionRecord(
+                     transaction.hash,
+                     transaction.from,
+                     "-",                             
+                     txValue,                        
+                     "3",                  
+                     this.walletNetworkId             
+                  )
+
+
+
+
                }
+            } catch (e) {
+               console.log("xxl ****error");
+               console.log(e);
+               this.actionTabs = "m3"; //进入错误页
+            } finally {
+               this.processing = false;
             }
+            //}
          },
 
          //计算距离申领奖励开始的时间？
@@ -365,12 +419,11 @@
 
                // xxl bug 02 url
                // const apiUrl = isMainnetNetwork(this.walletNetworkId)
-               //   ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
-               //   : `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
-               const apiUrl = isMainnetNetwork(this.walletNetworkId)
-                    ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
-                    //: `https://reward-query-dev.linear-finance.workers.dev/rewards/${walletAddress}`;
-                    : CENTER_BASE + `rewards/${walletAddress}`;  
+               //      ? `https://reward-query.linear-finance.workers.dev/rewards/${walletAddress}`
+               //      : CENTER_BASE + `rewards/${this.walletNetworkId}/${walletAddress}`;  
+               
+               // xxl ##03 
+               const apiUrl = CENTER_BASE + `rewards/${this.walletNetworkId}/${walletAddress}`;  
 
                const [
                   firstPeriodStartTimeRes,
@@ -409,18 +462,26 @@
                //const allRewardEntries = await allRewardEntriesRes.json();
                const allRewardEntriesJson = await allRewardEntriesRes.json();
                const allRewardEntries = allRewardEntriesJson.data
-               console.log("xxl allRewardEntries start ...");
-               console.log(allRewardEntries);
+               console.log("xxl allRewardEntries start 12...");
+               
 
+               // const pendingRewardEntries = allRewardEntries.filter(
+               //   entry => entry.periodId > lastClaimPeriodId
+               // );
                const pendingRewardEntries = allRewardEntries.filter(
-                 entry => entry.periodId > lastClaimPeriodId
+                 entry => entry.periodId > 0
                );
+               console.log(pendingRewardEntries);
+
 
                this.hasClaim = pendingRewardEntries.length === 0;
                this.feesAreClaimable = pendingRewardEntries.length > 0;
                this.pendingRewardEntries = pendingRewardEntries;
 
                if (pendingRewardEntries.length > 0) {
+
+                  console.log("xxl useGetFeeData come to entires : " );
+
                   this.closeIn = "Now";
                   this.stakingRewards = formatNumber(
                     pendingRewardEntries.reduce(
@@ -436,7 +497,8 @@
                       BigNumber.from(0)
                     ) / 1e18
                   );
-               } else {
+               } 
+               else {
                   this.closeIn = "N/A";
                   this.stakingRewards = 0;
                   this.tradingRewards = 0;
@@ -459,6 +521,17 @@
                // const signature = utils.splitSignature(
                //     rewardEntry.signatures[0].signature
                // );
+               console.log("xxl ****02.4 start ");
+
+               console.log([
+                 rewardEntry.periodId, // periodId
+                 BigNumber.from(rewardEntry.stakingReward), // stakingReward
+                 BigNumber.from(rewardEntry.feeReward), // feeReward
+                 rewardEntry.signatures[0].signature
+               ]);
+
+               console.log("xxl ****02.4 end ");
+
 
                let gasEstimate = await ShumRewardSystem.contract.estimateGas.claimReward(
                  rewardEntry.periodId, // periodId

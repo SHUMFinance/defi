@@ -130,7 +130,6 @@ contract ShumErc20Bridge is ShumAdminUpgradeable {
         _setRelayer(_relayer);
     }
 
-    //xxl STOP HERE
     function addToken(
         bytes32 tokenKey,
         address tokenAddress,

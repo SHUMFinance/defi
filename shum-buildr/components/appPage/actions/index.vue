@@ -93,6 +93,7 @@
              placement="bottom"
              v-for="(item, index) in actions"
              :key="index"
+             v-show="item !== 'EXCHANGE'"
              :class="{
                     activited: currentAction == index + 1,
                     isTransaction: isTransaction && currentAction != index + 1

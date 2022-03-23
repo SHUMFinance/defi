@@ -4,6 +4,9 @@
       import abi from '../../lib/abis/bscdev/ShumOracleRouter';
   
       function ShumOracleRouter(contractSettings) {
+
+        console.log("xxl kovan 99  : ");
+
         this.contractSettings = contractSettings || new ContractSettings();
   
         this.contract = new Contract(
@@ -79,18 +82,10 @@
       };
     
       this.getPrice = async (currencyKey, txParams) => {
+
+        console.log("xxl kovan 99 getPrice : " + currencyKey);
+    
         txParams = txParams || {};
-
-        //xxl TODO
-        console.log("xxl bsctestnet  ...");
-        try{
-          await this.contract.getPrice(currencyKey, txParams);
-        }catch(e){
-          console.log("xxl bsctestnet oralce get price error " );
-          console.log(e);
-        }
-        //xxl TODO END 
-
         return await this.contract.getPrice(currencyKey, txParams);
       };
     

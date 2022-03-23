@@ -165,12 +165,27 @@ export const getPriceRates = async currency => {
             ["ETH", "BNB"].includes(name) && (name = "s" + name);
 
             console.log("xxl name is " + name);
-            pricesPromise.push(
-                contract.getPrice(utils.formatBytes32String(name))
-            );
+            if(name != "sXLM" && 
+               name != "sYFI"
+               ){
+
+                console.log("xxl ::: " +name );
+                pricesPromise.push(
+                    contract.getPrice(utils.formatBytes32String(name))
+                );
+            }
+
         }
 
-        let prices = await Promise.all(pricesPromise);
+        let prices = [];
+        try{
+            prices = await Promise.all(pricesPromise);
+        }catch(e){
+            console.log("xxl kovan 99 error start ...");
+            console.log(e);
+            console.log("xxl kovan 99 error end ");
+        }
+       
 
         for (let index = 0; index < currency.length; index++) {
             const name = currency[index];

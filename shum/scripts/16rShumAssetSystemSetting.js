@@ -18,8 +18,8 @@ const main = async () => {
     admin = deployer;
     console.log("admin address is :" + admin.address);
 
-    let ShumRewardSystemAddress = await readConfig("14config","ShumRewardSystem");
-    let ShumAssetSystemAddress = await readConfig("14config","ShumAssetSystem");
+    let ShumRewardSystemAddress = await readConfig("13config","ShumRewardSystem");
+    let ShumAssetSystemAddress = await readConfig("13config","ShumAssetSystem");
     const ShumAssetSystem = await ethers.getContractFactory('ShumAssetSystem',deployer)
     shumAssetSystem = await ShumAssetSystem.connect(admin).attach(
         ShumAssetSystemAddress
@@ -42,7 +42,7 @@ const main = async () => {
     console.log("shumAssetSystem updateAll ShumRewardSystem ")
     
     //
-    let ShumExchangeSystemAddress = await readConfig("14config","ShumExchangeSystem");
+    let ShumExchangeSystemAddress = await readConfig("13config","ShumExchangeSystem");
     let safeDecimalMath = await readConfig("2config","SafeDecimalMath");
     const ShumExchangeSystem = await ethers.getContractFactory('ShumExchangeSystem', {
         signer: deployer,

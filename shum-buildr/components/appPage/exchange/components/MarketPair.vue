@@ -28,16 +28,16 @@
       </div>
       <div class="item">
         <span>
-          <template v-if="formatNumber('priceChange') > 0">
+          <template v-if="formatNumber('priceChangePercent') > 0">
             <img src="@/static/appPage/up.png" alt="" />
             <span style="color: #108c1c"
-              >{{ formatNumber("priceChange") }}%</span
+              >{{ formatNumber("priceChangePercent") }}%</span
             >
           </template>
           <template v-else>
             <img src="@/static/appPage/down.png" alt="" />
             <span style="color: #da3620"
-              >{{ formatNumber("priceChange") }}%</span
+              >{{ formatNumber("priceChangePercent") }}%</span
             >
           </template>
         </span>
@@ -66,11 +66,8 @@
         <div class="chart-container" id="chart"></div>
         <div class="time-tool">
           <div class="time-range">
-            <span style="color: #4b72f0">Day</span>
-            <span>Week</span>
-            <span>Month</span>
-            <span>Year</span>
-            <span>All</span>
+            <span  v-for="item in options" :key="item.value" :class="{active : current === item.value}" @click="select(item.value)">{{item.label}}</span>
+            <!-- <span>All</span> -->
           </div>
           <div class="series-control">
             <span class="date"> 18:17:05（UTC+8） </span>
@@ -88,6 +85,17 @@
 import currencies from "@/common/currency";
 import { formatNumber } from "@/assets/linearLibrary/linearTools/format";
 import echarts from "echarts";
+import api from "@/api";
+
+import moment from 'moment';
+
+const options = [
+  { value: 'days', label: 'Day' },
+  { value: 'weeks', label: 'Week' },
+  { value: 'months', label: 'Month' },
+  { value: 'years', label: 'Year' },
+]
+
 export default {
   name: "MarketPair",
   props: {
@@ -98,77 +106,133 @@ export default {
   data: function () {
     return {
       currencies,
+      kData: [],
+      options,
+      current: options[0].value
     };
   },
-  mounted() {
-    this.lineChart();
+  watch: {
+    currency: {
+      handler: function() {
+        this.select(this.current);
+      },
+      immediate: true
+    }
   },
   methods: {
+    select(val) {
+      this.current = val;
+      if (!this.currency) {
+        return;
+      }
+      let start, end, interval, format;
+      switch (this.current) {
+        case options[0].value:
+          start = moment().startOf('day').valueOf(); //获取当天零点的时间
+          end = moment().endOf('day').valueOf(); //获取当天23:59:59的时间
+          interval = '1h';
+          format = 'hA';
+          break;
+        case options[1].value:
+          start = moment().startOf('week').valueOf(); 
+          end = moment().endOf('week').valueOf();
+          interval = '1h';
+          format = 'ddd, hA';
+          break;
+        case options[2].value:
+          start = moment().startOf('month').valueOf(); 
+          end = moment().endOf('month').valueOf();
+          interval = '1d';
+          format = 'MM/DD';
+          break;
+        case options[3].value:
+          start = moment().startOf('year').valueOf(); 
+          end = moment().endOf('year').valueOf();
+          interval = '1d';
+          format = 'MM/DD';
+          break;
+        default:
+          break;
+      }
+      this.getKData(start, end, interval)
+        .then(res => {
+          this.kData = res
+          this.lineChart(format);
+        })
+
+    },
+    getKData(start, end, interval) {
+    
+      const { symbol } = this.currency;
+      return api.getklines(symbol, start, end, interval)
+    },
+
+    getHour: function (date) {
+      const hour = new Date(date).getHours(); // ? getUTCHours()
+      return this.time[hour];
+    },
+
     formatNumber: function (attr) {
       if (!this.currency) {
         return 0;
       }
       return formatNumber(this.currency[attr], 4);
     },
-    lineChart() {
+    lineChart(format) {
       // [todo: 获取当前币种实际24hr 数据]
       // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
-      const data = splitData([
-        ["9am", 2320.26, 2320.26, 2287.3, 2362.94],
-        ["11am", 2300, 2291.3, 2288.26, 2308.38],
-        ["2pm", 2295.35, 2346.5, 2295.35, 2346.92],
-        ["6pm", 2347.22, 2358.98, 2337.35, 2363.8],
-      ]);
-
-      function splitData(rawData) {
-        const categoryData = [];
-        const values = [];
-        for (let i = 0; i < rawData.length; i++) {
-          categoryData.push(rawData[i].splice(0, 1)[0]);
-          values.push(rawData[i]);
-        }
-        return {
-          categoryData: categoryData,
-          values: values,
-        };
-      }
+      // const data = splitData(this.kData);
 
       const upColor = "#ec0000";
       const upBorderColor = "#8A0000";
       const downColor = "#00da3c";
       const downBorderColor = "#008F28";
 
+      const time = [];
+      const data = [];
+      this.kData.forEach(v => {
+        time.push(v[0]);
+        data.push([v[1], v[4], v[3], v[2]]);
+      })
+
       this.myChart = echarts.init(document.getElementById("chart"));
       this.myChart.setOption({
-        title: {
-          text: "1.8478",
-          left: 0,
-        },
+        // title: {
+        //   text: "1.8478",
+        //   left: 0,
+        // },
         tooltip: {
           trigger: "axis",
           axisPointer: {
             type: "cross",
           },
+          // formatter: function (params, ticket, callback) {
+          //     console.log('1111111111111', params, ticket, callback)
+          //     return 'Loading';
+          // }
+
         },
+        dataZoom: [
+          {
+            id: 'dataZoomX',
+            type: 'inside',
+            xAxisIndex: [0],
+            filterMode: 'filter',
+          },
+        ],
         xAxis: {
           type: "category",
-          data: [
-            "8am",
-            "9am",
-            "10am",
-            "11am",
-            "12am",
-            "1pm",
-            "2pm",
-            "3pm",
-            "4pm",
-            "5pm",
-            "6pm",
-          ],
+          data: time,
           scale: false,
           boundaryGap: false,
-          axisLine: { show: false },
-          splitLine: { show: false },
+          boundaryGap: false,
+          min: 'dataMin',
+          max: 'dataMax',
+          axisLabel: {
+            formatter: function (value) {
+              return moment(Number(value)).format(format);        
+            }
+          }
         },
         yAxis: {
           scale: true,
@@ -183,9 +247,10 @@ export default {
         },
         series: [
           {
-            name: "",
+            name: `${this.currencyId}`,
             type: "candlestick",
-            data: data.values,
+            data: data,
+            // dimensions: ['date', 'open', 'highest', 'lowest', 'close'],
             itemStyle: {
               width: 2,
               color: upColor,
@@ -312,6 +377,10 @@ export default {
         span {
           display: inline-block;
           margin-right: 16px;
+          cursor: pointer;
+        }
+        .active {
+          color: #4b72f0
         }
       }
 

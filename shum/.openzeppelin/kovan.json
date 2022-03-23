@@ -293,8 +293,8 @@
       }
     },
     "67b7de63420f38997bdc584e801bffec34fe7b71cb9586dda774fb548cd53b4b": {
-      "address": "0xdE9b7689B6B0E1643bA0ca0fB9923f5002DD027C",
-      "txHash": "0x7d8d37624ec9984bb09cc0de60766da13bc07c81c86de578cdd7acc259a2bf1c",
+      "address": "0xE961d0Ae36D7db5b29291054684A1f460Dc222B2",
+      "txHash": "0x40af1a5c46ca16deb98fc9b8e26fd0e409772d3513b6376609f0c4940659c263",
       "layout": {
         "storage": [
           {
@@ -824,25 +824,25 @@
           {
             "contract": "ShumCollateralSystem",
             "label": "priceGetter",
-            "type": "t_contract(IShumPrices)9673",
+            "type": "t_contract(IShumPrices)9682",
             "src": "contracts/ShumCollateralSystem.sol:30"
           },
           {
             "contract": "ShumCollateralSystem",
             "label": "debtSystem",
-            "type": "t_contract(IShumDebtSystem)9647",
+            "type": "t_contract(IShumDebtSystem)9656",
             "src": "contracts/ShumCollateralSystem.sol:31"
           },
           {
             "contract": "ShumCollateralSystem",
             "label": "mConfig",
-            "type": "t_contract(IShumConfig)9626",
+            "type": "t_contract(IShumConfig)9635",
             "src": "contracts/ShumCollateralSystem.sol:33"
           },
           {
             "contract": "ShumCollateralSystem",
             "label": "mRewardLocker",
-            "type": "t_contract(IShumRewardLocker)9725",
+            "type": "t_contract(IShumRewardLocker)9734",
             "src": "contracts/ShumCollateralSystem.sol:33"
           },
           {
@@ -872,7 +872,7 @@
           {
             "contract": "ShumCollateralSystem",
             "label": "buildBurnSystem",
-            "type": "t_contract(IShumBuildBurnSystem)9560",
+            "type": "t_contract(IShumBuildBurnSystem)9569",
             "src": "contracts/ShumCollateralSystem.sol:60"
           },
           {
@@ -889,16 +889,16 @@
           }
         ],
         "types": {
-          "t_contract(IShumPrices)9673": {
+          "t_contract(IShumPrices)9682": {
             "label": "contract IShumPrices"
           },
-          "t_contract(IShumDebtSystem)9647": {
+          "t_contract(IShumDebtSystem)9656": {
             "label": "contract IShumDebtSystem"
           },
-          "t_contract(IShumConfig)9626": {
+          "t_contract(IShumConfig)9635": {
             "label": "contract IShumConfig"
           },
-          "t_contract(IShumRewardLocker)9725": {
+          "t_contract(IShumRewardLocker)9734": {
             "label": "contract IShumRewardLocker"
           },
           "t_uint256": {
@@ -955,7 +955,7 @@
               }
             ]
           },
-          "t_contract(IShumBuildBurnSystem)9560": {
+          "t_contract(IShumBuildBurnSystem)9569": {
             "label": "contract IShumBuildBurnSystem"
           },
           "t_array(t_uint256)41_storage": {
@@ -1642,6 +1642,2155 @@
           }
         }
       }
+    },
+    "4d511ba8b7d7feda6d6e9f0b54dc9173be150bc996d51a17659e0fa5a74705d8": {
+      "address": "0x465039Bc517679F750700537C50e856C60f74241",
+      "txHash": "0x4f9015d3319d9e9dc9318db97b925dbb930fa0bc940410aac067d515274b7a3d",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "priceGetter",
+            "type": "t_contract(IShumPrices)9675",
+            "src": "contracts/ShumCollateralSystem.sol:30"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "debtSystem",
+            "type": "t_contract(IShumDebtSystem)9649",
+            "src": "contracts/ShumCollateralSystem.sol:31"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9628",
+            "src": "contracts/ShumCollateralSystem.sol:33"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "mRewardLocker",
+            "type": "t_contract(IShumRewardLocker)9727",
+            "src": "contracts/ShumCollateralSystem.sol:33"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "uniqueId",
+            "type": "t_uint256",
+            "src": "contracts/ShumCollateralSystem.sol:40"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "tokenInfos",
+            "type": "t_mapping(t_bytes32,t_struct(TokenInfo)5184_storage)",
+            "src": "contracts/ShumCollateralSystem.sol:47"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "tokenSymbol",
+            "type": "t_array(t_bytes32)dyn_storage",
+            "src": "contracts/ShumCollateralSystem.sol:50"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "userCollateralData",
+            "type": "t_mapping(t_address,t_mapping(t_bytes32,t_struct(CollateralData)5194_storage))",
+            "src": "contracts/ShumCollateralSystem.sol:56"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "buildBurnSystem",
+            "type": "t_contract(IShumBuildBurnSystem)9562",
+            "src": "contracts/ShumCollateralSystem.sol:60"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "liquidation",
+            "type": "t_address",
+            "src": "contracts/ShumCollateralSystem.sol:62"
+          },
+          {
+            "contract": "ShumCollateralSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)41_storage",
+            "src": "contracts/ShumCollateralSystem.sol:496"
+          }
+        ],
+        "types": {
+          "t_contract(IShumPrices)9675": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumDebtSystem)9649": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumConfig)9628": {
+            "label": "contract IShumConfig"
+          },
+          "t_contract(IShumRewardLocker)9727": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_bytes32,t_struct(TokenInfo)5184_storage)": {
+            "label": "mapping(bytes32 => struct ShumCollateralSystem.TokenInfo)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(TokenInfo)5184_storage": {
+            "label": "struct ShumCollateralSystem.TokenInfo",
+            "members": [
+              {
+                "label": "tokenAddr",
+                "type": "t_address"
+              },
+              {
+                "label": "minCollateral",
+                "type": "t_uint256"
+              },
+              {
+                "label": "totalCollateral",
+                "type": "t_uint256"
+              },
+              {
+                "label": "bClose",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_address,t_mapping(t_bytes32,t_struct(CollateralData)5194_storage))": {
+            "label": "mapping(address => mapping(bytes32 => struct ShumCollateralSystem.CollateralData))"
+          },
+          "t_mapping(t_bytes32,t_struct(CollateralData)5194_storage)": {
+            "label": "mapping(bytes32 => struct ShumCollateralSystem.CollateralData)"
+          },
+          "t_struct(CollateralData)5194_storage": {
+            "label": "struct ShumCollateralSystem.CollateralData",
+            "members": [
+              {
+                "label": "collateral",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_contract(IShumBuildBurnSystem)9562": {
+            "label": "contract IShumBuildBurnSystem"
+          },
+          "t_array(t_uint256)41_storage": {
+            "label": "uint256[41]"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "2debd93450a2bcb492fa0998411eea7b809b23b94a23546522d2cc0fdcdb2576": {
+      "address": "0x5BC31E17cC45B72d99686f85dC320f74D5527e17",
+      "txHash": "0x140ba9b152b678e15d62c18dfc926d9e6f1c11289b6da245e5598893f51e8fb0",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "sUSDToken",
+            "type": "t_contract(IShumAsset)9516",
+            "src": "contracts/ShumBuildBurnSystem.sol:22"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "debtSystem",
+            "type": "t_contract(IShumDebtSystem)9642",
+            "src": "contracts/ShumBuildBurnSystem.sol:24"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "priceGetter",
+            "type": "t_contract(IShumPrices)9668",
+            "src": "contracts/ShumBuildBurnSystem.sol:25"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "collaterSys",
+            "type": "t_contract(IShumCollateralSystem)9606",
+            "src": "contracts/ShumBuildBurnSystem.sol:26"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9621",
+            "src": "contracts/ShumBuildBurnSystem.sol:27"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "liquidation",
+            "type": "t_address",
+            "src": "contracts/ShumBuildBurnSystem.sol:28"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "contracts/ShumBuildBurnSystem.sol:212"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAsset)9516": {
+            "label": "contract IShumAsset"
+          },
+          "t_contract(IShumDebtSystem)9642": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumPrices)9668": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumCollateralSystem)9606": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumConfig)9621": {
+            "label": "contract IShumConfig"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "b3e6a88e6c853efdce0b99eef2c1b8d236472c5b4c8ff6eb899a31f353a8b82a": {
+      "address": "0xeb1Df2e699F7Bbdc714a70064181Cb96A7039441",
+      "txHash": "0xf576cb5a1efa8c4a1bdcc9b6eccca4a12559cd1dd7b5f1f12859b6037f97bfbf",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "sUSDToken",
+            "type": "t_contract(IShumAsset)9516",
+            "src": "contracts/ShumBuildBurnSystem.sol:22"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "debtSystem",
+            "type": "t_contract(IShumDebtSystem)9642",
+            "src": "contracts/ShumBuildBurnSystem.sol:24"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "priceGetter",
+            "type": "t_contract(IShumPrices)9668",
+            "src": "contracts/ShumBuildBurnSystem.sol:25"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "collaterSys",
+            "type": "t_contract(IShumCollateralSystem)9606",
+            "src": "contracts/ShumBuildBurnSystem.sol:26"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9621",
+            "src": "contracts/ShumBuildBurnSystem.sol:27"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "liquidation",
+            "type": "t_address",
+            "src": "contracts/ShumBuildBurnSystem.sol:28"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "contracts/ShumBuildBurnSystem.sol:212"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAsset)9516": {
+            "label": "contract IShumAsset"
+          },
+          "t_contract(IShumDebtSystem)9642": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumPrices)9668": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumCollateralSystem)9606": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumConfig)9621": {
+            "label": "contract IShumConfig"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "452c9d05faff675e9c7c6d2fbd45e745c37cd45844d97a62516fe4f77a73e2a4": {
+      "address": "0x3af6993D3B770f1d3FbA8794De8E6d099AF8E0d0",
+      "txHash": "0x5476a1966a6a2b8f267831a2ea54a039aefb0ad2e6439fdbefcbab8f00b977f9",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "globalStalePeriod",
+            "type": "t_uint256",
+            "src": "contracts/ShumOracleRouter.sol:35"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "stalePeriodOverrides",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "src": "contracts/ShumOracleRouter.sol:36"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "oracleSettings",
+            "type": "t_mapping(t_bytes32,t_struct(OracleSettings)8577_storage)",
+            "src": "contracts/ShumOracleRouter.sol:37"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "linearCurrencyKeysToBandCurrencyKeys",
+            "type": "t_mapping(t_bytes32,t_string_storage)",
+            "src": "contracts/ShumOracleRouter.sol:38"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_mapping(t_bytes32,t_struct(OracleSettings)8577_storage)": {
+            "label": "mapping(bytes32 => struct ShumOracleRouter.OracleSettings)"
+          },
+          "t_struct(OracleSettings)8577_storage": {
+            "label": "struct ShumOracleRouter.OracleSettings",
+            "members": [
+              {
+                "label": "oracleType",
+                "type": "t_uint8"
+              },
+              {
+                "label": "oracleAddress",
+                "type": "t_address"
+              }
+            ]
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_bytes32,t_string_storage)": {
+            "label": "mapping(bytes32 => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "340cc4a48aa28d6649d095e0abec02ea236d89135e02286eb67b318f70c41f26": {
+      "address": "0x6229D47499f07f8e8c09E78c7e45Ce856296569c",
+      "txHash": "0x1d7a0deb73ad994f854b6b794449d3eea3a0d2df6ebf70bfdf9eda587bd14704",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "accessCtrl",
+            "type": "t_contract(IShumAccessControl)9447",
+            "src": "contracts/ShumDebtSystem.sol:19"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "assetSys",
+            "type": "t_contract(IShumAssetSystem)9524",
+            "src": "contracts/ShumDebtSystem.sol:20"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "userDebtState",
+            "type": "t_mapping(t_address,t_struct(DebtData)7085_storage)",
+            "src": "contracts/ShumDebtSystem.sol:26"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastDebtFactors",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/ShumDebtSystem.sol:29"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "debtCurrentIndex",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:30"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastCloseAt",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:32"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastDeletTo",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:33"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)42_storage",
+            "src": "contracts/ShumDebtSystem.sol:206"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAccessControl)9447": {
+            "label": "contract IShumAccessControl"
+          },
+          "t_contract(IShumAssetSystem)9524": {
+            "label": "contract IShumAssetSystem"
+          },
+          "t_mapping(t_address,t_struct(DebtData)7085_storage)": {
+            "label": "mapping(address => struct ShumDebtSystem.DebtData)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(DebtData)7085_storage": {
+            "label": "struct ShumDebtSystem.DebtData",
+            "members": [
+              {
+                "label": "debtProportion",
+                "type": "t_uint256"
+              },
+              {
+                "label": "debtFactor",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_array(t_uint256)42_storage": {
+            "label": "uint256[42]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "1c0853d4a5960fdad833b46bd2a2a25b20fe3d394e635522dd0da1b744e8e836": {
+      "address": "0x467340FC9fAC524b6d42387532349d81c5Fc5227",
+      "txHash": "0x02d99c1b345a213ff9b7ccac601e8e0f5c06a4d56efaa5e167aa4892515899c4",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mAssets",
+            "type": "t_contract(IShumAddressStorage)9482",
+            "src": "contracts/ShumExchangeSystem.sol:58"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mPrices",
+            "type": "t_contract(IShumPrices)9668",
+            "src": "contracts/ShumExchangeSystem.sol:59"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9621",
+            "src": "contracts/ShumExchangeSystem.sol:60"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mRewardSys",
+            "type": "t_address",
+            "src": "contracts/ShumExchangeSystem.sol:61"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "foundationFeeHolder",
+            "type": "t_address",
+            "src": "contracts/ShumExchangeSystem.sol:62"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "exitPositionOnly",
+            "type": "t_bool",
+            "src": "contracts/ShumExchangeSystem.sol:64"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "lastPendingExchangeEntryId",
+            "type": "t_uint256",
+            "src": "contracts/ShumExchangeSystem.sol:66"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "pendingExchangeEntries",
+            "type": "t_mapping(t_uint256,t_struct(PendingExchangeEntry)7799_storage)",
+            "src": "contracts/ShumExchangeSystem.sol:67"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)42_storage",
+            "src": "contracts/ShumExchangeSystem.sol:257"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAddressStorage)9482": {
+            "label": "contract IShumAddressStorage"
+          },
+          "t_contract(IShumPrices)9668": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumConfig)9621": {
+            "label": "contract IShumConfig"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_struct(PendingExchangeEntry)7799_storage)": {
+            "label": "mapping(uint256 => struct ShumExchangeSystem.PendingExchangeEntry)"
+          },
+          "t_struct(PendingExchangeEntry)7799_storage": {
+            "label": "struct ShumExchangeSystem.PendingExchangeEntry",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint64"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint64"
+              },
+              {
+                "label": "fromAddr",
+                "type": "t_address"
+              },
+              {
+                "label": "destAddr",
+                "type": "t_address"
+              },
+              {
+                "label": "fromAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "fromCurrency",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "toCurrency",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)42_storage": {
+            "label": "uint256[42]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "5d9c3f2452b1628dc4575920dbc80356a9c1fd52ac62d084c2d79f24b1aec5d1": {
+      "address": "0xE06Dc686165D1f509eCC1904131a8F398C35aB44",
+      "txHash": "0xf54186a524d0ef95401f25967276b433b5ee5472a25d3f8725983f813ec56440",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumBuildBurnSystem",
+            "type": "t_contract(IShumBuildBurnSystem)9059",
+            "src": "contracts/ShumLiquidation.sol:80"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumCollateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9110",
+            "src": "contracts/ShumLiquidation.sol:81"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumConfig",
+            "type": "t_contract(IShumConfig)9125",
+            "src": "contracts/ShumLiquidation.sol:82"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumDebtSystem",
+            "type": "t_contract(IShumDebtSystem)9146",
+            "src": "contracts/ShumLiquidation.sol:83"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumPrices",
+            "type": "t_contract(IShumPrices)9172",
+            "src": "contracts/ShumLiquidation.sol:84"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumRewardLocker",
+            "type": "t_contract(IShumRewardLocker)9224",
+            "src": "contracts/ShumLiquidation.sol:85"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "undercollateralizationMarks",
+            "type": "t_mapping(t_address,t_struct(UndercollateralizationMark)4948_storage)",
+            "src": "contracts/ShumLiquidation.sol:87"
+          }
+        ],
+        "types": {
+          "t_contract(IShumBuildBurnSystem)9059": {
+            "label": "contract IShumBuildBurnSystem"
+          },
+          "t_contract(IShumCollateralSystem)9110": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumConfig)9125": {
+            "label": "contract IShumConfig"
+          },
+          "t_contract(IShumDebtSystem)9146": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumPrices)9172": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumRewardLocker)9224": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_mapping(t_address,t_struct(UndercollateralizationMark)4948_storage)": {
+            "label": "mapping(address => struct ShumLiquidation.UndercollateralizationMark)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(UndercollateralizationMark)4948_storage": {
+            "label": "struct ShumLiquidation.UndercollateralizationMark",
+            "members": [
+              {
+                "label": "marker",
+                "type": "t_address"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint64"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "df5c386d615875cdfb368b6facc2763c8dd1ee3b356b9340bb9e5f644f8cbcfa": {
+      "address": "0xa4072d0056363945143f40c99dF302A054F1CFd6",
+      "txHash": "0xa340708b48410ee7550764bc659d752ff470c1d336ed42cd0a51e848304c31b7",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "firstPeriodStartTime",
+            "type": "t_uint256",
+            "src": "contracts/ShumRewardSystem.sol:30"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardSigner",
+            "type": "t_address",
+            "src": "contracts/ShumRewardSystem.sol:31"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "userLastClaimPeriodIds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/ShumRewardSystem.sol:32"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "lusd",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:34"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "collateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9110",
+            "src": "contracts/ShumRewardSystem.sol:35"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardLocker",
+            "type": "t_contract(IShumRewardLocker)9224",
+            "src": "contracts/ShumRewardSystem.sol:36"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "DOMAIN_SEPARATOR",
+            "type": "t_bytes32",
+            "src": "contracts/ShumRewardSystem.sol:38"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)43_storage",
+            "src": "contracts/ShumRewardSystem.sol:204"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_contract(IERC20Upgradeable)1703": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IShumCollateralSystem)9110": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumRewardLocker)9224": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)43_storage": {
+            "label": "uint256[43]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "758268930aa76f7a07cfaf21551d7e52ac82f20c8e07942852e161a797c0387e": {
+      "address": "0xA1769B5fD02847d42BA73bb58039fc506BF825b9",
+      "txHash": "0xa16f0b64d8525cd4f8b1f725e152fe308271bb85f54038097a76bcfcaa00b54f",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "firstPeriodStartTime",
+            "type": "t_uint256",
+            "src": "contracts/ShumRewardSystem.sol:30"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardSigner",
+            "type": "t_address",
+            "src": "contracts/ShumRewardSystem.sol:31"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "userLastClaimPeriodIds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/ShumRewardSystem.sol:32"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "lusd",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:34"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "collateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9102",
+            "src": "contracts/ShumRewardSystem.sol:35"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardLocker",
+            "type": "t_contract(IShumRewardLocker)9216",
+            "src": "contracts/ShumRewardSystem.sol:36"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "DOMAIN_SEPARATOR",
+            "type": "t_bytes32",
+            "src": "contracts/ShumRewardSystem.sol:38"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)43_storage",
+            "src": "contracts/ShumRewardSystem.sol:210"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_contract(IERC20Upgradeable)1703": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IShumCollateralSystem)9102": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumRewardLocker)9216": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)43_storage": {
+            "label": "uint256[43]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "a288ddf8c527e1dcbf1677e55095e2ba256ac1b2dfac4417dcdca8b4a005831c": {
+      "address": "0x66e72723b21e396A930Dc915d41222f1c10216A7",
+      "txHash": "0xcc177e26f0a759386f8c4d4f20bf7bd8d49270913e199835eb98d1fab263f0ca",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:28"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:96"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "sUSDToken",
+            "type": "t_contract(IShumAsset)9516",
+            "src": "contracts/ShumBuildBurnSystem.sol:22"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "debtSystem",
+            "type": "t_contract(IShumDebtSystem)9642",
+            "src": "contracts/ShumBuildBurnSystem.sol:24"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "priceGetter",
+            "type": "t_contract(IShumPrices)9668",
+            "src": "contracts/ShumBuildBurnSystem.sol:25"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "collaterSys",
+            "type": "t_contract(IShumCollateralSystem)9606",
+            "src": "contracts/ShumBuildBurnSystem.sol:26"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9621",
+            "src": "contracts/ShumBuildBurnSystem.sol:27"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "liquidation",
+            "type": "t_address",
+            "src": "contracts/ShumBuildBurnSystem.sol:28"
+          },
+          {
+            "contract": "ShumBuildBurnSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)44_storage",
+            "src": "contracts/ShumBuildBurnSystem.sol:210"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAsset)9516": {
+            "label": "contract IShumAsset"
+          },
+          "t_contract(IShumDebtSystem)9642": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumPrices)9668": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumCollateralSystem)9606": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumConfig)9621": {
+            "label": "contract IShumConfig"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "12f710752bebe63c9dad716c5ad5cd7938724988a131d42a5b485aa74a6bcb5f": {
+      "address": "0xc67ce059ecb6c19bf001f0eF20547e313922BF74",
+      "txHash": "0x970ce7ac29461a7b9692eb4a0483f7a2bb5a197bb97905f5cba4a47a29802db2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "globalStalePeriod",
+            "type": "t_uint256",
+            "src": "contracts/ShumOracleRouter.sol:35"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "stalePeriodOverrides",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "src": "contracts/ShumOracleRouter.sol:36"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "oracleSettings",
+            "type": "t_mapping(t_bytes32,t_struct(OracleSettings)8577_storage)",
+            "src": "contracts/ShumOracleRouter.sol:37"
+          },
+          {
+            "contract": "ShumOracleRouter",
+            "label": "linearCurrencyKeysToBandCurrencyKeys",
+            "type": "t_mapping(t_bytes32,t_string_storage)",
+            "src": "contracts/ShumOracleRouter.sol:38"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_mapping(t_bytes32,t_struct(OracleSettings)8577_storage)": {
+            "label": "mapping(bytes32 => struct ShumOracleRouter.OracleSettings)"
+          },
+          "t_struct(OracleSettings)8577_storage": {
+            "label": "struct ShumOracleRouter.OracleSettings",
+            "members": [
+              {
+                "label": "oracleType",
+                "type": "t_uint8"
+              },
+              {
+                "label": "oracleAddress",
+                "type": "t_address"
+              }
+            ]
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_bytes32,t_string_storage)": {
+            "label": "mapping(bytes32 => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "90849ee45d2d31bd254dc9553d533d90453b39f017e8027d1a3ac928e0fdf70e": {
+      "address": "0x56B4029e6Fc1dB966F0FCd7795cc096C803037e0",
+      "txHash": "0x0c7c4a56880a3a0f187b5c90284891fea75bd3de069715d08338558266c69694",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "accessCtrl",
+            "type": "t_contract(IShumAccessControl)9447",
+            "src": "contracts/ShumDebtSystem.sol:19"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "assetSys",
+            "type": "t_contract(IShumAssetSystem)9524",
+            "src": "contracts/ShumDebtSystem.sol:20"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "userDebtState",
+            "type": "t_mapping(t_address,t_struct(DebtData)7085_storage)",
+            "src": "contracts/ShumDebtSystem.sol:26"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastDebtFactors",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/ShumDebtSystem.sol:29"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "debtCurrentIndex",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:30"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastCloseAt",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:32"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "lastDeletTo",
+            "type": "t_uint256",
+            "src": "contracts/ShumDebtSystem.sol:33"
+          },
+          {
+            "contract": "ShumDebtSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)42_storage",
+            "src": "contracts/ShumDebtSystem.sol:206"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAccessControl)9447": {
+            "label": "contract IShumAccessControl"
+          },
+          "t_contract(IShumAssetSystem)9524": {
+            "label": "contract IShumAssetSystem"
+          },
+          "t_mapping(t_address,t_struct(DebtData)7085_storage)": {
+            "label": "mapping(address => struct ShumDebtSystem.DebtData)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(DebtData)7085_storage": {
+            "label": "struct ShumDebtSystem.DebtData",
+            "members": [
+              {
+                "label": "debtProportion",
+                "type": "t_uint256"
+              },
+              {
+                "label": "debtFactor",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_array(t_uint256)42_storage": {
+            "label": "uint256[42]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "af4e1c88390952ddfaa11ea6d20bf76150147829ff564b3e384bef21f09f0fb0": {
+      "address": "0x21b68EB1Cf4c34df66A773cDe333f2ac87f7D989",
+      "txHash": "0xdba6f47a1263152ee414c9f0791931b10a2adbea4ee6869eac7973a39e23d1b0",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mAssets",
+            "type": "t_contract(IShumAddressStorage)9482",
+            "src": "contracts/ShumExchangeSystem.sol:58"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mPrices",
+            "type": "t_contract(IShumPrices)9668",
+            "src": "contracts/ShumExchangeSystem.sol:59"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mConfig",
+            "type": "t_contract(IShumConfig)9621",
+            "src": "contracts/ShumExchangeSystem.sol:60"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "mRewardSys",
+            "type": "t_address",
+            "src": "contracts/ShumExchangeSystem.sol:61"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "foundationFeeHolder",
+            "type": "t_address",
+            "src": "contracts/ShumExchangeSystem.sol:62"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "exitPositionOnly",
+            "type": "t_bool",
+            "src": "contracts/ShumExchangeSystem.sol:64"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "lastPendingExchangeEntryId",
+            "type": "t_uint256",
+            "src": "contracts/ShumExchangeSystem.sol:66"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "pendingExchangeEntries",
+            "type": "t_mapping(t_uint256,t_struct(PendingExchangeEntry)7799_storage)",
+            "src": "contracts/ShumExchangeSystem.sol:67"
+          },
+          {
+            "contract": "ShumExchangeSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)42_storage",
+            "src": "contracts/ShumExchangeSystem.sol:257"
+          }
+        ],
+        "types": {
+          "t_contract(IShumAddressStorage)9482": {
+            "label": "contract IShumAddressStorage"
+          },
+          "t_contract(IShumPrices)9668": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumConfig)9621": {
+            "label": "contract IShumConfig"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_struct(PendingExchangeEntry)7799_storage)": {
+            "label": "mapping(uint256 => struct ShumExchangeSystem.PendingExchangeEntry)"
+          },
+          "t_struct(PendingExchangeEntry)7799_storage": {
+            "label": "struct ShumExchangeSystem.PendingExchangeEntry",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint64"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint64"
+              },
+              {
+                "label": "fromAddr",
+                "type": "t_address"
+              },
+              {
+                "label": "destAddr",
+                "type": "t_address"
+              },
+              {
+                "label": "fromAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "fromCurrency",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "toCurrency",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)42_storage": {
+            "label": "uint256[42]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          }
+        }
+      }
+    },
+    "4af5fb85355424da2686f8112c7798e7a73d65a8fbba53a0acdda2addaa42eaa": {
+      "address": "0x87B4Ead2A11Bf5e42d78E6c35e87652C521a84Ce",
+      "txHash": "0xc24f5788266f64e2897e864d2ad4ad4d8582c27eefab1ff9654602f52ccb7af7",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumBuildBurnSystem",
+            "type": "t_contract(IShumBuildBurnSystem)9047",
+            "src": "contracts/ShumLiquidation.sol:80"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumCollateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9098",
+            "src": "contracts/ShumLiquidation.sol:81"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumConfig",
+            "type": "t_contract(IShumConfig)9113",
+            "src": "contracts/ShumLiquidation.sol:82"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumDebtSystem",
+            "type": "t_contract(IShumDebtSystem)9134",
+            "src": "contracts/ShumLiquidation.sol:83"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumPrices",
+            "type": "t_contract(IShumPrices)9160",
+            "src": "contracts/ShumLiquidation.sol:84"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "shumRewardLocker",
+            "type": "t_contract(IShumRewardLocker)9212",
+            "src": "contracts/ShumLiquidation.sol:85"
+          },
+          {
+            "contract": "ShumLiquidation",
+            "label": "undercollateralizationMarks",
+            "type": "t_mapping(t_address,t_struct(UndercollateralizationMark)4948_storage)",
+            "src": "contracts/ShumLiquidation.sol:87"
+          }
+        ],
+        "types": {
+          "t_contract(IShumBuildBurnSystem)9047": {
+            "label": "contract IShumBuildBurnSystem"
+          },
+          "t_contract(IShumCollateralSystem)9098": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumConfig)9113": {
+            "label": "contract IShumConfig"
+          },
+          "t_contract(IShumDebtSystem)9134": {
+            "label": "contract IShumDebtSystem"
+          },
+          "t_contract(IShumPrices)9160": {
+            "label": "contract IShumPrices"
+          },
+          "t_contract(IShumRewardLocker)9212": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_mapping(t_address,t_struct(UndercollateralizationMark)4948_storage)": {
+            "label": "mapping(address => struct ShumLiquidation.UndercollateralizationMark)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(UndercollateralizationMark)4948_storage": {
+            "label": "struct ShumLiquidation.UndercollateralizationMark",
+            "members": [
+              {
+                "label": "marker",
+                "type": "t_address"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint64"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "6e60fb3f09e80e30596e9d0ea60483a4c8e5650314fc667de3a7c8fe36ece2be": {
+      "address": "0x3AE60ceff61A7a2F85e08cb0528ECbCec09D553F",
+      "txHash": "0x923beb84a98ddbbd926f4bc6b8ababa08cc196da2e2d23bb4623cfaa6b29696a",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "firstPeriodStartTime",
+            "type": "t_uint256",
+            "src": "contracts/ShumRewardSystem.sol:30"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardSigner",
+            "type": "t_address",
+            "src": "contracts/ShumRewardSystem.sol:31"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "userLastClaimPeriodIds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/ShumRewardSystem.sol:32"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "lusd",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:34"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "shum",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:35"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "collateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9098",
+            "src": "contracts/ShumRewardSystem.sol:36"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardLocker",
+            "type": "t_contract(IShumRewardLocker)9212",
+            "src": "contracts/ShumRewardSystem.sol:37"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "DOMAIN_SEPARATOR",
+            "type": "t_bytes32",
+            "src": "contracts/ShumRewardSystem.sol:39"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)43_storage",
+            "src": "contracts/ShumRewardSystem.sol:202"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_contract(IERC20Upgradeable)1703": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IShumCollateralSystem)9098": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumRewardLocker)9212": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)43_storage": {
+            "label": "uint256[43]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "61748964ac364f3aa6ea058e4ae5a4398a6f558d170c5120b53d5f709d2f4f6a": {
+      "address": "0x20c1cc4B4792b7C92905b5CC31DBC3066418B9E9",
+      "txHash": "0x7507122f82e3190863b742693695468cbf1da6a310227db2edd620fa13cabca9",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:24"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:29"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "admin",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:16"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "candidate",
+            "type": "t_address",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:17"
+          },
+          {
+            "contract": "ShumAdminUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)48_storage",
+            "src": "contracts/upgradeable/ShumAdminUpgradeable.sol:44"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "firstPeriodStartTime",
+            "type": "t_uint256",
+            "src": "contracts/ShumRewardSystem.sol:30"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardSigner",
+            "type": "t_address",
+            "src": "contracts/ShumRewardSystem.sol:31"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "userLastClaimPeriodIds",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/ShumRewardSystem.sol:32"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "lusd",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:34"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "shum",
+            "type": "t_contract(IERC20Upgradeable)1703",
+            "src": "contracts/ShumRewardSystem.sol:35"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "collateralSystem",
+            "type": "t_contract(IShumCollateralSystem)9073",
+            "src": "contracts/ShumRewardSystem.sol:36"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "rewardLocker",
+            "type": "t_contract(IShumRewardLocker)9187",
+            "src": "contracts/ShumRewardSystem.sol:37"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "DOMAIN_SEPARATOR",
+            "type": "t_bytes32",
+            "src": "contracts/ShumRewardSystem.sol:39"
+          },
+          {
+            "contract": "ShumRewardSystem",
+            "label": "__gap",
+            "type": "t_array(t_uint256)43_storage",
+            "src": "contracts/ShumRewardSystem.sol:194"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_contract(IERC20Upgradeable)1703": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IShumCollateralSystem)9073": {
+            "label": "contract IShumCollateralSystem"
+          },
+          "t_contract(IShumRewardLocker)9187": {
+            "label": "contract IShumRewardLocker"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)43_storage": {
+            "label": "uint256[43]"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   },
   "proxies": [
@@ -1724,6 +3873,206 @@
       "address": "0xea57064D0e7B06181dB6E07f4E423711C05A36fD",
       "kind": "transparent",
       "txHash": "0xe21c6752dd6f8c3aa0058a7a5ac7d881547cbe1fa2bcba595aa40fd6f5d9875c"
+    },
+    {
+      "address": "0x4E9a57FC892aD670D7A58daE5e63457638D46D20",
+      "kind": "transparent",
+      "txHash": "0x4c6ec29614724f1f904f773df5ccaafa4c71f60167a359be9bd2eec5e7e8df95"
+    },
+    {
+      "address": "0xac109E4768766A125E008AF5EC26008c7c6c55a8",
+      "kind": "transparent",
+      "txHash": "0x88cc87db8571e29e7e1656ed94f115f5e7453307efd57c53bc5712c8f5406619"
+    },
+    {
+      "address": "0x9794E6f1D55ad48d9381696252D6A4F6FE604B5e",
+      "kind": "transparent",
+      "txHash": "0x5141d5d453deb52919bcf602ff125f89fc57e39b90322635a733201fc466309d"
+    },
+    {
+      "address": "0x4439190477C1eE4495dAf7fc40F52E6770603c84",
+      "kind": "transparent",
+      "txHash": "0x5f487d36ae0f27f613844586b50f2ebe2bca3e60fe68a1e30ab5112447021113"
+    },
+    {
+      "address": "0x04F34a41e318331aF832B05B7FfDa18593a8b0EA",
+      "kind": "transparent",
+      "txHash": "0x672da0e9b123f9f5c3bc6b78fd1b052c0253c276129cbc7f08cf0ce8271bf275"
+    },
+    {
+      "address": "0x6Ce905a0B6A4acb21005E8FFef276728cA04B1f8",
+      "kind": "transparent",
+      "txHash": "0x18c853ab6571442577a8bc17f8c292422017d5a3a48a8c67e3299cc3b909a843"
+    },
+    {
+      "address": "0xAcBbF93f069d086f62b5F6842Dc81082Bf04cA42",
+      "kind": "transparent",
+      "txHash": "0xdbeb72a96325cef6c50458c87f4df039e926dc9dded8098ee49508490664eeb9"
+    },
+    {
+      "address": "0xf55A901B281A5248f8083167797d666f5225f804",
+      "kind": "transparent",
+      "txHash": "0x5231ebd3273e716a0f05ebdedf746013a1ce6faf818db317ed693b9c3b03571b"
+    },
+    {
+      "address": "0xAf33e922279B9823320baB5FB47f740feAa3F4C6",
+      "kind": "transparent",
+      "txHash": "0x8ca1fc73878709107774c0d540476cd584d4a6eb34f57ab851db8e6810ef28ab"
+    },
+    {
+      "address": "0xd69e264532674b4b413715152Dae38D5650087cF",
+      "kind": "transparent",
+      "txHash": "0x171224a45a87db1948cd268f04f27ac7ee0237dca5cef95d79ff69d40300467e"
+    },
+    {
+      "address": "0xa33B969168102De58398c39Aca0Dc61C80112631",
+      "kind": "transparent",
+      "txHash": "0x5e11efe272d8b6978ed194a5611b9f3add88d7c9c163db198f13090a0216c880"
+    },
+    {
+      "address": "0x363FA9873fea2B84D9E5610cfe4D461608385C53",
+      "kind": "transparent",
+      "txHash": "0xcf77e3f6dc23f191405f8dda1bf2efa0ab0e4a1288afee248febb415fed8d9ae"
+    },
+    {
+      "address": "0x68729ebD2eA1a6d61aFe9d8daB76e8D1c121e11F",
+      "kind": "transparent",
+      "txHash": "0xfaa2b4944f0c28f4f393e33852a6c397135a5d648ea1ba55cff248d806bbe358"
+    },
+    {
+      "address": "0xddB64a85A421e687473264860e68b8B807d05069",
+      "kind": "transparent",
+      "txHash": "0xb2f0bc5958efa566ddc1eacf38ce91be9c256884730bfd6722c2e0e9838a1958"
+    },
+    {
+      "address": "0x700a4eb0A5c1e861993296514195607b4Ba05F69",
+      "kind": "transparent",
+      "txHash": "0x278f88579d1d0910cc690abf701a2d7b546ac680b8ca5c1c1796254e23ac9480"
+    },
+    {
+      "address": "0xEAb600f881932CAB74361650048E211bE9389E54",
+      "kind": "transparent",
+      "txHash": "0x10cfba32770ff5e586dd230bf7cf2cbb924909ae748efc56324b29020555e247"
+    },
+    {
+      "address": "0xB707Ac88876A0Fa51265790B18A108846CA36253",
+      "kind": "transparent",
+      "txHash": "0x72de4166544c4a4a0732086ddeeef86dde68e5e0f2833f6c6e4e386bf83aa8f1"
+    },
+    {
+      "address": "0x7fc3AE81bAb797E6ED93BaAD646787084A5EFECC",
+      "kind": "transparent",
+      "txHash": "0x182723b1b39a1b29da233811baccaca8c868e78fbcf7ce06b997df31d5ca589e"
+    },
+    {
+      "address": "0x3297120000C67c18bbf4Cb79A493d3F73badcaa8",
+      "kind": "transparent",
+      "txHash": "0x884f1512bb1dc51d1acc9b11dc152d56ffd51fc16cecd3351d59e9dd7da9c906"
+    },
+    {
+      "address": "0x0Cb361e98F28DF89f825DF68D313D39eD726D5D6",
+      "kind": "transparent",
+      "txHash": "0x923ea1b75af4017a2304b4a33f84660121b6227b5fbbbcb2cdc36ae73a654540"
+    },
+    {
+      "address": "0x6dC8C684Aa7aa9BC618aE55bFFAAEe33c3B7eb01",
+      "kind": "transparent",
+      "txHash": "0xe1ff6399975aa708499eee019a70e806be38b21c9b7a2dec87262e03e4546b18"
+    },
+    {
+      "address": "0x6cBFA2daE88e412D34410E5BCaC830A362304488",
+      "kind": "transparent",
+      "txHash": "0x74020a97e2daecac7f88df407bf1055decd272ca6c8a2a6454431fdc71d1f13f"
+    },
+    {
+      "address": "0xca127A8ffbfdaa2B1D60676961C03548Aa77f2d4",
+      "kind": "transparent",
+      "txHash": "0x6d99d978cf9491c0d8222f3218d1f038291755f01082fadb38769ac35950b445"
+    },
+    {
+      "address": "0x9eb6bB4EDbC0769C93Cb5E51A5D5f8E7E6A6A4A7",
+      "kind": "transparent",
+      "txHash": "0x7acf7ed22c2b95a40a7afe52017cee67e08cd763c9e55eb765bf0dfeaab38e1a"
+    },
+    {
+      "address": "0x1B1e0cFe40602f7bFCdb71ccc562D717735171Fe",
+      "kind": "transparent",
+      "txHash": "0x8c2608466c807d0ff7c41ab3afb7e5bd6f1df86da91ab745ef7ce49c42d152e2"
+    },
+    {
+      "address": "0x559eD1B130b6a604f46e2306f5fF4084C9eC598A",
+      "kind": "transparent",
+      "txHash": "0x67139121229033ea6c869c4cce970cde08ebefdc7d2f064e8dedf8646ac35388"
+    },
+    {
+      "address": "0xb1CEb6d10920Bdc51697d3D93b805e967B3a59CD",
+      "kind": "transparent",
+      "txHash": "0x00d7a3754a0cbccd265c6221541ff5a9a18ba2769b919331aedf7d072d73b9ff"
+    },
+    {
+      "address": "0x86dde9969ba1F7B6FeCffc6AAf458423d634c9ce",
+      "kind": "transparent",
+      "txHash": "0xcde6421f9c42a0d284419420753c19201e647b08f8abb68636c608a8b30dd036"
+    },
+    {
+      "address": "0xD041f4d448A03D5A9a4e2A2822b3d3DecFddC4ED",
+      "kind": "transparent",
+      "txHash": "0x5a3f8a7869f9bb680aaf06856aa7d5ebc46a99d05b66b82fdbb9b66868ad5838"
+    },
+    {
+      "address": "0x7DcDB3838f104fAe8CAc76422B029403F3844D88",
+      "kind": "transparent",
+      "txHash": "0xa0209aa8643fcfd079696ddad497fac793dd2810dc8d624675ddf5fcce1bbe8e"
+    },
+    {
+      "address": "0x1cbd3091801E835499e38Af0314c033dd91da428",
+      "kind": "transparent",
+      "txHash": "0x4669516f0c7a5da986cd034246b83001ec3bacaa7e9a4631e12c20632c234429"
+    },
+    {
+      "address": "0x836bee0424bB88A279C671cA4cec330c9eb48346",
+      "kind": "transparent",
+      "txHash": "0xd4def17fc67621874d22391dc97409f755280e279fb59aae9320fcd53ce26707"
+    },
+    {
+      "address": "0x24C7680aD78025658dd1dc2aBFc448Ba29Ce8293",
+      "kind": "transparent",
+      "txHash": "0x3b21457334ef70ff418da5e46899d4b68619bcb6aa68c64711b12ea3511dab2f"
+    },
+    {
+      "address": "0x35d04e2387B2c93A7Ee79Afc9b198beF7668811d",
+      "kind": "transparent",
+      "txHash": "0x3eb8c680bf2a6aaf546cc98c1847d79367584117070c022ea957b6172d843dbc"
+    },
+    {
+      "address": "0x2487CE45Cce08148445833c1e0ae734Ce8206C9B",
+      "kind": "transparent",
+      "txHash": "0xd04231195cfcd8dd182f8f07381e6f79c1372513cd436d890b1bc82846c40162"
+    },
+    {
+      "address": "0x54c9E5abb4242D95aCB0bbFa682875871878bD15",
+      "kind": "transparent",
+      "txHash": "0xa73dfca3166f8c8943ba53a64d83b6766b860e8f708adee30e6eb1ffa2a7a0e9"
+    },
+    {
+      "address": "0xc888588674F2Faf7477Cf7cFCAF06D6051fDc972",
+      "kind": "transparent",
+      "txHash": "0x183ba7a4ee33c9131194b94d4a01fe21043acc2e7ee6e9fcc5df21c3c16c96f0"
+    },
+    {
+      "address": "0x5Bfe836ffC11bf44307a3BB8A9616853ede50B60",
+      "kind": "transparent",
+      "txHash": "0x4c0ef8538e799bcb89c94fba317ddb4af78f3b90fc9d57647cfd7343a2b17286"
+    },
+    {
+      "address": "0x6147658FeB4fdDb4AddBbAaA762dddCE740D8279",
+      "kind": "transparent",
+      "txHash": "0xc730db92e06eb08e2ea6ccc6c5704ac8e0e239af2b15ac7f0efc8ecc025efd5f"
+    },
+    {
+      "address": "0x102a9305fBc2a3eBA7bC1eAC8EfBd639cB2fA745",
+      "kind": "transparent",
+      "txHash": "0x2279d80d32fffb28cc2aa9e21f6e24b758d4473e0faa525e1daf061161c76648"
     }
   ],
   "admin": {

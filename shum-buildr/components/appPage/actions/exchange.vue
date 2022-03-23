@@ -873,6 +873,17 @@
                         currentToken, 
                      )
 
+                     //xxl ??01 exchange tx
+                     //txType 0:build 1:burn 2:exchage 
+                     //chain 42:kovan 1:eth 56:bsc 97:bscTestNet
+                     //console.log(transaction);
+                     let txValue = bn2n(sourceAmount) + "sUSD " + "->" + currentToken
+                     console.log("xxl ??01 ExchangeRecord tx data start");
+                     console.log(transaction);
+                     console.log([transaction.hash,transaction.from,"-",txValue,2,this.walletNetworkId]);
+                     console.log("xxl ??01 ExchangeRecord tx data end");
+
+
                   }
 
                } catch (error) {

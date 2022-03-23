@@ -33,6 +33,9 @@ module.exports = {
             minBlock = undefined,
             networkId = $nuxt.$store.state?.walletNetworkId
         } = {}) {
+
+
+            ////
             return pageResults({
                 api: graphAPIEndpoints[networkId],
                 max,
@@ -58,7 +61,8 @@ module.exports = {
             })
                 .then(results =>
                     results.map(
-                        ({ id, account, timestamp, block, value, source }) => ({
+                        ({ id, account, timestamp, block, value, source }) => (
+                            {
                             hash: id.split("-")[0],
                             account,
                             timestamp: Number(timestamp * 1000),
@@ -70,6 +74,11 @@ module.exports = {
                     )
                 )
                 .catch(err => console.error(err));
+            
+            
+            ////
+
+            
         },
         burned({
             max = maxRequest,

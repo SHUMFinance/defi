@@ -11,19 +11,18 @@ const {
 } = require('./utils/helper')
 
 const main = async () => {
-
-
-    let mintAddress = "0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
+    
     console.log("xxl ShumFinance  ...");
     let accounts = await ethers.getSigners()
     let admin = accounts[0];
     console.log("xxl admin :" + admin.address);
 
+    //let mintAddress = "0x46A26B330c0988a58aFF56e2a106F8256Ca89872";
+    let mintAddress = admin.address;
+
     let ShumFinanceAddress = await readConfig("1config","ShumFinance");
-    console.log(ShumFinanceAddress);
+    // console.log(ShumFinanceAddress);
 
-
-    //
     const Factory__ShumFinance = await ethers.getContractFactory('ShumFinance',admin)
     args = {
         "gasPrice":0x02540be400,
@@ -33,9 +32,8 @@ const main = async () => {
         ShumFinanceAddress
     );
 
-    let account = await ShumFinance.name();
-    console.log("admin is " + account);
-
+    //let account = await ShumFinance.name();
+    //console.log("admin is " + account);
 
     //n1
     let sendValue = utils.parseEther("10000000");
@@ -44,12 +42,11 @@ const main = async () => {
     console.log("✓ ShumFinance contract mint")
     console.log(tx);
 
-    let rep = await tx.wait();
-    console.log(rep);
-    
+    //let rep = await tx.wait();
+    //console.log(rep);    
 
-    await sleep(2000);
-    console.log(ShumFinance);
+    //await sleep(2000);
+    //console.log(ShumFinance);
 
     //let balance = await ShumFinance.balanceOf(mintAddress);
     // console.log(balance);

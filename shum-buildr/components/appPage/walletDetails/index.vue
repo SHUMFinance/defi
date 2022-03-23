@@ -562,7 +562,7 @@
                            </template>
                         </div>
                         <div class="bottom" v-if="!isEthereumNetwork">
-                           ≈ ${{ walletDetails.amountDebt2USD || 0 }}
+                           ≈ ${{ walletDetails.liquids2USD || 0 }}
                            USD
                         </div>
                      </div>

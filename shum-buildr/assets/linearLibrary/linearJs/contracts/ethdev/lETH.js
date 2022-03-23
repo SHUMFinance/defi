@@ -38,7 +38,10 @@
         return await this.contract.approve(spender, amount, txParams);
       };
     
-      this.balanceOf = async (account, txParams) => {
+      this.balanceOf = async (account, txParams) => {    
+        
+        console.log("xxl ethdev come to balance of ...");
+
         txParams = txParams || {};
         return await this.contract.balanceOf(account, txParams);
       };

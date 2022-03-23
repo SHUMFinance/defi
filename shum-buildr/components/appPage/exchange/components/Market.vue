@@ -3,7 +3,7 @@
     <div class="title">MARKET</div>
     <div class="handler">
       <Select v-model="listValue">
-        <Option v-for="item in options" :value="item.value" :key="item.value"
+        <Option v-for="item in options" :value="item.type" :key="item.type"
           >{{ item.label }}
         </Option>
       </Select>
@@ -85,14 +85,14 @@ export default {
     return {
       currencies,
       currency: undefined,
-      listValue: 0,
+      listValue: 'all',
       // [todo: 需要获取实际的类型分类 这是模拟数据]
       listOptions: [
-        { label: "All", value: 0 },
-        { label: "Crypto", value: 1 },
-        { label: "Commodities", value: 2 },
-        { label: "Currencies", value: 3 },
-        { label: "Indices", value: 4 },
+        { label: "All", type: 'all' },
+        { label: "Crypto", type: 'crypto' },
+        { label: "Commodities", type: 'commodity' },
+        { label: "Currencies", type: 'currencies' },
+        { label: "Indices", type: 'index' },
       ],
     };
   },
@@ -100,16 +100,16 @@ export default {
     currentList: function () {
       return this.list
         .filter((v) => {
-          if (this.listValue === 0) {
+          if (this.listValue === 'all') {
             return true;
           }
-          return v.value === this.listValue;
+          return v.type === this.listValue;
         })
         .filter((v) => (this.currency ? v.id.includes(this.currency.toLocaleUpperCase()) : true));
     },
     options: function () {
       return this.listOptions.map((option) => {
-        if (option.value === 0) {
+        if (option.type === 'all') {
           return {
             ...option,
             label: `${option.label}  (${this.list.length})`,
@@ -118,7 +118,7 @@ export default {
           return {
             ...option,
             label: `${option.label}  (${
-              this.list.filter((v) => option.value === v.value).length
+              this.list.filter((v) => option.type === v.type).length
             })`,
           };
         }

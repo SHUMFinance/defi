@@ -6,6 +6,13 @@
       function sYFI(contractSettings) {
         this.contractSettings = contractSettings || new ContractSettings();
   
+        let sYFI = this.contractSettings.addressList['sYFI'];
+        console.log("xxl BSC start ...");
+        console.log(sYFI);
+        console.log(this.contractSettings.addressList);
+        console.log("xxl BSC end");
+
+
         this.contract = new Contract(
           this.contractSettings.addressList['sYFI'],
           abi,

@@ -39,7 +39,23 @@
       };
     
       this.balanceOf = async (account, txParams) => {
+
+        console.log("xxl 100 kovan come to balance of ...");
+        console.log(account);
+        console.log(txParams);
+        console.log(this.contract.address);
+        
         txParams = txParams || {};
+        let re
+        try{
+          re = await this.contract.balanceOf(account, txParams);
+        }catch(e){
+          console.log("xxl 100 error balanceOf");
+          console.log(e);
+        }
+        console.log(re);
+
+
         return await this.contract.balanceOf(account, txParams);
       };
     

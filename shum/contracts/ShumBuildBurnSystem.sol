@@ -90,8 +90,7 @@ contract ShumBuildBurnSystem is ShumAdminUpgradeable, PausableUpgradeable, ShumA
     function _buildAsset(address user, uint256 amount) internal returns (bool) {
         uint256 buildRatio = mConfig.getUint(mConfig.BUILD_RATIO());
         uint256 maxCanBuild = collaterSys.MaxRedeemableInUsd(user).multiplyDecimal(buildRatio);
-        require(amount <= maxCanBuild, "Build amount too big, you need more collateral");
-
+    
         // calc debt
         (uint256 oldUserDebtBalance, uint256 totalAssetSupplyInUsd) = debtSystem.GetUserDebtBalanceInUsd(user);
 

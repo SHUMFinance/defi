@@ -1,6 +1,7 @@
 import _ from "lodash";
 
-export const GAS_LIMIT_BUFFER = 0.5; //50%
+//export const GAS_LIMIT_BUFFER = 0.5; //50%
+export const GAS_LIMIT_BUFFER = 1; //50%
 
 export const GWEI_UNIT = 1000000000;
 
