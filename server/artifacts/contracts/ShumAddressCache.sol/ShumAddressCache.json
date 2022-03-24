@@ -1,0 +1,43 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ShumAddressCache",
+  "sourceName": "contracts/ShumAddressCache.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "name",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "CachedAddressUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract IShumAddressStorage",
+          "name": "_addressStorage",
+          "type": "address"
+        }
+      ],
+      "name": "updateAddressCache",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
